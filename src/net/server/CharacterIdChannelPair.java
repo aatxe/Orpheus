@@ -18,30 +18,30 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server;
 
 /**
- *
+ * 
  * @author Frz
  */
 public class CharacterIdChannelPair {
-    private int charid;
-    private byte channel;
+	private int charid;
+	private byte channel;
 
-    public CharacterIdChannelPair() {
-    }
+	public CharacterIdChannelPair() {
+	}
 
-    public CharacterIdChannelPair(int charid, byte channel) {
-        this.charid = charid;
-        this.channel = channel;
-    }
+	public CharacterIdChannelPair(int charid, byte channel) {
+		this.charid = charid;
+		this.channel = channel;
+	}
 
-    public int getCharacterId() {
-        return charid;
-    }
+	public int getCharacterId() {
+		return charid;
+	}
 
-    public byte getChannel() {
-        return channel;
-    }
+	public byte getChannel() {
+		return channel;
+	}
 }

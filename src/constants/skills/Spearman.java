@@ -18,20 +18,20 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package constants.skills;
 
 /**
- *
+ * 
  * @author BubblesDev
  */
 public class Spearman {
-    public static final int SPEAR_MASTERY = 1300000;
-    public static final int POLEARM_MASTERY = 1300001;
-    public static final int FINAL_ATTACK_SPEAR = 1300002;
-    public static final int FINAL_ATTACK_POLEARM = 1300003;
-    public static final int SPEAR_BOOSTER = 1301004;
-    public static final int POLEARM_BOOSTER = 1301005;
-    public static final int IRON_WILL = 1301006;
-    public static final int HYPER_BODY = 1301007;
+	public static final int SPEAR_MASTERY = 1300000;
+	public static final int POLEARM_MASTERY = 1300001;
+	public static final int FINAL_ATTACK_SPEAR = 1300002;
+	public static final int FINAL_ATTACK_POLEARM = 1300003;
+	public static final int SPEAR_BOOSTER = 1301004;
+	public static final int POLEARM_BOOSTER = 1301005;
+	public static final int IRON_WILL = 1301006;
+	public static final int HYPER_BODY = 1301007;
 }

@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleClient;
@@ -43,34 +43,34 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class SkillEffectHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        int skillId = slea.readInt();
-        int level = slea.readByte();
-        byte flags = slea.readByte();
-        int speed = slea.readByte();
-        byte aids = slea.readByte();//Mmmk
-        switch (skillId) {
-            case FPMage.EXPLOSION:
-            case FPArchMage.BIG_BANG:
-            case ILArchMage.BIG_BANG:
-            case Bishop.BIG_BANG:
-            case Bowmaster.HURRICANE:
-            case Marksman.PIERCING_ARROW:
-            case ChiefBandit.CHAKRA:
-            case Brawler.CORKSCREW_BLOW:
-            case Gunslinger.GRENADE:
-            case Corsair.RAPID_FIRE:
-            case WindArcher.HURRICANE:
-            case NightWalker.POISON_BOMB:
-            case ThunderBreaker.CORKSCREW_BLOW:
-            case Paladin.MONSTER_MAGNET:
-            case DarkKnight.MONSTER_MAGNET:
-            case Hero.MONSTER_MAGNET:
-                c.getPlayer().getMap().broadcastMessage(c.getPlayer(), MaplePacketCreator.skillEffect(c.getPlayer(), skillId, level, flags, speed, aids), false);
-                return;
-            default:
-                System.out.println(c.getPlayer() + " entered SkillEffectHandler without being handled using " + skillId + ".");
-                return;
-        }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		int skillId = slea.readInt();
+		int level = slea.readByte();
+		byte flags = slea.readByte();
+		int speed = slea.readByte();
+		byte aids = slea.readByte();// Mmmk
+		switch (skillId) {
+			case FPMage.EXPLOSION:
+			case FPArchMage.BIG_BANG:
+			case ILArchMage.BIG_BANG:
+			case Bishop.BIG_BANG:
+			case Bowmaster.HURRICANE:
+			case Marksman.PIERCING_ARROW:
+			case ChiefBandit.CHAKRA:
+			case Brawler.CORKSCREW_BLOW:
+			case Gunslinger.GRENADE:
+			case Corsair.RAPID_FIRE:
+			case WindArcher.HURRICANE:
+			case NightWalker.POISON_BOMB:
+			case ThunderBreaker.CORKSCREW_BLOW:
+			case Paladin.MONSTER_MAGNET:
+			case DarkKnight.MONSTER_MAGNET:
+			case Hero.MONSTER_MAGNET:
+				c.getPlayer().getMap().broadcastMessage(c.getPlayer(), MaplePacketCreator.skillEffect(c.getPlayer(), skillId, level, flags, speed, aids), false);
+				return;
+			default:
+				System.out.println(c.getPlayer() + " entered SkillEffectHandler without being handled using " + skillId + ".");
+				return;
+		}
+	}
 }

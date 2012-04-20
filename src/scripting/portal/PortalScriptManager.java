@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package scripting.portal;
 
 import java.io.File;
@@ -37,58 +37,58 @@ import java.lang.reflect.UndeclaredThrowableException;
 import server.MaplePortal;
 
 public class PortalScriptManager {
-    private static PortalScriptManager instance = new PortalScriptManager();
-    private Map<String, PortalScript> scripts = new HashMap<String, PortalScript>();
-    private ScriptEngineFactory sef;
+	private static PortalScriptManager instance = new PortalScriptManager();
+	private Map<String, PortalScript> scripts = new HashMap<String, PortalScript>();
+	private ScriptEngineFactory sef;
 
-    private PortalScriptManager() {
-        ScriptEngineManager sem = new ScriptEngineManager();
-        sef = sem.getEngineByName("javascript").getFactory();
-    }
+	private PortalScriptManager() {
+		ScriptEngineManager sem = new ScriptEngineManager();
+		sef = sem.getEngineByName("javascript").getFactory();
+	}
 
-    public static PortalScriptManager getInstance() {
-        return instance;
-    }
+	public static PortalScriptManager getInstance() {
+		return instance;
+	}
 
-    private PortalScript getPortalScript(String scriptName) {
-        if (scripts.containsKey(scriptName)) {
-            return scripts.get(scriptName);
-        }
-        File scriptFile = new File("scripts/portal/" + scriptName + ".js");
-        if (!scriptFile.exists()) {
-            scripts.put(scriptName, null);
-            return null;
-        }
-        FileReader fr = null;
-        ScriptEngine portal = sef.getScriptEngine();
-        try {
-            fr = new FileReader(scriptFile);
-            ((Compilable) portal).compile(fr).eval();
-        } catch (ScriptException e) {
-            System.out.println("THROW " + e);
-        } catch (IOException e) {
-            System.out.println("THROW " + e);
-        } catch (UndeclaredThrowableException ute) {
-            ute.printStackTrace();
-        } finally {
-            if (fr != null) {
-                try {
-                    fr.close();
-                } catch (IOException e) {
-                    System.out.println("ERROR CLOSING " + e);
-                }
-            }
-        }
-        PortalScript script = ((Invocable) portal).getInterface(PortalScript.class);
-        scripts.put(scriptName, script);
-        return script;
-    }
+	private PortalScript getPortalScript(String scriptName) {
+		if (scripts.containsKey(scriptName)) {
+			return scripts.get(scriptName);
+		}
+		File scriptFile = new File("scripts/portal/" + scriptName + ".js");
+		if (!scriptFile.exists()) {
+			scripts.put(scriptName, null);
+			return null;
+		}
+		FileReader fr = null;
+		ScriptEngine portal = sef.getScriptEngine();
+		try {
+			fr = new FileReader(scriptFile);
+			((Compilable) portal).compile(fr).eval();
+		} catch (ScriptException e) {
+			System.out.println("THROW " + e);
+		} catch (IOException e) {
+			System.out.println("THROW " + e);
+		} catch (UndeclaredThrowableException ute) {
+			ute.printStackTrace();
+		} finally {
+			if (fr != null) {
+				try {
+					fr.close();
+				} catch (IOException e) {
+					System.out.println("ERROR CLOSING " + e);
+				}
+			}
+		}
+		PortalScript script = ((Invocable) portal).getInterface(PortalScript.class);
+		scripts.put(scriptName, script);
+		return script;
+	}
 
-    public boolean executePortalScript(MaplePortal portal, MapleClient c) {
-        PortalScript script = getPortalScript(portal.getScriptName());
-        if (script != null) {
-            return script.enter(new PortalPlayerInteraction(c, portal));
-        }
-        return false;
-    }
+	public boolean executePortalScript(MaplePortal portal, MapleClient c) {
+		PortalScript script = getPortalScript(portal.getScriptName());
+		if (script != null) {
+			return script.enter(new PortalPlayerInteraction(c, portal));
+		}
+		return false;
+	}
 }

@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package provider.wz;
 
 import java.util.ArrayList;
@@ -32,37 +32,37 @@ import provider.MapleDataEntry;
 import provider.MapleDataFileEntry;
 
 public class WZDirectoryEntry extends WZEntry implements MapleDataDirectoryEntry {
-    private List<MapleDataDirectoryEntry> subdirs = new ArrayList<MapleDataDirectoryEntry>();
-    private List<MapleDataFileEntry> files = new ArrayList<MapleDataFileEntry>();
-    private Map<String, MapleDataEntry> entries = new HashMap<String, MapleDataEntry>();
+	private List<MapleDataDirectoryEntry> subdirs = new ArrayList<MapleDataDirectoryEntry>();
+	private List<MapleDataFileEntry> files = new ArrayList<MapleDataFileEntry>();
+	private Map<String, MapleDataEntry> entries = new HashMap<String, MapleDataEntry>();
 
-    public WZDirectoryEntry(String name, int size, int checksum, MapleDataEntity parent) {
-        super(name, size, checksum, parent);
-    }
+	public WZDirectoryEntry(String name, int size, int checksum, MapleDataEntity parent) {
+		super(name, size, checksum, parent);
+	}
 
-    public WZDirectoryEntry() {
-        super(null, 0, 0, null);
-    }
+	public WZDirectoryEntry() {
+		super(null, 0, 0, null);
+	}
 
-    public void addDirectory(MapleDataDirectoryEntry dir) {
-        subdirs.add(dir);
-        entries.put(dir.getName(), dir);
-    }
+	public void addDirectory(MapleDataDirectoryEntry dir) {
+		subdirs.add(dir);
+		entries.put(dir.getName(), dir);
+	}
 
-    public void addFile(MapleDataFileEntry fileEntry) {
-        files.add(fileEntry);
-        entries.put(fileEntry.getName(), fileEntry);
-    }
+	public void addFile(MapleDataFileEntry fileEntry) {
+		files.add(fileEntry);
+		entries.put(fileEntry.getName(), fileEntry);
+	}
 
-    public List<MapleDataDirectoryEntry> getSubdirectories() {
-        return Collections.unmodifiableList(subdirs);
-    }
+	public List<MapleDataDirectoryEntry> getSubdirectories() {
+		return Collections.unmodifiableList(subdirs);
+	}
 
-    public List<MapleDataFileEntry> getFiles() {
-        return Collections.unmodifiableList(files);
-    }
+	public List<MapleDataFileEntry> getFiles() {
+		return Collections.unmodifiableList(files);
+	}
 
-    public MapleDataEntry getEntry(String name) {
-        return entries.get(name);
-    }
+	public MapleDataEntry getEntry(String name) {
+		return entries.get(name);
+	}
 }

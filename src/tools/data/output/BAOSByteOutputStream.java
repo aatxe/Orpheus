@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package tools.data.output;
 
 import java.io.ByteArrayOutputStream;
@@ -31,26 +31,28 @@ import java.io.ByteArrayOutputStream;
  * @since Revision 352
  */
 class BAOSByteOutputStream implements ByteOutputStream {
-    private ByteArrayOutputStream baos;
+	private ByteArrayOutputStream baos;
 
-    /**
-     * Class constructor - Wraps the stream around a Java BAOS.
-     *
-     * @param baos <code>The ByteArrayOutputStream</code> to wrap this around.
-     */
-    BAOSByteOutputStream(ByteArrayOutputStream baos) {
-        super();
-        this.baos = baos;
-    }
+	/**
+	 * Class constructor - Wraps the stream around a Java BAOS.
+	 * 
+	 * @param baos
+	 *            <code>The ByteArrayOutputStream</code> to wrap this around.
+	 */
+	BAOSByteOutputStream(ByteArrayOutputStream baos) {
+		super();
+		this.baos = baos;
+	}
 
-    /**
-     * Writes a byte to the stream.
-     *
-     * @param b The byte to write to the stream.
-     * @see tools.data.output.ByteOutputStream#writeByte(byte)
-     */
-    @Override
-    public void writeByte(byte b) {
-        baos.write(b);
-    }
+	/**
+	 * Writes a byte to the stream.
+	 * 
+	 * @param b
+	 *            The byte to write to the stream.
+	 * @see tools.data.output.ByteOutputStream#writeByte(byte)
+	 */
+	@Override
+	public void writeByte(byte b) {
+		baos.write(b);
+	}
 }

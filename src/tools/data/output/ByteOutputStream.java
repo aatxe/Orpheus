@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package tools.data.output;
 
 /**
@@ -29,10 +29,11 @@ package tools.data.output;
  * @version 1.0
  */
 interface ByteOutputStream {
-    /**
-     * Writes a byte to the stream.
-     *
-     * @param b The byte to write.
-     */
-    void writeByte(byte b);
+	/**
+	 * Writes a byte to the stream.
+	 * 
+	 * @param b
+	 *            The byte to write.
+	 */
+	void writeByte(byte b);
 }

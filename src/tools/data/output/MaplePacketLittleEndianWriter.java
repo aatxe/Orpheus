@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package tools.data.output;
 
 import java.awt.Point;
@@ -35,42 +35,43 @@ import tools.HexTool;
  * @since Revision 352
  */
 public class MaplePacketLittleEndianWriter extends GenericLittleEndianWriter {
-    private ByteArrayOutputStream baos;
+	private ByteArrayOutputStream baos;
 
-    /**
-     * Constructor - initializes this stream with a default size.
-     */
-    public MaplePacketLittleEndianWriter() {
-        this(32);
-    }
+	/**
+	 * Constructor - initializes this stream with a default size.
+	 */
+	public MaplePacketLittleEndianWriter() {
+		this(32);
+	}
 
-    /**
-     * Constructor - initializes this stream with size <code>size</code>.
-     *
-     * @param size The size of the underlying stream.
-     */
-    public MaplePacketLittleEndianWriter(int size) {
-        this.baos = new ByteArrayOutputStream(size);
-        setByteOutputStream(new BAOSByteOutputStream(baos));
-    }
+	/**
+	 * Constructor - initializes this stream with size <code>size</code>.
+	 * 
+	 * @param size
+	 *            The size of the underlying stream.
+	 */
+	public MaplePacketLittleEndianWriter(int size) {
+		this.baos = new ByteArrayOutputStream(size);
+		setByteOutputStream(new BAOSByteOutputStream(baos));
+	}
 
-    /**
-     * Gets a <code>MaplePacket</code> instance representing this
-     * sequence of bytes.
-     *
-     * @return A <code>MaplePacket</code> with the bytes in this stream.
-     */
-    public MaplePacket getPacket() {
-        return new ByteArrayMaplePacket(baos.toByteArray());
-    }
+	/**
+	 * Gets a <code>MaplePacket</code> instance representing this sequence of
+	 * bytes.
+	 * 
+	 * @return A <code>MaplePacket</code> with the bytes in this stream.
+	 */
+	public MaplePacket getPacket() {
+		return new ByteArrayMaplePacket(baos.toByteArray());
+	}
 
-    /**
-     * Changes this packet into a human-readable hexadecimal stream of bytes.
-     *
-     * @return This packet as hex digits.
-     */
-    @Override
-    public String toString() {
-        return HexTool.toString(baos.toByteArray());
-    }
+	/**
+	 * Changes this packet into a human-readable hexadecimal stream of bytes.
+	 * 
+	 * @return This packet as hex digits.
+	 */
+	@Override
+	public String toString() {
+		return HexTool.toString(baos.toByteArray());
+	}
 }

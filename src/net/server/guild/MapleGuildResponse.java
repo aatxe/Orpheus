@@ -18,23 +18,21 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.guild;
 
 import tools.MaplePacketCreator;
 import net.MaplePacket;
 
 public enum MapleGuildResponse {
-    NOT_IN_CHANNEL(0x2a),
-    ALREADY_IN_GUILD(0x28),
-    NOT_IN_GUILD(0x2d);
-    private int value;
+	NOT_IN_CHANNEL(0x2a), ALREADY_IN_GUILD(0x28), NOT_IN_GUILD(0x2d);
+	private int value;
 
-    private MapleGuildResponse(int val) {
-        value = val;
-    }
+	private MapleGuildResponse(int val) {
+		value = val;
+	}
 
-    public MaplePacket getPacket() {
-        return MaplePacketCreator.genericGuildMessage((byte) value);
-    }
+	public MaplePacket getPacket() {
+		return MaplePacketCreator.genericGuildMessage((byte) value);
+	}
 }

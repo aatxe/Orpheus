@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleClient;
@@ -30,16 +30,16 @@ import tools.data.input.SeekableLittleEndianAccessor;
  * @author Lerk
  */
 public final class ReactorHitHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        //CD 00 6B 00 00 00 01 00 00 00 03 00 00 00 20 03 F7 03 00 00
-        int oid = slea.readInt();
-        int charPos = slea.readInt();
-        short stance = slea.readShort();
-        slea.skip(4);
-        int skillid = slea.readInt();
-        MapleReactor reactor = c.getPlayer().getMap().getReactorByOid(oid);
-        if (reactor != null && reactor.isAlive()) {
-            reactor.hitReactor(charPos, stance, skillid,c);
-        }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		// CD 00 6B 00 00 00 01 00 00 00 03 00 00 00 20 03 F7 03 00 00
+		int oid = slea.readInt();
+		int charPos = slea.readInt();
+		short stance = slea.readShort();
+		slea.skip(4);
+		int skillid = slea.readInt();
+		MapleReactor reactor = c.getPlayer().getMap().getReactorByOid(oid);
+		if (reactor != null && reactor.isAlive()) {
+			reactor.hitReactor(charPos, stance, skillid, c);
+		}
+	}
 }

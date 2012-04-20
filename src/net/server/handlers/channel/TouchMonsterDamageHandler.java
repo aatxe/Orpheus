@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleBuffStat;
@@ -26,10 +26,10 @@ import client.MapleClient;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class TouchMonsterDamageHandler extends AbstractDealDamageHandler {
-    @Override
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        if (c.getPlayer().getEnergyBar() == 15000 || c.getPlayer().getBuffedValue(MapleBuffStat.BODY_PRESSURE) != null) {
-            applyAttack(parseDamage(slea, c.getPlayer(), false), c.getPlayer(), 1);
-        }
-    }
+	@Override
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		if (c.getPlayer().getEnergyBar() == 15000 || c.getPlayer().getBuffedValue(MapleBuffStat.BODY_PRESSURE) != null) {
+			applyAttack(parseDamage(slea, c.getPlayer(), false), c.getPlayer(), 1);
+		}
+	}
 }

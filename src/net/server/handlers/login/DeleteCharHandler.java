@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.login;
 
 import client.MapleClient;
@@ -27,14 +27,14 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class DeleteCharHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        String pic = slea.readMapleAsciiString();
-        int cid = slea.readInt();
-        if (c.checkPic(pic)) {
-        c.announce(MaplePacketCreator.deleteCharResponse(cid, 0));
-        c.deleteCharacter(cid);
-        } else {
-        c.announce(MaplePacketCreator.deleteCharResponse(cid, 0x14));
-        }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		String pic = slea.readMapleAsciiString();
+		int cid = slea.readInt();
+		if (c.checkPic(pic)) {
+			c.announce(MaplePacketCreator.deleteCharResponse(cid, 0));
+			c.deleteCharacter(cid);
+		} else {
+			c.announce(MaplePacketCreator.deleteCharResponse(cid, 0x14));
+		}
+	}
 }

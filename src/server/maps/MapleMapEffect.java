@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.maps;
 
 import client.MapleClient;
@@ -26,24 +26,24 @@ import net.MaplePacket;
 import tools.MaplePacketCreator;
 
 public class MapleMapEffect {
-    private String msg;
-    private int itemId;
-    private boolean active = true;
+	private String msg;
+	private int itemId;
+	private boolean active = true;
 
-    public MapleMapEffect(String msg, int itemId) {
-        this.msg = msg;
-        this.itemId = itemId;
-    }
+	public MapleMapEffect(String msg, int itemId) {
+		this.msg = msg;
+		this.itemId = itemId;
+	}
 
-    public MaplePacket makeDestroyData() {
-        return MaplePacketCreator.removeMapEffect();
-    }
+	public MaplePacket makeDestroyData() {
+		return MaplePacketCreator.removeMapEffect();
+	}
 
-    public MaplePacket makeStartData() {
-        return MaplePacketCreator.startMapEffect(msg, itemId, active);
-    }
+	public MaplePacket makeStartData() {
+		return MaplePacketCreator.startMapEffect(msg, itemId, active);
+	}
 
-    public void sendStartData(MapleClient client) {
-        client.announce(makeStartData());
-    }
+	public void sendStartData(MapleClient client) {
+		client.announce(makeStartData());
+	}
 }

@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleClient;
@@ -28,15 +28,15 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class MonsterBombHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        int oid = slea.readInt();
-        MapleMonster monster = c.getPlayer().getMap().getMonsterByOid(oid);
-        if (!c.getPlayer().isAlive() || monster == null) {
-            return;
-        }
-        if (monster.getId() == 8500003 || monster.getId() == 8500004) {
-            monster.getMap().broadcastMessage(MaplePacketCreator.killMonster(monster.getObjectId(), 4));
-            c.getPlayer().getMap().removeMapObject(oid);
-        }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		int oid = slea.readInt();
+		MapleMonster monster = c.getPlayer().getMap().getMonsterByOid(oid);
+		if (!c.getPlayer().isAlive() || monster == null) {
+			return;
+		}
+		if (monster.getId() == 8500003 || monster.getId() == 8500004) {
+			monster.getMap().broadcastMessage(MaplePacketCreator.killMonster(monster.getObjectId(), 4));
+			c.getPlayer().getMap().removeMapObject(oid);
+		}
+	}
 }

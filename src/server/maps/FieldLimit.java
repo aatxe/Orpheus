@@ -17,46 +17,40 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.maps;
 
 import net.LongValueHolder;
 
 /**
- *
+ * 
  * @author AngelSL
  */
 public enum FieldLimit implements LongValueHolder {
-    JUMP(0x01),
-    MOVEMENTSKILLS(0x02),
-    SUMMON(0x04),
-    DOOR(0x08),
-    CHANGECHANNEL(0x10),
-    CANNOTVIPROCK(0x40),
-    CANNOTMINIGAME(0x80),
-    //NoClue1(0x100), // APQ and a couple quest maps have this
-    CANNOTUSEMOUNTS(0x200),
-    //NoClue2(0x400), // Monster carnival?
-    //NoClue3(0x800), // Monster carnival?
-    CANNOTUSEPOTION(0x1000),
-    //NoClue4(0x2000), // No notes
-    //Unused(0x4000),
-    //NoClue5(0x8000), // Ariant colosseum-related?
-    //NoClue6(0x10000), // No notes
-    CANNOTJUMPDOWN(0x20000);
-    //NoClue7(0x40000); // Seems to .. disable Rush if 0x2 is set
-    private long i;
+	JUMP(0x01), MOVEMENTSKILLS(0x02), SUMMON(0x04), DOOR(0x08), CHANGECHANNEL(0x10), CANNOTVIPROCK(0x40), CANNOTMINIGAME(0x80),
+	// NoClue1(0x100), // APQ and a couple quest maps have this
+	CANNOTUSEMOUNTS(0x200),
+	// NoClue2(0x400), // Monster carnival?
+	// NoClue3(0x800), // Monster carnival?
+	CANNOTUSEPOTION(0x1000),
+	// NoClue4(0x2000), // No notes
+	// Unused(0x4000),
+	// NoClue5(0x8000), // Ariant colosseum-related?
+	// NoClue6(0x10000), // No notes
+	CANNOTJUMPDOWN(0x20000);
+	// NoClue7(0x40000); // Seems to .. disable Rush if 0x2 is set
+	private long i;
 
-    private FieldLimit(long i) {
-        this.i = i;
-    }
+	private FieldLimit(long i) {
+		this.i = i;
+	}
 
-    @Override
-    public long getValue() {
-        return i;
-    }
+	@Override
+	public long getValue() {
+		return i;
+	}
 
-    public boolean check(int fieldlimit) {
-        return (fieldlimit & i) == i;
-    }
+	public boolean check(int fieldlimit) {
+		return (fieldlimit & i) == i;
+	}
 }

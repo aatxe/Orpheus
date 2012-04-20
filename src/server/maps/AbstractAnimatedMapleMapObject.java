@@ -18,21 +18,21 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.maps;
 
 public abstract class AbstractAnimatedMapleMapObject extends AbstractMapleMapObject implements AnimatedMapleMapObject {
-    private int stance;
+	private int stance;
 
-    public int getStance() {
-        return stance;
-    }
+	public int getStance() {
+		return stance;
+	}
 
-    public void setStance(int stance) {
-        this.stance = stance;
-    }
+	public void setStance(int stance) {
+		this.stance = stance;
+	}
 
-    public boolean isFacingLeft() {
-        return Math.abs(stance) % 2 == 1;
-    }
+	public boolean isFacingLeft() {
+		return Math.abs(stance) % 2 == 1;
+	}
 }

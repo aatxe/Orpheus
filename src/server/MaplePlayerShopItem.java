@@ -18,49 +18,49 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server;
 
 import client.IItem;
 
 /**
- *
+ * 
  * @author Matze
  */
 public class MaplePlayerShopItem {
-    private IItem item;
-    private short bundles;
-    private int price;
-    private boolean doesExist;
+	private IItem item;
+	private short bundles;
+	private int price;
+	private boolean doesExist;
 
-    public MaplePlayerShopItem(IItem item, short bundles, int price) {
-        this.item = item;
-        this.bundles = bundles;
-        this.price = price;
-        this.doesExist = true;
-    }
+	public MaplePlayerShopItem(IItem item, short bundles, int price) {
+		this.item = item;
+		this.bundles = bundles;
+		this.price = price;
+		this.doesExist = true;
+	}
 
-    public void setDoesExist(boolean tf) {
-        this.doesExist = tf;
-    }
+	public void setDoesExist(boolean tf) {
+		this.doesExist = tf;
+	}
 
-    public boolean isExist() {
-        return doesExist;
-    }
+	public boolean isExist() {
+		return doesExist;
+	}
 
-    public IItem getItem() {
-        return item;
-    }
+	public IItem getItem() {
+		return item;
+	}
 
-    public short getBundles() {
-        return bundles;
-    }
+	public short getBundles() {
+		return bundles;
+	}
 
-    public int getPrice() {
-        return price;
-    }
+	public int getPrice() {
+		return price;
+	}
 
-    public void setBundles(short bundles) {
-        this.bundles = bundles;
-    }
+	public void setBundles(short bundles) {
+		this.bundles = bundles;
+	}
 }

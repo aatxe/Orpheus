@@ -31,52 +31,52 @@ import tools.data.input.SeekableLittleEndianAccessor;
 
 public class GMServerHandler extends IoHandlerAdapter {
 
-    GMPacketProcessor processor;
-    IoSession session;
+	GMPacketProcessor processor;
+	IoSession session;
 
-    public GMServerHandler() {
-        this.processor = new GMPacketProcessor();
-    }
+	public GMServerHandler() {
+		this.processor = new GMPacketProcessor();
+	}
 
-    @Override
-    public void messageSent(IoSession session, Object message) throws Exception {
-        super.messageSent(session, message);
-    }
+	@Override
+	public void messageSent(IoSession session, Object message) throws Exception {
+		super.messageSent(session, message);
+	}
 
-    @Override
-    public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
-        GMServer.getInstance().removeOutGame((String) session.getAttribute("NAME"));
-    }
+	@Override
+	public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
+		GMServer.getInstance().removeOutGame((String) session.getAttribute("NAME"));
+	}
 
-    @Override
-    public void sessionOpened(IoSession session) throws Exception {
-        this.session = session;
-    }
+	@Override
+	public void sessionOpened(IoSession session) throws Exception {
+		this.session = session;
+	}
 
-    @Override
-    public void sessionClosed(IoSession session) throws Exception {
-        synchronized (session) {
-            GMServer.getInstance().removeOutGame((String) session.getAttribute("NAME"));
-        }
-        super.sessionClosed(session);
-    }
+	@Override
+	public void sessionClosed(IoSession session) throws Exception {
+		synchronized (session) {
+			GMServer.getInstance().removeOutGame((String) session.getAttribute("NAME"));
+		}
+		super.sessionClosed(session);
+	}
 
-    @Override
-    public void messageReceived(IoSession session, Object message) throws Exception {
-        byte[] content = (byte[]) message;
-        SeekableLittleEndianAccessor slea = new GenericSeekableLittleEndianAccessor(new ByteArrayByteStream(content));
-        short opcode = slea.readShort();
-        GMPacketHandler packetHandler = processor.getHandler(opcode);
-        if (packetHandler != null) {
-            try {
-                packetHandler.handlePacket(slea, session);
-            } catch (Throwable t) {
-            }
-        }
-    }
+	@Override
+	public void messageReceived(IoSession session, Object message) throws Exception {
+		byte[] content = (byte[]) message;
+		SeekableLittleEndianAccessor slea = new GenericSeekableLittleEndianAccessor(new ByteArrayByteStream(content));
+		short opcode = slea.readShort();
+		GMPacketHandler packetHandler = processor.getHandler(opcode);
+		if (packetHandler != null) {
+			try {
+				packetHandler.handlePacket(slea, session);
+			} catch (Throwable t) {
+			}
+		}
+	}
 
-    @Override
-    public void sessionIdle(final IoSession session, final IdleStatus status) throws Exception {
-        super.sessionIdle(session, status);
-    }
+	@Override
+	public void sessionIdle(final IoSession session, final IdleStatus status) throws Exception {
+		super.sessionIdle(session, status);
+	}
 }

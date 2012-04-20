@@ -18,13 +18,14 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.movement;
 
 import java.awt.Point;
 import tools.data.output.LittleEndianWriter;
 
 public interface LifeMovementFragment {
-    void serialize(LittleEndianWriter lew);
-    Point getPosition();
+	void serialize(LittleEndianWriter lew);
+
+	Point getPosition();
 }

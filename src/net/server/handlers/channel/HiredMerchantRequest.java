@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.ItemFactory;
@@ -32,27 +32,27 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
- *
+ * 
  * @author XoticStory
  */
 public final class HiredMerchantRequest extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        MapleCharacter chr = c.getPlayer();
-        if (chr.getMap().getMapObjectsInRange(chr.getPosition(), 23000, Arrays.asList(MapleMapObjectType.HIRED_MERCHANT)).isEmpty() && chr.getMapId() > 910000000 && chr.getMapId() < 910000023) {
-            if (!chr.hasMerchant()) {
-                try {
-                    if (ItemFactory.MERCHANT.loadItems(chr.getId(), false).isEmpty() && chr.getMerchantMeso() == 0) {
-                        c.announce(MaplePacketCreator.hiredMerchantBox());
-                    } else {
-                        chr.announce(MaplePacketCreator.retrieveFirstMessage());
-                    }
-                } catch (SQLException ex) {
-                }
-            } else {
-                chr.dropMessage(1, "You already have a store open.");
-            }
-        } else {
-            chr.dropMessage(1, "You cannot open your hired merchant here.");
-        }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		MapleCharacter chr = c.getPlayer();
+		if (chr.getMap().getMapObjectsInRange(chr.getPosition(), 23000, Arrays.asList(MapleMapObjectType.HIRED_MERCHANT)).isEmpty() && chr.getMapId() > 910000000 && chr.getMapId() < 910000023) {
+			if (!chr.hasMerchant()) {
+				try {
+					if (ItemFactory.MERCHANT.loadItems(chr.getId(), false).isEmpty() && chr.getMerchantMeso() == 0) {
+						c.announce(MaplePacketCreator.hiredMerchantBox());
+					} else {
+						chr.announce(MaplePacketCreator.retrieveFirstMessage());
+					}
+				} catch (SQLException ex) {
+				}
+			} else {
+				chr.dropMessage(1, "You already have a store open.");
+			}
+		} else {
+			chr.dropMessage(1, "You cannot open your hired merchant here.");
+		}
+	}
 }

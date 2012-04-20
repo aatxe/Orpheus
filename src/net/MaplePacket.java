@@ -18,11 +18,13 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net;
 
 public interface MaplePacket {
-    public byte[] getBytes();
-    public Runnable getOnSend();
-    public void setOnSend(Runnable onSend);
+	public byte[] getBytes();
+
+	public Runnable getOnSend();
+
+	public void setOnSend(Runnable onSend);
 }

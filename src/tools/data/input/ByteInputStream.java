@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package tools.data.input;
 
 /**
@@ -29,7 +29,9 @@ package tools.data.input;
  * @since Revision 323
  */
 public interface ByteInputStream {
-    int readByte();
-    long getBytesRead();
-    long available();
+	int readByte();
+
+	long getBytesRead();
+
+	long available();
 }

@@ -29,26 +29,25 @@ import client.command.Commands;
 
 public final class GeneralchatHandler extends net.AbstractMaplePacketHandler {
 
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        String s = slea.readMapleAsciiString();
-        MapleCharacter chr = c.getPlayer();
-        char heading = s.charAt(0);
-        if (heading == '/' || heading == '!' || heading == '@') {
-            String[] sp = s.split(" ");
-            sp[0] = sp[0].toLowerCase().substring(1);
-            if (!Commands.executePlayerCommand(c, sp, heading)) {
-                if (chr.isGM()) {
-                    if (!Commands.executeGMCommand(c, sp, heading)) {
-                        Commands.executeAdminCommand(c, sp, heading);
-                    }
-                }
-            }
-        } else {
-            if (!chr.isHidden())
-                chr.getMap().broadcastMessage(MaplePacketCreator.getChatText(chr.getId(), s, chr.isGM(), slea.readByte()));
-            else
-                chr.getMap().broadcastGMMessage(MaplePacketCreator.getChatText(chr.getId(), s, chr.isGM(), slea.readByte()));
-        }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		String s = slea.readMapleAsciiString();
+		MapleCharacter chr = c.getPlayer();
+		char heading = s.charAt(0);
+		if (heading == '/' || heading == '!' || heading == '@') {
+			String[] sp = s.split(" ");
+			sp[0] = sp[0].toLowerCase().substring(1);
+			if (!Commands.executePlayerCommand(c, sp, heading)) {
+				if (chr.isGM()) {
+					if (!Commands.executeGMCommand(c, sp, heading)) {
+						Commands.executeAdminCommand(c, sp, heading);
+					}
+				}
+			}
+		} else {
+			if (!chr.isHidden())
+				chr.getMap().broadcastMessage(MaplePacketCreator.getChatText(chr.getId(), s, chr.isGM(), slea.readByte()));
+			else
+				chr.getMap().broadcastGMMessage(MaplePacketCreator.getChatText(chr.getId(), s, chr.isGM(), slea.readByte()));
+		}
+	}
 }
-

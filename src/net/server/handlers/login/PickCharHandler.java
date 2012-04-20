@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.login;
 
 import java.net.InetAddress;
@@ -31,35 +31,35 @@ import tools.Randomizer;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class PickCharHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        int charId = slea.readInt();
-        byte world = (byte) slea.readInt();//Wuuu? ):
-        c.setWorld(world);
-        String macs = slea.readMapleAsciiString();
-        c.updateMacs(macs);
-        if (c.hasBannedMac()) {
-            c.getSession().close(true);
-            return;
-        }
-        try {
-            c.setChannel((byte) Randomizer.nextInt(Server.getInstance().getLoad(world).size()));
-        } catch (Exception e) {
-            c.setChannel((byte) 1);
-        }
-        try {
-            if (c.getIdleTask() != null) {
-                c.getIdleTask().cancel(true);
-            }
-            c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION);
-            String channelServerIP = MapleClient.getChannelServerIPFromSubnet(c.getSession().getRemoteAddress().toString().replace("/", "").split(":")[0], c.getChannel());
-            if (channelServerIP.equals("0.0.0.0")) {
-                String[] socket = Server.getInstance().getIP(c.getWorld(), c.getChannel()).split(":");
-                c.announce(MaplePacketCreator.getServerIP(InetAddress.getByName(socket[0]), Integer.parseInt(socket[1]), charId));
-            } else {
-                c.announce(MaplePacketCreator.getServerIP(InetAddress.getByName(channelServerIP), Integer.parseInt(Server.getInstance().getIP(c.getWorld(), c.getChannel()).split(":")[1]), charId));
-            }
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		int charId = slea.readInt();
+		byte world = (byte) slea.readInt();// Wuuu? ):
+		c.setWorld(world);
+		String macs = slea.readMapleAsciiString();
+		c.updateMacs(macs);
+		if (c.hasBannedMac()) {
+			c.getSession().close(true);
+			return;
+		}
+		try {
+			c.setChannel((byte) Randomizer.nextInt(Server.getInstance().getLoad(world).size()));
+		} catch (Exception e) {
+			c.setChannel((byte) 1);
+		}
+		try {
+			if (c.getIdleTask() != null) {
+				c.getIdleTask().cancel(true);
+			}
+			c.updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION);
+			String channelServerIP = MapleClient.getChannelServerIPFromSubnet(c.getSession().getRemoteAddress().toString().replace("/", "").split(":")[0], c.getChannel());
+			if (channelServerIP.equals("0.0.0.0")) {
+				String[] socket = Server.getInstance().getIP(c.getWorld(), c.getChannel()).split(":");
+				c.announce(MaplePacketCreator.getServerIP(InetAddress.getByName(socket[0]), Integer.parseInt(socket[1]), charId));
+			} else {
+				c.announce(MaplePacketCreator.getServerIP(InetAddress.getByName(channelServerIP), Integer.parseInt(Server.getInstance().getIP(c.getWorld(), c.getChannel()).split(":")[1]), charId));
+			}
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+	}
 }

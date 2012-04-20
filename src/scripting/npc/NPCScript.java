@@ -18,13 +18,15 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package scripting.npc;
 
 import client.MapleCharacter;
 
 public interface NPCScript {
-    public void start();
-    public void start(MapleCharacter chr);
-    public void action(byte mode, byte type, int selection);
+	public void start();
+
+	public void start(MapleCharacter chr);
+
+	public void action(byte mode, byte type, int selection);
 }

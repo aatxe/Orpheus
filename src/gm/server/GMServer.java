@@ -44,118 +44,119 @@ import org.apache.mina.transport.socket.SocketSessionConfig;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 
 /**
- *
+ * 
  * @author kevintjuh93
  */
 public class GMServer {
 
-    private IoAcceptor acceptor;
-    private Map<String, IoSession> outGame;//LOL
-    private Map<String, IoSession> inGame;
-    private static GMServer instance;
-    public final static String KEYWORD = "MOOPLEDEV";
+	private IoAcceptor acceptor;
+	private Map<String, IoSession> outGame;// LOL
+	private Map<String, IoSession> inGame;
+	private static GMServer instance;
+	public final static String KEYWORD = "MOOPLEDEV";
 
-    public static GMServer getInstance() {
-        if (instance == null) {
-            instance = new GMServer();
-        }
-        return instance;
-    }
+	public static GMServer getInstance() {
+		if (instance == null) {
+			instance = new GMServer();
+		}
+		return instance;
+	}
 
-    public GMServer() {
-        IoBuffer.setUseDirectBuffer(false);
-        IoBuffer.setAllocator(new SimpleBufferAllocator());
-        acceptor = new NioSocketAcceptor();
-        acceptor.setHandler(new GMServerHandler());
-        acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 30);
-        acceptor.getFilterChain().addLast("codec", (IoFilter) new ProtocolCodecFilter(new GMCodecFactory()));
-        ((SocketSessionConfig) acceptor.getSessionConfig()).setTcpNoDelay(true);
-        try {
-            acceptor.bind(new InetSocketAddress(5252));
-            System.out.println("\r\nGM Server online : Listening on port 5252.");
-        } catch (Exception e) {
-            System.out.println("Failed binding the GM Server to port : 5252");
-        }
-        outGame = new HashMap<String, IoSession>();
-        inGame = new HashMap<String, IoSession>();
-    }
+	public GMServer() {
+		IoBuffer.setUseDirectBuffer(false);
+		IoBuffer.setAllocator(new SimpleBufferAllocator());
+		acceptor = new NioSocketAcceptor();
+		acceptor.setHandler(new GMServerHandler());
+		acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 30);
+		acceptor.getFilterChain().addLast("codec", (IoFilter) new ProtocolCodecFilter(new GMCodecFactory()));
+		((SocketSessionConfig) acceptor.getSessionConfig()).setTcpNoDelay(true);
+		try {
+			acceptor.bind(new InetSocketAddress(5252));
+			System.out.println("\r\nGM Server online : Listening on port 5252.");
+		} catch (Exception e) {
+			System.out.println("Failed binding the GM Server to port : 5252");
+		}
+		outGame = new HashMap<String, IoSession>();
+		inGame = new HashMap<String, IoSession>();
+	}
 
-    public void broadcastOutGame(MaplePacket packet, String exclude) {
-        for (IoSession ss : outGame.values()) {
-            if (!ss.getAttribute("NAME").equals(exclude)) {
-                ss.write(packet);
-            }
-        }
-    }
+	public void broadcastOutGame(MaplePacket packet, String exclude) {
+		for (IoSession ss : outGame.values()) {
+			if (!ss.getAttribute("NAME").equals(exclude)) {
+				ss.write(packet);
+			}
+		}
+	}
 
-    public void broadcastInGame(MaplePacket packet) {
-        for (IoSession ss : inGame.values()) {
-            ss.write(packet);
-        }
-    }
+	public void broadcastInGame(MaplePacket packet) {
+		for (IoSession ss : inGame.values()) {
+			ss.write(packet);
+		}
+	}
 
-    public void addInGame(String name, IoSession session) {
-        if (!inGame.containsKey(name)) {
-            broadcastOutGame(GMPacketCreator.chat(name + " has logged in."), null);
-            broadcastOutGame(GMPacketCreator.addUser(name), null);
-        }
-        inGame.put(name, session);//replace old one (:
-    }
+	public void addInGame(String name, IoSession session) {
+		if (!inGame.containsKey(name)) {
+			broadcastOutGame(GMPacketCreator.chat(name + " has logged in."), null);
+			broadcastOutGame(GMPacketCreator.addUser(name), null);
+		}
+		inGame.put(name, session);// replace old one (:
+	}
 
-    public void addOutGame(String name, IoSession session) {
-        outGame.put(name, session);
-    }
+	public void addOutGame(String name, IoSession session) {
+		outGame.put(name, session);
+	}
 
-    public void removeInGame(String name) {
-        if (inGame.remove(name) != null) {
-            broadcastOutGame(GMPacketCreator.removeUser(name), null);
-            broadcastOutGame(GMPacketCreator.chat(name + " has logged out."), null);
-        }
-    }
+	public void removeInGame(String name) {
+		if (inGame.remove(name) != null) {
+			broadcastOutGame(GMPacketCreator.removeUser(name), null);
+			broadcastOutGame(GMPacketCreator.chat(name + " has logged out."), null);
+		}
+	}
 
-    public void removeOutGame(String name) {
-        IoSession ss = outGame.remove(name);
-        if (ss != null) {
-            if (!ss.isClosing()) {
-                broadcastOutGame(GMPacketCreator.removeUser(name), null);
-                broadcastOutGame(GMPacketCreator.chat(name + " has logged out."), null);
-            }
-        }
-    }
+	public void removeOutGame(String name) {
+		IoSession ss = outGame.remove(name);
+		if (ss != null) {
+			if (!ss.isClosing()) {
+				broadcastOutGame(GMPacketCreator.removeUser(name), null);
+				broadcastOutGame(GMPacketCreator.chat(name + " has logged out."), null);
+			}
+		}
+	}
 
-    public boolean contains(String name) {
-        return inGame.containsKey(name) || outGame.containsKey(name);
-    }
+	public boolean contains(String name) {
+		return inGame.containsKey(name) || outGame.containsKey(name);
+	}
 
-    public final void closeAllSessions() {
-        try {//I CAN AND IT'S FREE BITCHES
-            Collection<IoSession> sss = Collections.synchronizedCollection(outGame.values());
-            synchronized (sss) {
-                final Iterator<IoSession> outIt = sss.iterator();
-                while (outIt.hasNext()) {
-                    outIt.next().close(true);
-                    outIt.remove();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public final void closeAllSessions() {
+		try {// I CAN AND IT'S FREE BITCHES
+			Collection<IoSession> sss = Collections.synchronizedCollection(outGame.values());
+			synchronized (sss) {
+				final Iterator<IoSession> outIt = sss.iterator();
+				while (outIt.hasNext()) {
+					outIt.next().close(true);
+					outIt.remove();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    public List<String> getUserList(String exclude) {
-        List<String> returnList = new ArrayList<String>(outGame.keySet());
-        returnList.remove(exclude);//Already sent in LoginHandler (So you are first on the list (:
-        returnList.addAll(inGame.keySet());
-        return returnList;
-    }
+	public List<String> getUserList(String exclude) {
+		List<String> returnList = new ArrayList<String>(outGame.keySet());
+		returnList.remove(exclude);// Already sent in LoginHandler (So you are
+									// first on the list (:
+		returnList.addAll(inGame.keySet());
+		return returnList;
+	}
 
-    public final void shutdown() {//nothing to save o.o
-        try {
-            closeAllSessions();
-            acceptor.unbind();
-            System.out.println("GMServer is offline.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public final void shutdown() {// nothing to save o.o
+		try {
+			closeAllSessions();
+			acceptor.unbind();
+			System.out.println("GMServer is offline.");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

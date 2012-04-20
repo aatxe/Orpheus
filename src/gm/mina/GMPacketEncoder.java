@@ -29,12 +29,12 @@ import org.apache.mina.filter.codec.ProtocolEncoderOutput;
 
 public class GMPacketEncoder implements ProtocolEncoder {
 
-    @Override
-    public synchronized void encode(IoSession session, Object message, ProtocolEncoderOutput out) throws Exception {
-        out.write(IoBuffer.wrap(((MaplePacket) message).getBytes()));
-    }
+	@Override
+	public synchronized void encode(IoSession session, Object message, ProtocolEncoderOutput out) throws Exception {
+		out.write(IoBuffer.wrap(((MaplePacket) message).getBytes()));
+	}
 
-    @Override
-    public void dispose(IoSession session) throws Exception {
-    }
+	@Override
+	public void dispose(IoSession session) throws Exception {
+	}
 }

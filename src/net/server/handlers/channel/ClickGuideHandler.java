@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package net.server.handlers.channel;
 
@@ -29,16 +29,16 @@ import scripting.npc.NPCScriptManager;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
- *
+ * 
  * @author kevintjuh93
  */
 public class ClickGuideHandler extends AbstractMaplePacketHandler {
-    public void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        if (c.getPlayer().getJob().equals(MapleJob.NOBLESSE)) {
-                NPCScriptManager.getInstance().start(c, 1101008, null, null);
-            } else {
-                NPCScriptManager.getInstance().start(c, 1202000, null, null);
-            }
-    }
+	public void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		if (c.getPlayer().getJob().equals(MapleJob.NOBLESSE)) {
+			NPCScriptManager.getInstance().start(c, 1101008, null, null);
+		} else {
+			NPCScriptManager.getInstance().start(c, 1202000, null, null);
+		}
+	}
 
 }

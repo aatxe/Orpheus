@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.login;
 
 import client.MapleClient;
@@ -29,20 +29,21 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class ServerStatusRequestHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        byte world = (byte) slea.readShort();//Wuuu? ):
-        int status;
-        int num = 0;
-        for (byte load : Server.getInstance().getLoad(world).keySet()) {
-             num += load;
-        }
-        if (num >= ServerConstants.CHANNEL_LOAD) {
-            status = 2;
-        } else if (num >= ServerConstants.CHANNEL_LOAD * .8) { // More than 80 percent o___o
-            status = 1;
-        } else {
-            status = 0;
-        }
-        c.announce(MaplePacketCreator.getServerStatus(status));
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		byte world = (byte) slea.readShort();// Wuuu? ):
+		int status;
+		int num = 0;
+		for (byte load : Server.getInstance().getLoad(world).keySet()) {
+			num += load;
+		}
+		if (num >= ServerConstants.CHANNEL_LOAD) {
+			status = 2;
+		} else if (num >= ServerConstants.CHANNEL_LOAD * .8) { // More than 80
+																// percent o___o
+			status = 1;
+		} else {
+			status = 0;
+		}
+		c.announce(MaplePacketCreator.getServerStatus(status));
+	}
 }

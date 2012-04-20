@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleClient;
@@ -33,21 +33,21 @@ import tools.data.input.SeekableLittleEndianAccessor;
  * @author PurpleMadness
  */
 public final class UseMountFoodHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        slea.skip(6);
-        int itemid = slea.readInt();
-        if (c.getPlayer().getInventory(MapleInventoryType.USE).findById(itemid) != null) {
-            if (c.getPlayer().getMount() != null && c.getPlayer().getMount().getTiredness() > 0) {
-                c.getPlayer().getMount().setTiredness(Math.max(c.getPlayer().getMount().getTiredness() - 30, 0));
-                c.getPlayer().getMount().setExp(2 * c.getPlayer().getMount().getLevel() + 6 + c.getPlayer().getMount().getExp());
-                int level = c.getPlayer().getMount().getLevel();
-                boolean levelup = c.getPlayer().getMount().getExp() >= ExpTable.getMountExpNeededForLevel(level) && level < 31;
-                if (levelup) {
-                    c.getPlayer().getMount().setLevel(level + 1);
-                }
-                c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.updateMount(c.getPlayer().getId(), c.getPlayer().getMount(), levelup));
-                MapleInventoryManipulator.removeById(c, MapleInventoryType.USE, itemid, 1, true, false);
-            }
-        }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		slea.skip(6);
+		int itemid = slea.readInt();
+		if (c.getPlayer().getInventory(MapleInventoryType.USE).findById(itemid) != null) {
+			if (c.getPlayer().getMount() != null && c.getPlayer().getMount().getTiredness() > 0) {
+				c.getPlayer().getMount().setTiredness(Math.max(c.getPlayer().getMount().getTiredness() - 30, 0));
+				c.getPlayer().getMount().setExp(2 * c.getPlayer().getMount().getLevel() + 6 + c.getPlayer().getMount().getExp());
+				int level = c.getPlayer().getMount().getLevel();
+				boolean levelup = c.getPlayer().getMount().getExp() >= ExpTable.getMountExpNeededForLevel(level) && level < 31;
+				if (levelup) {
+					c.getPlayer().getMount().setLevel(level + 1);
+				}
+				c.getPlayer().getMap().broadcastMessage(MaplePacketCreator.updateMount(c.getPlayer().getId(), c.getPlayer().getMount(), levelup));
+				MapleInventoryManipulator.removeById(c, MapleInventoryType.USE, itemid, 1, true, false);
+			}
+		}
+	}
 }

@@ -18,48 +18,48 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.guild;
 
 public class MapleGuildSummary implements java.io.Serializable {
-    private static final long serialVersionUID = 2107845458870315533L;
-    private String name;
-    private short logoBG;
-    private byte logoBGColor;
-    private short logo;
-    private byte logoColor;
-    private int allianceId;
+	private static final long serialVersionUID = 2107845458870315533L;
+	private String name;
+	private short logoBG;
+	private byte logoBGColor;
+	private short logo;
+	private byte logoColor;
+	private int allianceId;
 
-    public MapleGuildSummary(MapleGuild g) {
-        this.name = g.getName();
-        this.logoBG = (short) g.getLogoBG();
-        this.logoBGColor = (byte) g.getLogoBGColor();
-        this.logo = (short) g.getLogo();
-        this.logoColor = (byte) g.getLogoColor();
-        this.allianceId = g.getAllianceId();
-    }
+	public MapleGuildSummary(MapleGuild g) {
+		this.name = g.getName();
+		this.logoBG = (short) g.getLogoBG();
+		this.logoBGColor = (byte) g.getLogoBGColor();
+		this.logo = (short) g.getLogo();
+		this.logoColor = (byte) g.getLogoColor();
+		this.allianceId = g.getAllianceId();
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public short getLogoBG() {
-        return logoBG;
-    }
+	public short getLogoBG() {
+		return logoBG;
+	}
 
-    public byte getLogoBGColor() {
-        return logoBGColor;
-    }
+	public byte getLogoBGColor() {
+		return logoBGColor;
+	}
 
-    public short getLogo() {
-        return logo;
-    }
+	public short getLogo() {
+		return logo;
+	}
 
-    public byte getLogoColor() {
-        return logoColor;
-    }
+	public byte getLogoColor() {
+		return logoColor;
+	}
 
-    public int getAllianceId() {
-        return allianceId;
-    }
+	public int getAllianceId() {
+		return allianceId;
+	}
 }

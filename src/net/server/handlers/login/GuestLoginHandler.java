@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.login;
 
 import client.MapleClient;
@@ -30,9 +30,9 @@ import tools.data.input.SeekableLittleEndianAccessor;
  * @author David
  */
 public final class GuestLoginHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        c.announce(MaplePacketCreator.sendGuestTOS());
-        System.out.println(slea.toString());
-        new LoginPasswordHandler().handlePacket(slea, c);
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		c.announce(MaplePacketCreator.sendGuestTOS());
+		System.out.println(slea.toString());
+		new LoginPasswordHandler().handlePacket(slea, c);
+	}
 }

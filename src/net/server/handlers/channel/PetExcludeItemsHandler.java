@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleClient;
@@ -29,11 +29,11 @@ import tools.data.input.SeekableLittleEndianAccessor;
  * @author BubblesDev
  */
 public final class PetExcludeItemsHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        slea.readLong();
-        byte amount = slea.readByte();
-        for (int i = 0; i < amount; i++) {
-            c.getPlayer().addExcluded(slea.readInt());
-        }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		slea.readLong();
+		byte amount = slea.readByte();
+		for (int i = 0; i < amount; i++) {
+			c.getPlayer().addExcluded(slea.readInt());
+		}
+	}
 }

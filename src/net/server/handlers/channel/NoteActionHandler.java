@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import java.sql.PreparedStatement;
@@ -32,49 +32,49 @@ import net.AbstractMaplePacketHandler;
 import tools.MaplePacketCreator;
 
 public final class NoteActionHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        int action = slea.readByte();
-        if (action == 0 && c.getPlayer().getCashShop().getAvailableNotes() > 0) {
-            String charname = slea.readMapleAsciiString();
-            String message = slea.readMapleAsciiString();
-            try {
-                if (c.getPlayer().getCashShop().isOpened())
-                    c.announce(MaplePacketCreator.showCashInventory(c));
-                
-                    c.getPlayer().sendNote(charname, message, (byte) 1);
-                    c.getPlayer().getCashShop().decreaseNotes();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        } else if (action == 1) {
-            int num = slea.readByte();
-            slea.readByte();
-            slea.readByte();
-            int fame = 0;
-            for (int i = 0; i < num; i++) {
-                int id = slea.readInt();
-                slea.readByte(); //Fame, but we read it from the database :)
-                PreparedStatement ps;
-                try {
-                    ps = DatabaseConnection.getConnection().prepareStatement("SELECT `fame` FROM notes WHERE id=? AND deleted=0");
-                    ps.setInt(1, id);
-                    ResultSet rs = ps.executeQuery();
-                    if (rs.next())
-                            fame += rs.getInt("fame");
-                    rs.close();
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		int action = slea.readByte();
+		if (action == 0 && c.getPlayer().getCashShop().getAvailableNotes() > 0) {
+			String charname = slea.readMapleAsciiString();
+			String message = slea.readMapleAsciiString();
+			try {
+				if (c.getPlayer().getCashShop().isOpened())
+					c.announce(MaplePacketCreator.showCashInventory(c));
 
-                    ps = DatabaseConnection.getConnection().prepareStatement("UPDATE notes SET `deleted` = 1 WHERE id = ?");
-                    ps.setInt(1, id);
-                    ps.executeUpdate();
-                    ps.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (fame > 0) {
-                c.getPlayer().gainFame(fame);
-                c.announce(MaplePacketCreator.getShowFameGain(fame));
-            }
-        }
-    }
+				c.getPlayer().sendNote(charname, message, (byte) 1);
+				c.getPlayer().getCashShop().decreaseNotes();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} else if (action == 1) {
+			int num = slea.readByte();
+			slea.readByte();
+			slea.readByte();
+			int fame = 0;
+			for (int i = 0; i < num; i++) {
+				int id = slea.readInt();
+				slea.readByte(); // Fame, but we read it from the database :)
+				PreparedStatement ps;
+				try {
+					ps = DatabaseConnection.getConnection().prepareStatement("SELECT `fame` FROM notes WHERE id=? AND deleted=0");
+					ps.setInt(1, id);
+					ResultSet rs = ps.executeQuery();
+					if (rs.next())
+						fame += rs.getInt("fame");
+					rs.close();
+
+					ps = DatabaseConnection.getConnection().prepareStatement("UPDATE notes SET `deleted` = 1 WHERE id = ?");
+					ps.setInt(1, id);
+					ps.executeUpdate();
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if (fame > 0) {
+				c.getPlayer().gainFame(fame);
+				c.announce(MaplePacketCreator.getShowFameGain(fame));
+			}
+		}
+	}
 }

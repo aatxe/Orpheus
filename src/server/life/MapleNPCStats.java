@@ -18,25 +18,25 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.life;
 
 /**
- *
+ * 
  * @author Matze
  */
 public class MapleNPCStats {
-    private String name;
+	private String name;
 
-    public MapleNPCStats(String name) {
-        this.name = name;
-    }
+	public MapleNPCStats(String name) {
+		this.name = name;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 }

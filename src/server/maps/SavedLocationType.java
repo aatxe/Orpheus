@@ -18,13 +18,13 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.maps;
 
 public enum SavedLocationType {
-    FREE_MARKET, EVENT, WORLDTOUR, FLORINA, INTRO, SUNDAY_MARKET, MIRROR;
+	FREE_MARKET, EVENT, WORLDTOUR, FLORINA, INTRO, SUNDAY_MARKET, MIRROR;
 
-    public static SavedLocationType fromString(String Str) {
-        return valueOf(Str);
-    }
+	public static SavedLocationType fromString(String Str) {
+		return valueOf(Str);
+	}
 }

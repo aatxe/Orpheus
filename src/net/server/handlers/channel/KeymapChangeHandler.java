@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.ISkill;
@@ -29,21 +29,21 @@ import net.AbstractMaplePacketHandler;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class KeymapChangeHandler extends AbstractMaplePacketHandler {
-    @Override
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        if (slea.available() != 8) {
-            slea.readInt();
-            int numChanges = slea.readInt();
-            for (int i = 0; i < numChanges; i++) {
-                int key = slea.readInt();
-                int type = slea.readByte();
-                int action = slea.readInt();
-                ISkill skill = SkillFactory.getSkill(action);
-                if (skill != null && c.getPlayer().getSkillLevel(skill) < 1) {
-                    continue;
-                }
-                c.getPlayer().changeKeybinding(key, new MapleKeyBinding(type, action));
-            }
-        }
-    }
+	@Override
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		if (slea.available() != 8) {
+			slea.readInt();
+			int numChanges = slea.readInt();
+			for (int i = 0; i < numChanges; i++) {
+				int key = slea.readInt();
+				int type = slea.readByte();
+				int action = slea.readInt();
+				ISkill skill = SkillFactory.getSkill(action);
+				if (skill != null && c.getPlayer().getSkillLevel(skill) < 1) {
+					continue;
+				}
+				c.getPlayer().changeKeybinding(key, new MapleKeyBinding(type, action));
+			}
+		}
+	}
 }

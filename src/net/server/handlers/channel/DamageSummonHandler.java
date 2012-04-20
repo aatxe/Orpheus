@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleBuffStat;
@@ -31,21 +31,21 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class DamageSummonHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        int skillid = slea.readInt(); //Bugged? might not be skillid.
-        int unkByte = slea.readByte();
-        int damage = slea.readInt();
-        int monsterIdFrom = slea.readInt();
-        if (SkillFactory.getSkill(skillid) != null) {
-            MapleCharacter player = c.getPlayer();
-            MapleSummon summon = player.getSummons().get(skillid);
-            if (summon != null) {
-                summon.addHP(-damage);
-                if (summon.getHP() <= 0) {
-                    player.cancelEffectFromBuffStat(MapleBuffStat.PUPPET);
-                }
-            }
-            player.getMap().broadcastMessage(player, MaplePacketCreator.damageSummon(player.getId(), skillid, damage, unkByte, monsterIdFrom), summon.getPosition());
-        }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		int skillid = slea.readInt(); // Bugged? might not be skillid.
+		int unkByte = slea.readByte();
+		int damage = slea.readInt();
+		int monsterIdFrom = slea.readInt();
+		if (SkillFactory.getSkill(skillid) != null) {
+			MapleCharacter player = c.getPlayer();
+			MapleSummon summon = player.getSummons().get(skillid);
+			if (summon != null) {
+				summon.addHP(-damage);
+				if (summon.getHP() <= 0) {
+					player.cancelEffectFromBuffStat(MapleBuffStat.PUPPET);
+				}
+			}
+			player.getMap().broadcastMessage(player, MaplePacketCreator.damageSummon(player.getId(), skillid, damage, unkByte, monsterIdFrom), summon.getPosition());
+		}
+	}
 }

@@ -18,63 +18,62 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package client;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import server.MapleStatEffect;
 import server.life.Element;
 
 public class Skill implements ISkill {
-    public int id;
-    public List<MapleStatEffect> effects = new ArrayList<MapleStatEffect>();
-    public Element element;
-    public int animationTime;
-    public boolean action;
+	public int id;
+	public List<MapleStatEffect> effects = new ArrayList<MapleStatEffect>();
+	public Element element;
+	public int animationTime;
+	public boolean action;
 
-    public Skill(int id) {
-        this.id = id;
-    }
+	public Skill(int id) {
+		this.id = id;
+	}
 
-    @Override
-    public int getId() {
-        return id;
-    }
+	@Override
+	public int getId() {
+		return id;
+	}
 
-    @Override
-    public MapleStatEffect getEffect(int level) {
-        return effects.get(level - 1);
-    }
+	@Override
+	public MapleStatEffect getEffect(int level) {
+		return effects.get(level - 1);
+	}
 
-    @Override
-    public int getMaxLevel() {
-        return effects.size();
-    }
+	@Override
+	public int getMaxLevel() {
+		return effects.size();
+	}
 
-    @Override
-    public boolean isFourthJob() {
-        return (id / 10000) % 10 == 2;
-    }
+	@Override
+	public boolean isFourthJob() {
+		return (id / 10000) % 10 == 2;
+	}
 
-    @Override
-    public Element getElement() {
-        return element;
-    }
+	@Override
+	public Element getElement() {
+		return element;
+	}
 
-    @Override
-    public int getAnimationTime() {
-        return animationTime;
-    }
+	@Override
+	public int getAnimationTime() {
+		return animationTime;
+	}
 
-    @Override
-    public boolean isBeginnerSkill() {
-        return id % 10000000 < 10000;
-    }
+	@Override
+	public boolean isBeginnerSkill() {
+		return id % 10000000 < 10000;
+	}
 
-    @Override
-    public boolean getAction() {
-        return action;
-    }
+	@Override
+	public boolean getAction() {
+		return action;
+	}
 }

@@ -18,26 +18,26 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package tools;
 
 import java.io.Serializable;
 
 public class Pair<E, F> implements Serializable {
-    private static final long serialVersionUID = -634786879149311046L;
-    private E left;
-    private F right;
+	private static final long serialVersionUID = -634786879149311046L;
+	private E left;
+	private F right;
 
-    public Pair(E left, F right) {
-        this.left = left;
-        this.right = right;
-    }
+	public Pair(E left, F right) {
+		this.left = left;
+		this.right = right;
+	}
 
-    public E getLeft() {
-        return left;
-    }
+	public E getLeft() {
+		return left;
+	}
 
-    public F getRight() {
-        return right;
-    }
+	public F getRight() {
+		return right;
+	}
 }

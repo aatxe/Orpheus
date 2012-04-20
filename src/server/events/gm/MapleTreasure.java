@@ -18,14 +18,14 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package server.events.gm;
 
 /**
- *
+ * 
  * @author kevintjuh93
  */
 public class MapleTreasure {
-    // don't know what this event is yet.
+	// don't know what this event is yet.
 }

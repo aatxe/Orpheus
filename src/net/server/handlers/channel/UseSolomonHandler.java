@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.IItem;
@@ -31,25 +31,25 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
- *
+ * 
  * @author XoticStory; modified by kevintjuh93
  */
 public final class UseSolomonHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        slea.readInt();
-        byte slot = (byte) slea.readShort();
-        int itemId = slea.readInt();
-        MapleItemInformationProvider ii = MapleItemInformationProvider.getInstance();
-        IItem slotItem = c.getPlayer().getInventory(MapleInventoryType.USE).getItem(slot);
-        int gachaexp = ii.getExpById(itemId);
-        if (c.getPlayer().getInventory(MapleInventoryType.USE).countById(itemId) <= 0 || slotItem.getItemId() != itemId || c.getPlayer().getLevel() > ii.getMaxLevelById(itemId)) {
-            return;
-        }
-        if ((c.getPlayer().getGachaExp() + gachaexp) > Integer.MAX_VALUE) {
-            return;
-        }
-        c.getPlayer().gainGachaExp(gachaexp);
-        MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short) 1, false);
-        c.announce(MaplePacketCreator.enableActions());
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		slea.readInt();
+		byte slot = (byte) slea.readShort();
+		int itemId = slea.readInt();
+		MapleItemInformationProvider ii = MapleItemInformationProvider.getInstance();
+		IItem slotItem = c.getPlayer().getInventory(MapleInventoryType.USE).getItem(slot);
+		int gachaexp = ii.getExpById(itemId);
+		if (c.getPlayer().getInventory(MapleInventoryType.USE).countById(itemId) <= 0 || slotItem.getItemId() != itemId || c.getPlayer().getLevel() > ii.getMaxLevelById(itemId)) {
+			return;
+		}
+		if ((c.getPlayer().getGachaExp() + gachaexp) > Integer.MAX_VALUE) {
+			return;
+		}
+		c.getPlayer().gainGachaExp(gachaexp);
+		MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short) 1, false);
+		c.announce(MaplePacketCreator.enableActions());
+	}
 }

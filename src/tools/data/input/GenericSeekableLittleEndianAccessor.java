@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package tools.data.input;
 
 import java.io.IOException;
@@ -33,57 +33,60 @@ import java.io.IOException;
  * @see tools.data.input.GenericLittleEndianAccessor
  */
 public class GenericSeekableLittleEndianAccessor extends GenericLittleEndianAccessor implements SeekableLittleEndianAccessor {
-    private SeekableInputStreamBytestream bs;
+	private SeekableInputStreamBytestream bs;
 
-    /**
-     * Class constructor
-     * Provide a seekable input stream to wrap this object around.
-     *
-     * @param bs The byte stream to wrap this around.
-     */
-    public GenericSeekableLittleEndianAccessor(SeekableInputStreamBytestream bs) {
-        super(bs);
-        this.bs = bs;
-    }
+	/**
+	 * Class constructor Provide a seekable input stream to wrap this object
+	 * around.
+	 * 
+	 * @param bs
+	 *            The byte stream to wrap this around.
+	 */
+	public GenericSeekableLittleEndianAccessor(SeekableInputStreamBytestream bs) {
+		super(bs);
+		this.bs = bs;
+	}
 
-    /**
-     * Seek the pointer to <code>offset</code>
-     *
-     * @param offset The offset to seek to.
-     * @see tools.data.input.SeekableInputStreamBytestream#seek
-     */
-    @Override
-    public void seek(long offset) {
-        try {
-            bs.seek(offset);
-        } catch (IOException e) {
-            System.out.println("Seek failed " + e);
-        }
-    }
+	/**
+	 * Seek the pointer to <code>offset</code>
+	 * 
+	 * @param offset
+	 *            The offset to seek to.
+	 * @see tools.data.input.SeekableInputStreamBytestream#seek
+	 */
+	@Override
+	public void seek(long offset) {
+		try {
+			bs.seek(offset);
+		} catch (IOException e) {
+			System.out.println("Seek failed " + e);
+		}
+	}
 
-    /**
-     * Get the current position of the pointer.
-     *
-     * @return The current position of the pointer as a long integer.
-     * @see tools.data.input.SeekableInputStreamBytestream#getPosition
-     */
-    @Override
-    public long getPosition() {
-        try {
-            return bs.getPosition();
-        } catch (IOException e) {
-            System.out.println("getPosition failed" + e);
-            return -1;
-        }
-    }
+	/**
+	 * Get the current position of the pointer.
+	 * 
+	 * @return The current position of the pointer as a long integer.
+	 * @see tools.data.input.SeekableInputStreamBytestream#getPosition
+	 */
+	@Override
+	public long getPosition() {
+		try {
+			return bs.getPosition();
+		} catch (IOException e) {
+			System.out.println("getPosition failed" + e);
+			return -1;
+		}
+	}
 
-    /**
-     * Skip <code>num</code> number of bytes in the stream.
-     *
-     * @param num The number of bytes to skip.
-     */
-    @Override
-    public void skip(int num) {
-        seek(getPosition() + num);
-    }
+	/**
+	 * Skip <code>num</code> number of bytes in the stream.
+	 * 
+	 * @param num
+	 *            The number of bytes to skip.
+	 */
+	@Override
+	public void skip(int num) {
+		seek(getPosition() + num);
+	}
 }

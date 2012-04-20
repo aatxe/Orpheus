@@ -28,29 +28,29 @@ import org.apache.mina.filter.codec.ProtocolEncoder;
 
 public class GMCodecFactory implements ProtocolCodecFactory {
 
-    private final ProtocolEncoder encoder;
-    private final ProtocolDecoder decoder;
+	private final ProtocolEncoder encoder;
+	private final ProtocolDecoder decoder;
 
-    public GMCodecFactory() {
-        encoder = new GMPacketEncoder();
-        decoder = new GMPacketDecoder();
-    }
+	public GMCodecFactory() {
+		encoder = new GMPacketEncoder();
+		decoder = new GMPacketDecoder();
+	}
 
-    public ProtocolEncoder getEncoder() throws Exception {
-        return encoder;
-    }
+	public ProtocolEncoder getEncoder() throws Exception {
+		return encoder;
+	}
 
-    public ProtocolDecoder getDecoder() throws Exception {
-        return decoder;
-    }
+	public ProtocolDecoder getDecoder() throws Exception {
+		return decoder;
+	}
 
-    @Override
-    public ProtocolEncoder getEncoder(IoSession session) throws Exception {
-        return encoder;
-    }
+	@Override
+	public ProtocolEncoder getEncoder(IoSession session) throws Exception {
+		return encoder;
+	}
 
-    @Override
-    public ProtocolDecoder getDecoder(IoSession session) throws Exception {
-        return decoder;
-    }
+	@Override
+	public ProtocolDecoder getDecoder(IoSession session) throws Exception {
+		return decoder;
+	}
 }

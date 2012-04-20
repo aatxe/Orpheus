@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleCharacter;
@@ -29,32 +29,32 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
- *
+ * 
  * @author kevintjuh93
  */
 public final class TrockAddMapHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        MapleCharacter chr = c.getPlayer();
-        byte type = slea.readByte();
-        boolean vip = slea.readByte() == 1;
-        if (type == 0x00) {
-            int mapId = slea.readInt();
-            if (vip)
-                chr.deleteFromVipTrocks(mapId);
-            else
-                chr.deleteFromTrocks(mapId);
-            c.announce(MaplePacketCreator.trockRefreshMapList(chr, true, vip));
-        } else if (type == 0x01) {
-            if (!FieldLimit.CANNOTVIPROCK.check(chr.getMap().getFieldLimit())) {
-                if (vip)
-                    chr.addVipTrockMap();
-                else
-                    chr.addTrockMap();
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		MapleCharacter chr = c.getPlayer();
+		byte type = slea.readByte();
+		boolean vip = slea.readByte() == 1;
+		if (type == 0x00) {
+			int mapId = slea.readInt();
+			if (vip)
+				chr.deleteFromVipTrocks(mapId);
+			else
+				chr.deleteFromTrocks(mapId);
+			c.announce(MaplePacketCreator.trockRefreshMapList(chr, true, vip));
+		} else if (type == 0x01) {
+			if (!FieldLimit.CANNOTVIPROCK.check(chr.getMap().getFieldLimit())) {
+				if (vip)
+					chr.addVipTrockMap();
+				else
+					chr.addTrockMap();
 
-                 c.announce(MaplePacketCreator.trockRefreshMapList(chr, false, vip));
-            } else {
-                chr.message("You may not save this map.");
-            }
-        }
-    }
+				c.announce(MaplePacketCreator.trockRefreshMapList(chr, false, vip));
+			} else {
+				chr.message("You may not save this map.");
+			}
+		}
+	}
 }

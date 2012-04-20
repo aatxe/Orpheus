@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package server.partyquest;
 
@@ -30,43 +30,44 @@ import net.server.MaplePartyCharacter;
 import net.server.Server;
 
 /**
- *
+ * 
  * @author kevintjuh93
  */
 public class PartyQuest {
-    byte channel, world;
-    MapleParty party;
-    List<MapleCharacter> participants = new ArrayList<MapleCharacter>();
+	byte channel, world;
+	MapleParty party;
+	List<MapleCharacter> participants = new ArrayList<MapleCharacter>();
 
-    public PartyQuest(MapleParty party) {
-        this.party = party;
-        MaplePartyCharacter leader = party.getLeader();
-        channel = leader.getChannel();
-        world = leader.getWorld();
-        int mapid = leader.getMapId();
-        for (MaplePartyCharacter pchr : party.getMembers()) {
-            if (pchr.getChannel() == channel && pchr.getMapId() == mapid) {
-                MapleCharacter chr = Server.getInstance().getWorld(world).getChannel(channel).getPlayerStorage().getCharacterById(pchr.getId());
-                if (chr != null)
-                    this.participants.add(chr);
-            }
-        }
-    }
+	public PartyQuest(MapleParty party) {
+		this.party = party;
+		MaplePartyCharacter leader = party.getLeader();
+		channel = leader.getChannel();
+		world = leader.getWorld();
+		int mapid = leader.getMapId();
+		for (MaplePartyCharacter pchr : party.getMembers()) {
+			if (pchr.getChannel() == channel && pchr.getMapId() == mapid) {
+				MapleCharacter chr = Server.getInstance().getWorld(world).getChannel(channel).getPlayerStorage().getCharacterById(pchr.getId());
+				if (chr != null)
+					this.participants.add(chr);
+			}
+		}
+	}
 
-    public MapleParty getParty() {
-        return party;
-    }
+	public MapleParty getParty() {
+		return party;
+	}
 
-    public List<MapleCharacter> getParticipants() {
-        return participants;
-    }
+	public List<MapleCharacter> getParticipants() {
+		return participants;
+	}
 
-    public void removeParticipant(MapleCharacter chr) throws Throwable {
-        synchronized (participants) {
-            participants.remove(chr);
-            chr.setPartyQuest(null);
-            if (participants.isEmpty()) super.finalize();
-            //System.gc();
-        }
-    }
+	public void removeParticipant(MapleCharacter chr) throws Throwable {
+		synchronized (participants) {
+			participants.remove(chr);
+			chr.setPartyQuest(null);
+			if (participants.isEmpty())
+				super.finalize();
+			// System.gc();
+		}
+	}
 }

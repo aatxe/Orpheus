@@ -18,17 +18,19 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package provider;
 
 import java.util.List;
 
 /**
- *
+ * 
  * @author Matze
  */
 public interface MapleDataDirectoryEntry extends MapleDataEntry {
-    public List<MapleDataDirectoryEntry> getSubdirectories();
-    public List<MapleDataFileEntry> getFiles();
-    public MapleDataEntry getEntry(String name);
+	public List<MapleDataDirectoryEntry> getSubdirectories();
+
+	public List<MapleDataFileEntry> getFiles();
+
+	public MapleDataEntry getEntry(String name);
 }

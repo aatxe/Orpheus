@@ -18,13 +18,13 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package provider;
 
 /**
- *
+ * 
  * @author Matze
  */
 public interface MapleDataFileEntry extends MapleDataEntry {
-    public void setOffset(int offset);
+	public void setOffset(int offset);
 }

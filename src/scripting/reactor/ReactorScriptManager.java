@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package scripting.reactor;
 
 import java.sql.PreparedStatement;
@@ -38,77 +38,77 @@ import server.maps.ReactorDropEntry;
  * @author Lerk
  */
 public class ReactorScriptManager extends AbstractScriptManager {
-    private static ReactorScriptManager instance = new ReactorScriptManager();
-    private Map<Integer, List<ReactorDropEntry>> drops = new HashMap<Integer, List<ReactorDropEntry>>();
+	private static ReactorScriptManager instance = new ReactorScriptManager();
+	private Map<Integer, List<ReactorDropEntry>> drops = new HashMap<Integer, List<ReactorDropEntry>>();
 
-    public synchronized static ReactorScriptManager getInstance() {
-        return instance;
-    }
+	public synchronized static ReactorScriptManager getInstance() {
+		return instance;
+	}
 
-    public void act(MapleClient c, MapleReactor reactor) {
-        try {
-            ReactorActionManager rm = new ReactorActionManager(c, reactor);
-            Invocable iv = getInvocable("reactor/" + reactor.getId() + ".js", c);
-//            System.out.println(reactor.getId());
-            if (iv == null) {
-                return;
-            }
-            engine.put("rm", rm);
-            ReactorScript rs = iv.getInterface(ReactorScript.class);
-            rs.act();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public void act(MapleClient c, MapleReactor reactor) {
+		try {
+			ReactorActionManager rm = new ReactorActionManager(c, reactor);
+			Invocable iv = getInvocable("reactor/" + reactor.getId() + ".js", c);
+			// System.out.println(reactor.getId());
+			if (iv == null) {
+				return;
+			}
+			engine.put("rm", rm);
+			ReactorScript rs = iv.getInterface(ReactorScript.class);
+			rs.act();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    public List<ReactorDropEntry> getDrops(int rid) {
-        List<ReactorDropEntry> ret = drops.get(rid);
-        if (ret == null) {
-            ret = new LinkedList<ReactorDropEntry>();
-            try {
-                PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT itemid, chance FROM reactordrops WHERE reactorid = ? AND chance >= 0");
-                ps.setInt(1, rid);
-                ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
-                    ret.add(new ReactorDropEntry(rs.getInt("itemid"), rs.getInt("chance")));
-                }
-                rs.close();
-                ps.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            drops.put(rid, ret);
-        }
-        return ret;
-    }
+	public List<ReactorDropEntry> getDrops(int rid) {
+		List<ReactorDropEntry> ret = drops.get(rid);
+		if (ret == null) {
+			ret = new LinkedList<ReactorDropEntry>();
+			try {
+				PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT itemid, chance FROM reactordrops WHERE reactorid = ? AND chance >= 0");
+				ps.setInt(1, rid);
+				ResultSet rs = ps.executeQuery();
+				while (rs.next()) {
+					ret.add(new ReactorDropEntry(rs.getInt("itemid"), rs.getInt("chance")));
+				}
+				rs.close();
+				ps.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			drops.put(rid, ret);
+		}
+		return ret;
+	}
 
-    public void clearDrops() {
-        drops.clear();
-    }
+	public void clearDrops() {
+		drops.clear();
+	}
 
-    public void touch(MapleClient c, MapleReactor reactor) {
-        touching(c, reactor, true);
-    }
+	public void touch(MapleClient c, MapleReactor reactor) {
+		touching(c, reactor, true);
+	}
 
-    public void untouch(MapleClient c, MapleReactor reactor) {
-        touching(c, reactor, false);
-    }
+	public void untouch(MapleClient c, MapleReactor reactor) {
+		touching(c, reactor, false);
+	}
 
-    public void touching(MapleClient c, MapleReactor reactor, boolean touching) {
-        try {
-            ReactorActionManager rm = new ReactorActionManager(c, reactor);
-            Invocable iv = getInvocable("reactor/" + reactor.getId() + ".js", c);
-            if (iv == null) {
-                return;
-            }
-            engine.put("rm", rm);
-            ReactorScript rs = iv.getInterface(ReactorScript.class);
-            if (touching) {
-                rs.touch();
-            } else {
-                rs.untouch();
-            }
-        } catch (Exception e) {
-        }
-    }
+	public void touching(MapleClient c, MapleReactor reactor, boolean touching) {
+		try {
+			ReactorActionManager rm = new ReactorActionManager(c, reactor);
+			Invocable iv = getInvocable("reactor/" + reactor.getId() + ".js", c);
+			if (iv == null) {
+				return;
+			}
+			engine.put("rm", rm);
+			ReactorScript rs = iv.getInterface(ReactorScript.class);
+			if (touching) {
+				rs.touch();
+			} else {
+				rs.untouch();
+			}
+		} catch (Exception e) {
+		}
+	}
 }

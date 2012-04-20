@@ -18,14 +18,19 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server;
 
 public interface TimerManagerMBean {
-    public boolean isTerminated();
-    public boolean isShutdown();
-    public long getCompletedTaskCount();
-    public long getActiveCount();
-    public long getTaskCount();
-    public int getQueuedTasks();
+	public boolean isTerminated();
+
+	public boolean isShutdown();
+
+	public long getCompletedTaskCount();
+
+	public long getActiveCount();
+
+	public long getTaskCount();
+
+	public int getQueuedTasks();
 }

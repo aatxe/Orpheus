@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleClient;
@@ -29,29 +29,29 @@ import server.maps.MapleSummon;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
- *
+ * 
  * @author BubblesDev
  */
-public final class BeholderHandler extends AbstractMaplePacketHandler {//broken
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        System.out.println(slea.toString());
-        Collection<MapleSummon> summons = c.getPlayer().getSummons().values();
-        int oid = slea.readInt();
-        MapleSummon summon = null;
-        for (MapleSummon sum : summons) {
-            if (sum.getObjectId() == oid) {
-                summon = sum;
-            }
-        }
-        if (summon != null) {
-            int skillId = slea.readInt();
-            if (skillId == DarkKnight.AURA_OF_BEHOLDER) {
-                slea.readShort(); //Not sure.
-            } else if (skillId == DarkKnight.HEX_OF_BEHOLDER) {
-                slea.readByte(); //Not sure.
-            }            //show to others here
-        } else {
-            c.getPlayer().getSummons().clear();
-        }
-    }
+public final class BeholderHandler extends AbstractMaplePacketHandler {// broken
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		System.out.println(slea.toString());
+		Collection<MapleSummon> summons = c.getPlayer().getSummons().values();
+		int oid = slea.readInt();
+		MapleSummon summon = null;
+		for (MapleSummon sum : summons) {
+			if (sum.getObjectId() == oid) {
+				summon = sum;
+			}
+		}
+		if (summon != null) {
+			int skillId = slea.readInt();
+			if (skillId == DarkKnight.AURA_OF_BEHOLDER) {
+				slea.readShort(); // Not sure.
+			} else if (skillId == DarkKnight.HEX_OF_BEHOLDER) {
+				slea.readByte(); // Not sure.
+			} // show to others here
+		} else {
+			c.getPlayer().getSummons().clear();
+		}
+	}
 }

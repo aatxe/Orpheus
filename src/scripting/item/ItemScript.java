@@ -18,13 +18,13 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package scripting.item;
 
 /**
- *
+ * 
  * @author kevintjuh93
  */
 public interface ItemScript {
-    public void start(ItemScriptMethods is);
+	public void start(ItemScriptMethods is);
 }

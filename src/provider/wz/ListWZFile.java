@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package provider.wz;
 
 import java.io.BufferedInputStream;
@@ -36,50 +36,50 @@ import tools.data.input.InputStreamByteStream;
 import tools.data.input.LittleEndianAccessor;
 
 public class ListWZFile {
-    private LittleEndianAccessor lea;
-    private List<String> entries = new ArrayList<String>();
-    private static Collection<String> modernImgs = new HashSet<String>();
+	private LittleEndianAccessor lea;
+	private List<String> entries = new ArrayList<String>();
+	private static Collection<String> modernImgs = new HashSet<String>();
 
-    public static byte[] xorBytes(byte[] a, byte[] b) {
-        byte[] wusched = new byte[a.length];
-        for (int i = 0; i < a.length; i++) {
-            wusched[i] = (byte) (a[i] ^ b[i]);
-        }
-        return wusched;
-    }
+	public static byte[] xorBytes(byte[] a, byte[] b) {
+		byte[] wusched = new byte[a.length];
+		for (int i = 0; i < a.length; i++) {
+			wusched[i] = (byte) (a[i] ^ b[i]);
+		}
+		return wusched;
+	}
 
-    public ListWZFile(File listwz) throws FileNotFoundException {
-        lea = new GenericLittleEndianAccessor(new InputStreamByteStream(new BufferedInputStream(new FileInputStream(listwz))));
-        while (lea.available() > 0) {
-            int l = lea.readInt() * 2;
-            byte[] chunk = new byte[l];
-            for (int i = 0; i < chunk.length; i++) {
-                chunk[i] = lea.readByte();
-            }
-            lea.readChar();
-            final String value = String.valueOf(WZTool.readListString(chunk));
-            entries.add(value);
-        }
-        entries = Collections.unmodifiableList(entries);
-    }
+	public ListWZFile(File listwz) throws FileNotFoundException {
+		lea = new GenericLittleEndianAccessor(new InputStreamByteStream(new BufferedInputStream(new FileInputStream(listwz))));
+		while (lea.available() > 0) {
+			int l = lea.readInt() * 2;
+			byte[] chunk = new byte[l];
+			for (int i = 0; i < chunk.length; i++) {
+				chunk[i] = lea.readByte();
+			}
+			lea.readChar();
+			final String value = String.valueOf(WZTool.readListString(chunk));
+			entries.add(value);
+		}
+		entries = Collections.unmodifiableList(entries);
+	}
 
-    public List<String> getEntries() {
-        return entries;
-    }
+	public List<String> getEntries() {
+		return entries;
+	}
 
-    public static void init() {
-        final String listWz = System.getProperty("listwz");
-        if (listWz != null) {
-            ListWZFile listwz;
-            try {
-                listwz = new ListWZFile(MapleDataProviderFactory.fileInWZPath("List.wz"));
-                modernImgs = new HashSet<String>(listwz.getEntries());
-            } catch (FileNotFoundException e) {
-            }
-        }
-    }
+	public static void init() {
+		final String listWz = System.getProperty("listwz");
+		if (listWz != null) {
+			ListWZFile listwz;
+			try {
+				listwz = new ListWZFile(MapleDataProviderFactory.fileInWZPath("List.wz"));
+				modernImgs = new HashSet<String>(listwz.getEntries());
+			} catch (FileNotFoundException e) {
+			}
+		}
+	}
 
-    public static boolean isModernImgFile(String path) {
-        return modernImgs.contains(path);
-    }
+	public static boolean isModernImgFile(String path) {
+		return modernImgs.contains(path);
+	}
 }

@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package scripting.item;
 
 import client.MapleClient;
@@ -36,54 +36,54 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 public class ItemScriptManager {
-    private static ItemScriptManager instance = new ItemScriptManager();
-    private Map<String, ItemScript> scripts = new HashMap<String, ItemScript>();
-    private ScriptEngineFactory sef;
+	private static ItemScriptManager instance = new ItemScriptManager();
+	private Map<String, ItemScript> scripts = new HashMap<String, ItemScript>();
+	private ScriptEngineFactory sef;
 
-    private ItemScriptManager() {
-        ScriptEngineManager sem = new ScriptEngineManager();
-        sef = sem.getEngineByName("javascript").getFactory();
-    }
+	private ItemScriptManager() {
+		ScriptEngineManager sem = new ScriptEngineManager();
+		sef = sem.getEngineByName("javascript").getFactory();
+	}
 
-    public static ItemScriptManager getInstance() {
-        return instance;
-    }
+	public static ItemScriptManager getInstance() {
+		return instance;
+	}
 
-    public boolean scriptExists(String scriptName) {
-        File scriptFile = new File("scripts/item/" + scriptName + ".js");
-        return scriptFile.exists();
-    }
+	public boolean scriptExists(String scriptName) {
+		File scriptFile = new File("scripts/item/" + scriptName + ".js");
+		return scriptFile.exists();
+	}
 
-    public void getItemScript(MapleClient c, String scriptName) {
-        if (scripts.containsKey(scriptName)) {
-            scripts.get(scriptName).start(new ItemScriptMethods(c));
-            return;
-        }
-        File scriptFile = new File("scripts/item/" + scriptName + ".js");
-        if (!scriptFile.exists()) {
-            return;
-        }
-        FileReader fr = null;
-        ScriptEngine portal = sef.getScriptEngine();
-        try {
-            fr = new FileReader(scriptFile);
-            CompiledScript compiled = ((Compilable) portal).compile(fr);
-            compiled.eval();
-        } catch (ScriptException e) {
-            System.err.println("THROW" + e);
-        } catch (IOException e) {
-            System.err.println("THROW" + e);
-        } finally {
-            if (fr != null) {
-                try {
-                    fr.close();
-                } catch (IOException e) {
-                    System.err.println("ERROR CLOSING" + e);
-                }
-            }
-        }
-        ItemScript script = ((Invocable) portal).getInterface(ItemScript.class);
-        scripts.put(scriptName, script);
-        script.start(new ItemScriptMethods(c));
-    }
+	public void getItemScript(MapleClient c, String scriptName) {
+		if (scripts.containsKey(scriptName)) {
+			scripts.get(scriptName).start(new ItemScriptMethods(c));
+			return;
+		}
+		File scriptFile = new File("scripts/item/" + scriptName + ".js");
+		if (!scriptFile.exists()) {
+			return;
+		}
+		FileReader fr = null;
+		ScriptEngine portal = sef.getScriptEngine();
+		try {
+			fr = new FileReader(scriptFile);
+			CompiledScript compiled = ((Compilable) portal).compile(fr);
+			compiled.eval();
+		} catch (ScriptException e) {
+			System.err.println("THROW" + e);
+		} catch (IOException e) {
+			System.err.println("THROW" + e);
+		} finally {
+			if (fr != null) {
+				try {
+					fr.close();
+				} catch (IOException e) {
+					System.err.println("ERROR CLOSING" + e);
+				}
+			}
+		}
+		ItemScript script = ((Invocable) portal).getInterface(ItemScript.class);
+		scripts.put(scriptName, script);
+		script.start(new ItemScriptMethods(c));
+	}
 }

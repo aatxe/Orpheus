@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleCharacter;
@@ -28,21 +28,20 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
- *
+ * 
  * @author Jay Estrella
  */
 public final class FamilyAddHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        System.out.println(slea.toString());
-        String toAdd = slea.readMapleAsciiString();
-        MapleCharacter addChr = c.getChannelServer().getPlayerStorage().getCharacterByName(toAdd);
-        if (addChr != null) {
-            addChr.getClient().announce(MaplePacketCreator.sendFamilyInvite(c.getPlayer().getId(), toAdd));
-            c.getPlayer().dropMessage("The invite has been sent.");
-        } else {
-            c.getPlayer().dropMessage("The player cannot be found!");
-        }
-        c.announce(MaplePacketCreator.enableActions());
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		System.out.println(slea.toString());
+		String toAdd = slea.readMapleAsciiString();
+		MapleCharacter addChr = c.getChannelServer().getPlayerStorage().getCharacterByName(toAdd);
+		if (addChr != null) {
+			addChr.getClient().announce(MaplePacketCreator.sendFamilyInvite(c.getPlayer().getId(), toAdd));
+			c.getPlayer().dropMessage("The invite has been sent.");
+		} else {
+			c.getPlayer().dropMessage("The player cannot be found!");
+		}
+		c.announce(MaplePacketCreator.enableActions());
+	}
 }
-

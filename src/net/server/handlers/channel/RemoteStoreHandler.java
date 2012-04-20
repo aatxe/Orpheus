@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package net.server.handlers.channel;
 
@@ -32,37 +32,37 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
- *
+ * 
  * @author kevintjuh93 :3
  */
 public class RemoteStoreHandler extends AbstractMaplePacketHandler {
-    public void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        MapleCharacter chr = c.getPlayer();
-        HiredMerchant hm = getMerchant(c);
-        if (chr.hasMerchant() && hm != null) {
-            if (hm.getChannel() == chr.getClient().getChannel()) {
-                hm.setOpen(false);
-                hm.removeAllVisitors("");
-                chr.setHiredMerchant(hm);
-                chr.announce(MaplePacketCreator.getHiredMerchant(chr, hm, false));
-            } else {
-                c.announce(MaplePacketCreator.remoteChannelChange((byte) (hm.getChannel() - 1)));
-            }
-            return;
-        } else {
-           chr.dropMessage(1, "You don't have a Merchant open");
-        }
-        c.announce(MaplePacketCreator.enableActions());
-    }
+	public void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		MapleCharacter chr = c.getPlayer();
+		HiredMerchant hm = getMerchant(c);
+		if (chr.hasMerchant() && hm != null) {
+			if (hm.getChannel() == chr.getClient().getChannel()) {
+				hm.setOpen(false);
+				hm.removeAllVisitors("");
+				chr.setHiredMerchant(hm);
+				chr.announce(MaplePacketCreator.getHiredMerchant(chr, hm, false));
+			} else {
+				c.announce(MaplePacketCreator.remoteChannelChange((byte) (hm.getChannel() - 1)));
+			}
+			return;
+		} else {
+			chr.dropMessage(1, "You don't have a Merchant open");
+		}
+		c.announce(MaplePacketCreator.enableActions());
+	}
 
-    public HiredMerchant getMerchant(MapleClient c) {
-        if (c.getPlayer().hasMerchant()) {
-            for (Channel cserv : Server.getInstance().getChannelsFromWorld(c.getWorld())) {
-                if (cserv.getHiredMerchants().get(c.getPlayer().getId()) != null) {
-                    return cserv.getHiredMerchants().get(c.getPlayer().getId());
-                }
-            }
-        }
-        return null;
-    }
+	public HiredMerchant getMerchant(MapleClient c) {
+		if (c.getPlayer().hasMerchant()) {
+			for (Channel cserv : Server.getInstance().getChannelsFromWorld(c.getWorld())) {
+				if (cserv.getHiredMerchants().get(c.getPlayer().getId()) != null) {
+					return cserv.getHiredMerchants().get(c.getPlayer().getId());
+				}
+			}
+		}
+		return null;
+	}
 }

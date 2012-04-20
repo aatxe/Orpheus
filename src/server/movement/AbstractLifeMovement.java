@@ -18,41 +18,41 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.movement;
 
 import java.awt.Point;
 
 public abstract class AbstractLifeMovement implements LifeMovement {
-    private Point position;
-    private int duration;
-    private byte newstate, type;
+	private Point position;
+	private int duration;
+	private byte newstate, type;
 
-    public AbstractLifeMovement(byte type, Point position, int duration, byte newstate) {
-        super();
-        this.type = type;
-        this.position = position;
-        this.duration = duration;
-        this.newstate = newstate;
-    }
+	public AbstractLifeMovement(byte type, Point position, int duration, byte newstate) {
+		super();
+		this.type = type;
+		this.position = position;
+		this.duration = duration;
+		this.newstate = newstate;
+	}
 
-    @Override
-    public byte getType() {
-        return this.type;
-    }
+	@Override
+	public byte getType() {
+		return this.type;
+	}
 
-    @Override
-    public int getDuration() {
-        return duration;
-    }
+	@Override
+	public int getDuration() {
+		return duration;
+	}
 
-    @Override
-    public byte getNewstate() {
-        return newstate;
-    }
+	@Override
+	public byte getNewstate() {
+		return newstate;
+	}
 
-    @Override
-    public Point getPosition() {
-        return position;
-    }
+	@Override
+	public Point getPosition() {
+		return position;
+	}
 }

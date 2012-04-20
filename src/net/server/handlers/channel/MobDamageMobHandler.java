@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleClient;
@@ -27,19 +27,19 @@ import server.maps.MapleMap;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
- *
+ * 
  * @author Jay Estrella
  */
 public final class MobDamageMobHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        int from = slea.readInt();
-        slea.readInt();
-        int to = slea.readInt();
-        slea.readByte();
-        int dmg = slea.readInt();
-        MapleMap map = c.getPlayer().getMap();
-        if (map.getMonsterByOid(from) != null && map.getMonsterByOid(to) != null) {
-            map.damageMonster(c.getPlayer(), map.getMonsterByOid(to), dmg);
-        }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		int from = slea.readInt();
+		slea.readInt();
+		int to = slea.readInt();
+		slea.readByte();
+		int dmg = slea.readInt();
+		MapleMap map = c.getPlayer().getMap();
+		if (map.getMonsterByOid(from) != null && map.getMonsterByOid(to) != null) {
+			map.damageMonster(c.getPlayer(), map.getMonsterByOid(to), dmg);
+		}
+	}
 }

@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.login;
 
 import client.MapleClient;
@@ -30,18 +30,18 @@ import tools.data.input.SeekableLittleEndianAccessor;
  * @author Rob
  */
 public final class RegisterPinHandler extends AbstractMaplePacketHandler {
-    @Override
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        byte c2 = slea.readByte();
-        if (c2 == 0) {
-            c.updateLoginState(MapleClient.LOGIN_NOTLOGGEDIN);
-        } else {
-            String pin = slea.readMapleAsciiString();
-            if (pin != null) {
-                c.setPin(pin);
-                c.announce(MaplePacketCreator.pinRegistered());
-                c.updateLoginState(MapleClient.LOGIN_NOTLOGGEDIN);
-            }
-        }
-    }
+	@Override
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		byte c2 = slea.readByte();
+		if (c2 == 0) {
+			c.updateLoginState(MapleClient.LOGIN_NOTLOGGEDIN);
+		} else {
+			String pin = slea.readMapleAsciiString();
+			if (pin != null) {
+				c.setPin(pin);
+				c.announce(MaplePacketCreator.pinRegistered());
+				c.updateLoginState(MapleClient.LOGIN_NOTLOGGEDIN);
+			}
+		}
+	}
 }

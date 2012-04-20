@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleClient;
@@ -28,13 +28,13 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class UseChairHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        int itemId = slea.readInt();
-        if (c.getPlayer().getInventory(MapleInventoryType.SETUP).findById(itemId) == null) {
-            return;
-        }
-        c.getPlayer().setChair(itemId);
-        c.getPlayer().getMap().broadcastMessage(c.getPlayer(), MaplePacketCreator.showChair(c.getPlayer().getId(), itemId), false);
-        c.announce(MaplePacketCreator.enableActions());
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		int itemId = slea.readInt();
+		if (c.getPlayer().getInventory(MapleInventoryType.SETUP).findById(itemId) == null) {
+			return;
+		}
+		c.getPlayer().setChair(itemId);
+		c.getPlayer().getMap().broadcastMessage(c.getPlayer(), MaplePacketCreator.showChair(c.getPlayer().getId(), itemId), false);
+		c.announce(MaplePacketCreator.enableActions());
+	}
 }

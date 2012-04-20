@@ -18,39 +18,39 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server;
 
 /**
- *
+ * 
  * @author Matze
  */
 public class MapleShopItem {
-    private short buyable;
-    private int itemId;
-    private int price;
-    private int pitch;
+	private short buyable;
+	private int itemId;
+	private int price;
+	private int pitch;
 
-    public MapleShopItem(short buyable, int itemId, int price, int pitch) {
-        this.buyable = buyable;
-        this.itemId = itemId;
-        this.price = price;
-        this.pitch = pitch;
-    }
+	public MapleShopItem(short buyable, int itemId, int price, int pitch) {
+		this.buyable = buyable;
+		this.itemId = itemId;
+		this.price = price;
+		this.pitch = pitch;
+	}
 
-    public short getBuyable() {
-        return buyable;
-    }
+	public short getBuyable() {
+		return buyable;
+	}
 
-    public int getItemId() {
-        return itemId;
-    }
+	public int getItemId() {
+		return itemId;
+	}
 
-    public int getPrice() {
-        return price;
-    }
+	public int getPrice() {
+		return price;
+	}
 
-    public int getPitch() {
-        return pitch;
-    }
+	public int getPitch() {
+		return pitch;
+	}
 }

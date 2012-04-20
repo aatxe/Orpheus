@@ -18,32 +18,53 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package client;
 
 public interface IItem extends Comparable<IItem> {
-    public final int PET = 3;
-    public final int ITEM = 2;
-    public final int EQUIP = 1;
-    public void setFlag(byte b);
-    byte getFlag();
-    byte getType();
-    byte getPosition();
-    void setPosition(byte position);
-    int getItemId();
-    int getCashId();
-    short getQuantity();
-    String getOwner();
-    int getPetId();
-    void setPetId(int id);
-    IItem copy();
-    void setOwner(String owner);
-    void setQuantity(short quantity);
-    long getExpiration();
-    void setExpiration(long expiration);
-    void setSN(int sn);
-    int getSN();
-    String getGiftFrom();
-    void setGiftFrom(String giftFrom);
-    MaplePet getPet();
+	public final int PET = 3;
+	public final int ITEM = 2;
+	public final int EQUIP = 1;
+
+	public void setFlag(byte b);
+
+	byte getFlag();
+
+	byte getType();
+
+	byte getPosition();
+
+	void setPosition(byte position);
+
+	int getItemId();
+
+	int getCashId();
+
+	short getQuantity();
+
+	String getOwner();
+
+	int getPetId();
+
+	void setPetId(int id);
+
+	IItem copy();
+
+	void setOwner(String owner);
+
+	void setQuantity(short quantity);
+
+	long getExpiration();
+
+	void setExpiration(long expiration);
+
+	void setSN(int sn);
+
+	int getSN();
+
+	String getGiftFrom();
+
+	void setGiftFrom(String giftFrom);
+
+	MaplePet getPet();
 }

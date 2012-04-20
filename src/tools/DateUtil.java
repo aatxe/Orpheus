@@ -33,8 +33,9 @@ public class DateUtil {
 
 	/**
 	 * Converts a Unix Timestamp into File Time
-	 *
-	 * @param realTimestamp The actual timestamp in milliseconds.
+	 * 
+	 * @param realTimestamp
+	 *            The actual timestamp in milliseconds.
 	 * @return A 64-bit long giving a filetime timestamp
 	 */
 	public static long getFileTimestamp(long timeStampinMillis) {

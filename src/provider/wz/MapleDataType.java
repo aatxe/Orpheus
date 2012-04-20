@@ -18,9 +18,9 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package provider.wz;
 
 public enum MapleDataType {
-    NONE, IMG_0x00, SHORT, INT, FLOAT, DOUBLE, STRING, EXTENDED, PROPERTY, CANVAS, VECTOR, CONVEX, SOUND, UOL, UNKNOWN_TYPE, UNKNOWN_EXTENDED_TYPE;
+	NONE, IMG_0x00, SHORT, INT, FLOAT, DOUBLE, STRING, EXTENDED, PROPERTY, CANVAS, VECTOR, CONVEX, SOUND, UOL, UNKNOWN_TYPE, UNKNOWN_EXTENDED_TYPE;
 }

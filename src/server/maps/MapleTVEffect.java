@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.maps;
 
 import java.util.List;
@@ -33,50 +33,50 @@ import tools.MaplePacketCreator;
  * @author MrXotic
  */
 public class MapleTVEffect {
-    private List<String> message = new ArrayList<String>(5);
-    private MapleCharacter user;
-    private static boolean active;
-    private int type;
-    private byte world;
-    private MapleCharacter partner;
+	private List<String> message = new ArrayList<String>(5);
+	private MapleCharacter user;
+	private static boolean active;
+	private int type;
+	private byte world;
+	private MapleCharacter partner;
 
-    public MapleTVEffect(MapleCharacter user_, MapleCharacter partner_, List<String> msg, int type_, byte world_) {
-        this.message = msg;
-        this.user = user_;
-        this.type = type_;
-        this.world = world_;
-        this.partner = partner_;
-        broadcastTV(true);
-    }
+	public MapleTVEffect(MapleCharacter user_, MapleCharacter partner_, List<String> msg, int type_, byte world_) {
+		this.message = msg;
+		this.user = user_;
+		this.type = type_;
+		this.world = world_;
+		this.partner = partner_;
+		broadcastTV(true);
+	}
 
-    public static boolean isActive() {
-        return active;
-    }
+	public static boolean isActive() {
+		return active;
+	}
 
-    private void setActive(boolean set) {
-        active = set;
-    }
+	private void setActive(boolean set) {
+		active = set;
+	}
 
-    private void broadcastTV(boolean active_) {
-        Server server = Server.getInstance();
-        setActive(active_);
-            if (active_) {
-                server.broadcastMessage(world, MaplePacketCreator.enableTV());
-                server.broadcastMessage(world, MaplePacketCreator.sendTV(user, message, type <= 2 ? type : type - 3, partner));
-                int delay = 15000;
-                if (type == 4) {
-                    delay = 30000;
-                } else if (type == 5) {
-                    delay = 60000;
-                }
-                TimerManager.getInstance().schedule(new Runnable() {
-                    @Override
-                    public void run() {
-                        broadcastTV(false);
-                    }
-                }, delay);
-            } else {
-                server.broadcastMessage(world, MaplePacketCreator.removeTV());
-            }
-    }
+	private void broadcastTV(boolean active_) {
+		Server server = Server.getInstance();
+		setActive(active_);
+		if (active_) {
+			server.broadcastMessage(world, MaplePacketCreator.enableTV());
+			server.broadcastMessage(world, MaplePacketCreator.sendTV(user, message, type <= 2 ? type : type - 3, partner));
+			int delay = 15000;
+			if (type == 4) {
+				delay = 30000;
+			} else if (type == 5) {
+				delay = 60000;
+			}
+			TimerManager.getInstance().schedule(new Runnable() {
+				@Override
+				public void run() {
+					broadcastTV(false);
+				}
+			}, delay);
+		} else {
+			server.broadcastMessage(world, MaplePacketCreator.removeTV());
+		}
+	}
 }

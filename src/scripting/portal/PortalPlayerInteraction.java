@@ -31,50 +31,50 @@ import tools.DatabaseConnection;
 
 public class PortalPlayerInteraction extends AbstractPlayerInteraction {
 
-    private MaplePortal portal;
+	private MaplePortal portal;
 
-    public PortalPlayerInteraction(MapleClient c, MaplePortal portal) {
-        super(c);
-        this.portal = portal;
-    }
+	public PortalPlayerInteraction(MapleClient c, MaplePortal portal) {
+		super(c);
+		this.portal = portal;
+	}
 
-    public MaplePortal getPortal() {
-        return portal;
-    }
+	public MaplePortal getPortal() {
+		return portal;
+	}
 
-    public boolean hasLevel30Character() {
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            ps = DatabaseConnection.getConnection().prepareStatement("SELECT `level` FROM `characters` WHERE accountid = ?");
-            ps.setInt(1, getPlayer().getAccountID());
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                if (rs.getInt("level") >= 30) {
-                    return true;
-                }
-            }
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-        } finally {
-            try {
-                if (ps != null && !ps.isClosed()) {
-                    ps.close();
-                }
-                if (rs != null && !rs.isClosed()) {
-                    rs.close();
-                }
-            } catch (SQLException ex) {
-            }
-        }
-        return false;
-    }
+	public boolean hasLevel30Character() {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			ps = DatabaseConnection.getConnection().prepareStatement("SELECT `level` FROM `characters` WHERE accountid = ?");
+			ps.setInt(1, getPlayer().getAccountID());
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				if (rs.getInt("level") >= 30) {
+					return true;
+				}
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+		} finally {
+			try {
+				if (ps != null && !ps.isClosed()) {
+					ps.close();
+				}
+				if (rs != null && !rs.isClosed()) {
+					rs.close();
+				}
+			} catch (SQLException ex) {
+			}
+		}
+		return false;
+	}
 
-    public void blockPortal() {
-        c.getPlayer().blockPortal(getPortal().getScriptName());
-    }
+	public void blockPortal() {
+		c.getPlayer().blockPortal(getPortal().getScriptName());
+	}
 
-    public void unblockPortal() {
-        c.getPlayer().unblockPortal(getPortal().getScriptName());
-    }
+	public void unblockPortal() {
+		c.getPlayer().unblockPortal(getPortal().getScriptName());
+	}
 }

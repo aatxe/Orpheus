@@ -18,134 +18,134 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.guild;
 
 import client.MapleCharacter;
 import java.io.Serializable;
 
 public class MapleGuildCharacter implements Serializable {
-    private static final long serialVersionUID = -8012634292341191559L;
-    private int level;
-    private int id;
-    private byte world, channel;
-    private int jobid;
-    private int guildrank;
-    private int guildid;
-    private int allianceRank;
-    private boolean online;
-    private String name;
+	private static final long serialVersionUID = -8012634292341191559L;
+	private int level;
+	private int id;
+	private byte world, channel;
+	private int jobid;
+	private int guildrank;
+	private int guildid;
+	private int allianceRank;
+	private boolean online;
+	private String name;
 
-    public MapleGuildCharacter(MapleCharacter c) {
-        this.name = c.getName();
-        this.level = c.getLevel();
-        this.id = c.getId();
-        this.channel = c.getClient().getChannel();
-        this.world = c.getWorld();
-        this.jobid = c.getJob().getId();
-        this.guildrank = c.getGuildRank();
-        this.guildid = c.getGuildId();
-        this.online = true;
-        this.allianceRank = c.getAllianceRank();
-    }
+	public MapleGuildCharacter(MapleCharacter c) {
+		this.name = c.getName();
+		this.level = c.getLevel();
+		this.id = c.getId();
+		this.channel = c.getClient().getChannel();
+		this.world = c.getWorld();
+		this.jobid = c.getJob().getId();
+		this.guildrank = c.getGuildRank();
+		this.guildid = c.getGuildId();
+		this.online = true;
+		this.allianceRank = c.getAllianceRank();
+	}
 
-    public MapleGuildCharacter(int _id, int _lv, String _name, byte _channel, byte _world, int _job, int _rank, int _gid, boolean _on, int _allianceRank) {
-        this.level = _lv;
-        this.id = _id;
-        this.name = _name;
-        if (_on) {
-            this.channel = _channel;
-            this.world = _world;
-        }
-        this.jobid = _job;
-        this.online = _on;
-        this.guildrank = _rank;
-        this.guildid = _gid;
-        this.allianceRank = _allianceRank;
-    }
+	public MapleGuildCharacter(int _id, int _lv, String _name, byte _channel, byte _world, int _job, int _rank, int _gid, boolean _on, int _allianceRank) {
+		this.level = _lv;
+		this.id = _id;
+		this.name = _name;
+		if (_on) {
+			this.channel = _channel;
+			this.world = _world;
+		}
+		this.jobid = _job;
+		this.online = _on;
+		this.guildrank = _rank;
+		this.guildid = _gid;
+		this.allianceRank = _allianceRank;
+	}
 
-    public int getLevel() {
-        return level;
-    }
+	public int getLevel() {
+		return level;
+	}
 
-    public void setLevel(int l) {
-        level = l;
-    }
+	public void setLevel(int l) {
+		level = l;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void setChannel(byte ch) {
-        channel = ch;
-    }
+	public void setChannel(byte ch) {
+		channel = ch;
+	}
 
-    public byte getChannel() {
-        return channel;
-    }
+	public byte getChannel() {
+		return channel;
+	}
 
-    public byte getWorld() {
-        return world;
-    }
+	public byte getWorld() {
+		return world;
+	}
 
-    public int getJobId() {
-        return jobid;
-    }
+	public int getJobId() {
+		return jobid;
+	}
 
-    public void setJobId(int job) {
-        jobid = job;
-    }
+	public void setJobId(int job) {
+		jobid = job;
+	}
 
-    public int getGuildId() {
-        return guildid;
-    }
+	public int getGuildId() {
+		return guildid;
+	}
 
-    public void setGuildId(int gid) {
-        guildid = gid;
-    }
+	public void setGuildId(int gid) {
+		guildid = gid;
+	}
 
-    public void setGuildRank(int rank) {
-        guildrank = rank;
-    }
+	public void setGuildRank(int rank) {
+		guildrank = rank;
+	}
 
-    public int getGuildRank() {
-        return guildrank;
-    }
+	public int getGuildRank() {
+		return guildrank;
+	}
 
-    public boolean isOnline() {
-        return online;
-    }
+	public boolean isOnline() {
+		return online;
+	}
 
-    public void setOnline(boolean f) {
-        online = f;
-    }
+	public void setOnline(boolean f) {
+		online = f;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setAllianceRank(int rank) {
-        allianceRank = rank;
-    }
+	public void setAllianceRank(int rank) {
+		allianceRank = rank;
+	}
 
-    public int getAllianceRank() {
-        return allianceRank;
-    }
+	public int getAllianceRank() {
+		return allianceRank;
+	}
 
-    @Override
-    public boolean equals(Object other) {
-        if (!(other instanceof MapleGuildCharacter)) {
-            return false;
-        }
-        MapleGuildCharacter o = (MapleGuildCharacter) other;
-        return (o.getId() == id && o.getName().equals(name));
-    }
+	@Override
+	public boolean equals(Object other) {
+		if (!(other instanceof MapleGuildCharacter)) {
+			return false;
+		}
+		MapleGuildCharacter o = (MapleGuildCharacter) other;
+		return (o.getId() == id && o.getName().equals(name));
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 19 * hash + this.id;
-        hash = 19 * hash + (this.name != null ? this.name.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		int hash = 3;
+		hash = 19 * hash + this.id;
+		hash = 19 * hash + (this.name != null ? this.name.hashCode() : 0);
+		return hash;
+	}
 }

@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.maps;
 
 import java.awt.Point;
@@ -28,74 +28,76 @@ import client.SkillFactory;
 import tools.MaplePacketCreator;
 
 /**
- *
+ * 
  * @author Jan
  */
 public class MapleSummon extends AbstractAnimatedMapleMapObject {
-    private MapleCharacter owner;
-    private byte skillLevel;
-    private int skill, hp;
-    private SummonMovementType movementType;
+	private MapleCharacter owner;
+	private byte skillLevel;
+	private int skill, hp;
+	private SummonMovementType movementType;
 
-    public MapleSummon(MapleCharacter owner, int skill, Point pos, SummonMovementType movementType) {
-        this.owner = owner;
-        this.skill = skill;
-        this.skillLevel = owner.getSkillLevel(SkillFactory.getSkill(skill));
-        if (skillLevel == 0) throw new RuntimeException();
-        
-        this.movementType = movementType;
-        setPosition(pos);
-    }
+	public MapleSummon(MapleCharacter owner, int skill, Point pos, SummonMovementType movementType) {
+		this.owner = owner;
+		this.skill = skill;
+		this.skillLevel = owner.getSkillLevel(SkillFactory.getSkill(skill));
+		if (skillLevel == 0)
+			throw new RuntimeException();
 
-    public void sendSpawnData(MapleClient client) {
-        if (this != null) client.getSession().write(MaplePacketCreator.spawnSummon(this, false));
-
-    }
-
-    public void sendDestroyData(MapleClient client) {
-        client.getSession().write(MaplePacketCreator.removeSummon(this, true));
-    }
-
-    public MapleCharacter getOwner() {
-        return owner;
-    }
-
-    public int getSkill() {
-        return skill;
-    }
-
-    public int getHP() {
-        return hp;
-    }
-
-    public void addHP(int delta) {
-        this.hp += delta;
-    }
-
-    public SummonMovementType getMovementType() {
-        return movementType;
-    }
-
-    public boolean isStationary() {
-        return (skill == 3111002 || skill == 3211002 || skill == 5211001 || skill == 13111004);
-    }
-
-    public byte getSkillLevel() {
-        return skillLevel;
-    }
-
-    @Override
-    public MapleMapObjectType getType() {
-        return MapleMapObjectType.SUMMON;
-    }
-
-    public final boolean isPuppet() {
-	switch (skill) {
-	    case 3111002:
-	    case 3211002:
-	    case 13111004:
-		return true;
+		this.movementType = movementType;
+		setPosition(pos);
 	}
-	return false;
-    }
+
+	public void sendSpawnData(MapleClient client) {
+		if (this != null)
+			client.getSession().write(MaplePacketCreator.spawnSummon(this, false));
+
+	}
+
+	public void sendDestroyData(MapleClient client) {
+		client.getSession().write(MaplePacketCreator.removeSummon(this, true));
+	}
+
+	public MapleCharacter getOwner() {
+		return owner;
+	}
+
+	public int getSkill() {
+		return skill;
+	}
+
+	public int getHP() {
+		return hp;
+	}
+
+	public void addHP(int delta) {
+		this.hp += delta;
+	}
+
+	public SummonMovementType getMovementType() {
+		return movementType;
+	}
+
+	public boolean isStationary() {
+		return (skill == 3111002 || skill == 3211002 || skill == 5211001 || skill == 13111004);
+	}
+
+	public byte getSkillLevel() {
+		return skillLevel;
+	}
+
+	@Override
+	public MapleMapObjectType getType() {
+		return MapleMapObjectType.SUMMON;
+	}
+
+	public final boolean isPuppet() {
+		switch (skill) {
+			case 3111002:
+			case 3211002:
+			case 13111004:
+				return true;
+		}
+		return false;
+	}
 }

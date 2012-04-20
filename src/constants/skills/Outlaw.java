@@ -18,17 +18,17 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package constants.skills;
 
 /**
- *
+ * 
  * @author BubblesDev
  */
 public class Outlaw {
-    public static final int OCTOPUS = 5211001;
-    public static final int GAVIOTA = 5211002;
-    public static final int FLAME_THROWER = 5211004;
-    public static final int HOMING_BEACON = 5211006;
-    public static final int ICE_SPLITTER = 5211005;
+	public static final int OCTOPUS = 5211001;
+	public static final int GAVIOTA = 5211002;
+	public static final int FLAME_THROWER = 5211004;
+	public static final int HOMING_BEACON = 5211006;
+	public static final int ICE_SPLITTER = 5211005;
 }

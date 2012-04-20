@@ -28,11 +28,11 @@ import org.apache.mina.filter.codec.ProtocolDecoderOutput;
 
 public class GMPacketDecoder extends CumulativeProtocolDecoder {
 
-    @Override
-    protected boolean doDecode(IoSession session, IoBuffer in, ProtocolDecoderOutput out) throws Exception {
-        byte decryptedPacket[] = new byte[in.limit()];
-        in.get(decryptedPacket, 0, in.limit());
-        out.write(decryptedPacket);
-        return true;
-    }
+	@Override
+	protected boolean doDecode(IoSession session, IoBuffer in, ProtocolDecoderOutput out) throws Exception {
+		byte decryptedPacket[] = new byte[in.limit()];
+		in.get(decryptedPacket, 0, in.limit());
+		out.write(decryptedPacket);
+		return true;
+	}
 }

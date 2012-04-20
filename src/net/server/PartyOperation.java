@@ -18,9 +18,9 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server;
 
 public enum PartyOperation {
-    JOIN, LEAVE, EXPEL, DISBAND, SILENT_UPDATE, LOG_ONOFF, CHANGE_LEADER
+	JOIN, LEAVE, EXPEL, DISBAND, SILENT_UPDATE, LOG_ONOFF, CHANGE_LEADER
 }

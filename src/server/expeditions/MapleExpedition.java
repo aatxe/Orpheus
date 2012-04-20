@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package server.expeditions;
 
@@ -26,25 +26,25 @@ import client.MapleCharacter;
 import java.util.List;
 
 /**
- *
+ * 
  * @author kevintjuh93
  */
 public class MapleExpedition {
-    private List<MapleCharacter> members;
-    
-    public MapleExpedition(MapleCharacter leader) {
-        members.add(leader);
-    }
+	private List<MapleCharacter> members;
 
-    public void addMember(MapleCharacter chr) {
-        members.add(chr);
-    }
-    
-    public void removeMember(MapleCharacter chr) {
-        members.remove(chr);
-    }
-    
-    public List<MapleCharacter> getAllMembers() {
-        return members;
-    }
+	public MapleExpedition(MapleCharacter leader) {
+		members.add(leader);
+	}
+
+	public void addMember(MapleCharacter chr) {
+		members.add(chr);
+	}
+
+	public void removeMember(MapleCharacter chr) {
+		members.remove(chr);
+	}
+
+	public List<MapleCharacter> getAllMembers() {
+		return members;
+	}
 }

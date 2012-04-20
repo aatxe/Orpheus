@@ -18,14 +18,15 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package provider;
 
 /**
- *
+ * 
  * @author Matze
  */
 public interface MapleDataEntity {
-    public String getName();
-    public MapleDataEntity getParent();
+	public String getName();
+
+	public MapleDataEntity getParent();
 }

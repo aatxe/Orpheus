@@ -18,22 +18,22 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package client;
 
 public class MapleKeyBinding {
-    private int type, action;
+	private int type, action;
 
-    public MapleKeyBinding(int type, int action) {
-        this.type = type;
-        this.action = action;
-    }
+	public MapleKeyBinding(int type, int action) {
+		this.type = type;
+		this.action = action;
+	}
 
-    public int getType() {
-        return type;
-    }
+	public int getType() {
+		return type;
+	}
 
-    public int getAction() {
-        return action;
-    }
+	public int getAction() {
+		return action;
+	}
 }

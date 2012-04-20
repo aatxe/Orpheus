@@ -17,22 +17,23 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.life;
 
 /**
- *
+ * 
  * @author LightPepsi
  */
 
 public class MonsterDropEntry {
-    public MonsterDropEntry(int itemId, int chance, int Minimum, int Maximum, short questid) {
-	this.itemId = itemId;
-	this.chance = chance;
-	this.questid = questid;
-	this.Minimum = Minimum;
-	this.Maximum = Maximum;
-    }
-    public short questid;
-    public int itemId, chance, Minimum, Maximum;
+	public MonsterDropEntry(int itemId, int chance, int Minimum, int Maximum, short questid) {
+		this.itemId = itemId;
+		this.chance = chance;
+		this.questid = questid;
+		this.Minimum = Minimum;
+		this.Maximum = Maximum;
+	}
+
+	public short questid;
+	public int itemId, chance, Minimum, Maximum;
 }

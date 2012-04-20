@@ -18,47 +18,47 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package client;
 
 public class SkillMacro {
-    private int skill1;
-    private int skill2;
-    private int skill3;
-    private String name;
-    private int shout;
-    private int position;
+	private int skill1;
+	private int skill2;
+	private int skill3;
+	private String name;
+	private int shout;
+	private int position;
 
-    public SkillMacro(int skill1, int skill2, int skill3, String name, int shout, int position) {
-        this.skill1 = skill1;
-        this.skill2 = skill2;
-        this.skill3 = skill3;
-        this.name = name;
-        this.shout = shout;
-        this.position = position;
-    }
+	public SkillMacro(int skill1, int skill2, int skill3, String name, int shout, int position) {
+		this.skill1 = skill1;
+		this.skill2 = skill2;
+		this.skill3 = skill3;
+		this.name = name;
+		this.shout = shout;
+		this.position = position;
+	}
 
-    public int getSkill1() {
-        return skill1;
-    }
+	public int getSkill1() {
+		return skill1;
+	}
 
-    public int getSkill2() {
-        return skill2;
-    }
+	public int getSkill2() {
+		return skill2;
+	}
 
-    public int getSkill3() {
-        return skill3;
-    }
+	public int getSkill3() {
+		return skill3;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public int getShout() {
-        return shout;
-    }
+	public int getShout() {
+		return shout;
+	}
 
-    public int getPosition() {
-        return position;
-    }
+	public int getPosition() {
+		return position;
+	}
 }

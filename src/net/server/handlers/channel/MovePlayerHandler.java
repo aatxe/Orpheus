@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import java.util.List;
@@ -28,17 +28,17 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class MovePlayerHandler extends AbstractMovementPacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        slea.skip(9);
-        final List<LifeMovementFragment> res = parseMovement(slea);
-        if (res != null) {
-            updatePosition(res, c.getPlayer(), 0);
-            c.getPlayer().getMap().movePlayer(c.getPlayer(), c.getPlayer().getPosition());
-            if (c.getPlayer().isHidden()) {
-                c.getPlayer().getMap().broadcastGMMessage(c.getPlayer(), MaplePacketCreator.movePlayer(c.getPlayer().getId(), res), false);
-            } else {
-                c.getPlayer().getMap().broadcastMessage(c.getPlayer(), MaplePacketCreator.movePlayer(c.getPlayer().getId(), res), false);
-            }            
-        }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		slea.skip(9);
+		final List<LifeMovementFragment> res = parseMovement(slea);
+		if (res != null) {
+			updatePosition(res, c.getPlayer(), 0);
+			c.getPlayer().getMap().movePlayer(c.getPlayer(), c.getPlayer().getPosition());
+			if (c.getPlayer().isHidden()) {
+				c.getPlayer().getMap().broadcastGMMessage(c.getPlayer(), MaplePacketCreator.movePlayer(c.getPlayer().getId(), res), false);
+			} else {
+				c.getPlayer().getMap().broadcastMessage(c.getPlayer(), MaplePacketCreator.movePlayer(c.getPlayer().getId(), res), false);
+			}
+		}
+	}
 }

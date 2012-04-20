@@ -18,88 +18,89 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package client;
 
 public class MapleFamilyEntry {
-    private int familyId;
-    private int rank, reputation, totalReputation, todaysRep, totalJuniors, juniors, chrid;
-    private String familyName;
+	private int familyId;
+	private int rank, reputation, totalReputation, todaysRep, totalJuniors,
+			juniors, chrid;
+	private String familyName;
 
-    public int getId() {
-        return familyId;
-    }
+	public int getId() {
+		return familyId;
+	}
 
-    public void setFamilyId(int familyId) {
-        this.familyId = familyId;
-    }
+	public void setFamilyId(int familyId) {
+		this.familyId = familyId;
+	}
 
-    public int getRank() {
-        return rank;
-    }
+	public int getRank() {
+		return rank;
+	}
 
-    public void setRank(int rank) {
-        this.rank = rank;
-    }
+	public void setRank(int rank) {
+		this.rank = rank;
+	}
 
-    public int getChrId() {
-        return chrid;
-    }
+	public int getChrId() {
+		return chrid;
+	}
 
-    public void setChrId(int chrid) {
-        this.chrid = chrid;
-    }
+	public void setChrId(int chrid) {
+		this.chrid = chrid;
+	}
 
-    public int getReputation() {
-        return reputation;
-    }
+	public int getReputation() {
+		return reputation;
+	}
 
-    public int getTodaysRep() {
-        return todaysRep;
-    }
+	public int getTodaysRep() {
+		return todaysRep;
+	}
 
-    public void setReputation(int reputation) {
-        this.reputation = reputation;
-    }
+	public void setReputation(int reputation) {
+		this.reputation = reputation;
+	}
 
-    public void setTodaysRep(int today) {
-        this.todaysRep = today;
-    }
+	public void setTodaysRep(int today) {
+		this.todaysRep = today;
+	}
 
-    public void gainReputation(int gain) {
-        this.reputation += gain;
-        this.totalReputation += gain;
-    }
+	public void gainReputation(int gain) {
+		this.reputation += gain;
+		this.totalReputation += gain;
+	}
 
-    public int getTotalJuniors() {
-        return totalJuniors;
-    }
+	public int getTotalJuniors() {
+		return totalJuniors;
+	}
 
-    public void setTotalJuniors(int totalJuniors) {
-        this.totalJuniors = totalJuniors;
-    }
+	public void setTotalJuniors(int totalJuniors) {
+		this.totalJuniors = totalJuniors;
+	}
 
-    public int getJuniors() {
-        return juniors;
-    }
+	public int getJuniors() {
+		return juniors;
+	}
 
-    public void setJuniors(int juniors) {
-        this.juniors = juniors;
-    }
+	public void setJuniors(int juniors) {
+		this.juniors = juniors;
+	}
 
-    public void setFamilyName(String familyName) {
-        this.familyName = familyName;
-    }
+	public void setFamilyName(String familyName) {
+		this.familyName = familyName;
+	}
 
-    public String getFamilyName() {
-        return familyName;
-    }
+	public String getFamilyName() {
+		return familyName;
+	}
 
-    public int getTotalReputation() {
-        return totalReputation;
-    }
+	public int getTotalReputation() {
+		return totalReputation;
+	}
 
-    public void setTotalReputation(int totalReputation) {
-        this.totalReputation = totalReputation;
-    }
+	public void setTotalReputation(int totalReputation) {
+		this.totalReputation = totalReputation;
+	}
 }

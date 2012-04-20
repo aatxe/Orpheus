@@ -18,16 +18,16 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package constants.skills;
 
 /**
- *
+ * 
  * @author BubblesDev
  */
 public class Crossbowman {
-    public static final int CROSSBOW_MASTERY = 3200000;
-    public static final int FINAL_ATTACK = 3200001;
-    public static final int CROSSBOW_BOOSTER = 3201002;
-    public static final int SOUL_ARROW = 3201004;
+	public static final int CROSSBOW_MASTERY = 3200000;
+	public static final int FINAL_ATTACK = 3200001;
+	public static final int CROSSBOW_BOOSTER = 3201002;
+	public static final int SOUL_ARROW = 3201004;
 }

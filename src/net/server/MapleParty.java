@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server;
 
 import java.util.Collection;
@@ -27,88 +27,88 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MapleParty {
-    private MaplePartyCharacter leader;
-    private List<MaplePartyCharacter> members = new LinkedList<MaplePartyCharacter>();
-    private int id;
+	private MaplePartyCharacter leader;
+	private List<MaplePartyCharacter> members = new LinkedList<MaplePartyCharacter>();
+	private int id;
 
-    public MapleParty(int id, MaplePartyCharacter chrfor) {
-        this.leader = chrfor;
-        this.members.add(this.leader);
-        this.id = id;
-    }
+	public MapleParty(int id, MaplePartyCharacter chrfor) {
+		this.leader = chrfor;
+		this.members.add(this.leader);
+		this.id = id;
+	}
 
-    public boolean containsMembers(MaplePartyCharacter member) {
-        return members.contains(member);
-    }
+	public boolean containsMembers(MaplePartyCharacter member) {
+		return members.contains(member);
+	}
 
-    public void addMember(MaplePartyCharacter member) {
-        members.add(member);
-    }
+	public void addMember(MaplePartyCharacter member) {
+		members.add(member);
+	}
 
-    public void removeMember(MaplePartyCharacter member) {
-        members.remove(member);
-    }
+	public void removeMember(MaplePartyCharacter member) {
+		members.remove(member);
+	}
 
-    public void setLeader(MaplePartyCharacter victim) {
-        this.leader = victim;
-    }
+	public void setLeader(MaplePartyCharacter victim) {
+		this.leader = victim;
+	}
 
-    public void updateMember(MaplePartyCharacter member) {
-        for (int i = 0; i < members.size(); i++) {
-            if (members.get(i).equals(member)) {
-                members.set(i, member);
-            }
-        }
-    }
-    
-    public MaplePartyCharacter getMemberById(int id) {
-        for (MaplePartyCharacter chr : members) {
-            if (chr.getId() == id) {
-                return chr;
-            }
-        }
-        return null;
-    }
+	public void updateMember(MaplePartyCharacter member) {
+		for (int i = 0; i < members.size(); i++) {
+			if (members.get(i).equals(member)) {
+				members.set(i, member);
+			}
+		}
+	}
 
-    public Collection<MaplePartyCharacter> getMembers() {
-        return Collections.unmodifiableList(members);
-    }
+	public MaplePartyCharacter getMemberById(int id) {
+		for (MaplePartyCharacter chr : members) {
+			if (chr.getId() == id) {
+				return chr;
+			}
+		}
+		return null;
+	}
 
-    public int getId() {
-        return id;
-    }
+	public Collection<MaplePartyCharacter> getMembers() {
+		return Collections.unmodifiableList(members);
+	}
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public MaplePartyCharacter getLeader() {
-        return leader;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + id;
-        return result;
-    }
+	public MaplePartyCharacter getLeader() {
+		return leader;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final MapleParty other = (MapleParty) obj;
-        if (id != other.id) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final MapleParty other = (MapleParty) obj;
+		if (id != other.id) {
+			return false;
+		}
+		return true;
+	}
 }

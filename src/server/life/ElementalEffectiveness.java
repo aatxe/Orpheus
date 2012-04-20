@@ -18,24 +18,24 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.life;
 
 public enum ElementalEffectiveness {
-    NORMAL, IMMUNE, STRONG, WEAK, NEUTRAL;
+	NORMAL, IMMUNE, STRONG, WEAK, NEUTRAL;
 
-    public static ElementalEffectiveness getByNumber(int num) {
-        switch (num) {
-            case 1:
-                return IMMUNE;
-            case 2:
-                return STRONG;
-            case 3:
-                return WEAK;
-            case 4:
-                return NEUTRAL;
-            default:
-                throw new IllegalArgumentException("Unkown effectiveness: " + num);
-        }
-    }
+	public static ElementalEffectiveness getByNumber(int num) {
+		switch (num) {
+			case 1:
+				return IMMUNE;
+			case 2:
+				return STRONG;
+			case 3:
+				return WEAK;
+			case 4:
+				return NEUTRAL;
+			default:
+				throw new IllegalArgumentException("Unkown effectiveness: " + num);
+		}
+	}
 }

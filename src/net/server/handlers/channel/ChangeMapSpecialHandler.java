@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleClient;
@@ -28,19 +28,19 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class ChangeMapSpecialHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        slea.readByte();
-        String startwp = slea.readMapleAsciiString();
-        slea.readShort();
-        MaplePortal portal = c.getPlayer().getMap().getPortal(startwp);
-        if ((c.getPlayer().portalDelay() > System.currentTimeMillis()) || c.getPlayer().getBlockedPortals().contains(portal.getScriptName())) {
-            c.announce(MaplePacketCreator.enableActions());
-            return;
-        }
-        if (portal != null) {
-            portal.enterPortal(c);
-        } else {
-            c.announce(MaplePacketCreator.enableActions());
-        }       
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		slea.readByte();
+		String startwp = slea.readMapleAsciiString();
+		slea.readShort();
+		MaplePortal portal = c.getPlayer().getMap().getPortal(startwp);
+		if ((c.getPlayer().portalDelay() > System.currentTimeMillis()) || c.getPlayer().getBlockedPortals().contains(portal.getScriptName())) {
+			c.announce(MaplePacketCreator.enableActions());
+			return;
+		}
+		if (portal != null) {
+			portal.enterPortal(c);
+		} else {
+			c.announce(MaplePacketCreator.enableActions());
+		}
+	}
 }

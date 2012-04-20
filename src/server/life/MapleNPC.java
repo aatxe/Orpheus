@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.life;
 
 import client.MapleClient;
@@ -27,44 +27,44 @@ import server.maps.MapleMapObjectType;
 import tools.MaplePacketCreator;
 
 public class MapleNPC extends AbstractLoadedMapleLife {
-    private MapleNPCStats stats;
+	private MapleNPCStats stats;
 
-    public MapleNPC(int id, MapleNPCStats stats) {
-        super(id);
-        this.stats = stats;
-    }
+	public MapleNPC(int id, MapleNPCStats stats) {
+		super(id);
+		this.stats = stats;
+	}
 
-    public boolean hasShop() {
-        return MapleShopFactory.getInstance().getShopForNPC(getId()) != null;
-    }
+	public boolean hasShop() {
+		return MapleShopFactory.getInstance().getShopForNPC(getId()) != null;
+	}
 
-    public void sendShop(MapleClient c) {
-        MapleShopFactory.getInstance().getShopForNPC(getId()).sendShop(c);
-    }
+	public void sendShop(MapleClient c) {
+		MapleShopFactory.getInstance().getShopForNPC(getId()).sendShop(c);
+	}
 
-    @Override
-    public void sendSpawnData(MapleClient client) {
-        if (!this.isHidden()) {
-            if (this.getId() > 9010010 && this.getId() < 9010014) {
-                client.getSession().write(MaplePacketCreator.spawnNPCRequestController(this, false));
-            } else {
-                client.getSession().write(MaplePacketCreator.spawnNPC(this));
-                client.getSession().write(MaplePacketCreator.spawnNPCRequestController(this, true));
-            }
-        }
-    }
+	@Override
+	public void sendSpawnData(MapleClient client) {
+		if (!this.isHidden()) {
+			if (this.getId() > 9010010 && this.getId() < 9010014) {
+				client.getSession().write(MaplePacketCreator.spawnNPCRequestController(this, false));
+			} else {
+				client.getSession().write(MaplePacketCreator.spawnNPC(this));
+				client.getSession().write(MaplePacketCreator.spawnNPCRequestController(this, true));
+			}
+		}
+	}
 
-    @Override
-    public void sendDestroyData(MapleClient client) {
-        client.getSession().write(MaplePacketCreator.removeNPC(getObjectId()));
-    }
+	@Override
+	public void sendDestroyData(MapleClient client) {
+		client.getSession().write(MaplePacketCreator.removeNPC(getObjectId()));
+	}
 
-    @Override
-    public MapleMapObjectType getType() {
-        return MapleMapObjectType.NPC;
-    }
+	@Override
+	public MapleMapObjectType getType() {
+		return MapleMapObjectType.NPC;
+	}
 
-    public String getName() {
-        return stats.getName();
-    }
+	public String getName() {
+		return stats.getName();
+	}
 }

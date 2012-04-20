@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleClient;
@@ -36,23 +36,23 @@ import tools.data.input.SeekableLittleEndianAccessor;
 import tools.MaplePacketCreator;
 
 public final class CancelBuffHandler extends AbstractMaplePacketHandler implements MaplePacketHandler {
-    
-    @Override
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        int sourceid = slea.readInt();
-        switch (sourceid) {
-            case FPArchMage.BIG_BANG:
-            case ILArchMage.BIG_BANG:
-            case Bishop.BIG_BANG:
-            case Bowmaster.HURRICANE:
-            case Marksman.PIERCING_ARROW:
-            case Corsair.RAPID_FIRE:
-            case WindArcher.HURRICANE:
-                c.getPlayer().getMap().broadcastMessage(c.getPlayer(), MaplePacketCreator.skillCancel(c.getPlayer(), sourceid), false);
-                break;
-            default:
-                c.getPlayer().cancelEffect(SkillFactory.getSkill(sourceid).getEffect(1), false, -1);
-                break;
-        }
-    }
+
+	@Override
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		int sourceid = slea.readInt();
+		switch (sourceid) {
+			case FPArchMage.BIG_BANG:
+			case ILArchMage.BIG_BANG:
+			case Bishop.BIG_BANG:
+			case Bowmaster.HURRICANE:
+			case Marksman.PIERCING_ARROW:
+			case Corsair.RAPID_FIRE:
+			case WindArcher.HURRICANE:
+				c.getPlayer().getMap().broadcastMessage(c.getPlayer(), MaplePacketCreator.skillCancel(c.getPlayer(), sourceid), false);
+				break;
+			default:
+				c.getPlayer().cancelEffect(SkillFactory.getSkill(sourceid).getEffect(1), false, -1);
+				break;
+		}
+	}
 }

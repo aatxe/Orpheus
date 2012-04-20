@@ -18,19 +18,26 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package client;
 
 import server.MapleStatEffect;
 import server.life.Element;
 
 public interface ISkill {
-    int getId();
-    MapleStatEffect getEffect(int level);
-    int getMaxLevel();
-    int getAnimationTime();
-    public boolean isFourthJob();
-    public boolean getAction();
-    public Element getElement();
-    public boolean isBeginnerSkill();
+	int getId();
+
+	MapleStatEffect getEffect(int level);
+
+	int getMaxLevel();
+
+	int getAnimationTime();
+
+	public boolean isFourthJob();
+
+	public boolean getAction();
+
+	public Element getElement();
+
+	public boolean isBeginnerSkill();
 }

@@ -18,16 +18,19 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package provider;
 
 /**
- *
+ * 
  * @author Matze
  */
 public interface MapleDataEntry extends MapleDataEntity {
-    public String getName();
-    public int getSize();
-    public int getChecksum();
-    public int getOffset();
+	public String getName();
+
+	public int getSize();
+
+	public int getChecksum();
+
+	public int getOffset();
 }

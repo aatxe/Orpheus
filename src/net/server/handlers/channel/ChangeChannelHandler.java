@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleBuffStat;
@@ -36,56 +36,56 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
- *
+ * 
  * @author Matze
  */
 public final class ChangeChannelHandler extends AbstractMaplePacketHandler {
-    @Override
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        byte channel = (byte) (slea.readByte() + 1);
-        MapleCharacter chr = c.getPlayer();
-        Server server = Server.getInstance();
-        if (chr.isBanned()) {
-            c.disconnect();
-            return;
-        }
-        if (!chr.isAlive() || FieldLimit.CHANGECHANNEL.check(chr.getMap().getFieldLimit())) {
-            c.announce(MaplePacketCreator.enableActions());
-            return;
-        }
-        String[] socket = Server.getInstance().getIP(c.getWorld(), channel).split(":");
-        if (chr.getTrade() != null) {
-            MapleTrade.cancelTrade(c.getPlayer());
-        }
+	@Override
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		byte channel = (byte) (slea.readByte() + 1);
+		MapleCharacter chr = c.getPlayer();
+		Server server = Server.getInstance();
+		if (chr.isBanned()) {
+			c.disconnect();
+			return;
+		}
+		if (!chr.isAlive() || FieldLimit.CHANGECHANNEL.check(chr.getMap().getFieldLimit())) {
+			c.announce(MaplePacketCreator.enableActions());
+			return;
+		}
+		String[] socket = Server.getInstance().getIP(c.getWorld(), channel).split(":");
+		if (chr.getTrade() != null) {
+			MapleTrade.cancelTrade(c.getPlayer());
+		}
 
-        HiredMerchant merchant = chr.getHiredMerchant();
-        if (merchant != null) {
-            if (merchant.isOwner(c.getPlayer())) {
-                merchant.setOpen(true);
-            } else {
-                merchant.removeVisitor(c.getPlayer());
-            }
-        }       
-        server.getPlayerBuffStorage().addBuffsToStorage(chr.getId(), chr.getAllBuffs());
-        chr.cancelBuffEffects();
-        chr.cancelMagicDoor();
-        chr.saveCooldowns();
-        //Canceling mounts? Noty
-        if (chr.getBuffedValue(MapleBuffStat.PUPPET) != null) {
-            chr.cancelEffectFromBuffStat(MapleBuffStat.PUPPET);
-        }
-        if (chr.getBuffedValue(MapleBuffStat.COMBO) != null) {
-            chr.cancelEffectFromBuffStat(MapleBuffStat.COMBO);
-        }
-        chr.getInventory(MapleInventoryType.EQUIPPED).checked(false); //test
-        chr.getMap().removePlayer(chr);
-        chr.getClient().getChannelServer().removePlayer(chr);
-        chr.saveToDB(true);
-        server.getLoad(c.getWorld()).get(c.getChannel()).decrementAndGet();
-        chr.getClient().updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION);
-        try {
-            c.announce(MaplePacketCreator.getChannelChange(InetAddress.getByName(socket[0]), Integer.parseInt(socket[1])));
-        } catch (IOException e) {
-        }
-    }
+		HiredMerchant merchant = chr.getHiredMerchant();
+		if (merchant != null) {
+			if (merchant.isOwner(c.getPlayer())) {
+				merchant.setOpen(true);
+			} else {
+				merchant.removeVisitor(c.getPlayer());
+			}
+		}
+		server.getPlayerBuffStorage().addBuffsToStorage(chr.getId(), chr.getAllBuffs());
+		chr.cancelBuffEffects();
+		chr.cancelMagicDoor();
+		chr.saveCooldowns();
+		// Canceling mounts? Noty
+		if (chr.getBuffedValue(MapleBuffStat.PUPPET) != null) {
+			chr.cancelEffectFromBuffStat(MapleBuffStat.PUPPET);
+		}
+		if (chr.getBuffedValue(MapleBuffStat.COMBO) != null) {
+			chr.cancelEffectFromBuffStat(MapleBuffStat.COMBO);
+		}
+		chr.getInventory(MapleInventoryType.EQUIPPED).checked(false); // test
+		chr.getMap().removePlayer(chr);
+		chr.getClient().getChannelServer().removePlayer(chr);
+		chr.saveToDB(true);
+		server.getLoad(c.getWorld()).get(c.getChannel()).decrementAndGet();
+		chr.getClient().updateLoginState(MapleClient.LOGIN_SERVER_TRANSITION);
+		try {
+			c.announce(MaplePacketCreator.getChannelChange(InetAddress.getByName(socket[0]), Integer.parseInt(socket[1])));
+		} catch (IOException e) {
+		}
+	}
 }

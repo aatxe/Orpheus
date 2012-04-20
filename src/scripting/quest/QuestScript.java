@@ -18,13 +18,14 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package scripting.quest;
 
 /**
  * @author RMZero213
  */
 public interface QuestScript {
-    public void start(byte mode, byte type, int selection);
-    public void end(byte mode, byte type, int selection);
+	public void start(byte mode, byte type, int selection);
+
+	public void end(byte mode, byte type, int selection);
 }

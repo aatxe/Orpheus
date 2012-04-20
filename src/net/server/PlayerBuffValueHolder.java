@@ -18,21 +18,21 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server;
 
 import server.MapleStatEffect;
 
 /**
- *
+ * 
  * @author Danny
  */
 public class PlayerBuffValueHolder {
-    public long startTime;
-    public MapleStatEffect effect;
+	public long startTime;
+	public MapleStatEffect effect;
 
-    public PlayerBuffValueHolder(long startTime, MapleStatEffect effect) {
-        this.startTime = startTime;
-        this.effect = effect;
-    }
+	public PlayerBuffValueHolder(long startTime, MapleStatEffect effect) {
+		this.startTime = startTime;
+		this.effect = effect;
+	}
 }

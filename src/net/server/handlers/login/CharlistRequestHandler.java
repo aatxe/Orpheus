@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.login;
 
 import client.MapleClient;
@@ -26,12 +26,12 @@ import net.AbstractMaplePacketHandler;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class CharlistRequestHandler extends AbstractMaplePacketHandler {
-    @Override
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        slea.readByte();
-        byte world = slea.readByte();
-        c.setWorld(world);
-        c.setChannel((byte) (slea.readByte() + 1));
-        c.sendCharList(world);
-    }
+	@Override
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		slea.readByte();
+		byte world = slea.readByte();
+		c.setWorld(world);
+		c.setChannel((byte) (slea.readByte() + 1));
+		c.sendCharList(world);
+	}
 }

@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package client;
 
 import java.util.Collections;
@@ -30,152 +30,152 @@ import server.quest.MapleQuest;
 import tools.StringUtil;
 
 /**
- *
+ * 
  * @author Matze
  */
 public class MapleQuestStatus {
-    public enum Status {
-        UNDEFINED(-1),
-        NOT_STARTED(0),
-        STARTED(1),
-        COMPLETED(2);
-        final int status;
+	public enum Status {
+		UNDEFINED(-1), NOT_STARTED(0), STARTED(1), COMPLETED(2);
+		final int status;
 
-        private Status(int id) {
-            status = id;
-        }
+		private Status(int id) {
+			status = id;
+		}
 
-        public int getId() {
-            return status;
-        }
+		public int getId() {
+			return status;
+		}
 
-        public static Status getById(int id) {
-            for (Status l : Status.values()) {
-                if (l.getId() == id) {
-                    return l;
-                }
-            }
-            return null;
-        }
-    }
-    private MapleQuest quest;
-    private Status status;
-    private Map<Integer, String> progress = new LinkedHashMap<Integer, String>();
-    private List<Integer> medalProgress = new LinkedList<Integer>();
-    private int npc;
-    private long completionTime;
-    private int forfeited = 0;
+		public static Status getById(int id) {
+			for (Status l : Status.values()) {
+				if (l.getId() == id) {
+					return l;
+				}
+			}
+			return null;
+		}
+	}
 
-    public MapleQuestStatus(MapleQuest quest, Status status) {
-        this.quest = quest;
-        this.setStatus(status);
-        this.completionTime = System.currentTimeMillis();
-        if (status == Status.STARTED) 
-            registerMobs();      
-    }
+	private MapleQuest quest;
+	private Status status;
+	private Map<Integer, String> progress = new LinkedHashMap<Integer, String>();
+	private List<Integer> medalProgress = new LinkedList<Integer>();
+	private int npc;
+	private long completionTime;
+	private int forfeited = 0;
 
-    public MapleQuestStatus(MapleQuest quest, Status status, int npc) {
-        this.quest = quest;
-        this.setStatus(status);
-        this.setNpc(npc);
-        this.completionTime = System.currentTimeMillis();
-        if (status == Status.STARTED) {
-            registerMobs();
-        }
-    }
+	public MapleQuestStatus(MapleQuest quest, Status status) {
+		this.quest = quest;
+		this.setStatus(status);
+		this.completionTime = System.currentTimeMillis();
+		if (status == Status.STARTED)
+			registerMobs();
+	}
 
-    public MapleQuest getQuest() {
-        return quest;
-    }
+	public MapleQuestStatus(MapleQuest quest, Status status, int npc) {
+		this.quest = quest;
+		this.setStatus(status);
+		this.setNpc(npc);
+		this.completionTime = System.currentTimeMillis();
+		if (status == Status.STARTED) {
+			registerMobs();
+		}
+	}
 
-    public Status getStatus() {
-        return status;
-    }
+	public MapleQuest getQuest() {
+		return quest;
+	}
 
-    public final void setStatus(Status status) {
-        this.status = status;
-    }
+	public Status getStatus() {
+		return status;
+	}
 
-    public int getNpc() {
-        return npc;
-    }
+	public final void setStatus(Status status) {
+		this.status = status;
+	}
 
-    public final void setNpc(int npc) {
-        this.npc = npc;
-    }
+	public int getNpc() {
+		return npc;
+	}
 
-    private void registerMobs() {
-        for (int i : quest.getRelevantMobs()) {
-            progress.put(i, "000");
-        }
-    }
+	public final void setNpc(int npc) {
+		this.npc = npc;
+	}
 
-    public boolean addMedalMap(int mapid) {
-        if (medalProgress.contains(mapid)) return false;
-        medalProgress.add(mapid);
-        return true;
-    }
+	private void registerMobs() {
+		for (int i : quest.getRelevantMobs()) {
+			progress.put(i, "000");
+		}
+	}
 
-    public int getMedalProgress() {
-        return medalProgress.size();
-    }
+	public boolean addMedalMap(int mapid) {
+		if (medalProgress.contains(mapid))
+			return false;
+		medalProgress.add(mapid);
+		return true;
+	}
 
-    public List<Integer> getMedalMaps() {
-        return medalProgress;
-    }
+	public int getMedalProgress() {
+		return medalProgress.size();
+	}
 
-    public boolean progress(int id) {
-        if (progress.get(id) != null) {
-            int current = Integer.parseInt(progress.get(id));
-            String str = StringUtil.getLeftPaddedStr(Integer.toString(current + 1), '0', 3);
-            progress.put(id, str);
-            return true;
-        }
-        return false;
-    }
+	public List<Integer> getMedalMaps() {
+		return medalProgress;
+	}
 
-    public void setProgress(int id, String pr) {
-        progress.put(id, pr);
-    }
+	public boolean progress(int id) {
+		if (progress.get(id) != null) {
+			int current = Integer.parseInt(progress.get(id));
+			String str = StringUtil.getLeftPaddedStr(Integer.toString(current + 1), '0', 3);
+			progress.put(id, str);
+			return true;
+		}
+		return false;
+	}
 
-    public boolean madeProgress() {
-        return progress.size() > 0;
-    }
+	public void setProgress(int id, String pr) {
+		progress.put(id, pr);
+	}
 
-    public String getProgress(int id) {
-        if (progress.get(id) == null) return "";
-        return progress.get(id);
-    }
+	public boolean madeProgress() {
+		return progress.size() > 0;
+	}
 
-    public Map<Integer, String> getProgress() {
-        return Collections.unmodifiableMap(progress);
-    }
+	public String getProgress(int id) {
+		if (progress.get(id) == null)
+			return "";
+		return progress.get(id);
+	}
 
-    public long getCompletionTime() {
-        return completionTime;
-    }
+	public Map<Integer, String> getProgress() {
+		return Collections.unmodifiableMap(progress);
+	}
 
-    public void setCompletionTime(long completionTime) {
-        this.completionTime = completionTime;
-    }
+	public long getCompletionTime() {
+		return completionTime;
+	}
 
-    public int getForfeited() {
-        return forfeited;
-    }
+	public void setCompletionTime(long completionTime) {
+		this.completionTime = completionTime;
+	}
 
-    public void setForfeited(int forfeited) {
-        if (forfeited >= this.forfeited) {
-            this.forfeited = forfeited;
-        } else {
-            throw new IllegalArgumentException("Can't set forfeits to something lower than before.");
-        }
-    }
+	public int getForfeited() {
+		return forfeited;
+	}
 
-    public String getQuestData() {
-        StringBuilder str = new StringBuilder();
-        for (String ps : progress.values()) {
-            str.append(ps);
-        }
-        return str.toString();
-    }
+	public void setForfeited(int forfeited) {
+		if (forfeited >= this.forfeited) {
+			this.forfeited = forfeited;
+		} else {
+			throw new IllegalArgumentException("Can't set forfeits to something lower than before.");
+		}
+	}
+
+	public String getQuestData() {
+		StringBuilder str = new StringBuilder();
+		for (String ps : progress.values()) {
+			str.append(ps);
+		}
+		return str.toString();
+	}
 }

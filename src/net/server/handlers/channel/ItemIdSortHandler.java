@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.IItem;
@@ -40,27 +40,27 @@ import tools.data.input.SeekableLittleEndianAccessor;
  * @author BubblesDev
  */
 public final class ItemIdSortHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        MapleCharacter chr = c.getPlayer();
-        chr.getAutobanManager().setTimestamp(4, slea.readInt());
-        byte inv = slea.readByte();
-        if (inv < 0 || inv > 5) {
-            c.disconnect();
-            return;
-        }
-        MapleInventory Inv = chr.getInventory(MapleInventoryType.getByType(inv));
-        ArrayList<Item> itemarray = new ArrayList<Item>();
-        for (Iterator<IItem> it = Inv.iterator(); it.hasNext();) {
-            Item item = (Item) it.next();
-            itemarray.add((Item) item.copy());
-        }
-        Collections.sort(itemarray);
-        for (IItem item : itemarray) {
-            MapleInventoryManipulator.removeById(c, MapleInventoryType.getByType(inv), item.getItemId(), item.getQuantity(), false, false);
-        }
-        for (IItem i : itemarray) {
-            MapleInventoryManipulator.addFromDrop(c, i, false);
-        }
-        c.announce(MaplePacketCreator.finishedSort2(inv));
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		MapleCharacter chr = c.getPlayer();
+		chr.getAutobanManager().setTimestamp(4, slea.readInt());
+		byte inv = slea.readByte();
+		if (inv < 0 || inv > 5) {
+			c.disconnect();
+			return;
+		}
+		MapleInventory Inv = chr.getInventory(MapleInventoryType.getByType(inv));
+		ArrayList<Item> itemarray = new ArrayList<Item>();
+		for (Iterator<IItem> it = Inv.iterator(); it.hasNext();) {
+			Item item = (Item) it.next();
+			itemarray.add((Item) item.copy());
+		}
+		Collections.sort(itemarray);
+		for (IItem item : itemarray) {
+			MapleInventoryManipulator.removeById(c, MapleInventoryType.getByType(inv), item.getItemId(), item.getQuantity(), false, false);
+		}
+		for (IItem i : itemarray) {
+			MapleInventoryManipulator.addFromDrop(c, i, false);
+		}
+		c.announce(MaplePacketCreator.finishedSort2(inv));
+	}
 }

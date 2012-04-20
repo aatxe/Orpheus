@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package scripting;
 
 import java.io.File;
@@ -29,45 +29,45 @@ import javax.script.ScriptEngineManager;
 import client.MapleClient;
 
 /**
- *
+ * 
  * @author Matze
  */
 public abstract class AbstractScriptManager {
-    protected ScriptEngine engine;
-    private ScriptEngineManager sem;
+	protected ScriptEngine engine;
+	private ScriptEngineManager sem;
 
-    protected AbstractScriptManager() {
-        sem = new ScriptEngineManager();
-    }
+	protected AbstractScriptManager() {
+		sem = new ScriptEngineManager();
+	}
 
-    protected Invocable getInvocable(String path, MapleClient c) {
-        try {
-            path = "scripts/" + path;
-            engine = null;
-            if (c != null) {
-                engine = c.getScriptEngine(path);
-            }
-            if (engine == null) {
-                File scriptFile = new File(path);
-                if (!scriptFile.exists()) {
-                    return null;
-                }
-                engine = sem.getEngineByName("javascript");
-                if (c != null) {
-                    c.setScriptEngine(path, engine);
-                }
-                FileReader fr = new FileReader(scriptFile);
-                engine.eval(fr);
-                fr.close();
-            }
-            return (Invocable) engine;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+	protected Invocable getInvocable(String path, MapleClient c) {
+		try {
+			path = "scripts/" + path;
+			engine = null;
+			if (c != null) {
+				engine = c.getScriptEngine(path);
+			}
+			if (engine == null) {
+				File scriptFile = new File(path);
+				if (!scriptFile.exists()) {
+					return null;
+				}
+				engine = sem.getEngineByName("javascript");
+				if (c != null) {
+					c.setScriptEngine(path, engine);
+				}
+				FileReader fr = new FileReader(scriptFile);
+				engine.eval(fr);
+				fr.close();
+			}
+			return (Invocable) engine;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
-    protected void resetContext(String path, MapleClient c) {
-        c.removeScriptEngine("scripts/" + path);
-    }
+	protected void resetContext(String path, MapleClient c) {
+		c.removeScriptEngine("scripts/" + path);
+	}
 }

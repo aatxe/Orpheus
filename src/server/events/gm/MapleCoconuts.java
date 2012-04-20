@@ -18,46 +18,46 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package server.events.gm;
 
 /**
- *
+ * 
  * @author kevintjuh93
  */
 public class MapleCoconuts {
-    private int id;
-    private int hits = 0;
-    private boolean hittable = false;
-    private long hittime = System.currentTimeMillis();
+	private int id;
+	private int hits = 0;
+	private boolean hittable = false;
+	private long hittime = System.currentTimeMillis();
 
-    public MapleCoconuts(int id) {
-        this.id = id;
-    }
+	public MapleCoconuts(int id) {
+		this.id = id;
+	}
 
-    public void hit() {
-        this.hittime = System.currentTimeMillis() + 750;
-        hits++;
-    }
+	public void hit() {
+		this.hittime = System.currentTimeMillis() + 750;
+		hits++;
+	}
 
-    public int getHits() {
-        return hits;
-    }
+	public int getHits() {
+		return hits;
+	}
 
-    public void resetHits() {
-        hits = 0;
-    }
+	public void resetHits() {
+		hits = 0;
+	}
 
-    public boolean isHittable() {
-        return hittable;
-    }
+	public boolean isHittable() {
+		return hittable;
+	}
 
-    public void setHittable(boolean hittable) {
-        this.hittable = hittable;
-    }
+	public void setHittable(boolean hittable) {
+		this.hittable = hittable;
+	}
 
-    public long getHitTime() {
-        return hittime;
-    }
+	public long getHitTime() {
+		return hittime;
+	}
 
 }

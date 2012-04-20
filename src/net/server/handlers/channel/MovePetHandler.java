@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import java.util.List;
@@ -29,20 +29,20 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class MovePetHandler extends AbstractMovementPacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        int petId = slea.readInt();
-        slea.readLong();
-//        Point startPos = StreamUtil.readShortPoint(slea);
-        List<LifeMovementFragment> res = parseMovement(slea);
-        if (res.isEmpty()) {
-            return;
-        }
-        MapleCharacter player = c.getPlayer();
-        byte slot = player.getPetIndex(petId);
-        if (slot == -1) {
-            return;
-        }
-        player.getPet(slot).updatePosition(res);
-        player.getMap().broadcastMessage(player, MaplePacketCreator.movePet(player.getId(), petId, slot, res), false);
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		int petId = slea.readInt();
+		slea.readLong();
+		// Point startPos = StreamUtil.readShortPoint(slea);
+		List<LifeMovementFragment> res = parseMovement(slea);
+		if (res.isEmpty()) {
+			return;
+		}
+		MapleCharacter player = c.getPlayer();
+		byte slot = player.getPetIndex(petId);
+		if (slot == -1) {
+			return;
+		}
+		player.getPet(slot).updatePosition(res);
+		player.getMap().broadcastMessage(player, MaplePacketCreator.movePet(player.getId(), petId, slot, res), false);
+	}
 }

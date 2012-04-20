@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package tools.data.input;
 
 import java.io.IOException;
@@ -33,51 +33,51 @@ import java.io.RandomAccessFile;
  * @since Revision 323
  */
 public class RandomAccessByteStream implements SeekableInputStreamBytestream {
-    private RandomAccessFile raf;
-    private long read = 0;
+	private RandomAccessFile raf;
+	private long read = 0;
 
-    public RandomAccessByteStream(RandomAccessFile raf) {
-        super();
-        this.raf = raf;
-    }
+	public RandomAccessByteStream(RandomAccessFile raf) {
+		super();
+		this.raf = raf;
+	}
 
-    @Override
-    public int readByte() {
-        int temp;
-        try {
-            temp = raf.read();
-            if (temp == -1) {
-                throw new RuntimeException("EOF");
-            }
-            read++;
-            return temp;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+	@Override
+	public int readByte() {
+		int temp;
+		try {
+			temp = raf.read();
+			if (temp == -1) {
+				throw new RuntimeException("EOF");
+			}
+			read++;
+			return temp;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
-    @Override
-    public void seek(long offset) throws IOException {
-        raf.seek(offset);
-    }
+	@Override
+	public void seek(long offset) throws IOException {
+		raf.seek(offset);
+	}
 
-    @Override
-    public long getPosition() throws IOException {
-        return raf.getFilePointer();
-    }
+	@Override
+	public long getPosition() throws IOException {
+		return raf.getFilePointer();
+	}
 
-    @Override
-    public long getBytesRead() {
-        return read;
-    }
+	@Override
+	public long getBytesRead() {
+		return read;
+	}
 
-    @Override
-    public long available() {
-        try {
-            return raf.length() - raf.getFilePointer();
-        } catch (IOException e) {
-            System.out.println("ERROR " + e);
-            return 0;
-        }
-    }
+	@Override
+	public long available() {
+		try {
+			return raf.length() - raf.getFilePointer();
+		} catch (IOException e) {
+			System.out.println("ERROR " + e);
+			return 0;
+		}
+	}
 }

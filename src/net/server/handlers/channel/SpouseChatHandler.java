@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 //import client.MapleCharacter;
@@ -29,27 +29,32 @@ import net.AbstractMaplePacketHandler;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class SpouseChatHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        System.out.println(slea.toString());
-//        slea.readMapleAsciiString();//recipient
-//        String msg = slea.readMapleAsciiString();
-//        if (!CommandProcessor.processCommand(c, msg))
-//            if (c.getPlayer().isMarried()) {
-//                MapleCharacter wife = c.getChannelServer().getPlayerStorage().getCharacterById(c.getPlayer().getPartnerId());
-//                if (wife != null) {
-//                    wife.getClient().announce(MaplePacketCreator.sendSpouseChat(c.getPlayer(), msg));
-//                    c.announce(MaplePacketCreator.sendSpouseChat(c.getPlayer(), msg));
-//                } else
-//                    try {
-//                        if (c.getChannelServer().getWorldInterface().isConnected(wife.getName())) {
-//                            c.getChannelServer().getWorldInterface().sendSpouseChat(c.getPlayer().getName(), wife.getName(), msg);
-//                            c.announce(MaplePacketCreator.sendSpouseChat(c.getPlayer(), msg));
-//                        } else
-//                            c.getPlayer().message("You are either not married or your spouse is currently offline.");
-//                    } catch (Exception e) {
-//                        c.getPlayer().message("You are either not married or your spouse is currently offline.");
-//                        c.getChannelServer().reconnectWorld();
-//                    }
-//            }
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		System.out.println(slea.toString());
+		// slea.readMapleAsciiString();//recipient
+		// String msg = slea.readMapleAsciiString();
+		// if (!CommandProcessor.processCommand(c, msg))
+		// if (c.getPlayer().isMarried()) {
+		// MapleCharacter wife =
+		// c.getChannelServer().getPlayerStorage().getCharacterById(c.getPlayer().getPartnerId());
+		// if (wife != null) {
+		// wife.getClient().announce(MaplePacketCreator.sendSpouseChat(c.getPlayer(),
+		// msg));
+		// c.announce(MaplePacketCreator.sendSpouseChat(c.getPlayer(), msg));
+		// } else
+		// try {
+		// if
+		// (c.getChannelServer().getWorldInterface().isConnected(wife.getName()))
+		// {
+		// c.getChannelServer().getWorldInterface().sendSpouseChat(c.getPlayer().getName(),
+		// wife.getName(), msg);
+		// c.announce(MaplePacketCreator.sendSpouseChat(c.getPlayer(), msg));
+		// } else
+		// c.getPlayer().message("You are either not married or your spouse is currently offline.");
+		// } catch (Exception e) {
+		// c.getPlayer().message("You are either not married or your spouse is currently offline.");
+		// c.getChannelServer().reconnectWorld();
+		// }
+		// }
+	}
 }

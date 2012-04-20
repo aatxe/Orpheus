@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.IItem;
@@ -33,30 +33,30 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
- *
+ * 
  * @author AngelSL
  */
 public final class UseSummonBag extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        //[4A 00][6C 4C F2 02][02 00][63 0B 20 00]
-        if (!c.getPlayer().isAlive()) {
-            c.announce(MaplePacketCreator.enableActions());
-            return;
-        }
-        slea.readInt();
-        byte slot = (byte) slea.readShort();
-        int itemId = slea.readInt();
-        IItem toUse = c.getPlayer().getInventory(MapleInventoryType.USE).getItem(slot);
-        if (toUse != null && toUse.getQuantity() > 0 && toUse.getItemId() == itemId) {
-            MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short) 1, false);
-            int[][] toSpawn = MapleItemInformationProvider.getInstance().getSummonMobs(itemId);
-            for (int z = 0; z < toSpawn.length; z++) {
-                int[] toSpawnChild = toSpawn[z];
-                if (Randomizer.nextInt(101) <= toSpawnChild[1]) {
-                    c.getPlayer().getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(toSpawnChild[0]), c.getPlayer().getPosition());
-                }
-            }
-        }
-        c.announce(MaplePacketCreator.enableActions());
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		// [4A 00][6C 4C F2 02][02 00][63 0B 20 00]
+		if (!c.getPlayer().isAlive()) {
+			c.announce(MaplePacketCreator.enableActions());
+			return;
+		}
+		slea.readInt();
+		byte slot = (byte) slea.readShort();
+		int itemId = slea.readInt();
+		IItem toUse = c.getPlayer().getInventory(MapleInventoryType.USE).getItem(slot);
+		if (toUse != null && toUse.getQuantity() > 0 && toUse.getItemId() == itemId) {
+			MapleInventoryManipulator.removeFromSlot(c, MapleInventoryType.USE, slot, (short) 1, false);
+			int[][] toSpawn = MapleItemInformationProvider.getInstance().getSummonMobs(itemId);
+			for (int z = 0; z < toSpawn.length; z++) {
+				int[] toSpawnChild = toSpawn[z];
+				if (Randomizer.nextInt(101) <= toSpawnChild[1]) {
+					c.getPlayer().getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(toSpawnChild[0]), c.getPlayer().getPosition());
+				}
+			}
+		}
+		c.announce(MaplePacketCreator.enableActions());
+	}
 }

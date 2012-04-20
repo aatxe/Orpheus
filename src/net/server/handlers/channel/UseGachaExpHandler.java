@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 package net.server.handlers.channel;
 
@@ -29,16 +29,16 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
- *
+ * 
  * @author kevintjuh93
  */
 public class UseGachaExpHandler extends AbstractMaplePacketHandler {
-    public void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        if (c.getPlayer().getGachaExp() == 0) {
-            c.getPlayer().dropMessage(1, "Packet editing is for faggots like you.");
-            AutobanFactory.GACHA_EXP.autoban(c.getPlayer(), "Packet editing is for faggots like this nib.");
-        }
-        c.getPlayer().gainGachaExp();
-        c.announce(MaplePacketCreator.enableActions());
-    }
+	public void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		if (c.getPlayer().getGachaExp() == 0) {
+			c.getPlayer().dropMessage(1, "Packet editing is for faggots like you.");
+			AutobanFactory.GACHA_EXP.autoban(c.getPlayer(), "Packet editing is for faggots like this nib.");
+		}
+		c.getPlayer().gainGachaExp();
+		c.announce(MaplePacketCreator.enableActions());
+	}
 }

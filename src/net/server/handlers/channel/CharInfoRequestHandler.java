@@ -18,7 +18,7 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleCharacter;
@@ -28,11 +28,12 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class CharInfoRequestHandler extends AbstractMaplePacketHandler {
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        slea.readInt();
-        int cid = slea.readInt();
-        MapleCharacter player = (MapleCharacter) c.getPlayer().getMap().getMapObject(cid);
-        if (player.isHidden() && !c.getPlayer().isGM()) return;
-        c.announce(MaplePacketCreator.charInfo(player));
-    }
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		slea.readInt();
+		int cid = slea.readInt();
+		MapleCharacter player = (MapleCharacter) c.getPlayer().getMap().getMapObject(cid);
+		if (player.isHidden() && !c.getPlayer().isGM())
+			return;
+		c.announce(MaplePacketCreator.charInfo(player));
+	}
 }

@@ -18,16 +18,16 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package constants.skills;
 
 /**
- *
+ * 
  * @author BubblesDev
  */
 public class Marauder {
-    public static final int STUN_MASTERY = 5110000;
-    public static final int ENERGY_CHARGE = 5110001;
-    public static final int ENERGY_DRAIN = 5111004;
-    public static final int TRANSFORMATION = 5111005;
+	public static final int STUN_MASTERY = 5110000;
+	public static final int ENERGY_CHARGE = 5110001;
+	public static final int ENERGY_DRAIN = 5111004;
+	public static final int TRANSFORMATION = 5111005;
 }

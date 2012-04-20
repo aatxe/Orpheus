@@ -18,26 +18,29 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package net.server.handlers.channel;
 
 import client.MapleClient;
 import net.AbstractMaplePacketHandler;
 import tools.data.input.SeekableLittleEndianAccessor;
 
-public final class CancelDebuffHandler extends AbstractMaplePacketHandler {//TIP: BAD STUFF LOL!
-    public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-        /*List<MapleDisease> diseases = c.getPlayer().getDiseases();
-        List<MapleDisease> diseases_ = new ArrayList<MapleDisease>();
-        for (MapleDisease disease : diseases) {
-            List<MapleDisease> disease_ = new ArrayList<MapleDisease>();
-            disease_.add(disease);
-            diseases_.add(disease);
-            c.announce(MaplePacketCreator.cancelDebuff(disease_));
-            c.getPlayer().getMap().broadcastMessage(c.getPlayer(), MaplePacketCreator.cancelForeignDebuff(c.getPlayer().getId(), disease_), false);
-        }
-        for (MapleDisease disease : diseases_) {
-            c.getPlayer().removeDisease(disease);
-        }*/
-    }
+public final class CancelDebuffHandler extends AbstractMaplePacketHandler {// TIP:
+																			// BAD
+																			// STUFF
+																			// LOL!
+	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
+		/*
+		 * List<MapleDisease> diseases = c.getPlayer().getDiseases();
+		 * List<MapleDisease> diseases_ = new ArrayList<MapleDisease>(); for
+		 * (MapleDisease disease : diseases) { List<MapleDisease> disease_ = new
+		 * ArrayList<MapleDisease>(); disease_.add(disease);
+		 * diseases_.add(disease);
+		 * c.announce(MaplePacketCreator.cancelDebuff(disease_));
+		 * c.getPlayer().getMap().broadcastMessage(c.getPlayer(),
+		 * MaplePacketCreator.cancelForeignDebuff(c.getPlayer().getId(),
+		 * disease_), false); } for (MapleDisease disease : diseases_) {
+		 * c.getPlayer().removeDisease(disease); }
+		 */
+	}
 }

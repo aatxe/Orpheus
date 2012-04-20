@@ -17,18 +17,18 @@
 
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 package client;
 
 /**
- *
+ * 
  * @author anybody can do this
  */
 public class DiseaseValueHolder {
-    public long startTime, length;
-    
-    public DiseaseValueHolder(long start, long length) {
-        this.startTime = start;
-        this.length = length;
-    }
+	public long startTime, length;
+
+	public DiseaseValueHolder(long start, long length) {
+		this.startTime = start;
+		this.length = length;
+	}
 }
