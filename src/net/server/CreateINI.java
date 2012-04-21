@@ -97,7 +97,7 @@ public class CreateINI {
 				linux = con.readLine("Will your server be running Unix/Linux? ");
 			}
 			if (linux.equalsIgnoreCase("no") || linux.equalsIgnoreCase("n")) {
-				out = new FileOutputStream("launch_server.bat", false);
+				out = new FileOutputStream("runsrv.bat", false);
 				sb.append("@echo off").append("\r\n").append("@title OrpheusMS Server").append("\r\n");
 				sb.append("set CLASSPATH=.;dist\\*\r\n");
 				sb.append("java -Xmx").append(heapsize).append("m -Dwzpath=wz\\ -Djavax.net.ssl.keyStore=").append(keystore).append(" -Djavax.net.ssl.keyStorePassword=passwd -Djavax.net.ssl.trustStore=").append(keystore).append(" -Djavax.net.ssl.trustStorePassword=passwd net.server.Server\r\n");
