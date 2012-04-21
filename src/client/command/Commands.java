@@ -81,12 +81,6 @@ public class Commands {
 			NPCScriptManager.getInstance().dispose(c);
 			c.announce(MaplePacketCreator.enableActions());
 			chr.message("Done.");
-		} else if (sub[0].equals("rape")) {
-			List<Pair<MapleBuffStat, Integer>> list = new ArrayList<Pair<MapleBuffStat, Integer>>();
-			list.add(new Pair<MapleBuffStat, Integer>(MapleBuffStat.MORPH, 8));
-			list.add(new Pair<MapleBuffStat, Integer>(MapleBuffStat.CONFUSE, 1));
-			chr.announce(MaplePacketCreator.giveBuff(0, 0, list));
-			chr.getMap().broadcastMessage(chr, MaplePacketCreator.giveForeignBuff(chr.getId(), list));
 		} else {
 			if (chr.gmLevel() == 0) {
 				chr.yellowMessage("Player Command " + heading + sub[0] + " does not exist");

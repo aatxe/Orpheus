@@ -30,7 +30,7 @@ public class ServerConstants {
 	// Login Configuration
 	public static final int CHANNEL_LOAD = 100; // Players per channel
 	public static final long RANKING_INTERVAL = 3600000;
-	public static final boolean ENABLE_PIC = true;
+	public static final boolean ENABLE_PIC = false;
 	// Event Configuration
 	public static final boolean PERFECT_PITCH = false;
 	public static final String EVENTS = "automsg KerningPQ Boats Subway AirPlane elevator";

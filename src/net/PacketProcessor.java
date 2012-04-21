@@ -99,7 +99,7 @@ public final class PacketProcessor {
 		// CHANNEL HANDLERS
 		registerHandler(RecvOpcode.CHANGE_CHANNEL, new ChangeChannelHandler());
 		registerHandler(RecvOpcode.STRANGE_DATA, LoginRequiringNoOpHandler.getInstance());
-		registerHandler(RecvOpcode.GENERAL_CHAT, new GeneralchatHandler());
+		registerHandler(RecvOpcode.GENERAL_CHAT, new GeneralChatHandler());
 		registerHandler(RecvOpcode.WHISPER, new WhisperHandler());
 		registerHandler(RecvOpcode.NPC_TALK, new NPCTalkHandler());
 		registerHandler(RecvOpcode.NPC_TALK_MORE, new NPCMoreTalkHandler());

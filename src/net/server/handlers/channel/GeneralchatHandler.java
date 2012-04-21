@@ -27,7 +27,7 @@ import tools.data.input.SeekableLittleEndianAccessor;
 import client.MapleClient;
 import client.command.Commands;
 
-public final class GeneralchatHandler extends net.AbstractMaplePacketHandler {
+public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 
 	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
 		String s = slea.readMapleAsciiString();
