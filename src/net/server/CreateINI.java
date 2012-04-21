@@ -3,109 +3,112 @@ package net.server;
 import java.io.Console;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 
- * @author kevintjuh93
+ * @author Aaron Weiss
  */
 public class CreateINI {
 	public static void main(String args[]) {
 		StringBuilder sb = new StringBuilder();
-		String nextline = "\r\n";// Because I can, and it's free.
+		String nl = "\n";
 		byte worlds;
 		Console con = System.console();
 
-		System.out.println("Welcome to MoopleDEV's .ini creator\r\n\r\n");
+		sb.append("# OrpheusMS INI Configuration" + nl);
+		sb.append("# Created on " + getDateStamp() + nl + nl);
+		sb.append("# World Flags: 0 = None, 1 = Event, 2 = New, 3 = Hot" + nl);
+		
+		System.out.println("Welcome to OrpheusMS's Configuration Creator" + nl);
+		System.out.println("World Flags: 0 = None, 1 = Event, 2 = New, 3 = Hot");
+		worlds = Byte.parseByte(con.readLine("How many worlds? "));
+		sb.append("worlds=").append(worlds).append(nl + nl);
 
-		sb.append("#MoopleDEV's INI file. Do NOT modify it if you are an idiot (:\r\n");
-		sb.append("#Flag types: 0 = nothing, 1 = event, 2 = new, 3 = hot\r\n\r\n");
-
-		System.out.println("Flag types: 0 = nothing, 1 = event, 2 = new, 3 = hot\r\n\r\n");
-
-		worlds = Byte.parseByte(con.readLine("Number of worlds: "));
-		sb.append("worlds=").append(worlds).append("\r\n\r\n");
-
-		System.out.println("\r\n");
+		System.out.println(nl);
 
 		for (byte b = 0; b < worlds; b++) {
-			sb.append("#Properties for world ").append(b).append("\r\n");
-
+			sb.append("# Properties for world").append(b).append(nl);
 			System.out.println("Properties for world " + b);
-			if (b > 1)
-				System.out.println("Make sure you create a npc folder for this world!");
-			sb.append("flag").append(b).append("=").append(Byte.parseByte(con.readLine("   Flag: "))).append("\r\n");
-
-			sb.append("servermessage").append(b).append("=").append(con.readLine("   Server message: ")).append("\r\n");
-
-			sb.append("eventmessage").append(b).append("=").append(con.readLine("   Event message: ")).append("\r\n");
-
-			sb.append("whyamirecommended").append(b).append("=").append(con.readLine("   Recommend message: ")).append("\r\n");
-
-			sb.append("channels").append(b).append("=").append(Byte.parseByte(con.readLine("   Number of channels: "))).append("\r\n");
-
-			sb.append("exprate").append(b).append("=").append(Byte.parseByte(con.readLine("   Exp rate: "))).append("\r\n");
-
-			sb.append("droprate").append(b).append("=").append(Byte.parseByte(con.readLine("   Drop rate: "))).append("\r\n");
-
-			sb.append("mesorate").append(b).append("=").append(Byte.parseByte(con.readLine("   Meso rate: "))).append("\r\n");
-
-			sb.append("bossdroprate").append(b).append("=").append(Byte.parseByte(con.readLine("   Boss drop rate: "))).append("\r\n");
-
-			System.out.println(nextline);
-			sb.append("\r\n");
+			
+			if (b > 1) {
+				System.out.println("Be sure to create an NPC folder for this world!");
+			}
+			sb.append("flag").append(b).append("=").append(Byte.parseByte(con.readLine("\tWorld Flag: "))).append(nl);
+			sb.append("servermessage").append(b).append("=").append(con.readLine("\tServer Message: ")).append(nl);
+			sb.append("eventmessage").append(b).append("=").append(con.readLine("\tEvent Message: ")).append(nl);
+			sb.append("whyamirecommended").append(b).append("=").append(con.readLine("\tRecommend Message: ")).append(nl);
+			sb.append("channels").append(b).append("=").append(Byte.parseByte(con.readLine("\tNumber of Channels: "))).append(nl);
+			sb.append("exprate").append(b).append("=").append(Byte.parseByte(con.readLine("\tExperience Rate: "))).append(nl);
+			sb.append("mesorate").append(b).append("=").append(Byte.parseByte(con.readLine("\tMeso Rate: "))).append(nl);
+			sb.append("droprate").append(b).append("=").append(Byte.parseByte(con.readLine("\tDrop Rate: "))).append(nl);
+			sb.append("bossdroprate").append(b).append("=").append(Byte.parseByte(con.readLine("\tBoss Drop Rate: "))).append(nl);
+			System.out.println(nl);
+			sb.append(nl);
 		}
 
-		sb.append("\r\n").append("gmserver=").append(Boolean.parseBoolean(con.readLine("Do you want a GM Server? (true/false)")));
+		sb.append(nl).append("gmserver=").append(Boolean.parseBoolean(con.readLine("GM Server (true/false): ")));
 		FileOutputStream out = null;
 		try {
 			out = new FileOutputStream("moople.ini", false);
 			out.write(sb.toString().getBytes());
-		} catch (Exception ex) {
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			try {
 				if (out != null)
 					out.close();
-			} catch (IOException ex) {
-			}
+			} catch (IOException e) {}
 		}
 
+		System.out.println("Configuration Complete." + nl);
+		System.out.println("Server Launch Creator");
+		
 		sb = new StringBuilder();
 		try {
-			System.out.println("\r\nYou are about to set the Java Heap Size, if you don't know what it is, type '?'.");
 			String heapsize = con.readLine("Java Heap Size (in MB): ");
 			while (heapsize.equals("?")) {
-				System.out.println("\r\n");
-				System.out.println("WikiAnswers: Java heap is the heap size allocated to JVM applications which takes care of the new objects being created. If the objects being created exceed the heap size, it will throw an error saying memoryOutof Bound\r\n\r\n");
+				System.out.println("");
+				System.out.println("WikiAnswers: Java heap is the heap size allocated to JVM applications which takes care of the new objects being created. If the objects being created exceed the heap size, it will throw a MemoryOutofBounds exception." + nl);
 				heapsize = con.readLine("Java Heap Size (in MB): ");
 			}
-			String linux = con.readLine("\r\nAre you using a Linux platform or not? (y/n):");
-			while (!linux.equals("y") && !linux.equals("n")) {
-				System.out.println("Type 'y' if you use linux else type 'n'.");
-				linux = con.readLine("Are you using a Linux platform or not? (y/n):");
+			String keystore = con.readLine("Name of Keystore: ");
+			String linux = con.readLine("Will your server be running Unix/Linux? ");
+			while (!linux.equalsIgnoreCase("yes") && !linux.equalsIgnoreCase("no") && !linux.equalsIgnoreCase("y") && !linux.equalsIgnoreCase("n")) {
+				System.out.println("You must enter either yes or no.");
+				linux = con.readLine("Will your server be running Unix/Linux? ");
 			}
-			if (linux.equals("n")) {
+			if (linux.equalsIgnoreCase("no") || linux.equalsIgnoreCase("n")) {
 				out = new FileOutputStream("launch_server.bat", false);
-				sb.append("@echo off").append("\r\n").append("@title MoopleDEV Server v83").append("\r\n");
+				sb.append("@echo off").append("\r\n").append("@title OrpheusMS Server").append("\r\n");
 				sb.append("set CLASSPATH=.;dist\\*\r\n");
-				sb.append("java -Xmx").append(heapsize).append("m -Dwzpath=wz\\ -Djavax.net.ssl.keyStore=filename.keystore -Djavax.net.ssl.keyStorePassword=passwd -Djavax.net.ssl.trustStore=filename.keystore -Djavax.net.ssl.trustStorePassword=passwd net.server.Server\r\n");
+				sb.append("java -Xmx").append(heapsize).append("m -Dwzpath=wz\\ -Djavax.net.ssl.keyStore=").append(keystore).append(" -Djavax.net.ssl.keyStorePassword=passwd -Djavax.net.ssl.trustStore=").append(keystore).append(" -Djavax.net.ssl.trustStorePassword=passwd net.server.Server\r\n");
 				sb.append("pause");
-			} else {// test
-				out = new FileOutputStream("launch_server.sh", false);
-				sb.append("#!/bin/sh").append("\r\n\r\n");
-				sb.append("export CLASSPATH=").append(".:dist//*\r\n\r\n");
-				sb.append("java -Dwzpath=wz/ \\ \r\n").append("-Djavax.net.ssl.keyStore=filename.keystore \\ \r\n-Djavax.net.ssl.keyStorePassword=passwd \\ \r\n-Djavax.net.ssl.trustStore=filename.keystore \\ \r\n-Djavax.net.ssl.trustStorePassword=passwd \\ \r\n");
-				sb.append("-Xmx").append(heapsize).append("M \\").append("\r\nnet.server.Server");
+			} else if (linux.equalsIgnoreCase("yes") || linux.equalsIgnoreCase("y")) {
+				out = new FileOutputStream("runsrv.sh", false);
+				sb.append("#!/bin/sh").append(nl);
+				sb.append("export CLASSPATH=").append(".:dist/*").append(nl);
+				sb.append("java ").append("-Xmx").append(heapsize).append("M").append(" -Dwzpath=wz/ ").append("-Djavax.net.ssl.keyStore=").append(keystore).append(" -Djavax.net.ssl.keyStorePassword=passwd -Djavax.net.ssl.trustStore=").append(keystore).append(" -Djavax.net.ssl.trustStorePassword=passwd");
+				sb.append(" net.server.Server");
 			}
 			out.write(sb.toString().getBytes());
-		} catch (Exception ex) {
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			try {
 				if (out != null)
 					out.close();
-			} catch (IOException ex) {
-			}
+			} catch (IOException e) {}
 		}
-		System.out.println("\r\nMake sure that ServerConstants in modified too, and clean+compiled before you start the server.");
-		System.out.println("If you want other settings; restart this script or modify the moople.ini");
+		System.out.println("");
+		System.out.println("Make sure that ServerConstants is modified, cleaned, andcompiled before you start the server.");
+		System.out.println("If you would like to modify these settings, rerun this script, or modify the generated configuration file.");
+	}
+	
+	private static String getDateStamp() {
+		Date now = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
+		return sdf.format(now);
 	}
 }
