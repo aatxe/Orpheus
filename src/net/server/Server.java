@@ -132,6 +132,9 @@ public class Server implements Runnable {
 			System.out.println("Please run the OrpheusMS INI Configuration tool.");
 			System.exit(0);
 		}
+		if (!ServerConstants.DB_USE_COMPILED_VALUES) { 
+			DatabaseConnection.update("jdbc:mysql://" + p.getProperty("mysql_host") + ":" + p.getProperty("mysql_port") + "/Orpheus?autoReconnect=true", p.getProperty("mysql_user"), p.getProperty("mysql_pass"));
+		}
 		Runtime.getRuntime().addShutdownHook(new Thread(shutdown(false)));
 		DatabaseConnection.getConnection();
 		IoBuffer.setUseDirectBuffer(false);

@@ -25,7 +25,24 @@ public class CreateINI {
 		System.out.println("World Flags: 0 = None, 1 = Event, 2 = New, 3 = Hot");
 		worlds = Byte.parseByte(con.readLine("How many worlds? "));
 		sb.append("worlds=").append(worlds).append(nl + nl);
-
+		
+		System.out.println(nl);
+		System.out.println("Properties for server");
+		String mysqlInConfig = con.readLine("Would you like to configure MySQL in the configuration file? ");
+		while (!mysqlInConfig.equalsIgnoreCase("yes") && !mysqlInConfig.equalsIgnoreCase("no") && !mysqlInConfig.equalsIgnoreCase("y") && !mysqlInConfig.equalsIgnoreCase("n")) {
+			System.out.println("You must enter either yes or no.");
+			mysqlInConfig = con.readLine("Would you like to configure MySQL in the configuration file? ");
+		}
+		
+		if (mysqlInConfig.equalsIgnoreCase("yes") || mysqlInConfig.equalsIgnoreCase("y")) {
+			sb.append("# Properties for server").append(nl);
+			sb.append("mysql_host").append("=").append(con.readLine("\tMySQL Host: ")).append(nl);
+			sb.append("mysql_port").append("=").append(Integer.parseInt(con.readLine("\tMySQL Port: "))).append(nl);
+			sb.append("mysql_user").append("=").append(con.readLine("\tMySQL Username: ")).append(nl);
+			sb.append("mysql_pass").append("=").append(con.readLine("\tMySQL Password: ")).append(nl);
+			System.out.println("Be sure to set DB_USE_COMPILED_VALUES to false in ServerConstants!");
+		}
+		
 		System.out.println(nl);
 
 		for (byte b = 0; b < worlds; b++) {

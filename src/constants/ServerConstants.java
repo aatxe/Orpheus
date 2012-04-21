@@ -37,7 +37,8 @@ public class ServerConstants {
 	// IP Configuration
 	public static final String HOST = "localhost";
 	// Database Configuration
-	public static final String DB_URL = "jdbc:mysql://localhost:3306/MoopleDEV?autoReconnect=true";
+	public static final boolean DB_USE_COMPILED_VALUES = false;
+	public static final String DB_URL = "jdbc:mysql://localhost:3306/Orpheus?autoReconnect=true";
 	public static final String DB_USER = "root";
 	public static final String DB_PASS = "";
 }

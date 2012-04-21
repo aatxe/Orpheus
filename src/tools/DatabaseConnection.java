@@ -26,12 +26,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DatabaseConnection {// gay
+public class DatabaseConnection {
 	private static ThreadLocal<Connection> con = new ThreadLocalConnection();
 	private static String url = ServerConstants.DB_URL;
 	private static String user = ServerConstants.DB_USER;
 	private static String pass = ServerConstants.DB_PASS;
 
+	public static void update(String url, String user, String pass) {
+		DatabaseConnection.url = url;
+		DatabaseConnection.user = user;
+		DatabaseConnection.pass = pass;
+	}
+	
 	public static Connection getConnection() {
 		return con.get();
 	}
@@ -44,8 +50,7 @@ public class DatabaseConnection {// gay
 	private static class ThreadLocalConnection extends ThreadLocal<Connection> {
 		static {
 			try {
-				Class.forName("com.mysql.jdbc.Driver"); // touch the mysql
-														// driver
+				Class.forName("com.mysql.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
 				System.out.println("Could not locate the JDBC mysql driver.");
 			}
@@ -57,7 +62,6 @@ public class DatabaseConnection {// gay
 		}
 
 		private Connection getConnection() {
-			// Fk u *n word*
 			try {
 				return DriverManager.getConnection(url, user, pass);
 			} catch (SQLException sql) {
