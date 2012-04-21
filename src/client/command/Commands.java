@@ -255,12 +255,7 @@ public class Commands {
 					c.getChannelServer().setEvent(new MapleEvent(109020001, 50));
 					srv.broadcastMessage(player.getWorld(), MaplePacketCreator.serverNotice(0, "Hello Scania let's play an event in " + player.getMap().getMapName() + " CH " + c.getChannel() + "! " + player.getMap().getEventNPC()));
 				} else if (sub[1].equals("ola")) {
-					c.getChannelServer().setEvent(new MapleEvent(109030101, 50)); // Wrong
-																					// map
-																					// but
-																					// still
-																					// Ola
-																					// Ola
+					c.getChannelServer().setEvent(new MapleEvent(109030101, 50));
 					srv.broadcastMessage(player.getWorld(), MaplePacketCreator.serverNotice(0, "Hello Scania let's play an event in " + player.getMap().getMapName() + " CH " + c.getChannel() + "! " + player.getMap().getEventNPC()));
 				} else if (sub[1].equals("fitness")) {
 					c.getChannelServer().setEvent(new MapleEvent(109040000, 50));
@@ -322,9 +317,8 @@ public class Commands {
 					}
 				} else {
 					for (Pair<Integer, String> itemPair : MapleItemInformationProvider.getInstance().getAllItems()) {
-						if (sb.length() < 32654) {// ohlol
+						if (sb.length() < 32654) {
 							if (itemPair.getRight().toLowerCase().contains(search.toLowerCase())) {
-								// #v").append(id).append("# #k-
 								sb.append("#b").append(itemPair.getLeft()).append("#k - #r").append(itemPair.getRight()).append("\r\n");
 							}
 						} else {
@@ -336,14 +330,7 @@ public class Commands {
 				if (sb.length() == 0) {
 					sb.append("#bNo ").append(sub[1].toLowerCase()).append("s found.\r\n");
 				}
-
-				sb.append("\r\n#kLoaded within ").append((double) (System.currentTimeMillis() - start) / 1000).append(" seconds.");// because
-																																	// I
-																																	// can,
-																																	// and
-																																	// it's
-																																	// free
-
+				sb.append("\r\n#kLoaded within ").append((double) (System.currentTimeMillis() - start) / 1000).append(" seconds.");
 			} else {
 				sb.append("#bInvalid search.\r\nSyntax: '/search [type] [name]', where [type] is NPC, ITEM, MOB, or SKILL.");
 			}
