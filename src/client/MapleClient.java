@@ -547,7 +547,10 @@ public class MapleClient {
 					state = LOGIN_NOTLOGGEDIN;
 					updateLoginState(LOGIN_NOTLOGGEDIN);
 				}
-			}
+			} else if (state == LOGIN_LOGGEDIN && player == null) {
+                state = LOGIN_NOTLOGGEDIN;
+                updateLoginState(LOGIN_NOTLOGGEDIN);
+            }  
 			rs.close();
 			ps.close();
 			if (state == LOGIN_LOGGEDIN) {
