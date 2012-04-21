@@ -127,9 +127,9 @@ public class Server implements Runnable {
 	public void run() {
 		Properties p = new Properties();
 		try {
-			p.load(new FileInputStream("moople.ini"));
+			p.load(new FileInputStream("orpheus.ini"));
 		} catch (Exception e) {
-			System.out.println("Please start create_server.bat");
+			System.out.println("Please run the OrpheusMS INI Configuration tool.");
 			System.exit(0);
 		}
 		Runtime.getRuntime().addShutdownHook(new Thread(shutdown(false)));
@@ -148,7 +148,7 @@ public class Server implements Runnable {
 				System.out.println("Starting world " + i);
 				World world = new World(i, Byte.parseByte(p.getProperty("flag" + i)), p.getProperty("eventmessage" + i), Byte.parseByte(p.getProperty("exprate" + i)), Byte.parseByte(p.getProperty("droprate" + i)), Byte.parseByte(p.getProperty("mesorate" + i)), Byte.parseByte(p.getProperty("bossdroprate" + i)));// ohlol
 
-				worldRecommendedList.add(new Pair<Byte, String>(i, p.getProperty("whyamirecommended" + i)));
+				worldRecommendedList.add(new Pair<Byte, String>(i, p.getProperty("recommendmessage" + i)));
 				worlds.add(world);
 				channels.add(new LinkedHashMap<Byte, String>());
 				load.add(new LinkedHashMap<Byte, AtomicInteger>());
@@ -163,8 +163,8 @@ public class Server implements Runnable {
 				System.out.println("Finished loading world " + i + "\r\n");
 			}
 		} catch (Exception e) {
-			System.out.println("Error in moople.ini, start CreateINI.bat to re-make the file.");
-			e.printStackTrace();// For those who get errors
+			System.out.println("Errors in orpheus.ini, recreate it with the OrpheusMS INI Configuration tool.");
+			e.printStackTrace();
 			System.exit(0);
 		}
 

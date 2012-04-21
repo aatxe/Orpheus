@@ -38,7 +38,7 @@ public class CreateINI {
 			sb.append("flag").append(b).append("=").append(Byte.parseByte(con.readLine("\tWorld Flag: "))).append(nl);
 			sb.append("servermessage").append(b).append("=").append(con.readLine("\tServer Message: ")).append(nl);
 			sb.append("eventmessage").append(b).append("=").append(con.readLine("\tEvent Message: ")).append(nl);
-			sb.append("whyamirecommended").append(b).append("=").append(con.readLine("\tRecommend Message: ")).append(nl);
+			sb.append("recommendmessage").append(b).append("=").append(con.readLine("\tRecommend Message: ")).append(nl);
 			sb.append("channels").append(b).append("=").append(Byte.parseByte(con.readLine("\tNumber of Channels: "))).append(nl);
 			sb.append("exprate").append(b).append("=").append(Byte.parseByte(con.readLine("\tExperience Rate: "))).append(nl);
 			sb.append("mesorate").append(b).append("=").append(Byte.parseByte(con.readLine("\tMeso Rate: "))).append(nl);
@@ -51,7 +51,7 @@ public class CreateINI {
 		sb.append(nl).append("gmserver=").append(Boolean.parseBoolean(con.readLine("GM Server (true/false): ")));
 		FileOutputStream out = null;
 		try {
-			out = new FileOutputStream("moople.ini", false);
+			out = new FileOutputStream("orpheus.ini", false);
 			out.write(sb.toString().getBytes());
 		} catch (Exception e) {
 			e.printStackTrace();
