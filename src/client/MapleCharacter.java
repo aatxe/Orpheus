@@ -2572,6 +2572,20 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			ret.getInventory(MapleInventoryType.ETC).setSlotLimit(rs.getByte("etcslots"));
 			for (Pair<IItem, MapleInventoryType> item : ItemFactory.INVENTORY.loadItems(ret.id, !channelserver)) {
 				ret.getInventory(item.getRight()).addFromDB(item.getLeft());
+				if (item.getRight().equals(MapleInventoryType.EQUIP) || item.getRight().equals(MapleInventoryType.EQUIPPED)) {
+					IEquip equip = (IEquip) item.getLeft();
+					if (equip.getRingId() > -1) {
+						MapleRing ring = MapleRing.loadFromDb(equip.getRingId());
+						if (item.getRight().equals(MapleInventoryType.EQUIPPED)) {
+							ring.equip();
+						}
+						if (ring.getItemId() > 1112012) {
+							ret.addFriendshipRing(ring);
+						} else {
+							ret.addCrushRing(ring);
+						}
+					}
+				}
 				IItem itemz = item.getLeft();
 				if (itemz.getPetId() > -1) {
 					MaplePet pet = itemz.getPet();
