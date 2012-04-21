@@ -106,6 +106,6 @@ public class CreateINI {
 			}
 		}
 		System.out.println("\r\nMake sure that ServerConstants in modified too, and clean+compiled before you start the server.");
-		System.out.println("If you want other settings; restart this .bat or modify the moople.ini");
+		System.out.println("If you want other settings; restart this script or modify the moople.ini");
 	}
 }

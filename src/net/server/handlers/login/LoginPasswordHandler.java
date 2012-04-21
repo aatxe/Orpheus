@@ -21,6 +21,7 @@
  */
 package net.server.handlers.login;
 
+import client.AutoRegister;
 import client.MapleClient;
 import java.util.Calendar;
 import net.MaplePacketHandler;
@@ -41,7 +42,17 @@ public final class LoginPasswordHandler implements MaplePacketHandler {
 		String login = slea.readMapleAsciiString();
 		String pwd = slea.readMapleAsciiString();
 		c.setAccountName(login);
-		loginok = c.login(login, pwd);
+		
+		if (AutoRegister.getAccountExists(login)) {
+			loginok = c.login(login, pwd);
+		} else if (AutoRegister.wasSuccessful()) {
+			AutoRegister.createAccount(login, pwd, c.getSession().getRemoteAddress().toString());
+			if (AutoRegister.wasSuccessful()) {
+				loginok = c.login(login, pwd);
+			}
+		} else {
+			loginok = c.login(login, pwd);
+		}
 
 		if (c.hasBannedIP() || c.hasBannedMac()) {
 			c.announce(MaplePacketCreator.getLoginFailed(3));
@@ -55,19 +66,14 @@ public final class LoginPasswordHandler implements MaplePacketHandler {
 			}
 		}
 		if (loginok == 3) {
-			c.announce(MaplePacketCreator.getPermBan(c.getGReason()));// crashes
-																		// but
-																		// idc
-																		// :D
+			c.announce(MaplePacketCreator.getPermBan(c.getGReason()));
 			return;
 		} else if (loginok != 0) {
 			c.announce(MaplePacketCreator.getLoginFailed(loginok));
 			return;
 		}
 		if (c.finishLogin() == 0) {
-			c.announce(MaplePacketCreator.getAuthSuccess(c));// why the fk did I
-																// do
-																// c.getAccountName()?
+			c.announce(MaplePacketCreator.getAuthSuccess(c));
 			final MapleClient client = c;
 			c.setIdleTask(TimerManager.getInstance().schedule(new Runnable() {
 				@Override
