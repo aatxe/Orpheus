@@ -4,10 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import constants.ServerConstants;
 import tools.DatabaseConnection;
 
 public class AutoRegister {
-	public static final boolean autoRegister = true;
+	public static final boolean autoRegister = ServerConstants.ENABLE_AUTOREGISTER;
 	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MapleClient.class);
 	private static final int ACCOUNTS_PER_IP = 4;
 	private static boolean success;

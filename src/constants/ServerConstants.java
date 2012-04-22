@@ -30,6 +30,7 @@ public class ServerConstants {
 	public static final byte QUEST_EXP_RATE = 4;
 	public static final byte QUEST_MESO_RATE = 3;
 	// Login Configuration
+	public static final boolean ENABLE_AUTOREGISTER = true;
 	public static final int CHANNEL_LOAD = 100; // Players per channel
 	public static final long RANKING_INTERVAL = 3600000;
 	public static final boolean ENABLE_PIC = false;
