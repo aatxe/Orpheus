@@ -38,6 +38,8 @@ public class PlayerCommands extends Commands {
 			case back:
 				chr.setChalkboard("");
 				chr.dropMessage("Welcome back!");
+			case bugs:
+				chr.dropMessage("Report bugs at https://github.com/aaronweiss74/Orpheus/issues");
 			case buy:
 				if (chr.getMeso() > 999999999) { // Has 999,999,999 mesos.
 					chr.gainMeso(-1000000000, false); // Lose 1,000,000,000
@@ -113,6 +115,7 @@ public class PlayerCommands extends Commands {
 				chr.dropMessage(ServerConstants.SERVER_NAME + "'s PlayerCommands Help");
 				chr.dropMessage("@afk - Marks you as away, or with an optional message.");
 				chr.dropMessage("@back - Marks you as returned.");
+				chr.dropMessage("@bugs - Tells players where to report bugs!");
 				chr.dropMessage("@buy - Purchases a rice cake for 1,000,000,000 mesos.");
 				chr.dropMessage("@checkgm - Checks if a specified player is a GM.");
 				chr.dropMessage("@checkrebirths - Checks a player's rebirths.");
@@ -287,6 +290,7 @@ public class PlayerCommands extends Commands {
 	private static enum Command {
 		afk,
 		back,
+		bugs,
 		buy, 
 		checkgm, 
 		checkrebirths, 
