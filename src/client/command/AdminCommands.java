@@ -1,17 +1,9 @@
 package client.command;
 
 import java.sql.ResultSet;
-import java.util.Arrays;
-import java.util.List;
-import server.MapleInventoryManipulator;
-import server.maps.MapleMapItem;
-import server.maps.MapleMapObject;
-import server.maps.MapleMapObjectType;
-import tools.MaplePacketCreator;
 import net.server.Channel;
 import client.MapleCharacter;
 import client.MapleClient;
-import client.MapleStat;
 
 public class AdminCommands extends Commands {
 	public static void execute(MapleClient c, String[] sub, char heading) {
