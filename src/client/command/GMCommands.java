@@ -1,9 +1,12 @@
 package client.command;
 
+import java.io.File;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.List;
+import provider.MapleData;
+import provider.MapleDataProviderFactory;
 import net.server.Channel;
 import net.server.Server;
 import server.MapleItemInformationProvider;
@@ -16,6 +19,7 @@ import server.maps.MapleMapObjectType;
 import tools.DatabaseConnection;
 import tools.MaplePacketCreator;
 import client.IItem;
+import client.ISkill;
 import client.Item;
 import client.MapleCharacter;
 import client.MapleClient;
@@ -163,6 +167,33 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !map number || !map playerName number");
 				}
+			case maxskills:
+				if (sub.length == 2) {
+					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
+					for (MapleData skill_ : MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzpath") + "/" + "String.wz")).getData("Skill.img").getChildren()) {
+		                try {
+		                    ISkill skill = SkillFactory.getSkill(Integer.parseInt(skill_.getName()));
+		                    victim.changeSkillLevel(skill, (byte) skill.getMaxLevel(), skill.getMaxLevel(), -1);
+		                } catch (NumberFormatException nfe) {
+		                    break;
+		                } catch (NullPointerException npe) {
+		                    continue;
+		                }
+		            }
+				} else if (sub.length == 1) {
+					for (MapleData skill_ : MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzpath") + "/" + "String.wz")).getData("Skill.img").getChildren()) {
+		                try {
+		                    ISkill skill = SkillFactory.getSkill(Integer.parseInt(skill_.getName()));
+		                    chr.changeSkillLevel(skill, (byte) skill.getMaxLevel(), skill.getMaxLevel(), -1);
+		                } catch (NumberFormatException nfe) {
+		                    break;
+		                } catch (NullPointerException npe) {
+		                    continue;
+		                }
+		            }
+				} else {
+					chr.message("Usage: !maxskills || !maxskills playerName");
+				}
 			case maxstats:
 				if (sub.length == 2) {
 					final String[] s = {"setall", sub[1], String.valueOf(Short.MAX_VALUE)};
@@ -287,6 +318,7 @@ public class GMCommands extends Commands {
 		level,
 		levelup,
 		map,
+		maxskills,
 		maxstats,
 		mesos,
 		pap,
