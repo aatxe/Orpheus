@@ -169,7 +169,7 @@ public class GMCommands extends Commands {
 				}
 			case maxskills:
 				if (sub.length == 2) {
-					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
+					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]); 
 					for (MapleData skill_ : MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzpath") + "/" + "String.wz")).getData("Skill.img").getChildren()) {
 		                try {
 		                    ISkill skill = SkillFactory.getSkill(Integer.parseInt(skill_.getName()));

@@ -42,8 +42,8 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 		if (heading == '/' || heading == '!' || heading == '@') {
 			String[] sp = s.split(" ");
 			sp[0] = sp[0].toLowerCase().substring(1);
-			if (heading == '@') {
-				if (DonorCommands.isCommand(sp[0]) && chr.gmLevel() >= 2) {
+			if (heading == '@' || heading == '/') {
+				if (DonorCommands.isCommand(sp[0]) && chr.gmLevel() >= 1) {
 					DonorCommands.execute(c, sp, heading);
 				} else {
 					PlayerCommands.execute(c, sp, heading);
@@ -75,6 +75,12 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 					if (GMCommands.isCommand(sp[0])) {
 						GMCommands.execute(c, sp, heading);
 					} else if (SupportCommands.isCommand(sp[0])) {
+						SupportCommands.execute(c, sp, heading);
+					} else {
+						Commands.execute(c, sp, heading);
+					}
+				} else if (chr.gmLevel() == 2) {
+					if (SupportCommands.isCommand(sp[0])) {
 						SupportCommands.execute(c, sp, heading);
 					} else {
 						Commands.execute(c, sp, heading);
