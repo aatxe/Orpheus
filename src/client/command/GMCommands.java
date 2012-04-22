@@ -280,6 +280,12 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !setall number || !setall playerName number");
 				}
+			case shop:
+				if (sub.length == 2) {
+					MapleShopFactory.getInstance().getShop(Integer.parseInt(sub[1])).sendShop(c);
+				} else {
+					chr.message("Usage: !shop number");
+				}
 			case sp:
 				if (sub.length > 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -298,6 +304,12 @@ public class GMCommands extends Commands {
 					}
 				} else {
 					chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(Integer.parseInt(sub[1])), chr.getPosition());
+				}
+			case speak:
+				if (sub.length == 2) {
+					NPCScriptManager.getInstance().start(c, Integer.parseInt(sub[1]), null, null);
+				} else {
+					chr.message("Usage: !speak number");
 				}
 			case texttype:
 				chr.toggleGMText();
@@ -339,8 +351,10 @@ public class GMCommands extends Commands {
 		search,
 		servermessage,
 		setall,
+		shop,
 		sp,
 		spawn,
+		speak,
 		texttype,
 		unban,
 	}
