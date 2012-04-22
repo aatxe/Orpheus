@@ -9,6 +9,7 @@ import provider.MapleData;
 import provider.MapleDataProviderFactory;
 import net.server.Channel;
 import net.server.Server;
+import scripting.npc.NPCScriptManager;
 import server.MapleItemInformationProvider;
 import server.MapleShopFactory;
 import server.life.MapleLifeFactory;
@@ -71,6 +72,15 @@ public class GMCommands extends Commands {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
 				} else {
 					chr.message("Usage: !dc playerName");
+				}
+			case dispose:
+				if (sub.length == 2) {
+					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
+					NPCScriptManager.getInstance().dispose(victim.getClient());
+					victim.getClient().announce(MaplePacketCreator.enableActions());
+					chr.message("Done.");
+				} else {
+					chr.message("Usage: !dispose playerName");
 				}
 			case drop:
 				int itemId = Integer.parseInt(sub[1]);
@@ -308,6 +318,7 @@ public class GMCommands extends Commands {
 		ap,
 		buff,
 		dc,
+		dispose,
 		drop,
 		fame,
 		gmshop,
