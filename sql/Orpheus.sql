@@ -10,6 +10,7 @@ CREATE TABLE `accounts` (
   `salt` varchar(128) DEFAULT NULL,
   `pin` varchar(10) DEFAULT NULL,
   `pic` varchar(26) DEFAULT NULL,
+  `email` VARCHAR(255) NOT NULL DEFAULT '',
   `loggedin` tinyint(4) NOT NULL DEFAULT '0',
   `lastlogin` timestamp NULL DEFAULT NULL,
   `createdat` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -18,6 +19,7 @@ CREATE TABLE `accounts` (
   `banreason` text,
   `gm` tinyint(1) NOT NULL DEFAULT '0',
   `macs` tinytext,
+  `lastknownip` VARCHAR(30) NOT NULL DEFAULT '',
   `nxCredit` int(11) DEFAULT NULL,
   `maplePoint` int(11) DEFAULT NULL,
   `nxPrepaid` int(11) DEFAULT NULL,
@@ -167,6 +169,7 @@ CREATE TABLE `characters` (
   `sp` int(11) NOT NULL DEFAULT '0',
   `map` int(11) NOT NULL DEFAULT '0',
   `spawnpoint` int(11) NOT NULL DEFAULT '0',
+  `rebirths` int(11) NOT NULL DEFAULT '0',
   `gm` tinyint(1) NOT NULL DEFAULT '0',
   `party` int(11) NOT NULL DEFAULT '0',
   `buddyCapacity` int(11) NOT NULL DEFAULT '25',
@@ -19157,6 +19160,30 @@ CREATE TABLE `skills` (
 
 -- ----------------------------
 -- Records of skills
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `spawns`
+-- ----------------------------
+DROP TABLE IF EXISTS `spawns`;
+CREATE TABLE  `spawns` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idd` int(11) NOT NULL,
+  `f` int(11) NOT NULL,
+  `fh` int(11) NOT NULL,
+  `type` varchar(1) NOT NULL,
+  `cy` int(11) NOT NULL,
+  `rx0` int(11) NOT NULL,
+  `rx1` int(11) NOT NULL,
+  `x` int(11) NOT NULL,
+  `y` int(11) NOT NULL,
+  `mobtime` int(11) DEFAULT '1000',
+  `mid` int(11) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=161 DEFAULT CHARSET=latin1;  
+
+-- ----------------------------
+-- Records of spawns
 -- ----------------------------
 
 -- ----------------------------

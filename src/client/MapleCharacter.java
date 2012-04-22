@@ -147,7 +147,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	private int messengerposition = 4;
 	private int slots = 0;
 	private int energybar;
+	private int rebirths;
 	private int gmLevel;
+	private boolean whitetext = true;
 	private int ci = 0;
 	private MapleFamily family;
 	private int familyId;
@@ -1616,6 +1618,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	public int getDojoStage() {
 		return dojoStage;
 	}
+	
+	public int getRebirths() {
+		return rebirths;
+	}
 
 	public List<MapleDoor> getDoors() {
 		return new ArrayList<MapleDoor>(doors);
@@ -2122,6 +2128,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		return slots;
 	}
 
+	public String getStaffRank() {
+		return MapleRank.getById(gmLevel).toString();
+	}
+
 	public final List<MapleQuestStatus> getStartedQuests() {
 		List<MapleQuestStatus> ret = new LinkedList<MapleQuestStatus>();
 		for (MapleQuestStatus q : quests.values()) {
@@ -2152,7 +2162,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		}
 		return mbsvh.effect;
 	}
-
+	
 	public MapleStorage getStorage() {
 		return storage;
 	}
@@ -2529,6 +2539,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			ret.remainingAp = rs.getInt("ap");
 			ret.meso.set(rs.getInt("meso"));
 			ret.merchantmeso = rs.getInt("MerchantMesos");
+			ret.rebirths = rs.getInt("rebirths");
 			ret.gmLevel = rs.getInt("gm");
 			ret.skinColor = MapleSkinColor.getById(rs.getInt("skincolor"));
 			ret.gender = rs.getInt("gender");
@@ -3299,6 +3310,27 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	public void resetMGC() {
 		this.mgc = null;
 	}
+	
+	public void rebirthBeginner() {
+		this.setLevel(1);
+		this.setJob(MapleJob.BEGINNER);
+		this.setExp(0);
+		rebirths++;
+	}
+	
+	public void rebirthNoblesse() {
+		this.setLevel(1);
+		this.setJob(MapleJob.NOBLESSE);
+		this.setExp(0);
+		rebirths++;
+	}
+	
+	public void rebirthAran() {
+		this.setLevel(1);
+		this.setJob(MapleJob.ARAN1);
+		this.setExp(0);
+		rebirths++;
+	}
 
 	public void saveCooldowns() {
 		if (getAllCooldowns().size() > 0) {
@@ -3345,9 +3377,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			con.setAutoCommit(false);
 			PreparedStatement ps;
 			if (update) {
-				ps = con.prepareStatement("UPDATE characters SET level = ?, fame = ?, str = ?, dex = ?, luk = ?, `int` = ?, exp = ?, gachaexp = ?, hp = ?, mp = ?, maxhp = ?, maxmp = ?, sp = ?, ap = ?, gm = ?, skincolor = ?, gender = ?, job = ?, hair = ?, face = ?, map = ?, meso = ?, hpMpUsed = ?, spawnpoint = ?, party = ?, buddyCapacity = ?, messengerid = ?, messengerposition = ?, mountlevel = ?, mountexp = ?, mounttiredness= ?, equipslots = ?, useslots = ?, setupslots = ?, etcslots = ?,  monsterbookcover = ?, vanquisherStage = ?, dojoPoints = ?, lastDojoStage = ?, finishedDojoTutorial = ?, vanquisherKills = ?, matchcardwins = ?, matchcardlosses = ?, matchcardties = ?, omokwins = ?, omoklosses = ?, omokties = ? WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
+				ps = con.prepareStatement("UPDATE characters SET level = ?, fame = ?, str = ?, dex = ?, luk = ?, `int` = ?, exp = ?, gachaexp = ?, hp = ?, mp = ?, maxhp = ?, maxmp = ?, sp = ?, ap = ?, rebirths = ?, gm = ?, skincolor = ?, gender = ?, job = ?, hair = ?, face = ?, map = ?, meso = ?, hpMpUsed = ?, spawnpoint = ?, party = ?, buddyCapacity = ?, messengerid = ?, messengerposition = ?, mountlevel = ?, mountexp = ?, mounttiredness= ?, equipslots = ?, useslots = ?, setupslots = ?, etcslots = ?,  monsterbookcover = ?, vanquisherStage = ?, dojoPoints = ?, lastDojoStage = ?, finishedDojoTutorial = ?, vanquisherKills = ?, matchcardwins = ?, matchcardlosses = ?, matchcardties = ?, omokwins = ?, omoklosses = ?, omokties = ? WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
 			} else {
-				ps = con.prepareStatement("INSERT INTO characters (level, fame, str, dex, luk, `int`, exp, gachaexp, hp, mp, maxhp, maxmp, sp, ap, gm, skincolor, gender, job, hair, face, map, meso, hpMpUsed, spawnpoint, party, buddyCapacity, messengerid, messengerposition, mountlevel, mounttiredness, mountexp, equipslots, useslots, setupslots, etcslots, monsterbookcover, vanquisherStage, dojopoints, lastDojoStage, finishedDojoTutorial, vanquisherKills, matchcardwins, matchcardlosses, matchcardties, omokwins, omoklosses, omokties, accountid, name, world) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+				ps = con.prepareStatement("INSERT INTO characters (level, fame, str, dex, luk, `int`, exp, gachaexp, hp, mp, maxhp, maxmp, sp, ap, rebirths, gm, skincolor, gender, job, hair, face, map, meso, hpMpUsed, spawnpoint, party, buddyCapacity, messengerid, messengerposition, mountlevel, mounttiredness, mountexp, equipslots, useslots, setupslots, etcslots, monsterbookcover, vanquisherStage, dojopoints, lastDojoStage, finishedDojoTutorial, vanquisherKills, matchcardwins, matchcardlosses, matchcardties, omokwins, omoklosses, omokties, accountid, name, world) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			}
 			if (gmLevel < 1 && level > 199) {
 				ps.setInt(1, isCygnus() ? 120 : 200);
@@ -3367,88 +3399,89 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			ps.setInt(12, maxmp);
 			ps.setInt(13, remainingSp);
 			ps.setInt(14, remainingAp);
-			ps.setInt(15, gmLevel);
-			ps.setInt(16, skinColor.getId());
-			ps.setInt(17, gender);
-			ps.setInt(18, job.getId());
-			ps.setInt(19, hair);
-			ps.setInt(20, face);
+			ps.setInt(15, rebirths);
+			ps.setInt(16, gmLevel);
+			ps.setInt(17, skinColor.getId());
+			ps.setInt(18, gender);
+			ps.setInt(19, job.getId());
+			ps.setInt(20, hair);
+			ps.setInt(21, face);
 			if (map == null) {
 				if (getJob() == MapleJob.BEGINNER) {
-					ps.setInt(21, 0);
+					ps.setInt(22, 0);
 				} else if (getJob() == MapleJob.NOBLESSE) {
-					ps.setInt(21, 130030000);
+					ps.setInt(22, 130030000);
 				} else if (getJob() == MapleJob.LEGEND) {
-					ps.setInt(21, 914000000);
+					ps.setInt(22, 914000000);
 				} else if (getJob() == MapleJob.GM || getJob() == MapleJob.SUPERGM) {
-					ps.setInt(21, 180000000);
+					ps.setInt(22, 180000000);
 				}
 			} else {
 				if (map.getForcedReturnId() != 999999999) {
-					ps.setInt(21, map.getForcedReturnId());
+					ps.setInt(22, map.getForcedReturnId());
 				} else {
-					ps.setInt(21, map.getId());
+					ps.setInt(22, map.getId());
 				}
 			}
-			ps.setInt(22, meso.get());
-			ps.setInt(23, hpMpApUsed);
+			ps.setInt(23, meso.get());
+			ps.setInt(24, hpMpApUsed);
 			if (map == null || map.getId() == 610020000 || map.getId() == 610020001) {
-				ps.setInt(24, 0);
+				ps.setInt(25, 0);
 			} else {
 				MaplePortal closest = map.findClosestSpawnpoint(getPosition());
 				if (closest != null) {
-					ps.setInt(24, closest.getId());
+					ps.setInt(25, closest.getId());
 				} else {
-					ps.setInt(24, 0);
+					ps.setInt(25, 0);
 				}
 			}
 			if (party != null) {
-				ps.setInt(25, party.getId());
+				ps.setInt(26, party.getId());
 			} else {
-				ps.setInt(25, -1);
+				ps.setInt(26, -1);
 			}
-			ps.setInt(26, buddylist.getCapacity());
+			ps.setInt(27, buddylist.getCapacity());
 			if (messenger != null) {
-				ps.setInt(27, messenger.getId());
-				ps.setInt(28, messengerposition);
+				ps.setInt(28, messenger.getId());
+				ps.setInt(29, messengerposition);
 			} else {
-				ps.setInt(27, 0);
-				ps.setInt(28, 4);
+				ps.setInt(28, 0);
+				ps.setInt(29, 4);
 			}
 			if (maplemount != null) {
-				ps.setInt(29, maplemount.getLevel());
-				ps.setInt(30, maplemount.getExp());
-				ps.setInt(31, maplemount.getTiredness());
+				ps.setInt(30, maplemount.getLevel());
+				ps.setInt(31, maplemount.getExp());
+				ps.setInt(32, maplemount.getTiredness());
 			} else {
-				ps.setInt(29, 1);
-				ps.setInt(30, 0);
+				ps.setInt(30, 1);
 				ps.setInt(31, 0);
+				ps.setInt(32, 0);
 			}
 			for (int i = 1; i < 5; i++) {
-				ps.setInt(i + 31, getSlots(i));
+				ps.setInt(i + 32, getSlots(i));
 			}
 
 			if (update) {
 				monsterbook.saveCards(getId());
 			}
-			ps.setInt(36, bookCover);
-			ps.setInt(37, vanquisherStage);
-			ps.setInt(38, dojoPoints);
-			ps.setInt(39, dojoStage);
-			ps.setInt(40, finishedDojoTutorial ? 1 : 0);
-			ps.setInt(41, vanquisherKills);
-			ps.setInt(42, matchcardwins);
-			ps.setInt(43, matchcardlosses);
-			ps.setInt(44, matchcardties);
-			ps.setInt(45, omokwins);
-			ps.setInt(46, omoklosses);
-			ps.setInt(47, omokties);
+			ps.setInt(37, bookCover);
+			ps.setInt(38, vanquisherStage);
+			ps.setInt(39, dojoPoints);
+			ps.setInt(40, dojoStage);
+			ps.setInt(41, finishedDojoTutorial ? 1 : 0);
+			ps.setInt(42, vanquisherKills);
+			ps.setInt(43, matchcardwins);
+			ps.setInt(44, matchcardlosses);
+			ps.setInt(45, matchcardties);
+			ps.setInt(46, omokwins);
+			ps.setInt(47, omoklosses);
+			ps.setInt(48, omokties);
 			if (update) {
-				ps.setInt(48, id);
+				ps.setInt(49, id);
 			} else {
-				ps.setInt(48, accountid);
-				ps.setString(49, name);
-				ps.setInt(50, world);
+				ps.setInt(49, accountid);
+				ps.setString(50, name);
+				ps.setInt(51, world);
 			}
 			int updateRows = ps.executeUpdate();
 			if (!update) {
@@ -3783,6 +3816,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 
 	public void setFame(int fame) {
 		this.fame = fame;
+	}
+	
+	public void setRebirths(int rebirths) {
+		this.rebirths = rebirths;
 	}
 
 	public void setFamilyId(int familyId) {
@@ -4147,6 +4184,18 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			}
 		}, time * 1000 + 3000); // let the TIMES UP display for 3 seconds, then
 								// warp
+	}
+	
+	public boolean getGMText() {
+		return whitetext;
+	}
+	
+	public void toggleGMText() {
+		if (whitetext) {
+			whitetext = false;
+		} else {
+			whitetext = true;
+		}
 	}
 
 	public void showNote() {

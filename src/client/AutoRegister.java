@@ -26,7 +26,7 @@ public class AutoRegister {
 			if (rs.first()) {
 				accountExists = true;
 			}
-		} catch (Exception ex) {
+		} catch (Exception e) {
 		}
 		return accountExists;
 	}
@@ -36,8 +36,8 @@ public class AutoRegister {
 		Connection con;
 		try {
 			con = DatabaseConnection.getConnection();
-		} catch (Exception ex) {
-			log.error("ERROR", ex);
+		} catch (Exception e) {
+			log.error("ERROR", e);
 			return;
 		}
 		try {
@@ -63,8 +63,8 @@ public class AutoRegister {
 			}
 			ipc.close();
 			rs.close();
-		} catch (SQLException ex) {
-			log.error("There's a problem with automatic registration.\r\n" + ex);
+		} catch (SQLException e) {
+			log.error("There's a problem with automatic registration.\r\n" + e);
 		}
 	}
 }

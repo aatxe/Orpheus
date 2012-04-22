@@ -91,4 +91,153 @@ public enum MapleJob {
 	public boolean isA(MapleJob basejob) {
 		return getId() >= basejob.getId() && getId() / 100 == basejob.getId() / 100;
 	}
+	
+	public String toString() {
+		switch (this) {
+			case BEGINNER:
+				return "Beginner";
+			case WARRIOR:
+				return "Warrior";
+			case FIGHTER:
+				return "Fighter";
+			case CRUSADER:
+				return "Crusader";
+			case HERO:
+				return "Hero";
+			case PAGE:
+				return "Page";
+			case WHITEKNIGHT:
+				return "White Knight";
+			case PALADIN:
+				return "Paladin";
+			case SPEARMAN:
+				return "Spearman";
+			case DRAGONKNIGHT:
+				return "Dragon Knight";
+			case DARKKNIGHT:
+				return "Dark Knight";
+			case MAGICIAN:
+				return "Magician";
+			case FP_WIZARD:
+				return "Fire/Posion Wizard";
+			case FP_MAGE:
+				return "Fire/Posion Mage";
+			case FP_ARCHMAGE:
+				return "Fire/Posion Archmage";
+			case IL_WIZARD:
+				return "Ice/Lightning Wizard";
+			case IL_MAGE:
+				return "Ice/Lightning Mage";
+			case IL_ARCHMAGE:
+				return "Ice/Lightning Archmage";
+			case CLERIC:
+				return "Cleric";
+			case PRIEST:
+				return "Priest";
+			case BISHOP:
+				return "Bishop";
+			case BOWMAN:
+				return "Bowman";
+			case HUNTER:
+				return "Hunter";
+			case RANGER:
+				return "Ranger";
+			case BOWMASTER:
+				return "Bowmaster";
+			case CROSSBOWMAN:
+				return "Crossbowman";
+			case SNIPER:
+				return "Sniper";
+			case MARKSMAN:
+				return "Marksman";
+			case THIEF:
+				return "Thief";
+			case ASSASSIN:
+				return "Assassin";
+			case HERMIT:
+				return "Hermit";
+			case NIGHTLORD:
+				return "Night Lord";
+			case BANDIT:
+				return "Bandit";
+			case CHIEFBANDIT:
+				return "Chief Bandit";
+			case SHADOWER:
+				return "Shadower";
+			case PIRATE:
+				return "Pirate";
+			case BRAWLER:
+				return "Brawler";
+			case MARAUDER:
+				return "Marauder";
+			case BUCCANEER:
+				return "Buccaneer";
+			case GUNSLINGER:
+				return "Gunslinger";
+			case OUTLAW:
+				return "Outlaw";
+			case CORSAIR:
+				return "Corsair";
+			case MAPLELEAF_BRIGADIER:
+				return "Maple Leaf Brigadier";
+			case GM:
+				return "GM";
+			case SUPERGM:
+				return "SuperGM";
+			case NOBLESSE:
+				return "Noblesse";
+			case DAWNWARRIOR1:
+				return "Dawn Warrior (Rank 1)";
+			case DAWNWARRIOR2:
+				return "Dawn Warrior (Rank 2)";
+			case DAWNWARRIOR3:
+				return "Dawn Warrior (Rank 3)";
+			case DAWNWARRIOR4:
+				return "Dawn Warrior (Rank 4)";
+			case BLAZEWIZARD1:
+				return "Blaze Wizard (Rank 1)";
+			case BLAZEWIZARD2:
+				return "Blaze Wizard (Rank 2)";
+			case BLAZEWIZARD3:
+				return "Blaze Wizard (Rank 3)";
+			case BLAZEWIZARD4:
+				return "Blaze Wizard (Rank 4)";
+			case WINDARCHER1:
+				return "Wind Archer (Rank 1)";
+			case WINDARCHER2:
+				return "Wind Archer (Rank 2)";
+			case WINDARCHER3:
+				return "Wind Archer (Rank 3)";
+			case WINDARCHER4:
+				return "Wind Archer (Rank 4)";
+			case NIGHTWALKER1:
+				return "Night Walker (Rank 1)";
+			case NIGHTWALKER2:
+				return "Night Walker (Rank 2)";
+			case NIGHTWALKER3:
+				return "Night Walker (Rank 3)";
+			case NIGHTWALKER4:
+				return "Night Walker (Rank 4)";
+			case THUNDERBREAKER1:
+				return "Thunder Breaker (Rank 1)";
+			case THUNDERBREAKER2:
+				return "Thunder Breaker (Rank 2)";
+			case THUNDERBREAKER3:
+				return "Thunder Breaker (Rank 3)";
+			case THUNDERBREAKER4:
+				return "Thunder Breaker (Rank 4)";
+			case LEGEND:
+				return "Legend";
+			case ARAN1:
+				return "Aran (Rank 1)";
+			case ARAN2:
+				return "Aran (Rank 2)";
+			case ARAN3:
+				return "Aran (Rank 3)";
+			case ARAN4:
+				return "Aran (Rank 4)";
+			default:
+				return "Unknown";
+		}
+	}
 }

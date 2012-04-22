@@ -23,6 +23,8 @@ package constants;
 
 public class ServerConstants {
 	public static short VERSION = 83;
+	public static String ORPHEUS_VERSION = "[4/21/12 - r16]";
+	public static final String SERVER_NAME = "OrpheusMS";
 	public static String[] WORLD_NAMES = {"Scania", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
 	// Rate Configuration
 	public static final byte QUEST_EXP_RATE = 4;

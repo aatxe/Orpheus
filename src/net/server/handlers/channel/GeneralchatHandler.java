@@ -25,7 +25,13 @@ import client.MapleCharacter;
 import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 import client.MapleClient;
+import client.command.AdminCommands;
 import client.command.Commands;
+import client.command.DeveloperCommands;
+import client.command.DonorCommands;
+import client.command.GMCommands;
+import client.command.PlayerCommands;
+import client.command.SupportCommands;
 
 public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 
@@ -36,18 +42,50 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 		if (heading == '/' || heading == '!' || heading == '@') {
 			String[] sp = s.split(" ");
 			sp[0] = sp[0].toLowerCase().substring(1);
-			if (!Commands.executePlayerCommand(c, sp, heading)) {
-				if (chr.isGM()) {
-					if (!Commands.executeGMCommand(c, sp, heading)) {
-						Commands.executeAdminCommand(c, sp, heading);
+			if (heading == '@') {
+				if (DonorCommands.isCommand(sp[0]) && chr.gmLevel() >= 2) {
+					DonorCommands.execute(c, sp, heading);
+				} else {
+					PlayerCommands.execute(c, sp, heading);
+				}
+			} else {
+				if (chr.gmLevel() == 5) {
+					if (AdminCommands.isCommand(sp[0])) {
+						AdminCommands.execute(c, sp, heading);
+					} else if (DeveloperCommands.isCommand(sp[0])) {
+						DeveloperCommands.execute(c, sp, heading);
+					} else if (GMCommands.isCommand(sp[0])) {
+						GMCommands.execute(c, sp, heading);
+					} else if (SupportCommands.isCommand(sp[0])) {
+						SupportCommands.execute(c, sp, heading);
+					} else {
+						Commands.execute(c, sp, heading);
+					}
+				} else if (chr.gmLevel() == 4) {
+					if (DeveloperCommands.isCommand(sp[0])) {
+						DeveloperCommands.execute(c, sp, heading);
+					} else if (GMCommands.isCommand(sp[0])) {
+						GMCommands.execute(c, sp, heading);
+					} else if (SupportCommands.isCommand(sp[0])) {
+						SupportCommands.execute(c, sp, heading);
+					} else {
+						Commands.execute(c, sp, heading);
+					}
+				} else if (chr.gmLevel() == 3) {
+					if (GMCommands.isCommand(sp[0])) {
+						GMCommands.execute(c, sp, heading);
+					} else if (SupportCommands.isCommand(sp[0])) {
+						SupportCommands.execute(c, sp, heading);
+					} else {
+						Commands.execute(c, sp, heading);
 					}
 				}
 			}
 		} else {
 			if (!chr.isHidden())
-				chr.getMap().broadcastMessage(MaplePacketCreator.getChatText(chr.getId(), s, chr.isGM(), slea.readByte()));
+				chr.getMap().broadcastMessage(MaplePacketCreator.getChatText(chr.getId(), s, (chr.isGM() && chr.getGMText()), slea.readByte()));
 			else
-				chr.getMap().broadcastGMMessage(MaplePacketCreator.getChatText(chr.getId(), s, chr.isGM(), slea.readByte()));
+				chr.getMap().broadcastGMMessage(MaplePacketCreator.getChatText(chr.getId(), s, (chr.isGM() && chr.getGMText()), slea.readByte()));
 		}
 	}
 }
