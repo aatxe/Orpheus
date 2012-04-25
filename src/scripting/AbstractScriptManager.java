@@ -61,6 +61,8 @@ public abstract class AbstractScriptManager {
 				fr.close();
 			}
 			return (Invocable) engine;
+		} catch (NullPointerException e) {
+			return null; // Ignore it, this happens at startup.
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
