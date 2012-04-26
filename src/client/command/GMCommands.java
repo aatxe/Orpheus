@@ -40,7 +40,7 @@ public class GMCommands extends Commands {
 		Command command = Command.valueOf(sub[0]);
 		switch (command) {
 			default:
-				chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+				SupportCommands.execute(c, sub, heading);
 			case ap:
 				if (sub.length > 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -353,15 +353,6 @@ public class GMCommands extends Commands {
 				chr.message("Unbanned " + sub[1]);
 				break;
 		}
-	}
-
-	public static boolean isCommand(String command) {
-		for (int i = 0; i < Command.values().length; i++) {
-			if (Command.valueOf(command) == Command.values()[i]) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	private static enum Command {

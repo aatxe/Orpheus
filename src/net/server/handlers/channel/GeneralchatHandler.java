@@ -43,48 +43,28 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 			String[] sp = s.split(" ");
 			sp[0] = sp[0].toLowerCase().substring(1);
 			if (heading == '@' || heading == '/') {
-				if (DonorCommands.isCommand(sp[0]) && chr.gmLevel() >= 1) {
+				if (chr.gmLevel() != 0) {
 					DonorCommands.execute(c, sp, heading);
 				} else {
 					PlayerCommands.execute(c, sp, heading);
 				}
-			} else {
-				if (chr.gmLevel() == 5) {
-					if (AdminCommands.isCommand(sp[0])) {
+			} else if (heading == '!') {
+				switch (chr.gmLevel()) {
+					default:
+						Commands.execute(c, sp, heading);
+						break;
+					case 2:
+						SupportCommands.execute(c, sp, heading);
+						break;
+					case 3:
+						GMCommands.execute(c, sp, heading);
+						break;
+					case 4:
+						DeveloperCommands.execute(c, sp, heading);
+						break;
+					case 5:
 						AdminCommands.execute(c, sp, heading);
-					} else if (DeveloperCommands.isCommand(sp[0])) {
-						DeveloperCommands.execute(c, sp, heading);
-					} else if (GMCommands.isCommand(sp[0])) {
-						GMCommands.execute(c, sp, heading);
-					} else if (SupportCommands.isCommand(sp[0])) {
-						SupportCommands.execute(c, sp, heading);
-					} else {
-						Commands.execute(c, sp, heading);
-					}
-				} else if (chr.gmLevel() == 4) {
-					if (DeveloperCommands.isCommand(sp[0])) {
-						DeveloperCommands.execute(c, sp, heading);
-					} else if (GMCommands.isCommand(sp[0])) {
-						GMCommands.execute(c, sp, heading);
-					} else if (SupportCommands.isCommand(sp[0])) {
-						SupportCommands.execute(c, sp, heading);
-					} else {
-						Commands.execute(c, sp, heading);
-					}
-				} else if (chr.gmLevel() == 3) {
-					if (GMCommands.isCommand(sp[0])) {
-						GMCommands.execute(c, sp, heading);
-					} else if (SupportCommands.isCommand(sp[0])) {
-						SupportCommands.execute(c, sp, heading);
-					} else {
-						Commands.execute(c, sp, heading);
-					}
-				} else if (chr.gmLevel() == 2) {
-					if (SupportCommands.isCommand(sp[0])) {
-						SupportCommands.execute(c, sp, heading);
-					} else {
-						Commands.execute(c, sp, heading);
-					}
+						break;
 				}
 			}
 		} else {

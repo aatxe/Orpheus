@@ -34,7 +34,7 @@ public class DeveloperCommands extends Commands {
 		Command command = Command.valueOf(sub[0]);
 		switch (command) {
 			default:
-				chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+				GMCommands.execute(c, sub, heading);
 			case exprate:
 				c.getWorldServer().setExpRate((byte) (Byte.parseByte(sub[1]) % 128));
 				for (MapleCharacter mc : c.getWorldServer().getPlayerStorage().getAllCharacters()) {
@@ -199,15 +199,6 @@ public class DeveloperCommands extends Commands {
 
 	public static void setSLEA(SeekableLittleEndianAccessor slea) {
 		DeveloperCommands.slea = slea;
-	}
-	
-	public static boolean isCommand(String command) {
-		for (int i = 0; i < Command.values().length; i++) {
-			if (Command.valueOf(command) == Command.values()[i]) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	private static enum Command {

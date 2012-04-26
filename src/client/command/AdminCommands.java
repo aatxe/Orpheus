@@ -15,7 +15,7 @@ public class AdminCommands extends Commands {
 		Command command = Command.valueOf(sub[0]);
 		switch (command) {
 			default:
-				chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+				DeveloperCommands.execute(c, sub, heading);
 			case setgmlevel:
 				victim = c.getChannelServer().getPlayerStorage().getCharacterByName(sub[1]);
 				victim.setGM(Integer.parseInt(sub[2]));
@@ -25,15 +25,6 @@ public class AdminCommands extends Commands {
 		}
 	}
 	
-	public static boolean isCommand(String command) {
-		for (int i = 0; i < Command.values().length; i++) {
-			if (Command.valueOf(command) == Command.values()[i]) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	private static enum Command {
 		setgmlevel
 	}
