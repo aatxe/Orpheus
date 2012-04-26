@@ -61,7 +61,7 @@ public class PlayerCommands extends Commands {
 				} else {
 					victim = chr;
 				}
-				chr.message(victim + ((victim.gmLevel() > 2) ? "is a GM." : "is not a GM."));
+				chr.message(victim.getName() + ((victim.gmLevel() > 2) ? " is a GM." : " is not a GM."));
 				break;
 			case checkrebirths:
 				if (sub.length > 1) {
@@ -312,6 +312,15 @@ public class PlayerCommands extends Commands {
 		}
 	}
 
+	public static boolean isCommand(String command) {
+		for (int i = 0; i < Command.values().length; i++) {
+			if (Command.valueOf(command) == Command.values()[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private static enum Command {
 		afk,
 		back,

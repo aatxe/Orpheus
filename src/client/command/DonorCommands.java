@@ -57,6 +57,15 @@ public class DonorCommands extends Commands {
 				break;
 		}
 	}
+	
+	public static boolean isCommand(String command) {
+		for (int i = 0; i < Command.values().length; i++) {
+			if (Command.valueOf(command) == Command.values()[i]) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	private static enum Command {
 		donor, 
