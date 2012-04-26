@@ -24,6 +24,7 @@ public class SupportCommands extends Commands {
 		switch (command) {
 			default:
 				chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+				break;
 			case announce:
 				String message = joinStringFrom(sub, 1);
 				Server.getInstance().gmChat(chr.getName() + " (" + chr.getStaffRank() + "): " + message, null);

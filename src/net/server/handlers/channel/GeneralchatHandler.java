@@ -48,22 +48,22 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 				} else {
 					PlayerCommands.execute(c, sp, heading);
 				}
-			} else if (heading == '!') {
+			} else {
 				switch (chr.gmLevel()) {
-					default:
-						Commands.execute(c, sp, heading);
-						break;
-					case 2:
-						SupportCommands.execute(c, sp, heading);
-						break;
-					case 3:
-						GMCommands.execute(c, sp, heading);
+					case 5:
+						AdminCommands.execute(c, sp, heading);
 						break;
 					case 4:
 						DeveloperCommands.execute(c, sp, heading);
 						break;
-					case 5:
-						AdminCommands.execute(c, sp, heading);
+					case 3:
+						GMCommands.execute(c, sp, heading);
+						break;
+					case 2:
+						SupportCommands.execute(c, sp, heading);
+						break;
+					default:
+						Commands.execute(c, sp, heading);
 						break;
 				}
 			}

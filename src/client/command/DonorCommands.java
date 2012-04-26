@@ -24,6 +24,7 @@ public class DonorCommands extends Commands {
 		switch (command) {
 			default:
 				PlayerCommands.execute(c, sub, heading);
+				break;
 			case donor:
 				chr.setHp(30000);
 				chr.setMaxHp(30000);

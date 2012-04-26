@@ -35,6 +35,7 @@ public class DeveloperCommands extends Commands {
 		switch (command) {
 			default:
 				GMCommands.execute(c, sub, heading);
+				break;
 			case exprate:
 				c.getWorldServer().setExpRate((byte) (Byte.parseByte(sub[1]) % 128));
 				for (MapleCharacter mc : c.getWorldServer().getPlayerStorage().getAllCharacters()) {

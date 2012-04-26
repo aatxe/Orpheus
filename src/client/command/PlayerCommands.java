@@ -28,6 +28,7 @@ public class PlayerCommands extends Commands {
 		switch (command) {
 			default:
 				chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+				break;
 			case afk:
 				if (sub.length == 1) {
 					chr.setChalkboard("Away!");

@@ -41,6 +41,7 @@ public class GMCommands extends Commands {
 		switch (command) {
 			default:
 				SupportCommands.execute(c, sub, heading);
+				break;
 			case ap:
 				if (sub.length > 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);

@@ -16,6 +16,7 @@ public class AdminCommands extends Commands {
 		switch (command) {
 			default:
 				DeveloperCommands.execute(c, sub, heading);
+				break;
 			case setgmlevel:
 				victim = c.getChannelServer().getPlayerStorage().getCharacterByName(sub[1]);
 				victim.setGM(Integer.parseInt(sub[2]));
