@@ -40,10 +40,13 @@ public class DeveloperCommands extends Commands {
 				for (MapleCharacter mc : c.getWorldServer().getPlayerStorage().getAllCharacters()) {
 					mc.setRates();
 				}
+				break;
 			case gc:
 	            System.gc();
+				break;
 			case horntail:
 				chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(8810026), chr.getPosition());
+				break;
 			case npc:
 				npc = MapleLifeFactory.getNPC(Integer.parseInt(sub[1]));
 				if (npc != null) {
@@ -55,10 +58,13 @@ public class DeveloperCommands extends Commands {
 					chr.getMap().addMapObject(npc);
 					chr.getMap().broadcastMessage(MaplePacketCreator.spawnNPC(npc));
 				}
+				break;
 			case packet:
 				chr.getMap().broadcastMessage(MaplePacketCreator.customPacket(joinStringFrom(sub, 1)));
+				break;
 			case pinkbean:
 				chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(8820009), chr.getPosition());
+				break;
 			case pmob:
 				npcId = Integer.parseInt(sub[1]);
 	            mobTime = Integer.parseInt(sub[2]);
@@ -97,6 +103,7 @@ public class DeveloperCommands extends Commands {
 	            } else {
 	                chr.dropMessage("You have entered an invalid mob ID.");
 	            }
+				break;
 			case pnpc:
 				npcId = Integer.parseInt(sub[1]);
 	            npc = MapleLifeFactory.getNPC(npcId);
@@ -131,6 +138,7 @@ public class DeveloperCommands extends Commands {
 	            } else {
 	                chr.dropMessage("You have entered an invalid NPC id.");
 	            }
+				break;
 			case say:
 				if (sub.length > 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -139,6 +147,7 @@ public class DeveloperCommands extends Commands {
 				} else {
 					chr.message("Usage: !say playerName multi-word message");
 				}
+				break;
 			case shutdown:
 				if (sub.length == 2) {
 					int time = 60000;
@@ -151,6 +160,7 @@ public class DeveloperCommands extends Commands {
 				} else {
 					chr.message("Usage: !shutdown time || !shutdown now");
 				}
+				break;
 			case sql:
 				if (sub[1] == "true") {
 					String name = sub[1];
@@ -177,11 +187,13 @@ public class DeveloperCommands extends Commands {
 						chr.message("Query Failed: " + query);
 					}
 				}
+				break;
 			case zakum:
 				chr.getMap().spawnFakeMonsterOnGroundBelow(MapleLifeFactory.getMonster(8800000), chr.getPosition());
 				for (int x = 8800003; x < 8800011; x++) {
 					chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(x), chr.getPosition());
 				}
+				break;
 		}
 	}
 

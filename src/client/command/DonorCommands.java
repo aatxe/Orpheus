@@ -34,12 +34,14 @@ public class DonorCommands extends Commands {
 				chr.updateSingleStat(MapleStat.MP, 30000);
 				chr.updateSingleStat(MapleStat.MAXMP, 30000);
 				chr.message("Who's awesome? You're awesome!");
+				break;
 			case heal:
 				chr.setHp(chr.getMaxHp());
 				chr.setMp(chr.getMaxMp());
 				chr.updateSingleStat(MapleStat.HP, chr.getMaxHp());
 				chr.updateSingleStat(MapleStat.MP, chr.getMaxMp());
 				chr.message("Healed for free. Thanks for your donation!");
+				break;
 			case itemvac:
 				List<MapleMapObject> items = chr.getMap().getMapObjectsInRange(chr.getPosition(), Double.POSITIVE_INFINITY, Arrays.asList(MapleMapObjectType.ITEM));
 				for (MapleMapObject item : items) {
@@ -52,6 +54,7 @@ public class DonorCommands extends Commands {
 					chr.getMap().removeMapObject(item);
 					chr.getMap().nullifyObject(item);
 				}
+				break;
 		}
 	}
 

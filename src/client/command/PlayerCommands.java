@@ -35,11 +35,14 @@ public class PlayerCommands extends Commands {
 					String message = joinStringFrom(sub, 1);
 					chr.setChalkboard(message);
 				}
+				break;
 			case back:
 				chr.setChalkboard("");
 				chr.dropMessage("Welcome back!");
+				break;
 			case bugs:
 				chr.dropMessage("Report bugs at https://github.com/aaronweiss74/Orpheus/issues");
+				break;
 			case buy:
 				if (chr.getMeso() > 999999999) { // Has 999,999,999 mesos.
 					chr.gainMeso(-1000000000, false); // Lose 1,000,000,000
@@ -51,6 +54,7 @@ public class PlayerCommands extends Commands {
 				} else {
 					chr.message("You cannot afford a rice cake!");
 				}
+				break;
 			case checkgm:
 				if (sub.length > 1) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -58,6 +62,7 @@ public class PlayerCommands extends Commands {
 					victim = chr;
 				}
 				chr.message(victim + ((victim.gmLevel() > 2) ? "is a GM." : "is not a GM."));
+				break;
 			case checkrebirths:
 				if (sub.length > 1) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -65,6 +70,7 @@ public class PlayerCommands extends Commands {
 					victim = chr;
 				}
 				chr.message(victim.getName() + " has " + victim.getRebirths() + " rebirths.");
+				break;
 			case checkstats:
 				if (sub.length > 1) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -81,15 +87,19 @@ public class PlayerCommands extends Commands {
 				chr.message(" " + victim.getDex() + " Dexterity");
 				chr.message(" " + victim.getInt() + " Intellect");
 				chr.message(" " + victim.getLuk() + " Luck");
+				break;
 			case cody:
 				NPCScriptManager.getInstance().start(c, 9200000, null, null);
+				break;
 			case dispose:
 				NPCScriptManager.getInstance().dispose(c);
 				c.announce(MaplePacketCreator.enableActions());
 				chr.message("Done.");
+				break;
 			case emo:
 				chr.setHp(0);
 				chr.updateSingleStat(MapleStat.HP, 0);
+				break;
 			case gmlist:
 				rs = getGMList();
 				chr.dropMessage("GM List");
@@ -99,6 +109,7 @@ public class PlayerCommands extends Commands {
 					}
 				} catch (SQLException e) {
 				}
+				break;
 			case heal:
 				int cost = ((chr.getMaxHp() / 4) * (chr.getMaxHp() / 4));
 				if (chr.getMeso() >= cost && chr.getHp() < chr.getMaxHp()) {
@@ -111,6 +122,7 @@ public class PlayerCommands extends Commands {
 				} else {
 					chr.message("You cannot afford to heal.");
 				}
+				break;
 			case help:
 				chr.dropMessage(ServerConstants.SERVER_NAME + "'s PlayerCommands Help");
 				chr.dropMessage("@afk - Marks you as away, or with an optional message.");
@@ -137,10 +149,13 @@ public class PlayerCommands extends Commands {
 				chr.dropMessage("@stat - Allows you to raise your stats using your AP.");
 				chr.dropMessage("@stats - Displays your full stats.");
 				chr.dropMessage("@version - Displays server version information.");
+				break;
 			case kin:
 				NPCScriptManager.getInstance().start(c, 9900000, null, null);
+				break;
 			case nimakin:
 				NPCScriptManager.getInstance().start(c, 9900001, null, null);
+				break;
 			case nx:
 				if (chr.getCashShop().getCash(1) + 100000 <= Integer.MAX_VALUE) {
 					chr.getCashShop().gainCash(1, 100000);
@@ -148,9 +163,11 @@ public class PlayerCommands extends Commands {
 				} else {
 					chr.dropMessage("You have too much NX already!");
 				}
+				break;
 			case quit:
 				chr.saveToDB(true);
 				c.getSession().close(false);
+				break;
 			case rankings:
 				if (sub.length > 1) {
 					rs = getRankings(Boolean.parseBoolean(sub[1]));
@@ -166,6 +183,7 @@ public class PlayerCommands extends Commands {
 					}
 				} catch (SQLException e) {
 				}
+				break;
 			case rebirth:
 				if (chr.getLevel() >= 200) {
 					if (sub[1].equalsIgnoreCase("standard") || sub[1].equalsIgnoreCase("beginner")) {
@@ -184,10 +202,13 @@ public class PlayerCommands extends Commands {
 				} else {
 					chr.message("You must be level 200 to do this!");
 				}
+				break;
 			case rebirths:
 				chr.message("You have " + chr.getRebirths() + " rebirths.");
+				break;
 			case save:
 				chr.saveToDB(true);
+				break;
 			case sell:
 				if (chr.haveItem(4001101)) {
 					if (chr.getMeso() <= (Integer.MAX_VALUE - 1000000000)) { // Has less than 1,147,483,647 mesos.
@@ -202,6 +223,7 @@ public class PlayerCommands extends Commands {
 				} else {
 					chr.message("You don't have any rice cakes!");
 				}
+				break;
 			case stat:
 				String stat = sub[1];
 				int amount = Integer.parseInt(sub[2]);
@@ -246,6 +268,7 @@ public class PlayerCommands extends Commands {
 					chr.message("Stat: ");
 					chr.message(" To use this command, follow it with a stat and the amount by which to change it.");
 				}
+				break;
 			case stats:
 				chr.message(chr.getName() + "'s Stats:");
 				chr.message(" Level " + chr.getLevel() + " " + chr.getJob().toString());
@@ -257,8 +280,10 @@ public class PlayerCommands extends Commands {
 				chr.message(" " + chr.getDex() + " Dexterity");
 				chr.message(" " + chr.getInt() + " Intellect");
 				chr.message(" " + chr.getLuk() + " Luck");
+				break;
 			case version:
 				chr.message(ServerConstants.SERVER_NAME + " (Orpheus " + ServerConstants.ORPHEUS_VERSION + ")");
+				break;
 		}
 	}
 	

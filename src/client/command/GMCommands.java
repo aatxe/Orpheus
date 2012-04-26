@@ -52,6 +52,7 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !ap number || !ap playerName number");
 				}
+				break;
 			case buff:
 				if (sub.length == 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -67,12 +68,14 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !buff || !buff playerName");
 				}
+				break;
 			case dc:
 				if (sub.length == 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
 				} else {
 					chr.message("Usage: !dc playerName");
 				}
+				break;
 			case dispose:
 				if (sub.length == 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -82,6 +85,7 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !dispose playerName");
 				}
+				break;
 			case drop:
 				int itemId = Integer.parseInt(sub[1]);
 				short quantity = 1;
@@ -96,6 +100,7 @@ public class GMCommands extends Commands {
 					toDrop = new Item(itemId, (byte) 0, quantity);
 				}
 				c.getPlayer().getMap().spawnItemDrop(c.getPlayer(), c.getPlayer(), toDrop, c.getPlayer().getPosition(), true, true);
+				break;
 			case fame:
 				if (sub.length > 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -107,8 +112,10 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !job number || !job playerName number");
 				}
+				break;
 			case gmshop:
 				MapleShopFactory.getInstance().getShop(1337).sendShop(c);
+				break;
 			case heal:
 				if (sub.length == 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -118,6 +125,7 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !heal || !heal playerName");
 				}
+				break;
 			case job:
 				if (sub.length > 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -129,12 +137,14 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !job number || !job playerName number");
 				}
+				break;
 			case kill:
 				if (sub.length == 2) {
 					cserv.getPlayerStorage().getCharacterByName(sub[1]).setHpMp(0);
 				} else {
 					chr.message("Usage: !kill playerName");
 				}
+				break;
 			case killall:
 				List<MapleMapObject> monsters = chr.getMap().getMapObjectsInRange(chr.getPosition(), Double.POSITIVE_INFINITY, Arrays.asList(MapleMapObjectType.MONSTER));
 				MapleMap map = chr.getMap();
@@ -144,6 +154,7 @@ public class GMCommands extends Commands {
 					monster.giveExpToCharacter(chr, monster.getExp() * c.getPlayer().getExpRate(), true, 1);
 				}
 				chr.message("Killed " + monsters.size() + " monsters.");
+				break;
 			case level:
 				if (sub.length > 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -159,6 +170,7 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !level number || !level playerName number");
 				}
+				break;
 			case levelup:
 				if (sub.length == 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -168,6 +180,7 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !levelup || !levelup playerName");
 				}
+				break;
 			case map:
 				if (sub.length >= 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -177,6 +190,7 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !map number || !map playerName number");
 				}
+				break;
 			case maxskills:
 				if (sub.length == 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]); 
@@ -204,6 +218,7 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !maxskills || !maxskills playerName");
 				}
+				break;
 			case maxstats:
 				if (sub.length == 2) {
 					final String[] s = {"setall", sub[1], String.valueOf(Short.MAX_VALUE)};
@@ -231,6 +246,7 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !maxstats || !maxstats playerName");
 				}
+				break;
 			case mesos:
 				if (sub.length > 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -240,12 +256,16 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !mesos number || !mesos playerName number");
 				}
+				break;
 			case pap:
 				chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(8500001), chr.getPosition());
+				break;
 			case pianus:
 				chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(8510000), chr.getPosition());
+				break;
 			case notice:
 				Server.getInstance().broadcastMessage(chr.getWorld(), MaplePacketCreator.serverNotice(6, "[Notice] " + joinStringFrom(sub, 1)));
+				break;
 			case saveall:
 				for (Channel chan : Server.getInstance().getAllChannels()) {
 	                for (MapleCharacter plyrs : chan.getPlayerStorage().getAllCharacters()) {
@@ -253,8 +273,10 @@ public class GMCommands extends Commands {
 	                }
 	            }
 	            chr.message("Save Complete.");
+				break;
 			case servermessage:
 				c.getWorldServer().setServerMessage(joinStringFrom(sub, 1));
+				break;
 			case setall:
 				if (sub.length > 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -280,12 +302,14 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !setall number || !setall playerName number");
 				}
+				break;
 			case shop:
 				if (sub.length == 2) {
 					MapleShopFactory.getInstance().getShop(Integer.parseInt(sub[1])).sendShop(c);
 				} else {
 					chr.message("Usage: !shop number");
 				}
+				break;
 			case sp:
 				if (sub.length > 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -297,6 +321,7 @@ public class GMCommands extends Commands {
 				} else {
 					chr.message("Usage: !ap number || !ap playerName number");
 				}
+				break;
 			case spawn:
 				if (sub.length > 2) {
 					for (int i = 0; i < Integer.parseInt(sub[2]); i++) {
@@ -305,15 +330,18 @@ public class GMCommands extends Commands {
 				} else {
 					chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(Integer.parseInt(sub[1])), chr.getPosition());
 				}
+				break;
 			case speak:
 				if (sub.length == 2) {
 					NPCScriptManager.getInstance().start(c, Integer.parseInt(sub[1]), null, null);
 				} else {
 					chr.message("Usage: !speak number");
 				}
+				break;
 			case texttype:
 				chr.toggleGMText();
 				chr.message("Your chat messages are now " + (chr.getGMText() ? "white." : "black."));
+				break;
 			case unban:
 				try {
 					PreparedStatement p = DatabaseConnection.getConnection().prepareStatement("UPDATE accounts SET banned = -1 WHERE id = " + MapleCharacter.getIdByName(sub[1]));
@@ -323,6 +351,7 @@ public class GMCommands extends Commands {
 					chr.message("Failed to unban " + sub[1]);
 				}
 				chr.message("Unbanned " + sub[1]);
+				break;
 		}
 	}
 	

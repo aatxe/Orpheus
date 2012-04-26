@@ -27,8 +27,10 @@ public class SupportCommands extends Commands {
 			case announce:
 				String message = joinStringFrom(sub, 1);
 				Server.getInstance().gmChat(chr.getName() + " (" + chr.getStaffRank() + "): " + message, null);
+				break;
 			case cleardrops:
 				chr.getMap().clearDrops(chr);
+				break;
 			case item:
 				int itemId = Integer.parseInt(sub[1]);
 				short quantity = 1;
@@ -40,8 +42,10 @@ public class SupportCommands extends Commands {
 					petid = MaplePet.createPet(itemId);
 				}
 				MapleInventoryManipulator.addById(c, itemId, quantity, chr.getName(), petid, -1);
+				break;
 			case mesos:
 				chr.gainMeso(Integer.parseInt(sub[1]), true);
+				break;
 			case online:
 				for (Channel ch : serv.getChannelsFromWorld(chr.getWorld())) {
 					String s = "Characters Online (Channel " + ch.getId() + " Online: " + ch.getPlayerStorage().getAllCharacters().size() + ") : ";
@@ -52,6 +56,7 @@ public class SupportCommands extends Commands {
 						chr.dropMessage(s.substring(0, s.length() - 2));
 					}
 				}
+				break;
 			case search:
 				try {
 					BufferedReader dis = new BufferedReader(new InputStreamReader(new URL("http://www.mapletip.com/search_java.php?search_value=" + sub[1] + "&check=true").openConnection().getInputStream()));
@@ -61,6 +66,7 @@ public class SupportCommands extends Commands {
 					}
 					dis.close();
 				} catch (Exception e) {}
+				break;
 			case warp:
 				try {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -69,6 +75,7 @@ public class SupportCommands extends Commands {
 				} catch (Exception e) {
 					chr.message("Usage: !warp playerName");
 				}
+				break;
 			case warphere:
 				try {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -77,8 +84,10 @@ public class SupportCommands extends Commands {
 				} catch (Exception e) {
 					chr.message("Usage: !warphere playerName");
 				}
+				break;
 			case whereami:
 				chr.dropMessage("You're at Map " + chr.getMapId());
+				break;
 		}
 	}
 

@@ -21,6 +21,7 @@ public class AdminCommands extends Commands {
 				victim.setGM(Integer.parseInt(sub[2]));
 				chr.message("Done.");
 				victim.getClient().disconnect();
+				break;
 		}
 	}
 
