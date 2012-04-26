@@ -38,7 +38,7 @@ public class ServerConstants {
 	public static final boolean PERFECT_PITCH = false;
 	public static final String EVENTS = "automsg KerningPQ Boats Subway AirPlane elevator";
 	// IP Configuration
-	public static final String HOST = "localhost";
+	public static final String HOST = "50.116.55.23";
 	// Database Configuration
 	public static final boolean DB_USE_COMPILED_VALUES = false;
 	public static final String DB_URL = "jdbc:mysql://localhost:3306/Orpheus?autoReconnect=true";
