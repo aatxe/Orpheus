@@ -23,14 +23,14 @@ package constants;
 
 public class ServerConstants {
 	public static short VERSION = 83;
-	public static String ORPHEUS_VERSION = "4/22/12";
+	public static String ORPHEUS_VERSION = "5/3/12";
 	public static final String SERVER_NAME = "OrpheusMS";
 	public static String[] WORLD_NAMES = {"Scania", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
 	// Rate Configuration
 	public static final byte QUEST_EXP_RATE = 4;
 	public static final byte QUEST_MESO_RATE = 3;
 	// Login Configuration
-	public static final boolean ENABLE_AUTOREGISTER = true;
+	public static final boolean ENABLE_AUTOREGISTER = true; // borked, as of right now.
 	public static final int CHANNEL_LOAD = 100; // Players per channel
 	public static final long RANKING_INTERVAL = 3600000;
 	public static final boolean ENABLE_PIC = false;
