@@ -65,6 +65,7 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 						commandExecuted = AdminCommands.execute(c, sp, heading);
 						if (commandExecuted) break;
 					case 4:
+						DeveloperCommands.setSLEA(slea);
 						commandExecuted = DeveloperCommands.execute(c, sp, heading);
 						if (commandExecuted) break;
 					case 3:
