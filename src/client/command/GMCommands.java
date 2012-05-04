@@ -30,7 +30,7 @@ import client.MapleStat;
 import client.SkillFactory;
 
 public class GMCommands extends Commands {
-	public static void execute(MapleClient c, String[] sub, char heading) {
+	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();
 		Channel cserv = c.getChannelServer();
 		Server serv = Server.getInstance();
@@ -40,8 +40,8 @@ public class GMCommands extends Commands {
 		Command command = Command.valueOf(sub[0]);
 		switch (command) {
 			default:
-				SupportCommands.execute(c, sub, heading);
-				break;
+				// chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+				return false;
 			case ap:
 				if (sub.length > 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -354,6 +354,7 @@ public class GMCommands extends Commands {
 				chr.message("Unbanned " + sub[1]);
 				break;
 		}
+		return true;
 	}
 	
 	private static enum Command {

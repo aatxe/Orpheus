@@ -39,32 +39,43 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 		String s = slea.readMapleAsciiString();
 		MapleCharacter chr = c.getPlayer();
 		char heading = s.charAt(0);
+		/*
+		 * WARNING: Daemons below!
+		 * The following code is messy, and hard to follow.
+		 * This is in an attempt to make the client.command classes
+		 * easier to understand and work with. I apologize for the mess!
+		 */
 		if (heading == '/' || heading == '!' || heading == '@') {
 			String[] sp = s.split(" ");
 			sp[0] = sp[0].toLowerCase().substring(1);
 			if (heading == '@' || heading == '/') {
+				boolean commandExecuted = false;
 				if (chr.gmLevel() != 0) {
-					DonorCommands.execute(c, sp, heading);
+					commandExecuted = DonorCommands.execute(c, sp, heading);
+				}
+				if (!commandExecuted) {
+					commandExecuted = PlayerCommands.execute(c, sp, heading);
 				} else {
-					PlayerCommands.execute(c, sp, heading);
+					commandExecuted = Commands.execute(c, sp, heading);
 				}
 			} else {
+				boolean commandExecuted = false;
 				switch (chr.gmLevel()) {
 					case 5:
-						AdminCommands.execute(c, sp, heading);
-						break;
+						commandExecuted = AdminCommands.execute(c, sp, heading);
+						if (commandExecuted) break;
 					case 4:
-						DeveloperCommands.execute(c, sp, heading);
-						break;
+						commandExecuted = DeveloperCommands.execute(c, sp, heading);
+						if (commandExecuted) break;
 					case 3:
-						GMCommands.execute(c, sp, heading);
-						break;
+						commandExecuted = GMCommands.execute(c, sp, heading);
+						if (commandExecuted) break;
 					case 2:
-						SupportCommands.execute(c, sp, heading);
-						break;
+						commandExecuted = SupportCommands.execute(c, sp, heading);
+						if (commandExecuted) break;
 					default:
 						Commands.execute(c, sp, heading);
-						break;
+						if (commandExecuted) break;
 				}
 			}
 		} else {

@@ -3,8 +3,9 @@ package client.command;
 import client.MapleClient;
 
 public abstract class Commands {
-	public static void execute(MapleClient c, String[] sub, char heading) {
+	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		c.getPlayer().yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+		return false;
 	}
 	
 	public static boolean isCommand(String command) {

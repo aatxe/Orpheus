@@ -14,7 +14,7 @@ import client.MapleClient;
 import client.MapleStat;
 
 public class DonorCommands extends Commands {
-	public static void execute(MapleClient c, String[] sub, char heading) {
+	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();
 		Channel cserv = c.getChannelServer();
 		MapleCharacter victim; // For commands with targets.
@@ -23,8 +23,8 @@ public class DonorCommands extends Commands {
 		Command command = Command.valueOf(sub[0]);
 		switch (command) {
 			default:
-				PlayerCommands.execute(c, sub, heading);
-				break;
+				// chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+				return false;
 			case donor:
 				chr.setHp(30000);
 				chr.setMaxHp(30000);
@@ -57,6 +57,7 @@ public class DonorCommands extends Commands {
 				}
 				break;
 		}
+		return true;
 	}
 
 	private static enum Command {

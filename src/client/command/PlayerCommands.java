@@ -18,7 +18,7 @@ import client.MapleRank;
 import client.MapleStat;
 
 public class PlayerCommands extends Commands {
-	public static void execute(MapleClient c, String[] sub, char heading) {
+	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();
 		Channel cserv = c.getChannelServer();
 		MapleCharacter victim; // For commands with targets.
@@ -27,8 +27,8 @@ public class PlayerCommands extends Commands {
 		Command command = Command.valueOf(sub[0]);
 		switch (command) {
 			default:
-				chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
-				break;
+				// chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+				return false;
 			case afk:
 				if (sub.length == 1) {
 					chr.setChalkboard("Away!");
@@ -286,6 +286,7 @@ public class PlayerCommands extends Commands {
 				chr.message(ServerConstants.SERVER_NAME + " (Orpheus " + ServerConstants.ORPHEUS_VERSION + ")");
 				break;
 		}
+		return true;
 	}
 	
 	private static ResultSet getGMList() {

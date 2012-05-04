@@ -13,7 +13,7 @@ import client.MapleClient;
 import client.MaplePet;
 
 public class SupportCommands extends Commands {
-	public static void execute(MapleClient c, String[] sub, char heading) {
+	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();
 		Channel cserv = c.getChannelServer();
 		Server serv = Server.getInstance();
@@ -23,8 +23,8 @@ public class SupportCommands extends Commands {
 		Command command = Command.valueOf(sub[0]);
 		switch (command) {
 			default:
-				chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
-				break;
+				// chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+				return false;
 			case announce:
 				String message = joinStringFrom(sub, 1);
 				Server.getInstance().gmChat(chr.getName() + " (" + chr.getStaffRank() + "): " + message, null);
@@ -90,6 +90,7 @@ public class SupportCommands extends Commands {
 				chr.dropMessage("You're at Map " + chr.getMapId());
 				break;
 		}
+		return true;
 	}
 
 	private static enum Command {

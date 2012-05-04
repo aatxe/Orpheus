@@ -19,7 +19,7 @@ import client.MapleClient;
 public class DeveloperCommands extends Commands {
 	public static SeekableLittleEndianAccessor slea;
 	
-	public static void execute(MapleClient c, String[] sub, char heading) {
+	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();
 		Channel cserv = c.getChannelServer();
 		MapleCharacter victim; // For commands with targets.
@@ -34,8 +34,8 @@ public class DeveloperCommands extends Commands {
 		Command command = Command.valueOf(sub[0]);
 		switch (command) {
 			default:
-				GMCommands.execute(c, sub, heading);
-				break;
+				// chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+				return false;
 			case exprate:
 				c.getWorldServer().setExpRate((byte) (Byte.parseByte(sub[1]) % 128));
 				for (MapleCharacter mc : c.getWorldServer().getPlayerStorage().getAllCharacters()) {
@@ -143,7 +143,7 @@ public class DeveloperCommands extends Commands {
 			case say:
 				if (sub.length > 2) {
 					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
-					String s = joinStringFrom(sub, 1);
+					final String s = joinStringFrom(sub, 2);
 					victim.getMap().broadcastMessage(MaplePacketCreator.getChatText(chr.getId(), s, chr.isGM(), slea.readByte()));
 				} else {
 					chr.message("Usage: !say playerName multi-word message");
@@ -196,6 +196,7 @@ public class DeveloperCommands extends Commands {
 				}
 				break;
 		}
+		return true;
 	}
 
 	public static void setSLEA(SeekableLittleEndianAccessor slea) {
