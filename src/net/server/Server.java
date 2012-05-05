@@ -73,6 +73,7 @@ public class Server implements Runnable {
 	private PlayerBuffStorage buffStorage = new PlayerBuffStorage();
 	private Map<Integer, MapleAlliance> alliances = new LinkedHashMap<Integer, MapleAlliance>();
 	private boolean online = false;
+	private boolean gmServerEnabled = false;
 
 	public static Server getInstance() {
 		if (instance == null) {
@@ -190,7 +191,7 @@ public class Server implements Runnable {
 		CashItemFactory.getSpecialCashItems();// just load who cares o.o
 		MapleItemInformationProvider.getInstance().getAllItems();
 		Output.print("Loading completed in " + ((System.currentTimeMillis() - startTime)) + "ms.");
-		if (Boolean.parseBoolean(p.getProperty("gmserver"))) {
+		if (isGMServerEnabled()) {
 			GMServer.getInstance();
 		}
 		Output.print("Server is now online!");
@@ -206,6 +207,10 @@ public class Server implements Runnable {
 
 	public static void main(String args[]) {
 		Server.getInstance().run();
+	}
+	
+	public boolean isGMServerEnabled() {
+		return gmServerEnabled;
 	}
 
 	public Properties getSubnetInfo() {

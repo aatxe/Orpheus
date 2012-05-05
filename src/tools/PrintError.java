@@ -6,8 +6,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 public class PrintError {
-	public static final String ACCOUNT_STUCK = "accountStuck.rtf",
-			EXCEPTION_CAUGHT = "exceptionCaught.rtf";// more to come (maps)
+	public static final String ACCOUNT_STUCK = "accountstuck.log",
+			EXCEPTION_CAUGHT = "exceptions.log";// more to come (maps)
 
 	// private static final SimpleDateFormat sdf = new
 	// SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

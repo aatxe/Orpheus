@@ -44,6 +44,7 @@ import net.server.Server;
 import net.server.World;
 import net.server.guild.MapleAlliance;
 import net.server.guild.MapleGuild;
+import net.server.Output;
 import tools.MaplePacketCreator;
 import tools.PrintError;
 import tools.data.input.SeekableLittleEndianAccessor;
@@ -69,7 +70,7 @@ public final class PlayerLoggedinHandler extends AbstractMaplePacketHandler {
 		} else {
 			player.newClient(c);
 		}
-		if (player.isGM()) {
+		if (player.isGM() && server.isGMServerEnabled()) {
 			GMServer.getInstance().addInGame(player.getName(), c.getSession());
 		}
 		c.setPlayer(player);
@@ -84,12 +85,11 @@ public final class PlayerLoggedinHandler extends AbstractMaplePacketHandler {
 					for (Channel ch : c.getWorldServer().getChannels()) {
 						if (ch.isConnected(charName)) {
 							StringBuilder sb = new StringBuilder();
-							sb.append(player.getName()).append(" failed to login.\r\n");
-							sb.append("Player in the World Server? = ").append(c.getWorldServer().isConnected(charName)).append("\r\n");
-							sb.append("Player in the Channel Server = ").append(charName).append("\r\n");
+							sb.append("[" + Output.now() + "] ").append(player.getName()).append(" failed to login.\r\n");
+							sb.append("[" + Output.now() + "] The player ").append((c.getWorldServer().isConnected(charName)) ? "is" : "isn't").append(" connected to the world server.\r\n");
+							sb.append("[" + Output.now() + "] The player has character ").append(charName).append(" connected.\r\n");
 							PrintError.print(PrintError.ACCOUNT_STUCK, sb.toString());
-							// ch.removePlayer(ch.getPlayerStorage().getCharacterByName(charName));//probably
-							// stuck
+							// ch.removePlayer(ch.getPlayerStorage().getCharacterByName(charName)); // unstuck
 							allowLogin = false;
 						}
 					}
