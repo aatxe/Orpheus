@@ -147,7 +147,7 @@ public class Server implements Runnable {
 		tMan.start();
 		tMan.register(tMan.purge(), 300000);// Purging ftw...
 		tMan.register(new RankingWorker(), ServerConstants.RANKING_INTERVAL);
-
+		gmServerEnabled = Boolean.parseBoolean(p.getProperty("gmserver"));
 		try {
 			for (byte i = 0; i < Byte.parseByte(p.getProperty("worlds")); i++) {
 				long startTime = System.currentTimeMillis();
