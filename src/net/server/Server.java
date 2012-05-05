@@ -149,8 +149,8 @@ public class Server implements Runnable {
 
 		try {
 			for (byte i = 0; i < Byte.parseByte(p.getProperty("worlds")); i++) {
-				long startTime = System.nanoTime();
-				Output.print("Loading world" + i);
+				long startTime = System.currentTimeMillis();
+				Output.print("Server is loading world" + i + ".");
 				World world = new World(i, Byte.parseByte(p.getProperty("flag" + i)), p.getProperty("eventmessage" + i), Byte.parseByte(p.getProperty("exprate" + i)), Byte.parseByte(p.getProperty("droprate" + i)), Byte.parseByte(p.getProperty("mesorate" + i)), Byte.parseByte(p.getProperty("bossdroprate" + i)));// ohlol
 
 				worldRecommendedList.add(new Pair<Byte, String>(i, p.getProperty("recommendmessage" + i)));
@@ -165,7 +165,7 @@ public class Server implements Runnable {
 					load.get(i).put(channelid, new AtomicInteger());
 				}
 				world.setServerMessage(p.getProperty("servermessage" + i));
-				Output.print("Loading completed in " + ((System.nanoTime() - startTime) / 1000) + "ms.\r\n");
+				Output.print("Loading completed in " + ((System.currentTimeMillis() - startTime)) + "ms.");
 			}
 		} catch (Exception e) {
 			Output.print("Corrupted configuration file, please run mksrv script to generate a new one.");
@@ -179,17 +179,17 @@ public class Server implements Runnable {
 			acceptor.bind(new InetSocketAddress(8484));
 		} catch (IOException ex) {
 		}
-		Output.print("Login Server: Listening on port 8484.\r\n");
+		Output.print("Login Server: Listening on port 8484.");
 		long startTime; // Used to time loading phases.
 		Output.print("Loading skills.");
-		startTime = System.nanoTime();
+		startTime = System.currentTimeMillis();
 		SkillFactory.loadAllSkills();
-		Output.print("Loading completed in " + ((System.nanoTime() - startTime) / 1000) + "ms.\r\n");
+		Output.print("Loading completed in " + ((System.currentTimeMillis() - startTime)) + "ms.");
 		Output.print("Loading items.");
-		startTime = System.nanoTime();
+		startTime = System.currentTimeMillis();
 		CashItemFactory.getSpecialCashItems();// just load who cares o.o
 		MapleItemInformationProvider.getInstance().getAllItems();
-		Output.print("Loading completed in " + ((System.nanoTime() - startTime) / 1000) + "ms.\r\n");
+		Output.print("Loading completed in " + ((System.currentTimeMillis() - startTime)) + "ms.");
 		if (Boolean.parseBoolean(p.getProperty("gmserver"))) {
 			GMServer.getInstance();
 		}
@@ -503,7 +503,7 @@ public class Server implements Runnable {
 
 			@Override
 			public void run() {
-				Output.print((restart ? "Restarting" : "Shutting down") + " the server!\r\n");
+				Output.print("The server is now " + (restart ? "restarting." : "shutting down."));
 				for (World w : getWorlds()) {
 					w.shutdown();
 				}
@@ -550,9 +550,9 @@ public class Server implements Runnable {
 				acceptor.unbind();
 				acceptor = null;
 				if (!restart) {
-					System.exit(0);
+					shutdown();
 				} else {
-					Output.print("\r\nThe server is now restarting.\r\n");
+					Output.print("\r\nThe server is now restarting.");
 					try {
 						instance.finalize();// FUU I CAN AND IT'S FREE
 					} catch (Throwable ex) {

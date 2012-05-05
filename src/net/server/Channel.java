@@ -103,7 +103,7 @@ public final class Channel {
 			((SocketSessionConfig) acceptor.getSessionConfig()).setTcpNoDelay(true);
 
 			eventSM.init();
-			Output.print("World " + world + ": Channel " + getId() + ": Listening on port " + port);
+			Output.print("World " + world + ": Channel " + getId() + ": Listening on port " + port + ".");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -118,7 +118,7 @@ public final class Channel {
 			acceptor.unbind();
 
 			finishedShutdown = true;
-			Output.print("Channel " + channel + " on world" + world + " has been shut down.\r\n");
+			Output.print("Channel " + channel + " on world" + world + " has been shut down.");
 		} catch (Exception e) {
 			Output.print("Channel " + channel + " on world" + world + " has failed to shut down.\r\n" + e);
 		}
