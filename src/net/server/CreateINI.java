@@ -120,7 +120,7 @@ public class CreateINI {
 			} catch (IOException e) {}
 		}
 		System.out.println("");
-		System.out.println("Make sure that ServerConstants is modified, cleaned, andcompiled before you start the server.");
+		System.out.println("Make sure that ServerConstants is modified, cleaned, and compiled before you start the server.");
 		System.out.println("If you would like to modify these settings, rerun this script, or modify the generated configuration file.");
 	}
 	

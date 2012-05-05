@@ -50,33 +50,48 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 			sp[0] = sp[0].toLowerCase().substring(1);
 			if (heading == '@' || heading == '/') {
 				boolean commandExecuted = false;
-				if (chr.gmLevel() != 0) {
-					commandExecuted = DonorCommands.execute(c, sp, heading);
-				}
-				if (!commandExecuted) {
-					commandExecuted = PlayerCommands.execute(c, sp, heading);
-				} else {
-					commandExecuted = Commands.execute(c, sp, heading);
+				switch (chr.gmLevel()) {
+					case 5:
+					case 4:
+					case 3: 
+					case 2:
+					case 1:
+						commandExecuted = DonorCommands.execute(c, sp, heading);
+						System.out.println("[" + c.getPlayer().getName() + "] Executed DonorCommands: " + heading + sp[0]);
+						if (commandExecuted) break;
+					case 0:
+						commandExecuted = PlayerCommands.execute(c, sp, heading);
+						System.out.println("[" + c.getPlayer().getName() + "] Executed PlayerCommands: " + heading + sp[0]);
+						if (commandExecuted) break;
+					default:
+						Commands.execute(c, sp, heading);
+						System.out.println("[" + c.getPlayer().getName() + "] Executed Commands: " + heading + sp[0]);
+						break;
 				}
 			} else {
 				boolean commandExecuted = false;
 				switch (chr.gmLevel()) {
 					case 5:
 						commandExecuted = AdminCommands.execute(c, sp, heading);
+						System.out.println("[" + c.getPlayer().getName() + "] Executed AdminCommand: " + heading + sp[0]);
 						if (commandExecuted) break;
 					case 4:
 						DeveloperCommands.setSLEA(slea);
 						commandExecuted = DeveloperCommands.execute(c, sp, heading);
+						System.out.println("[" + c.getPlayer().getName() + "] Executed DeveloperCommands: " + heading + sp[0]);
 						if (commandExecuted) break;
 					case 3:
 						commandExecuted = GMCommands.execute(c, sp, heading);
+						System.out.println("[" + c.getPlayer().getName() + "] Executed GMCommands: " + heading + sp[0]);
 						if (commandExecuted) break;
 					case 2:
 						commandExecuted = SupportCommands.execute(c, sp, heading);
+						System.out.println("[" + c.getPlayer().getName() + "] Executed SupportCommands: " + heading + sp[0]);
 						if (commandExecuted) break;
 					default:
 						Commands.execute(c, sp, heading);
-						if (commandExecuted) break;
+						System.out.println("[" + c.getPlayer().getName() + "] Executed Commands: " + heading + sp[0]);
+						break;
 				}
 			}
 		} else {
