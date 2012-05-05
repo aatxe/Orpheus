@@ -45,7 +45,7 @@ public final class LoginPasswordHandler implements MaplePacketHandler {
 		
 		if (AutoRegister.getAccountExists(login)) {
 			loginok = c.login(login, pwd);
-		} else if (AutoRegister.wasSuccessful()) {
+		} else if (!AutoRegister.wasSuccessful()) {
 			AutoRegister.createAccount(login, pwd, c.getSession().getRemoteAddress().toString());
 			if (AutoRegister.wasSuccessful()) {
 				loginok = c.login(login, pwd);
@@ -75,6 +75,7 @@ public final class LoginPasswordHandler implements MaplePacketHandler {
 		if (c.finishLogin() == 0) {
 			c.announce(MaplePacketCreator.getAuthSuccess(c));
 			final MapleClient client = c;
+			client.saveLastKnownIP();
 			c.setIdleTask(TimerManager.getInstance().schedule(new Runnable() {
 				@Override
 				public void run() {

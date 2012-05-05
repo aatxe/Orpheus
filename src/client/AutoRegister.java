@@ -4,12 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
+import java.security.NoSuchAlgorithmException;
 import constants.ServerConstants;
 import tools.DatabaseConnection;
+import tools.HashCreator;
+import tools.PrintError;
 
 public class AutoRegister {
-	public static final boolean autoRegister = ServerConstants.ENABLE_AUTOREGISTER;
-	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MapleClient.class);
+	private static final boolean autoRegister = ServerConstants.ENABLE_AUTOREGISTER;
 	private static final int ACCOUNTS_PER_IP = 4;
 	private static boolean success;
 
@@ -38,7 +40,7 @@ public class AutoRegister {
 		try {
 			con = DatabaseConnection.getConnection();
 		} catch (Exception e) {
-			log.error("ERROR", e);
+			PrintError.print(PrintError.EXCEPTION_CAUGHT, "There's a problem with automatic registration.\r\n" + e);
 			return;
 		}
 		try {
@@ -47,9 +49,9 @@ public class AutoRegister {
 			ResultSet rs = ipc.executeQuery();
 			if (rs.first() == false || rs.last() == true && rs.getRow() < ACCOUNTS_PER_IP) {
 				try {
-					PreparedStatement ps = con.prepareStatement("INSERT INTO accounts (name, password, email, birthday, macs, lastknownip) VALUES (?, SHA1(?), ?, ?, ?, ?)");
+					PreparedStatement ps = con.prepareStatement("INSERT INTO accounts (name, password, email, birthday, macs, lastknownip) VALUES (?, ?, ?, ?, ?, ?)");
 					ps.setString(1, login);
-					ps.setString(2, pwd);
+					ps.setString(2, HashCreator.getHash(pwd));
 					ps.setString(3, "no@email.provided");
 					ps.setString(4, "0000-00-00");
 					ps.setString(5, "00-00-00-00-00-00");
@@ -57,15 +59,18 @@ public class AutoRegister {
 					ps.executeUpdate();
 					ps.close();
 					success = true;
+				} catch (NoSuchAlgorithmException e) {
+					PrintError.print(PrintError.EXCEPTION_CAUGHT, "There's a problem with automatic registration.\r\n" + e);
+					return;
 				} catch (SQLException ex) {
-					log.error("ERROR", ex);
+					PrintError.print(PrintError.EXCEPTION_CAUGHT, "There's a problem with automatic registration.\r\n" + ex);
 					return;
 				}
 			}
 			ipc.close();
 			rs.close();
 		} catch (SQLException e) {
-			log.error("There's a problem with automatic registration.\r\n" + e);
+			PrintError.print(PrintError.EXCEPTION_CAUGHT, "There's a problem with automatic registration.\r\n" + e);
 		}
 	}
 }

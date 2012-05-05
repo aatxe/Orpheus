@@ -947,4 +947,23 @@ public class MapleClient {
 	public void announce(MaplePacket packet) {
 		session.write(packet);
 	}
+
+	public void saveLastKnownIP() {
+		String sockAddr = getSession().getRemoteAddress().toString();
+		Connection con;
+		try {
+			con = DatabaseConnection.getConnection();
+		} catch (Exception e) {
+			PrintError.print(PrintError.EXCEPTION_CAUGHT, e);
+			return;
+		}
+		try {
+			PreparedStatement ps = con.prepareStatement("UPDATE accounts SET lastknownip = ? WHERE account");
+			ps.setString(1, sockAddr.substring(1, sockAddr.lastIndexOf(':')));
+			ps.executeUpdate();
+			ps.close();
+		} catch (SQLException e) {
+			PrintError.print(PrintError.EXCEPTION_CAUGHT, e);
+		}
+	}
 }
