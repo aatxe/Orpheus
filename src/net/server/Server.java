@@ -202,10 +202,10 @@ public class Server implements Runnable {
 		try {
 			TimerManager.getInstance().stop();
 			acceptor.unbind();
+			Output.print("Server is now offline.");
 		} catch (NullPointerException e) {
 			// We're already off. Let's get out of here...
 		}
-		Output.print("Server is now offline!");
 		System.exit(0);// BOEIEND :D
 	}
 
