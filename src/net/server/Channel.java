@@ -103,7 +103,7 @@ public final class Channel {
 			((SocketSessionConfig) acceptor.getSessionConfig()).setTcpNoDelay(true);
 
 			eventSM.init();
-			System.out.println("    Channel " + getId() + ": Listening on port " + port);
+			Output.print("World " + world + ": Channel " + getId() + ": Listening on port " + port);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -111,16 +111,16 @@ public final class Channel {
 
 	public final void shutdown() {
 		try {
-			System.out.println("Shutting down Channel " + channel + " on World " + world);
+			Output.print("Server is now shutting down channel " + channel + " on world" + world + ".");
 
 			closeAllMerchants();
 			players.disconnectAll();
 			acceptor.unbind();
 
 			finishedShutdown = true;
-			System.out.println("Successfully shut down Channel " + channel + " on World " + world + "\r\n");
+			Output.print("Channel " + channel + " on world" + world + " has been shut down.\r\n");
 		} catch (Exception e) {
-			System.err.println("Error while shutting down Channel " + channel + " on World " + world + "\r\n" + e);
+			Output.print("Channel " + channel + " on world" + world + " has failed to shut down.\r\n" + e);
 		}
 	}
 
