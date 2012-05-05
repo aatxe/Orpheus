@@ -91,7 +91,6 @@ public class CreateINI {
 				System.out.println("WikiAnswers: Java heap is the heap size allocated to JVM applications which takes care of the new objects being created. If the objects being created exceed the heap size, it will throw a MemoryOutofBounds exception." + nl);
 				heapsize = con.readLine("Java Heap Size (in MB): ");
 			}
-			String keystore = con.readLine("Name of Keystore: ");
 			String linux = con.readLine("Will your server be running Unix/Linux? ");
 			while (!linux.equalsIgnoreCase("yes") && !linux.equalsIgnoreCase("no") && !linux.equalsIgnoreCase("y") && !linux.equalsIgnoreCase("n")) {
 				System.out.println("You must enter either yes or no.");
@@ -101,14 +100,13 @@ public class CreateINI {
 				out = new FileOutputStream("runsrv.bat", false);
 				sb.append("@echo off").append("\r\n").append("@title OrpheusMS Server").append("\r\n");
 				sb.append("set CLASSPATH=.;dist\\*\r\n");
-				sb.append("java -Xmx").append(heapsize).append("m -Dwzpath=wz\\ -Djavax.net.ssl.keyStore=").append(keystore).append(" -Djavax.net.ssl.keyStorePassword=passwd -Djavax.net.ssl.trustStore=").append(keystore).append(" -Djavax.net.ssl.trustStorePassword=passwd net.server.Server\r\n");
+				sb.append("java -Xmx").append(heapsize).append("m -Dwzpath=wz\\ net.server.Server\r\n");
 				sb.append("pause");
 			} else if (linux.equalsIgnoreCase("yes") || linux.equalsIgnoreCase("y")) {
 				out = new FileOutputStream("runsrv.sh", false);
 				sb.append("#!/bin/sh").append(nl);
 				sb.append("export CLASSPATH=").append(".:dist/*").append(nl);
-				sb.append("java ").append("-Xmx").append(heapsize).append("M").append(" -Dwzpath=wz/ ").append("-Djavax.net.ssl.keyStore=").append(keystore).append(" -Djavax.net.ssl.keyStorePassword=passwd -Djavax.net.ssl.trustStore=").append(keystore).append(" -Djavax.net.ssl.trustStorePassword=passwd");
-				sb.append(" net.server.Server");
+				sb.append("java ").append("-Xmx").append(heapsize).append("M").append(" -Dwzpath=wz/ net.server.Server");
 			}
 			out.write(sb.toString().getBytes());
 		} catch (Exception e) {
