@@ -59,6 +59,7 @@ public class MonsterDropCreator {
 	protected static List<Pair<Integer, MobInfo>> mobCache = new ArrayList<Pair<Integer, MobInfo>>();
 	protected static Map<Integer, Boolean> bossCache = new HashMap<Integer, Boolean>();
 
+	@SuppressWarnings("rawtypes") // messy code is messy, let's just ignore it...
 	public static void main(String args[]) throws FileNotFoundException, IOException, NotBoundException, InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException, MalformedObjectNameException {
 		MapleData data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzpath") + "/String.wz")).getData("MonsterBook.img");
 
@@ -708,7 +709,7 @@ public class MonsterDropCreator {
 	private static Map<Integer, List<Integer>> getDropsNotInMonsterBook() {
 		Map<Integer, List<Integer>> drops = new HashMap<Integer, List<Integer>>();
 
-		List<Integer> IndiviualMonsterDrop = new ArrayList();
+		List<Integer> IndiviualMonsterDrop = new ArrayList<Integer>();
 
 		// Bodyguard A
 		IndiviualMonsterDrop.add(4000139); // Bodyguard A's Tie Pin
@@ -720,7 +721,7 @@ public class MonsterDropCreator {
 
 		drops.put(9400112, IndiviualMonsterDrop);
 
-		IndiviualMonsterDrop = new ArrayList();
+		IndiviualMonsterDrop = new ArrayList<Integer>();
 
 		// Bodyguard B
 		IndiviualMonsterDrop.add(4000140); // Bodyguard B's Bullet Shell
@@ -733,7 +734,7 @@ public class MonsterDropCreator {
 
 		drops.put(9400113, IndiviualMonsterDrop);
 
-		IndiviualMonsterDrop = new ArrayList();
+		IndiviualMonsterDrop = new ArrayList<Integer>();
 
 		// The boss
 		IndiviualMonsterDrop.add(4000141); // Big Boss's flashlight
@@ -748,7 +749,7 @@ public class MonsterDropCreator {
 
 		drops.put(9400300, IndiviualMonsterDrop);
 
-		IndiviualMonsterDrop = new ArrayList();
+		IndiviualMonsterDrop = new ArrayList<Integer>();
 
 		// Dreamy ghost, himes
 		IndiviualMonsterDrop.add(4000225); // Kimono Piece
@@ -775,14 +776,14 @@ public class MonsterDropCreator {
 
 		drops.put(9400013, IndiviualMonsterDrop);
 
-		IndiviualMonsterDrop = new ArrayList();
+		IndiviualMonsterDrop = new ArrayList<Integer>();
 
 		// Zakum
 		IndiviualMonsterDrop.add(1372049); // Zakum Tree Branch
 
 		drops.put(8800002, IndiviualMonsterDrop);
 
-		IndiviualMonsterDrop = new ArrayList();
+		IndiviualMonsterDrop = new ArrayList<Integer>();
 
 		// Horntail
 		IndiviualMonsterDrop.add(4001094); // Nine Spirit Egg
@@ -790,7 +791,7 @@ public class MonsterDropCreator {
 
 		drops.put(8810018, IndiviualMonsterDrop);
 
-		IndiviualMonsterDrop = new ArrayList();
+		IndiviualMonsterDrop = new ArrayList<Integer>();
 
 		// Lady Boss
 		IndiviualMonsterDrop.add(4000138); // Lady Boss Comb
@@ -823,7 +824,7 @@ public class MonsterDropCreator {
 
 		drops.put(9400121, IndiviualMonsterDrop);
 
-		IndiviualMonsterDrop = new ArrayList();
+		IndiviualMonsterDrop = new ArrayList<Integer>();
 
 		// Wolf Spider
 		IndiviualMonsterDrop.add(4032024); // Jumper Cable
@@ -861,7 +862,7 @@ public class MonsterDropCreator {
 
 		drops.put(9400545, IndiviualMonsterDrop);
 
-		IndiviualMonsterDrop = new ArrayList();
+		IndiviualMonsterDrop = new ArrayList<Integer>();
 
 		return drops;
 	}

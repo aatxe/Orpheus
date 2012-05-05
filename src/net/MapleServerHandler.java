@@ -23,6 +23,7 @@ package net;
 
 import client.MapleClient;
 import constants.ServerConstants;
+import net.server.Output;
 import net.server.Server;
 import tools.MapleAESOFB;
 import tools.MaplePacketCreator;
@@ -82,7 +83,7 @@ public class MapleServerHandler extends IoHandlerAdapter {
 				return;
 			}
 		} else {
-			System.out.println("IoSession with " + session.getRemoteAddress() + " opened.");
+			Output.print("IoSession with " + session.getRemoteAddress() + " opened.");
 		}
 
 		byte key[] = {0x13, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, (byte) 0xB4, 0x00, 0x00, 0x00, 0x1B, 0x00, 0x00, 0x00, 0x0F, 0x00, 0x00, 0x00, 0x33, 0x00, 0x00, 0x00, 0x52, 0x00, 0x00, 0x00};

@@ -33,6 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import net.MaplePacket;
+import net.server.Output;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.buffer.SimpleBufferAllocator;
 import org.apache.mina.core.filterchain.IoFilter;
@@ -72,9 +73,9 @@ public class GMServer {
 		((SocketSessionConfig) acceptor.getSessionConfig()).setTcpNoDelay(true);
 		try {
 			acceptor.bind(new InetSocketAddress(5252));
-			System.out.println("\r\nGM Server online : Listening on port 5252.");
+			Output.print("GM Server: Listening on port 5252.");
 		} catch (Exception e) {
-			System.out.println("Failed binding the GM Server to port : 5252");
+			Output.print("Failed to bind the GM server to port 5252.");
 		}
 		outGame = new HashMap<String, IoSession>();
 		inGame = new HashMap<String, IoSession>();
@@ -154,7 +155,7 @@ public class GMServer {
 		try {
 			closeAllSessions();
 			acceptor.unbind();
-			System.out.println("GMServer is offline.");
+			Output.print("GM Server is now offline.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

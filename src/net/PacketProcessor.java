@@ -21,6 +21,7 @@
  */
 package net;
 
+import net.server.Output;
 import net.server.handlers.CustomPacketHandler;
 import net.server.handlers.login.*;
 import net.server.handlers.channel.*;
@@ -56,7 +57,7 @@ public final class PacketProcessor {
 		try {
 			handlers[code.getValue()] = handler;
 		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("Error registering handler - " + code.name());
+			Output.print("Error registering handler - " + code.name());
 		}
 	}
 

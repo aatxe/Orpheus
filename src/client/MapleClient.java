@@ -44,6 +44,7 @@ import javax.script.ScriptEngine;
 import net.MaplePacket;
 import tools.DatabaseConnection;
 import net.server.Channel;
+import net.server.Output;
 import net.server.Server;
 import net.server.MapleMessengerCharacter;
 import net.server.MaplePartyCharacter;
@@ -628,7 +629,7 @@ public class MapleClient {
 					try {
 						merchant.saveItems(false);
 					} catch (SQLException ex) {
-						System.out.println("Error while saving Hired Merchant items.");
+						Output.print("An error occurred while saving Hired Merchant items.");
 					}
 				}
 				if (player.getMessenger() != null) {

@@ -1,5 +1,6 @@
 package gm;
 
+import net.server.Output;
 import gm.server.handler.*;
 
 /**
@@ -35,7 +36,7 @@ public final class GMPacketProcessor {
 		try {
 			handlers[code.getValue()] = handler;
 		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("Error registering handler - " + code.name());
+			Output.print("Error registering handler - " + code.name());
 		}
 	}
 

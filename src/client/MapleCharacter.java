@@ -80,6 +80,7 @@ import java.util.regex.Pattern;
 import net.MaplePacket;
 import net.server.Channel;
 import net.server.MapleMessengerCharacter;
+import net.server.Output;
 import net.server.PartyOperation;
 import net.server.PlayerBuffValueHolder;
 import net.server.PlayerCoolDownValueHolder;
@@ -941,7 +942,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 				ps.execute();
 				ps.close();
 			} catch (SQLException ex) {
-				System.out.print("Error deleting skill: " + ex);
+				Output.print("Unable to delete skill from database.\r\n" + ex);
 			}
 		}
 	}
@@ -1044,7 +1045,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			ps.execute();
 			ps.close();
 		} catch (SQLException ex) {
-			System.out.print("Error deleting guild: " + ex);
+			Output.print("Unable to delete guild from database.\r\n" + ex);
 		}
 	}
 
@@ -4487,7 +4488,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 				ps.executeUpdate();
 				ps.close();
 			} catch (SQLException ex) {
-				System.out.println("[AREA DATA] An error has occured.");
+				Output.print("An error has occurred with area data.");
 				ex.printStackTrace();
 			}
 		}
@@ -4502,7 +4503,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException ex) {
-			System.out.println("[AREA DATA] An error has occured.");
+			Output.print("An error has occurred with area data.");
 			ex.printStackTrace();
 		}
 	}
