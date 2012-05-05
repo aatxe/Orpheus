@@ -958,8 +958,9 @@ public class MapleClient {
 			return;
 		}
 		try {
-			PreparedStatement ps = con.prepareStatement("UPDATE accounts SET lastknownip = ? WHERE account");
+			PreparedStatement ps = con.prepareStatement("UPDATE accounts SET lastknownip = ? WHERE name = ?");
 			ps.setString(1, sockAddr.substring(1, sockAddr.lastIndexOf(':')));
+			ps.setString(2, accountName);
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
