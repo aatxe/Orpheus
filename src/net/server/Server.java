@@ -129,7 +129,7 @@ public class Server implements Runnable {
 		try {
 			p.load(new FileInputStream("orpheus.ini"));
 		} catch (Exception e) {
-			System.out.println("Please run the OrpheusMS INI Configuration tool.");
+			Output.print("Missing configuration file, please run mksrv script to generate one.");
 			System.exit(0);
 		}
 		if (!ServerConstants.DB_USE_COMPILED_VALUES) { 
@@ -137,6 +137,7 @@ public class Server implements Runnable {
 		}
 		Runtime.getRuntime().addShutdownHook(new Thread(shutdown(false)));
 		DatabaseConnection.getConnection();
+		Output.print("Database connection established.");
 		IoBuffer.setUseDirectBuffer(false);
 		IoBuffer.setAllocator(new SimpleBufferAllocator());
 		acceptor = new NioSocketAcceptor();
@@ -148,7 +149,8 @@ public class Server implements Runnable {
 
 		try {
 			for (byte i = 0; i < Byte.parseByte(p.getProperty("worlds")); i++) {
-				System.out.println("Starting world " + i);
+				long startTime = System.nanoTime();
+				Output.print("Loading world" + i);
 				World world = new World(i, Byte.parseByte(p.getProperty("flag" + i)), p.getProperty("eventmessage" + i), Byte.parseByte(p.getProperty("exprate" + i)), Byte.parseByte(p.getProperty("droprate" + i)), Byte.parseByte(p.getProperty("mesorate" + i)), Byte.parseByte(p.getProperty("bossdroprate" + i)));// ohlol
 
 				worldRecommendedList.add(new Pair<Byte, String>(i, p.getProperty("recommendmessage" + i)));
@@ -163,10 +165,10 @@ public class Server implements Runnable {
 					load.get(i).put(channelid, new AtomicInteger());
 				}
 				world.setServerMessage(p.getProperty("servermessage" + i));
-				System.out.println("Finished loading world " + i + "\r\n");
+				Output.print("Loading completed in " + ((System.nanoTime() - startTime) / 1000) + "ms.\r\n");
 			}
 		} catch (Exception e) {
-			System.out.println("Errors in orpheus.ini, recreate it with the OrpheusMS INI Configuration tool.");
+			Output.print("Corrupted configuration file, please run mksrv script to generate a new one.");
 			e.printStackTrace();
 			System.exit(0);
 		}
@@ -177,31 +179,28 @@ public class Server implements Runnable {
 			acceptor.bind(new InetSocketAddress(8484));
 		} catch (IOException ex) {
 		}
-		System.out.println("Listening on port 8484\r\n");
-		System.out.print("Loading server");
-		ScheduledFuture<?> loldot = null;// rofl
-		loldot = tMan.register(new Runnable() {
-
-			@Override
-			public void run() {
-				System.out.print(".");
-			}
-		}, 500, 500);
+		Output.print("Login Server: Listening on port 8484.\r\n");
+		long startTime; // Used to time loading phases.
+		Output.print("Loading skills.");
+		startTime = System.nanoTime();
 		SkillFactory.loadAllSkills();
+		Output.print("Loading completed in " + ((System.nanoTime() - startTime) / 1000) + "ms.\r\n");
+		Output.print("Loading items.");
+		startTime = System.nanoTime();
 		CashItemFactory.getSpecialCashItems();// just load who cares o.o
 		MapleItemInformationProvider.getInstance().getAllItems();
+		Output.print("Loading completed in " + ((System.nanoTime() - startTime) / 1000) + "ms.\r\n");
 		if (Boolean.parseBoolean(p.getProperty("gmserver"))) {
 			GMServer.getInstance();
 		}
-		loldot.cancel(true);
-		System.out.println("\r\nServer is now online.");
+		Output.print("Server is now online!");
 		online = true;
 	}
 
 	public void shutdown() {
 		TimerManager.getInstance().stop();
 		acceptor.unbind();
-		System.out.println("Server offline.");
+		Output.print("Server is now offline!");
 		System.exit(0);// BOEIEND :D
 	}
 
@@ -504,7 +503,7 @@ public class Server implements Runnable {
 
 			@Override
 			public void run() {
-				System.out.println((restart ? "Restarting" : "Shutting down") + " the server!\r\n");
+				Output.print((restart ? "Restarting" : "Shutting down") + " the server!\r\n");
 				for (World w : getWorlds()) {
 					w.shutdown();
 				}
@@ -547,13 +546,13 @@ public class Server implements Runnable {
 				worldRecommendedList = null;
 				load.clear();
 				load = null;
-				System.out.println("Worlds + Channels are offline.");
+				Output.print("Server is now offline.");
 				acceptor.unbind();
 				acceptor = null;
 				if (!restart) {
 					System.exit(0);
 				} else {
-					System.out.println("\r\nRestarting the server....\r\n");
+					Output.print("\r\nThe server is now restarting.\r\n");
 					try {
 						instance.finalize();// FUU I CAN AND IT'S FREE
 					} catch (Throwable ex) {
