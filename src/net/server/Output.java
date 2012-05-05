@@ -11,6 +11,10 @@ public class Output {
 	public static void print(String message, boolean newLine) {
 		System.out.print("[OrpheusMS] [" + now() + "] " + message + ((newLine) ? "\n" : ""));
 	}
+
+	public static void printNewLine() {
+		System.out.print("\n");
+	}
 	
 	public static String now() {
 		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("America/New_York"));

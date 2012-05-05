@@ -199,8 +199,12 @@ public class Server implements Runnable {
 	}
 
 	public void shutdown() {
-		TimerManager.getInstance().stop();
-		acceptor.unbind();
+		try {
+			TimerManager.getInstance().stop();
+			acceptor.unbind();
+		} catch (NullPointerException e) {
+			// We're already off. Let's get out of here...
+		}
 		Output.print("Server is now offline!");
 		System.exit(0);// BOEIEND :D
 	}
@@ -508,6 +512,7 @@ public class Server implements Runnable {
 
 			@Override
 			public void run() {
+				Output.printNewLine();
 				Output.print("The server is now " + (restart ? "restarting." : "shutting down."));
 				for (World w : getWorlds()) {
 					w.shutdown();
