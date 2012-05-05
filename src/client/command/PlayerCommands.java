@@ -154,9 +154,6 @@ public class PlayerCommands extends Commands {
 			case kin:
 				NPCScriptManager.getInstance().start(c, 9900000, null, null);
 				break;
-			case nimakin:
-				NPCScriptManager.getInstance().start(c, 9900001, null, null);
-				break;
 			case nx:
 				if (chr.getCashShop().getCash(1) + 100000 <= Integer.MAX_VALUE) {
 					chr.getCashShop().gainCash(1, 100000);
@@ -329,7 +326,6 @@ public class PlayerCommands extends Commands {
 		heal,
 		help,
 		kin,
-		nimakin,
 		nx,
 		quit,
 		rankings,
