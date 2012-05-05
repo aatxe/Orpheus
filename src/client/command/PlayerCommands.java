@@ -106,7 +106,7 @@ public class PlayerCommands extends Commands {
 				chr.dropMessage("GM List");
 				try {
 					while (rs.next()) {
-						chr.dropMessage(rs.getString("name") + " " + MapleRank.getById(rs.getInt("gm")).toString());
+						chr.dropMessage(rs.getString("name") + " (" + MapleRank.getById(rs.getInt("gm")).toString() + ")");
 					}
 				} catch (SQLException e) {
 				}
@@ -140,7 +140,6 @@ public class PlayerCommands extends Commands {
 				chr.dropMessage("@heal - Heals you, for a fee.");
 				chr.dropMessage("@help - Displays this help message.");
 				chr.dropMessage("@kin - Opens a conversation with Kin.");
-				chr.dropMessage("@nimakin - Opens a conversation with Nimakin.");
 				chr.dropMessage("@nx - Gives you 100,000 NX for free!");
 				chr.dropMessage("@rankings - Displays the top 10 players.");
 				chr.dropMessage("@rebirth - Allows you to be reborn at max level.");
