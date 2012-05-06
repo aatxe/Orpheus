@@ -45,10 +45,13 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 		 * This is in an attempt to make the client.command classes
 		 * easier to understand and work with. I apologize for the mess!
 		 */
+		System.out.println("[" + c.getPlayer().getName() +"] Said something.");
 		if (heading == '/' || heading == '!' || heading == '@') {
+			System.out.println("[" + c.getPlayer().getName() +"] Command parser.");
 			String[] sp = s.split(" ");
 			sp[0] = sp[0].toLowerCase().substring(1);
 			if (heading == '@' || heading == '/') {
+				System.out.println("[" + c.getPlayer().getName() +"] Command type: " + heading);
 				boolean commandExecuted = false;
 				switch (chr.gmLevel()) {
 					case 5:
@@ -69,6 +72,7 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 						break;
 				}
 			} else {
+				System.out.println("[" + c.getPlayer().getName() +"] Command type: " + heading);
 				boolean commandExecuted = false;
 				switch (chr.gmLevel()) {
 					case 5:
