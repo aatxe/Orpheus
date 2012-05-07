@@ -28,6 +28,7 @@ public class ServerConstants {
 	public static String[] WORLD_NAMES = {"Scania", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
 	// Orpheus Feature Configuration
 	public static final boolean USE_PARANOIA = true;
+	public static final boolean USE_MTS_AS_FM_WARP = true; // Replace the Meso Trade Shop with a warp to the Free Market.
 	// Rate Configuration
 	public static final byte QUEST_EXP_RATE = 4;
 	public static final byte QUEST_MESO_RATE = 3;
@@ -35,7 +36,7 @@ public class ServerConstants {
 	public static final boolean ENABLE_AUTOREGISTER = true; // Confirmed: working.
 	public static final int CHANNEL_LOAD = 100; // Players per channel
 	public static final long RANKING_INTERVAL = 3600000;
-	public static final boolean ENABLE_PIC = false;
+	public static final boolean ENABLE_PIC = true; // False: can't delete characters.
 	// Event Configuration
 	public static final boolean PERFECT_PITCH = false;
 	public static final boolean FREE_NX = true;
