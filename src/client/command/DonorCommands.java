@@ -60,7 +60,7 @@ public class DonorCommands extends Commands {
 		return true;
 	}
 
-	private static enum Command {
+	public static enum Command {
 		donor, 
 		heal,
 		itemvac,

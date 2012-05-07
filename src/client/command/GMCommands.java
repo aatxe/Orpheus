@@ -357,7 +357,7 @@ public class GMCommands extends Commands {
 		return true;
 	}
 	
-	private static enum Command {
+	public static enum Command {
 		ap,
 		buff,
 		dc,

@@ -8,15 +8,6 @@ public abstract class Commands {
 		return false;
 	}
 	
-	public static boolean isCommand(String command) {
-		for (int i = 0; i < Command.values().length; i++) {
-			if (Command.valueOf(command) == Command.values()[i]) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
 	protected static String joinStringFrom(String arr[], int start) {
 		StringBuilder builder = new StringBuilder();
 		for (int i = start; i < arr.length; i++) {
@@ -28,5 +19,5 @@ public abstract class Commands {
 		return builder.toString();
 	}
 	
-	private static enum Command {};
+	public static enum Command {};
 }

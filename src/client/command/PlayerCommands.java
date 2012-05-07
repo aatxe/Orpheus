@@ -205,6 +205,7 @@ public class PlayerCommands extends Commands {
 				break;
 			case save:
 				chr.saveToDB(true);
+				chr.dropMessage("Done.");
 				break;
 			case sell:
 				if (chr.haveItem(4001101)) {

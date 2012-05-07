@@ -203,7 +203,7 @@ public class DeveloperCommands extends Commands {
 		DeveloperCommands.slea = slea;
 	}
 	
-	private static enum Command {
+	public static enum Command {
 		exprate,
 		gc,
 		horntail,

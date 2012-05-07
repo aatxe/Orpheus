@@ -52,18 +52,17 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 			sp[0] = sp[0].toLowerCase().substring(1);
 			if (heading == '@' || heading == '/') {
 				System.out.println("[" + c.getPlayer().getName() +"] Command type: " + heading);
-				boolean commandExecuted = false;
+				boolean commandExecuted = true;
 				switch (chr.gmLevel()) {
 					case 5:
 					case 4:
 					case 3: 
 					case 2:
 					case 1:
-						commandExecuted = DonorCommands.execute(c, sp, heading);
+						System.out.println("[" + c.getPlayer().getName() + "]" + DonorCommands.execute(c, sp, heading));
 						System.out.println("[" + c.getPlayer().getName() + "] Executed DonorCommands: " + heading + sp[0]);
 						if (commandExecuted) break;
-					case 0:
-						commandExecuted = PlayerCommands.execute(c, sp, heading);
+					case 0:System.out.println("[" + c.getPlayer().getName() + "]" + PlayerCommands.execute(c, sp, heading));
 						System.out.println("[" + c.getPlayer().getName() + "] Executed PlayerCommands: " + heading + sp[0]);
 						if (commandExecuted) break;
 					default:
