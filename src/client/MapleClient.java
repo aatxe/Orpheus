@@ -67,7 +67,7 @@ import tools.HexTool;
 import org.apache.mina.core.session.IoSession;
 import server.MapleMiniGame;
 import server.quest.MapleQuest;
-import tools.PrintError;
+import tools.MapleLogger;
 
 public class MapleClient {
 
@@ -616,7 +616,7 @@ public class MapleClient {
 			}
 			player.cancelAllDebuffs();
 		} catch (final Throwable t) {
-			PrintError.print(PrintError.ACCOUNT_STUCK, t);
+			MapleLogger.print(MapleLogger.ACCOUNT_STUCK, t);
 		}
 	}
 
@@ -975,7 +975,7 @@ public class MapleClient {
 		try {
 			con = DatabaseConnection.getConnection();
 		} catch (Exception e) {
-			PrintError.print(PrintError.EXCEPTION_CAUGHT, e);
+			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
 			return;
 		}
 		try {
@@ -985,7 +985,7 @@ public class MapleClient {
 			ps.executeUpdate();
 			ps.close();
 		} catch (SQLException e) {
-			PrintError.print(PrintError.EXCEPTION_CAUGHT, e);
+			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
 		}
 	}
 }

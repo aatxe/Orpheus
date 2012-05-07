@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class PrintError {
-	public static final String ACCOUNT_STUCK = "accountstuck.log",
-			EXCEPTION_CAUGHT = "exceptions.log";// more to come (maps)
+public class MapleLogger {
+	public static final String ACCOUNT_STUCK = "accountstuck.log";
+	public static final String EXCEPTION_CAUGHT = "exceptions.log";
 
 	// private static final SimpleDateFormat sdf = new
 	// SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

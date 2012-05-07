@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import constants.ServerConstants;
 import tools.DatabaseConnection;
 import tools.HashCreator;
-import tools.PrintError;
+import tools.MapleLogger;
 
 public class AutoRegister {
 	private static final boolean autoRegister = ServerConstants.ENABLE_AUTOREGISTER;
@@ -40,7 +40,7 @@ public class AutoRegister {
 		try {
 			con = DatabaseConnection.getConnection();
 		} catch (Exception e) {
-			PrintError.print(PrintError.EXCEPTION_CAUGHT, "There's a problem with automatic registration.\r\n" + e);
+			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, "There's a problem with automatic registration.\r\n" + e);
 			return;
 		}
 		try {
@@ -60,17 +60,17 @@ public class AutoRegister {
 					ps.close();
 					success = true;
 				} catch (NoSuchAlgorithmException e) {
-					PrintError.print(PrintError.EXCEPTION_CAUGHT, "There's a problem with automatic registration.\r\n" + e);
+					MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, "There's a problem with automatic registration.\r\n" + e);
 					return;
 				} catch (SQLException ex) {
-					PrintError.print(PrintError.EXCEPTION_CAUGHT, "There's a problem with automatic registration.\r\n" + ex);
+					MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, "There's a problem with automatic registration.\r\n" + ex);
 					return;
 				}
 			}
 			ipc.close();
 			rs.close();
 		} catch (SQLException e) {
-			PrintError.print(PrintError.EXCEPTION_CAUGHT, "There's a problem with automatic registration.\r\n" + e);
+			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, "There's a problem with automatic registration.\r\n" + e);
 		}
 	}
 }

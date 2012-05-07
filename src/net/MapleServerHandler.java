@@ -33,7 +33,7 @@ import tools.data.input.SeekableLittleEndianAccessor;
 import org.apache.mina.core.session.IoSession;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
-import tools.PrintError;
+import tools.MapleLogger;
 
 public class MapleServerHandler extends IoHandlerAdapter {
 
@@ -67,7 +67,7 @@ public class MapleServerHandler extends IoHandlerAdapter {
 		 * client.disconnect(); } }
 		 */
 		session.close(true);
-		PrintError.print(PrintError.EXCEPTION_CAUGHT, cause);
+		MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, cause);
 		// sessionClosed should be called
 	}
 
