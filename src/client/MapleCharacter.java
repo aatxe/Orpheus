@@ -707,6 +707,12 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		}
 	}
 
+	public void setHidden(boolean hidden) {
+		if (isGM()) {
+			this.hidden = hidden;
+		}
+	}
+	
 	public void toggleHide(boolean login) {
 		if (isGM()) {
 			if (isHidden()) {

@@ -49,6 +49,10 @@ public class SupportCommands extends Commands {
 					} else {
 						return false;
 					}
+				case hide:
+					chr.setHidden(true);
+					chr.message("You're now invisible.");
+					break;
 				case item:
 					int itemId = Integer.parseInt(sub[1]);
 					short quantity = 1;
@@ -92,6 +96,10 @@ public class SupportCommands extends Commands {
 						dis.close();
 					} catch (Exception e) {}
 					break;
+				case show:
+					chr.setHidden(false);
+					chr.message("You're now visible.");
+					break;
 				case warp:
 					try {
 						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -124,11 +132,13 @@ public class SupportCommands extends Commands {
 		announce("Makes a server-wide announcement."),
 		cleardrops("Clears the drops on the map."),
 		help("Displays this help message."),
+		hide("Hides you, making you invisible to non-GMs."),
 		item("Gives an item to you or a victim."),
 		job("Sets your job."),
 		mesos("Gives you mesos."),
 		online("Checks who's online."),
 		search("Searches MapleTip for IDs"),
+		show("Makes you visible to all players."),
 		warp("Warps you to the victim."),
 		warphere("Warps the victim to you."),
 		whereami("Tells you what map you're on.");
