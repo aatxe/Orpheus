@@ -2370,7 +2370,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	}
 
 	public boolean isGM() {
-		return gmLevel > 0;
+		return gmLevel > 1;
 	}
 
 	public boolean isHidden() {
