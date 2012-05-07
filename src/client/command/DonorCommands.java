@@ -3,6 +3,7 @@ package client.command;
 import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.List;
+import constants.ServerConstants;
 import server.MapleInventoryManipulator;
 import server.maps.MapleMapItem;
 import server.maps.MapleMapObject;
@@ -44,6 +45,20 @@ public class DonorCommands extends Commands {
 					chr.updateSingleStat(MapleStat.MP, chr.getMaxMp());
 					chr.message("Healed for free. Thanks for your donation!");
 					break;
+				case help:
+					if (sub.length > 1) {
+						if (sub[1].equalsIgnoreCase("donor")) {
+							chr.dropMessage(ServerConstants.SERVER_NAME + "'s DonorCommands Help");
+							for (Command cmd : Command.values()) {
+								chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
+							}
+							break;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
 				case itemvac:
 					List<MapleMapObject> items = chr.getMap().getMapObjectsInRange(chr.getPosition(), Double.POSITIVE_INFINITY, Arrays.asList(MapleMapObjectType.ITEM));
 					for (MapleMapObject item : items) {
@@ -65,8 +80,19 @@ public class DonorCommands extends Commands {
 	}
 
 	private static enum Command {
-		donor, 
-		heal,
-		itemvac,
+		donor("Rewards you for donating!"), 
+		heal("Heals you, for free!"),
+		help("Displays this help message."),
+		itemvac("Vacuums up all the items on the map.");
+
+	    private final String description;
+	    
+	    private Command(String description){
+	        this.description = description;
+	    }
+	    
+	    public String getDescription() {
+	    	return this.description;
+	    }
 	}
 }

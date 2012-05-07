@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import constants.ServerConstants;
 import server.TimerManager;
 import server.life.MapleLifeFactory;
 import server.life.MapleMonster;
@@ -46,6 +47,20 @@ public class DeveloperCommands extends Commands {
 				case gc:
 		            System.gc();
 					break;
+				case help:
+					if (sub.length > 1) {
+						if (sub[1].equalsIgnoreCase("dev")) {
+							chr.dropMessage(ServerConstants.SERVER_NAME + "'s DeveloperCommands Help");
+							for (Command cmd : Command.values()) {
+								chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
+							}
+							break;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
 				case horntail:
 					chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(8810026), chr.getPosition());
 					break;
@@ -208,18 +223,29 @@ public class DeveloperCommands extends Commands {
 	}
 	
 	private static enum Command {
-		exprate,
-		gc,
-		horntail,
-		npc,
-		packet,
-		pmob,
-		pnpc,
-		pinkbean,
-		say,
-		shutdown,
-		sql,
-		zakum,
+		exprate("Sets the server-wide experience rate."),
+		gc("Runs the garbage collector."),
+		help("Displays this help message."),
+		horntail("Summons Horntail at your position."),
+		npc("Spawns an NPC at your position."),
+		packet("Executes a custom packet."),
+		pmob("Permanently spawns a mob at your position."),
+		pnpc("Permanently spawns an NPC at your position."),
+		pinkbean("Summons Pinkbean at your position."),
+		say("Forces a victim to say something."),
+		shutdown("Shutdowns the server."),
+		sql("Executes an SQL query."),
+		zakum("Summons Zakum at your position.");
+
+	    private final String description;
+	    
+	    private Command(String description){
+	        this.description = description;
+	    }
+	    
+	    public String getDescription() {
+	    	return this.description;
+	    }
 	}
 
 }

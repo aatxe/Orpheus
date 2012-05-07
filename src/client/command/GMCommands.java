@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.List;
+import constants.ServerConstants;
 import provider.MapleData;
 import provider.MapleDataProviderFactory;
 import net.server.Channel;
@@ -112,7 +113,7 @@ public class GMCommands extends Commands {
 						chr.setFame(Integer.parseInt(sub[1]));
 						chr.updateSingleStat(MapleStat.FAME, Integer.parseInt(sub[1]));
 					} else {
-						chr.message("Usage: !job number || !job playerName number");
+						chr.message("Usage: !fame number || !fame playerName number");
 					}
 					break;
 				case gmshop:
@@ -128,6 +129,20 @@ public class GMCommands extends Commands {
 						chr.message("Usage: !heal || !heal playerName");
 					}
 					break;
+				case help:
+					if (sub.length > 1) {
+						if (sub[1].equalsIgnoreCase("gm")) {
+							chr.dropMessage(ServerConstants.SERVER_NAME + "'s GMCommands Help");
+							for (Command cmd : Command.values()) {
+								chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
+							}
+							break;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
 				case job:
 					if (sub.length > 2) {
 						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -362,35 +377,46 @@ public class GMCommands extends Commands {
 	}
 	
 	private static enum Command {
-		ap,
-		buff,
-		dc,
-		dispose,
-		drop,
-		fame,
-		gmshop,
-		heal,
-		job,
-		kill,
-		killall,
-		level,
-		levelup,
-		map,
-		maxskills,
-		maxstats,
-		mesos,
-		pap,
-		pianus,
-		notice,
-		saveall,
-		search,
-		servermessage,
-		setall,
-		shop,
-		sp,
-		spawn,
-		speak,
-		texttype,
-		unban,
+		ap("Sets the AP of you or a victim."),
+		buff("Applies buffs to you or a victim."),
+		dc("Disconnects a victim."),
+		dispose("Fixes NPC issues for you or a victim."),
+		drop("Drops an item at your feet."),
+		fame("Sets the fame of you or a victim."),
+		gmshop("Opens up the GM Shop."),
+		heal("Heals you or a victim."),
+		help("Displays this help message."),
+		job("Sets the job of you or a victim."),
+		kill("Kills a victim."),
+		killall("Kills all monsters on map."),
+		level("Sets the level of you or a victim."),
+		levelup("Causes you or a victim to level up."),
+		map("Changes the map of you or a victim."),
+		maxskills("Maxes the skills of you or a victim."),
+		maxstats("Maxes the stats of you or a victim."),
+		mesos("Gives mesos to you or a victim."),
+		pap("Summons Papulatus at your position."),
+		pianus("Summons Pianus at your position."),
+		notice("Makes a server-wide notice anonymously."),
+		saveall("Saves all players online!"),
+		search("Searches MapleTip for IDs."),
+		servermessage("Sets the servermessage."),
+		setall("Sets the values of all of the stats of you or a victim."),
+		shop("Opens up a shop by ID."),
+		sp("Sets the SP of you or a victim."),
+		spawn("Spawns a mob at your position."),
+		speak("Opens up a conversation with an NPC."),
+		texttype("Toggles your text type."),
+		unban("Unbans a user.");
+
+	    private final String description;
+	    
+	    private Command(String description){
+	        this.description = description;
+	    }
+	    
+	    public String getDescription() {
+	    	return this.description;
+	    }
 	}
 }

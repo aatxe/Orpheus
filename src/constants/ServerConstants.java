@@ -36,6 +36,8 @@ public class ServerConstants {
 	public static final boolean ENABLE_PIC = false;
 	// Event Configuration
 	public static final boolean PERFECT_PITCH = false;
+	public static final boolean FREE_NX = true;
+	public static final int NX_COST = 1000000; // 1,000,000
 	public static final String EVENTS = "automsg KerningPQ Boats Subway AirPlane elevator";
 	// IP Configuration
 	public static final String HOST = "50.116.55.23";

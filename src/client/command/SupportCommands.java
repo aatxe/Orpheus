@@ -6,10 +6,12 @@ import java.net.URL;
 import java.sql.ResultSet;
 import server.MapleInventoryManipulator;
 import constants.ItemConstants;
+import constants.ServerConstants;
 import net.server.Channel;
 import net.server.Server;
 import client.MapleCharacter;
 import client.MapleClient;
+import client.MapleJob;
 import client.MaplePet;
 
 public class SupportCommands extends Commands {
@@ -33,6 +35,20 @@ public class SupportCommands extends Commands {
 				case cleardrops:
 					chr.getMap().clearDrops(chr);
 					break;
+				case help:
+					if (sub.length > 1) {
+						if (sub[1].equalsIgnoreCase("support")) {
+							chr.dropMessage(ServerConstants.SERVER_NAME + "'s SupportCommands Help");
+							for (Command cmd : Command.values()) {
+								chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
+							}
+							break;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
 				case item:
 					int itemId = Integer.parseInt(sub[1]);
 					short quantity = 1;
@@ -45,6 +61,13 @@ public class SupportCommands extends Commands {
 					}
 					MapleInventoryManipulator.addById(c, itemId, quantity, chr.getName(), petid, -1);
 					break;
+				case job:
+					if (sub.length >= 2) {
+						chr.changeJob(MapleJob.getById(Integer.parseInt(sub[1])));
+						chr.equipChanged();
+					} else {
+						chr.message("Usage: !job number");
+					}
 				case mesos:
 					chr.gainMeso(Integer.parseInt(sub[1]), true);
 					break;
@@ -98,14 +121,26 @@ public class SupportCommands extends Commands {
 	}
 
 	private static enum Command {
-		announce,
-		cleardrops,
-		item,
-		mesos,
-		online,
-		search,
-		warp,
-		warphere,
-		whereami,
+		announce("Makes a server-wide announcement."),
+		cleardrops("Clears the drops on the map."),
+		help("Displays this help message."),
+		item("Gives an item to you or a victim."),
+		job("Sets your job."),
+		mesos("Gives you mesos."),
+		online("Checks who's online."),
+		search("Searches MapleTip for IDs"),
+		warp("Warps you to the victim."),
+		warphere("Warps the victim to you."),
+		whereami("Tells you what map you're on.");
+
+	    private final String description;
+	    
+	    private Command(String description){
+	        this.description = description;
+	    }
+	    
+	    public String getDescription() {
+	    	return this.description;
+	    }
 	}
 }

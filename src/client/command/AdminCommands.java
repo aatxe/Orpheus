@@ -1,6 +1,7 @@
 package client.command;
 
 import java.sql.ResultSet;
+import constants.ServerConstants;
 import net.server.Channel;
 import client.MapleCharacter;
 import client.MapleClient;
@@ -17,6 +18,20 @@ public class AdminCommands extends Commands {
 				default:
 					// chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
 					return false;
+				case help:
+					if (sub.length > 1) {
+						if (sub[1].equalsIgnoreCase("admin")) {
+							chr.dropMessage(ServerConstants.SERVER_NAME + "'s AdminCommands Help");
+							for (Command cmd : Command.values()) {
+								chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
+							}
+							break;
+						} else {
+							return false;
+						}
+					} else {
+						return false;
+					}
 				case setgmlevel:
 					victim = c.getChannelServer().getPlayerStorage().getCharacterByName(sub[1]);
 					victim.saveToDB(true);
@@ -32,6 +47,17 @@ public class AdminCommands extends Commands {
 	}
 	
 	private static enum Command {
-		setgmlevel
+		help("Displays this help message."),
+		setgmlevel("Sets a victim's GM level.");
+
+	    private final String description;
+	    
+	    private Command(String description){
+	        this.description = description;
+	    }
+	    
+	    public String getDescription() {
+	    	return this.description;
+	    }
 	}
 }

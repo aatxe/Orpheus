@@ -23,6 +23,8 @@ public class PlayerCommands extends Commands {
 		Channel cserv = c.getChannelServer();
 		MapleCharacter victim; // For commands with targets.
 		ResultSet rs; // For commands with MySQL results.
+		int cost; // For commands with a fee.
+		
 		try {
 			Command command = Command.valueOf(sub[0]);
 			switch (command) {
@@ -112,7 +114,7 @@ public class PlayerCommands extends Commands {
 					}
 					break;
 				case heal:
-					int cost = ((chr.getMaxHp() / 4) * (chr.getMaxHp() / 4));
+					cost = ((chr.getMaxHp() / 4) * (chr.getMaxHp() / 4));
 					if (chr.getMeso() >= cost && chr.getHp() < chr.getMaxHp()) {
 						chr.gainMeso(-cost, false);
 						chr.setHp(chr.getMaxHp());
@@ -121,44 +123,40 @@ public class PlayerCommands extends Commands {
 					} else if (chr.getHp() >= chr.getMaxHp()) {
 						chr.message("You already have full health!");
 					} else {
-						chr.message("You cannot afford to heal.");
+						String readableCost = String.valueOf(cost);
+						readableCost = readableCost.replaceAll("(\\d)(?=(\\d{3})+$)", "$1,");
+						chr.message("You cannot afford to heal. You need " + readableCost + " mesos.");
 					}
 					break;
 				case help:
 					chr.dropMessage(ServerConstants.SERVER_NAME + "'s PlayerCommands Help");
-					chr.dropMessage("@afk - Marks you as away, or with an optional message.");
-					chr.dropMessage("@back - Marks you as returned.");
-					chr.dropMessage("@bugs - Tells players where to report bugs!");
-					chr.dropMessage("@buy - Purchases a rice cake for 1,000,000,000 mesos.");
-					chr.dropMessage("@checkgm - Checks if a specified player is a GM.");
-					chr.dropMessage("@checkrebirths - Checks a player's rebirths.");
-					chr.dropMessage("@checkstats - Checks a player's stats.");
-					chr.dropMessage("@cody - Shortcut to Cody.");
-					chr.dropMessage("@dispose - Solves NPC problems.");
-					chr.dropMessage("@emo - Kills yourself.");
-					chr.dropMessage("@gmlist - Presents a list of all GMs");
-					chr.dropMessage("@heal - Heals you, for a fee.");
-					chr.dropMessage("@help - Displays this help message.");
-					chr.dropMessage("@kin - Opens a conversation with Kin.");
-					chr.dropMessage("@nx - Gives you 100,000 NX for free!");
-					chr.dropMessage("@rankings - Displays the top 10 players.");
-					chr.dropMessage("@rebirth - Allows you to be reborn at max level.");
-					chr.dropMessage("@rebirths - Displays your rebirths.");
-					chr.dropMessage("@save - Saves your character to the database.");
-					chr.dropMessage("@sell - Sells a rice cake for 1,000,000,000 mesos.");
-					chr.dropMessage("@stat - Allows you to raise your stats using your AP.");
-					chr.dropMessage("@stats - Displays your full stats.");
-					chr.dropMessage("@version - Displays server version information.");
+					for (Command cmd : Command.values()) {
+						chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
+					}
 					break;
 				case kin:
 					NPCScriptManager.getInstance().start(c, 9900000, null, null);
 					break;
 				case nx:
-					if (chr.getCashShop().getCash(1) + 100000 <= Integer.MAX_VALUE) {
-						chr.getCashShop().gainCash(1, 100000);
-						chr.dropMessage("Added 100,000 NX.");
+					if (ServerConstants.FREE_NX) {
+						if (chr.getCashShop().getCash(1) + 100000 <= Integer.MAX_VALUE) {
+							chr.getCashShop().gainCash(1, 100000);
+							chr.dropMessage("Added 100,000 NX.");
+						} else {
+							chr.dropMessage("You have too much NX already!");
+						}
 					} else {
-						chr.dropMessage("You have too much NX already!");
+						if (chr.getMeso() >= ServerConstants.NX_COST && chr.getCashShop().getCash(1) + 100000 <= Integer.MAX_VALUE) {
+							chr.gainMeso(-ServerConstants.NX_COST, false);
+							chr.getCashShop().gainCash(1, 100000);
+							chr.message("You spent " + ServerConstants.NX_COST + " mesos on NX.");
+						} else if (chr.getCashShop().getCash(1) + 100000 > Integer.MAX_VALUE) {
+							chr.message("You have too much NX already!");
+						} else {
+							String readableCost = String.valueOf(ServerConstants.NX_COST);
+							readableCost = readableCost.replaceAll("(\\d)(?=(\\d{3})+$)", "$1,");
+							chr.message("You cannot afford to heal. You need " + readableCost + " mesos.");
+						}
 					}
 					break;
 				case quit:
@@ -318,29 +316,39 @@ public class PlayerCommands extends Commands {
 	}
 	
 	private static enum Command {
-		afk,
-		back,
-		bugs,
-		buy, 
-		checkgm, 
-		checkrebirths, 
-		checkstats, 
-		cody, 
-		dispose,
-		emo,
-		gmlist,
-		heal,
-		help,
-		kin,
-		nx,
-		quit,
-		rankings,
-		rebirth, 
-		rebirths, 
-		save,
-		sell,
-		stat,
-		stats,
-		version,
+		afk("Marks you as away, or with an optional message."),
+		back("Marks you as returned."),
+		bugs("Tells players where to report bugs!"),
+		buy("Purchases a rice cake for 1,000,000,000 mesos."), 
+		checkgm("Checks if a specified player is a GM."), 
+		checkrebirths("Checks a player's rebirths."), 
+		checkstats("Checks a player's stats."), 
+		cody("Shortcut to Cody."), 
+		dispose("Solves NPC problems."),
+		emo("Kills yourself."),
+		gmlist("Presents a list of all GMs."),
+		heal("Heals you, for a fee."),
+		help("Displays this help message."),
+		kin("Opens a conversation with Kin."),
+		nx("Gives you 100,000 NX for " + ((ServerConstants.FREE_NX) ? "free" : "a fee")),
+		quit("Allows you to quickly exit from the game."),
+		rankings("Displays the top 10 players."),
+		rebirth("Allows you to reborn at max level."), 
+		rebirths("Displays your rebirths."), 
+		save("Saves your character to the database."),
+		sell("Sells a rice cake for 1,000,000,000 mesos."),
+		stat("Allows you to raise your stats using your AP."),
+		stats("Displays your full stats."),
+		version("Displays server version information.");
+		
+	    private final String description;
+	    
+	    private Command(String description){
+	        this.description = description;
+	    }
+	    
+	    public String getDescription() {
+	    	return this.description;
+	    }
 	}
 }
