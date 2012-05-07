@@ -391,6 +391,9 @@ public class MapleClient {
 					ps.setString(1, passhashNew);
 					ps.setString(2, saltNew);
 					ps.setInt(3, accId);
+					rs = ps.executeQuery();
+					ps.close();
+					rs.close();
 				}
 				
 				ps = con.prepareStatement("INSERT INTO iplog (accountid, ip) VALUES (?, ?)");
