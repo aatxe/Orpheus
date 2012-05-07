@@ -5,7 +5,9 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.sql.ResultSet;
 import server.MapleInventoryManipulator;
+import tools.MapleLogger;
 import constants.ItemConstants;
+import constants.ParanoiaConstants;
 import constants.ServerConstants;
 import net.server.Channel;
 import net.server.Server;
@@ -15,6 +17,7 @@ import client.MapleJob;
 import client.MaplePet;
 
 public class SupportCommands extends Commands {
+	@SuppressWarnings("unused")
 	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();
 		Channel cserv = c.getChannelServer();
@@ -127,6 +130,9 @@ public class SupportCommands extends Commands {
 				case whereami:
 					chr.dropMessage("You're at Map " + chr.getMapId());
 					break;
+			}
+			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_COMMAND_LOGGER && ParanoiaConstants.LOG_SUPPORT_COMMANDS) {
+				MapleLogger.printFormatted(MapleLogger.PARANOIA_COMMAND, "[" + c.getPlayer().getName() + "] Used " + heading + sub[0] + ((sub.length > 1) ? " with parameters: " + joinStringFrom(sub, 1) : "."));
 			}
 			return true;
 		} catch (IllegalArgumentException e) {

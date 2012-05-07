@@ -3,11 +3,13 @@ package client.command;
 import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.List;
+import constants.ParanoiaConstants;
 import constants.ServerConstants;
 import server.MapleInventoryManipulator;
 import server.maps.MapleMapItem;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
+import tools.MapleLogger;
 import tools.MaplePacketCreator;
 import net.server.Channel;
 import client.MapleCharacter;
@@ -15,6 +17,7 @@ import client.MapleClient;
 import client.MapleStat;
 
 public class DonorCommands extends Commands {
+	@SuppressWarnings("unused")
 	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();
 		Channel cserv = c.getChannelServer();
@@ -72,6 +75,9 @@ public class DonorCommands extends Commands {
 						chr.getMap().nullifyObject(item);
 					}
 					break;
+			}
+			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_COMMAND_LOGGER && ParanoiaConstants.LOG_DONOR_COMMANDS) {
+				MapleLogger.printFormatted(MapleLogger.PARANOIA_COMMAND, "[" + c.getPlayer().getName() + "] Used " + heading + sub[0] + ((sub.length > 1) ? " with parameters: " + joinStringFrom(sub, 1) : "."));
 			}
 			return true;
 		} catch (IllegalArgumentException e) {

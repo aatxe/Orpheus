@@ -21,7 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package net.server.handlers.channel;
 
+import constants.ParanoiaConstants;
+import constants.ServerConstants;
 import client.MapleCharacter;
+import tools.MapleLogger;
 import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 import client.MapleClient;
@@ -35,6 +38,7 @@ import client.command.SupportCommands;
 
 public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 
+	@SuppressWarnings("unused")
 	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
 		String s = slea.readMapleAsciiString();
 		MapleCharacter chr = c.getPlayer();
@@ -89,10 +93,14 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 				}
 			}
 		} else {
-			if (!chr.isHidden())
+			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_CHAT_LOGGER && ParanoiaConstants.LOG_GENERAL_CHAT) {
+				MapleLogger.printFormatted(MapleLogger.PARANOIA_CHAT, "[General] [" + c.getPlayer().getName() + "] " + s);
+			}
+			if (!chr.isHidden()) {
 				chr.getMap().broadcastMessage(MaplePacketCreator.getChatText(chr.getId(), s, (chr.isGM() && chr.getGMText()), slea.readByte()));
-			else
+			} else {
 				chr.getMap().broadcastGMMessage(MaplePacketCreator.getChatText(chr.getId(), s, (chr.isGM() && chr.getGMText()), slea.readByte()));
+			}
 		}
 	}
 }

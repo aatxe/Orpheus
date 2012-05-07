@@ -8,6 +8,8 @@ import java.io.StringWriter;
 public class MapleLogger {
 	public static final String ACCOUNT_STUCK = "accountstuck.log";
 	public static final String EXCEPTION_CAUGHT = "exceptions.log";
+	public static final String PARANOIA_CHAT = "chat.log";
+	public static final String PARANOIA_COMMAND = "commands.log";
 
 	// private static final SimpleDateFormat sdf = new
 	// SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -35,6 +37,22 @@ public class MapleLogger {
 			out = new FileOutputStream(file, true);
 			out.write(s.getBytes());
 			out.write("\n---------------------------------\n".getBytes());
+		} catch (IOException ess) {
+		} finally {
+			try {
+				if (out != null) {
+					out.close();
+				}
+			} catch (IOException ignore) {
+			}
+		}
+	}
+	
+	public static void printFormatted(final String file, final String s) {
+		FileOutputStream out = null;
+		try {
+			out = new FileOutputStream(file, true);
+			out.write(s.getBytes());
 		} catch (IOException ess) {
 		} finally {
 			try {

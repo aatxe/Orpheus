@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.List;
+import constants.ParanoiaConstants;
 import constants.ServerConstants;
 import provider.MapleData;
 import provider.MapleDataProviderFactory;
@@ -19,6 +20,7 @@ import server.maps.MapleMap;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
 import tools.DatabaseConnection;
+import tools.MapleLogger;
 import tools.MaplePacketCreator;
 import client.IItem;
 import client.ISkill;
@@ -31,6 +33,7 @@ import client.MapleStat;
 import client.SkillFactory;
 
 public class GMCommands extends Commands {
+	@SuppressWarnings("unused")
 	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();
 		Channel cserv = c.getChannelServer();
@@ -369,6 +372,9 @@ public class GMCommands extends Commands {
 					}
 					chr.message("Unbanned " + sub[1]);
 					break;
+			}
+			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_COMMAND_LOGGER && ParanoiaConstants.LOG_GM_COMMANDS) {
+				MapleLogger.printFormatted(MapleLogger.PARANOIA_COMMAND, "[" + c.getPlayer().getName() + "] Used " + heading + sub[0] + ((sub.length > 1) ? " with parameters: " + joinStringFrom(sub, 1) : "."));
 			}
 			return true;
 		} catch (IllegalArgumentException e) {

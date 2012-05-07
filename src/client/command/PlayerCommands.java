@@ -4,11 +4,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import com.mysql.jdbc.Connection;
+import constants.ParanoiaConstants;
 import constants.ServerConstants;
 import net.server.Channel;
 import scripting.npc.NPCScriptManager;
 import server.MapleInventoryManipulator;
 import tools.DatabaseConnection;
+import tools.MapleLogger;
 import tools.MaplePacketCreator;
 import client.MapleCharacter;
 import client.MapleClient;
@@ -18,6 +20,7 @@ import client.MapleRank;
 import client.MapleStat;
 
 public class PlayerCommands extends Commands {
+	@SuppressWarnings("unused")
 	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();
 		Channel cserv = c.getChannelServer();
@@ -283,6 +286,9 @@ public class PlayerCommands extends Commands {
 				case version:
 					chr.message(ServerConstants.SERVER_NAME + " (Orpheus " + ServerConstants.ORPHEUS_VERSION + ")");
 					break;
+			}
+			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_COMMAND_LOGGER && ParanoiaConstants.LOG_PLAYER_COMMANDS) {
+				MapleLogger.printFormatted(MapleLogger.PARANOIA_COMMAND, "[" + c.getPlayer().getName() + "] Used " + heading + sub[0] + ((sub.length > 1) ? " with parameters: " + joinStringFrom(sub, 1) : "."));
 			}
 			return true;
 		} catch (IllegalArgumentException e) {

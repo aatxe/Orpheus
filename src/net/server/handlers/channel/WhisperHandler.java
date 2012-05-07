@@ -26,9 +26,12 @@ import client.MapleClient;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import constants.ParanoiaConstants;
+import constants.ServerConstants;
 import net.AbstractMaplePacketHandler;
 import net.server.World;
 import tools.DatabaseConnection;
+import tools.MapleLogger;
 import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
@@ -37,6 +40,7 @@ import tools.data.input.SeekableLittleEndianAccessor;
  * @author Matze
  */
 public final class WhisperHandler extends AbstractMaplePacketHandler {
+	@SuppressWarnings("unused")
 	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
 		byte mode = slea.readByte();
 		if (mode == 6) { // whisper
@@ -44,6 +48,9 @@ public final class WhisperHandler extends AbstractMaplePacketHandler {
 			String text = slea.readMapleAsciiString();
 			MapleCharacter player = c.getChannelServer().getPlayerStorage().getCharacterByName(recipient);
 			if (player != null) {
+				if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_CHAT_LOGGER && ParanoiaConstants.LOG_WHISPERS) {
+					MapleLogger.printFormatted(MapleLogger.PARANOIA_CHAT, "[Whisper] [" + c.getPlayer().getName() + " > " + recipient + "] " + text);
+				}
 				player.getClient().announce(MaplePacketCreator.getWhisper(c.getPlayer().getName(), c.getChannel(), text));
 				c.announce(MaplePacketCreator.getWhisperReply(recipient, (byte) 1));
 			} else {// not found
