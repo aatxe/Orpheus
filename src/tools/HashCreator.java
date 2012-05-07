@@ -19,8 +19,7 @@ public class HashCreator {
 		if (hash == null) {
 			hash = MessageDigest.getInstance("SHA-1");
 		}
-		hash.update(message.getBytes());
-		return HexTool.toString(hash.digest());
+		return HashCreator.getHash(hash, message);
 	}
 	
 	public static String getHash(String type, String message) throws NoSuchAlgorithmException {
@@ -29,7 +28,7 @@ public class HashCreator {
 	
 	public static String getHash(MessageDigest md, String message) {
 		md.update(message.getBytes());
-		return HexTool.toString(md.digest());
+		return HexTool.toString(md.digest()).replace(" ", "").toLowerCase();
     }
 	
 	// Just a simple tester for the hash calculator.
