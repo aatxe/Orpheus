@@ -391,7 +391,7 @@ public class MapleClient {
 					ps.setString(1, passhashNew);
 					ps.setString(2, saltNew);
 					ps.setInt(3, accId);
-					rs = ps.executeQuery();
+					ps.executeUpdate();
 					ps.close();
 					rs.close();
 				}
