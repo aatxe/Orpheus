@@ -399,7 +399,6 @@ public class GMCommands extends Commands {
 		pianus("Summons Pianus at your position."),
 		notice("Makes a server-wide notice anonymously."),
 		saveall("Saves all players online!"),
-		search("Searches MapleTip for IDs."),
 		servermessage("Sets the servermessage."),
 		setall("Sets the values of all of the stats of you or a victim."),
 		shop("Opens up a shop by ID."),

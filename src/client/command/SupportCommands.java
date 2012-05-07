@@ -88,10 +88,16 @@ public class SupportCommands extends Commands {
 					break;
 				case search:
 					try {
-						BufferedReader dis = new BufferedReader(new InputStreamReader(new URL("http://www.mapletip.com/search_java.php?search_value=" + sub[1] + "&check=true").openConnection().getInputStream()));
+						BufferedReader dis = new BufferedReader(new InputStreamReader(new URL("http://www.mapletip.com/search_java.php?search_value=" + joinStringFrom(sub, 2) + "&check=true").openConnection().getInputStream()));
 						String s;
 						while ((s = dis.readLine()) != null) {
-							chr.dropMessage(s);
+							if (s.startsWith(" "))
+								s = s.substring(1);
+							if (!s.startsWith("_") && !s.endsWith("_") && s.startsWith(getMapleTipPrefix(sub[1])) && getMapleTipPrefix(sub[1]) != "") {
+								chr.dropMessage(s.substring(getMapleTipPrefix(sub[1]).length() + 2));
+							} else if (!s.startsWith("_") && !s.endsWith("_") && s.startsWith(getMapleTipPrefix(sub[1]))) {
+								chr.dropMessage(s);
+							}
 						}
 						dis.close();
 					} catch (Exception e) {}
@@ -125,6 +131,28 @@ public class SupportCommands extends Commands {
 			return true;
 		} catch (IllegalArgumentException e) {
 			return false;
+		}
+	}
+
+	private static String getMapleTipPrefix(String entry) {
+		if (entry.equalsIgnoreCase("npc")) {
+			return "NPC";
+		} else if (entry.equalsIgnoreCase("skill") || entry.equalsIgnoreCase("skills")) {
+			return "Skill";
+		} else if (entry.equalsIgnoreCase("equip") || entry.equalsIgnoreCase("equips")) {
+			return "Equip";
+		} else if (entry.equalsIgnoreCase("mob") || entry.equalsIgnoreCase("mobs")) {
+			return "Monster";
+		} else if (entry.equalsIgnoreCase("map") || entry.equalsIgnoreCase("maps")) {
+			return "Map";
+		} else if (entry.equalsIgnoreCase("use")) {
+			return "Usable";
+		} else if (entry.equalsIgnoreCase("etc")) {
+			return "ETC";
+		} else if (entry.equalsIgnoreCase("cash")) {
+			return "Cash";
+		} else {
+			return "";
 		}
 	}
 
