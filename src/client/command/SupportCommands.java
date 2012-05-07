@@ -20,77 +20,81 @@ public class SupportCommands extends Commands {
 		MapleCharacter victim; // For commands with targets.
 		ResultSet rs; // For commands with MySQL results.
 
-		Command command = Command.valueOf(sub[0]);
-		switch (command) {
-			default:
-				// chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
-				return false;
-			case announce:
-				String message = joinStringFrom(sub, 1);
-				Server.getInstance().gmChat(chr.getName() + " (" + chr.getStaffRank() + "): " + message, null);
-				break;
-			case cleardrops:
-				chr.getMap().clearDrops(chr);
-				break;
-			case item:
-				int itemId = Integer.parseInt(sub[1]);
-				short quantity = 1;
-				try {
-					quantity = Short.parseShort(sub[2]);
-				} catch (Exception e) {}
-				int petid = -1;
-				if (ItemConstants.isPet(itemId)) {
-					petid = MaplePet.createPet(itemId);
-				}
-				MapleInventoryManipulator.addById(c, itemId, quantity, chr.getName(), petid, -1);
-				break;
-			case mesos:
-				chr.gainMeso(Integer.parseInt(sub[1]), true);
-				break;
-			case online:
-				for (Channel ch : serv.getChannelsFromWorld(chr.getWorld())) {
-					String s = "Characters Online (Channel " + ch.getId() + " Online: " + ch.getPlayerStorage().getAllCharacters().size() + ") : ";
-					if (ch.getPlayerStorage().getAllCharacters().size() < 50) {
-						for (MapleCharacter pc : ch.getPlayerStorage().getAllCharacters()) {
-							s += MapleCharacter.makeMapleReadable(pc.getName()) + ", ";
+		try {
+			Command command = Command.valueOf(sub[0]);
+			switch (command) {
+				default:
+					// chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+					return false;
+				case announce:
+					String message = joinStringFrom(sub, 1);
+					Server.getInstance().gmChat(chr.getName() + " (" + chr.getStaffRank() + "): " + message, null);
+					break;
+				case cleardrops:
+					chr.getMap().clearDrops(chr);
+					break;
+				case item:
+					int itemId = Integer.parseInt(sub[1]);
+					short quantity = 1;
+					try {
+						quantity = Short.parseShort(sub[2]);
+					} catch (Exception e) {}
+					int petid = -1;
+					if (ItemConstants.isPet(itemId)) {
+						petid = MaplePet.createPet(itemId);
+					}
+					MapleInventoryManipulator.addById(c, itemId, quantity, chr.getName(), petid, -1);
+					break;
+				case mesos:
+					chr.gainMeso(Integer.parseInt(sub[1]), true);
+					break;
+				case online:
+					for (Channel ch : serv.getChannelsFromWorld(chr.getWorld())) {
+						String s = "Characters Online (Channel " + ch.getId() + " Online: " + ch.getPlayerStorage().getAllCharacters().size() + ") : ";
+						if (ch.getPlayerStorage().getAllCharacters().size() < 50) {
+							for (MapleCharacter pc : ch.getPlayerStorage().getAllCharacters()) {
+								s += MapleCharacter.makeMapleReadable(pc.getName()) + ", ";
+							}
+							chr.dropMessage(s.substring(0, s.length() - 2));
 						}
-						chr.dropMessage(s.substring(0, s.length() - 2));
 					}
-				}
-				break;
-			case search:
-				try {
-					BufferedReader dis = new BufferedReader(new InputStreamReader(new URL("http://www.mapletip.com/search_java.php?search_value=" + sub[1] + "&check=true").openConnection().getInputStream()));
-					String s;
-					while ((s = dis.readLine()) != null) {
-						chr.dropMessage(s);
+					break;
+				case search:
+					try {
+						BufferedReader dis = new BufferedReader(new InputStreamReader(new URL("http://www.mapletip.com/search_java.php?search_value=" + sub[1] + "&check=true").openConnection().getInputStream()));
+						String s;
+						while ((s = dis.readLine()) != null) {
+							chr.dropMessage(s);
+						}
+						dis.close();
+					} catch (Exception e) {}
+					break;
+				case warp:
+					try {
+						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
+						chr.changeMap(victim.getMap());
+						chr.setPosition(victim.getPosition());
+					} catch (Exception e) {
+						chr.message("Usage: !warp playerName");
 					}
-					dis.close();
-				} catch (Exception e) {}
-				break;
-			case warp:
-				try {
-					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
-					chr.changeMap(victim.getMap());
-					chr.setPosition(victim.getPosition());
-				} catch (Exception e) {
-					chr.message("Usage: !warp playerName");
-				}
-				break;
-			case warphere:
-				try {
-					victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
-					victim.changeMap(chr.getMap());
-					victim.setPosition(chr.getPosition());
-				} catch (Exception e) {
-					chr.message("Usage: !warphere playerName");
-				}
-				break;
-			case whereami:
-				chr.dropMessage("You're at Map " + chr.getMapId());
-				break;
+					break;
+				case warphere:
+					try {
+						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
+						victim.changeMap(chr.getMap());
+						victim.setPosition(chr.getPosition());
+					} catch (Exception e) {
+						chr.message("Usage: !warphere playerName");
+					}
+					break;
+				case whereami:
+					chr.dropMessage("You're at Map " + chr.getMapId());
+					break;
+			}
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
 		}
-		return true;
 	}
 
 	private static enum Command {

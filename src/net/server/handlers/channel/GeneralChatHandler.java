@@ -51,7 +51,7 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 			String[] sp = s.split(" ");
 			sp[0] = sp[0].toLowerCase().substring(1);
 			if (heading == '@' || heading == '/') {
-				System.out.println("[" + c.getPlayer().getName() +"] Command type: " + heading);
+				System.out.println("[" + chr.getName() +"] Command type: " + heading);
 				boolean commandExecuted = true;
 				switch (chr.gmLevel()) {
 					case 5:
@@ -59,41 +59,42 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 					case 3: 
 					case 2:
 					case 1:
-						System.out.println("[" + c.getPlayer().getName() + "]" + DonorCommands.execute(c, sp, heading));
-						System.out.println("[" + c.getPlayer().getName() + "] Executed DonorCommands: " + heading + sp[0]);
+						commandExecuted = DonorCommands.execute(c, sp, heading);
+						System.out.println("[" + chr.getName() + "] Executed DonorCommands: " + heading + sp[0]);
 						if (commandExecuted) break;
-					case 0:System.out.println("[" + c.getPlayer().getName() + "]" + PlayerCommands.execute(c, sp, heading));
-						System.out.println("[" + c.getPlayer().getName() + "] Executed PlayerCommands: " + heading + sp[0]);
+					case 0:
+						commandExecuted = PlayerCommands.execute(c, sp, heading);
+						System.out.println("[" + chr.getName() + "] Executed PlayerCommands: " + heading + sp[0]);
 						if (commandExecuted) break;
 					default:
 						Commands.execute(c, sp, heading);
-						System.out.println("[" + c.getPlayer().getName() + "] Executed Commands: " + heading + sp[0]);
+						System.out.println("[" + chr.getName() + "] Executed Commands: " + heading + sp[0]);
 						break;
 				}
 			} else {
-				System.out.println("[" + c.getPlayer().getName() +"] Command type: " + heading);
+				System.out.println("[" + chr.getName() +"] Command type: " + heading);
 				boolean commandExecuted = false;
 				switch (chr.gmLevel()) {
 					case 5:
 						commandExecuted = AdminCommands.execute(c, sp, heading);
-						System.out.println("[" + c.getPlayer().getName() + "] Executed AdminCommand: " + heading + sp[0]);
+						System.out.println("[" + chr.getName() + "] Executed AdminCommand: " + heading + sp[0]);
 						if (commandExecuted) break;
 					case 4:
 						DeveloperCommands.setSLEA(slea);
 						commandExecuted = DeveloperCommands.execute(c, sp, heading);
-						System.out.println("[" + c.getPlayer().getName() + "] Executed DeveloperCommands: " + heading + sp[0]);
+						System.out.println("[" + chr.getName() + "] Executed DeveloperCommands: " + heading + sp[0]);
 						if (commandExecuted) break;
 					case 3:
 						commandExecuted = GMCommands.execute(c, sp, heading);
-						System.out.println("[" + c.getPlayer().getName() + "] Executed GMCommands: " + heading + sp[0]);
+						System.out.println("[" + chr.getName() + "] Executed GMCommands: " + heading + sp[0]);
 						if (commandExecuted) break;
 					case 2:
 						commandExecuted = SupportCommands.execute(c, sp, heading);
-						System.out.println("[" + c.getPlayer().getName() + "] Executed SupportCommands: " + heading + sp[0]);
+						System.out.println("[" + chr.getName() + "] Executed SupportCommands: " + heading + sp[0]);
 						if (commandExecuted) break;
 					default:
 						Commands.execute(c, sp, heading);
-						System.out.println("[" + c.getPlayer().getName() + "] Executed Commands: " + heading + sp[0]);
+						System.out.println("[" + chr.getName() + "] Executed Commands: " + heading + sp[0]);
 						break;
 				}
 			}

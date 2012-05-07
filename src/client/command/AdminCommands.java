@@ -11,21 +11,24 @@ public class AdminCommands extends Commands {
 		Channel cserv = c.getChannelServer();
 		MapleCharacter victim; // For commands with targets.
 		ResultSet rs; // For commands with MySQL results.
-
-		Command command = Command.valueOf(sub[0]);
-		switch (command) {
-			default:
-				// chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
-				return false;
-			case setgmlevel:
-				victim = c.getChannelServer().getPlayerStorage().getCharacterByName(sub[1]);
-				victim.saveToDB(true);
-				victim.setGM(Integer.parseInt(sub[2]));
-				chr.message("Done.");
-				victim.getClient().disconnect();
-				break;
+		try {
+			Command command = Command.valueOf(sub[0]);
+			switch (command) {
+				default:
+					// chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
+					return false;
+				case setgmlevel:
+					victim = c.getChannelServer().getPlayerStorage().getCharacterByName(sub[1]);
+					victim.saveToDB(true);
+					victim.setGM(Integer.parseInt(sub[2]));
+					chr.message("Done.");
+					victim.getClient().disconnect();
+					break;
+			}
+			return true;
+		} catch (IllegalArgumentException e) {
+			return false;
 		}
-		return true;
 	}
 	
 	private static enum Command {
