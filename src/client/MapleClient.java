@@ -23,6 +23,8 @@ package client;
 
 import gm.server.GMServer;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -58,6 +60,7 @@ import scripting.quest.QuestScriptManager;
 import server.MapleTrade;
 import server.TimerManager;
 import server.maps.HiredMerchant;
+import tools.HashCreator;
 import tools.MapleAESOFB;
 import tools.MaplePacketCreator;
 import tools.HexTool;
@@ -376,13 +379,28 @@ public class MapleClient {
 					loggedIn = false;
 					loginok = 4;
 				}
-
+				
+				if (loginok == 0) {
+					// We're going to change the hashing algorithm to SHA-512 with salt, so we can be secure! :3
+					SecureRandom random = new SecureRandom();
+					byte bytes[] = new byte[32]; // 32 bit salt (results may vary. depends on RNG algorithm)
+					random.nextBytes(bytes);
+					String saltNew = HexTool.toString(bytes);
+					String passhashNew = HashCreator.getHash("SHA-512", pwd + saltNew);
+					ps = con.prepareStatement("UPDATE accounts SET password = ?, salt = ? WHERE id = ?");
+					ps.setString(1, passhashNew);
+					ps.setString(2, saltNew);
+					ps.setInt(3, accId);
+				}
+				
 				ps = con.prepareStatement("INSERT INTO iplog (accountid, ip) VALUES (?, ?)");
 				ps.setInt(1, accId);
 				ps.setString(2, session.getRemoteAddress().toString());
 				ps.executeUpdate();
 			}
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} finally {
 			try {
