@@ -53,6 +53,7 @@ public class MapleLogger {
 		try {
 			out = new FileOutputStream(file, true);
 			out.write(s.getBytes());
+			out.write(("\n").getBytes());
 		} catch (IOException ess) {
 		} finally {
 			try {
