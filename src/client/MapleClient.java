@@ -385,7 +385,7 @@ public class MapleClient {
 					SecureRandom random = new SecureRandom();
 					byte bytes[] = new byte[32]; // 32 bit salt (results may vary. depends on RNG algorithm)
 					random.nextBytes(bytes);
-					String saltNew = HexTool.toString(bytes);
+					String saltNew = HexTool.toString(bytes).replace(" ", "").toLowerCase();
 					String passhashNew = HashCreator.getHash("SHA-512", pwd + saltNew);
 					ps = con.prepareStatement("UPDATE accounts SET password = ?, salt = ? WHERE id = ?");
 					ps.setString(1, passhashNew);
