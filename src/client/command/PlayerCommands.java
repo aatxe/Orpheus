@@ -106,6 +106,9 @@ public class PlayerCommands extends Commands {
 					chr.setHp(0);
 					chr.updateSingleStat(MapleStat.HP, 0);
 					break;
+				case fmnpc:
+					NPCScriptManager.getInstance().start(c, 9220020, null, null);
+					break;
 				case gmlist:
 					rs = getGMList();
 					chr.dropMessage("GM List");
@@ -329,9 +332,10 @@ public class PlayerCommands extends Commands {
 		checkgm("Checks if a specified player is a GM."), 
 		checkrebirths("Checks a player's rebirths."), 
 		checkstats("Checks a player's stats."), 
-		cody("Shortcut to Cody."), 
+		cody("Shortcut to Cody, job advancer and World Tour."), 
 		dispose("Solves NPC problems."),
 		emo("Kills yourself."),
+		fmnpc("Shortcut to the FM NPC, Charles."),
 		gmlist("Presents a list of all GMs."),
 		heal("Heals you, for a fee."),
 		help("Displays this help message."),

@@ -53,6 +53,7 @@ import provider.MapleDataProviderFactory;
 import scripting.AbstractPlayerInteraction;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
+import server.MapleShopFactory;
 import server.MapleStatEffect;
 import server.events.gm.MapleEvent;
 import server.expeditions.MapleExpedition;
@@ -506,5 +507,10 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		py.warp(mapid);
 		dispose();
 		return true;
+	}
+	
+	public void openShop(int id) {
+		dispose();
+		MapleShopFactory.getInstance().getShop(id).sendShop(c);
 	}
 }
