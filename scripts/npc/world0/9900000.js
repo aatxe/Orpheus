@@ -40,7 +40,7 @@ var facenew = Array();
 var colors = Array();
 
 function start() {
-    cm.sendSimple("Hey there, I can change your look. What would you like to change?\r\n#L0#Skin#l\r\n#L1#Hair#l\r\n#L5#Female Hair#l\r\n#L2#Hair Color#l\r\n#L3#Eye#l\r\n#L6#Female Eyes#l\r\n#L4#Eye Color#l");
+    cm.sendSimple("Hey there, I can change your look. What would you like to change?\r\n#L0#Skin#l\r\n#L1#Male Hair#l\r\n#L5#Female Hair#l\r\n#L2#Hair Color#l\r\n#L3#Mail Eyes#l\r\n#L6#Female Eyes#l\r\n#L4#Eye Color#l");
 }
 
 function action(mode, type, selection) {
