@@ -2,6 +2,7 @@ package constants;
 
 public class ParanoiaConstants {
 	public static short PARANOIA_VERSION = 1;
+	public static final boolean USE_TIMESTAMPS = true;
 	
 	// Paranoia Chat Logger settings
 	public static final boolean PARANOIA_CHAT_LOGGER = false;

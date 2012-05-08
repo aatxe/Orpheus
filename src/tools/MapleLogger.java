@@ -4,6 +4,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import net.server.Output;
+import constants.ParanoiaConstants;
 
 public class MapleLogger {
 	public static final String ACCOUNT_STUCK = "accountstuck.log";
@@ -52,6 +54,9 @@ public class MapleLogger {
 		FileOutputStream out = null;
 		try {
 			out = new FileOutputStream(file, true);
+			if (ParanoiaConstants.USE_TIMESTAMPS) {
+				out.write(("[" + Output.now() + "] ").getBytes());
+			}
 			out.write(s.getBytes());
 			out.write(("\n").getBytes());
 		} catch (IOException ess) {
