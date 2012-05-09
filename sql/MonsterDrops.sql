@@ -11223,6 +11223,7 @@ INSERT INTO `drop_data` VALUES ('11204', '8200001', '4007004', '1', '1', '0', '1
 INSERT INTO `drop_data` VALUES ('11205', '9420003', '4007004', '1', '1', '0', '10000');
 INSERT INTO `drop_data` VALUES ('11206', '4130104', '4000062', '1', '1', '0', '10000');
 INSERT INTO `drop_data` VALUES ('11207', '4230122', '4000058', '1', '1', '0', '10000');
+INSERT INTO `drop_data` VALUES ('11208', '9400014', '1302024', '1', '1', '0', '1');
 
 -- ----------------------------
 -- Table structure for `drop_data_global`

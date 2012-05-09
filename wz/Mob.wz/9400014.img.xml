@@ -1,18 +1,18 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <imgdir name="9400014.img">
   <imgdir name="info">
     <int name="bodyAttack" value="1" />
     <int name="level" value="115" />
-    <int name="maxHP" value="35000000" />
+    <int name="maxHP" value="350000000" />
     <int name="maxMP" value="10000000" />
     <int name="speed" value="60" />
-    <int name="PADamage" value="1000" />
-    <int name="PDDamage" value="1400" />
-    <int name="MADamage" value="800" />
-    <int name="MDDamage" value="1300" />
-    <int name="acc" value="250" />
-    <int name="eva" value="39" />
-    <int name="exp" value="1780000" />
+    <int name="PADamage" value="7000" />
+    <int name="PDDamage" value="7000" />
+    <int name="MADamage" value="7000" />
+    <int name="MDDamage" value="7000" />
+    <int name="acc" value="1000" />
+    <int name="eva" value="300" />
+    <int name="exp" value="17800000" />
     <int name="undead" value="0" />
     <int name="pushed" value="1000" />
     <float name="fs" value="10.0" />
