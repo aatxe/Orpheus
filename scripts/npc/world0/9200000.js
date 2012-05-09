@@ -133,7 +133,7 @@ function jobAdv(selection){
         cm.dispose();
     } else if (status == 1) {
         cm.changeJobById(possibleJobs[selection]);
-        if (cm.getJobId() % 100 == 0 && cm.getPlayer().getRebirths() == 0) {
+        if (cm.getJobId() % 100 == 0 && cm.getPlayer().getRebirths() == 0)
             cm.resetStats();
         cm.dispose();
     } else if (status == 2) {
