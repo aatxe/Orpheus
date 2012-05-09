@@ -3322,6 +3322,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		this.setLevel(1);
 		this.setJob(MapleJob.BEGINNER);
 		this.setExp(0);
+		this.updateSingleStat(MapleStat.LEVEL, 1);
+		this.updateSingleStat(MapleStat.JOB, MapleJob.BEGINNER.getId());
+		this.updateSingleStat(MapleStat.EXP, 0);
 		rebirths++;
 	}
 	
@@ -3329,6 +3332,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		this.setLevel(1);
 		this.setJob(MapleJob.NOBLESSE);
 		this.setExp(0);
+		this.updateSingleStat(MapleStat.LEVEL, 1);
+		this.updateSingleStat(MapleStat.JOB, MapleJob.NOBLESSE.getId());
+		this.updateSingleStat(MapleStat.EXP, 0);
 		rebirths++;
 	}
 	
@@ -3336,6 +3342,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		this.setLevel(1);
 		this.setJob(MapleJob.ARAN1);
 		this.setExp(0);
+		this.updateSingleStat(MapleStat.LEVEL, 1);
+		this.updateSingleStat(MapleStat.JOB, MapleJob.ARAN1.getId());
+		this.updateSingleStat(MapleStat.EXP, 0);
 		rebirths++;
 	}
 
