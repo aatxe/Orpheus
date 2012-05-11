@@ -567,6 +567,7 @@ public class Server implements Runnable {
 				acceptor = null;
 				if (!restart) {
 					shutdown();
+					System.exit(0);
 				} else {
 					Output.print("\r\nThe server is now restarting.");
 					try {
