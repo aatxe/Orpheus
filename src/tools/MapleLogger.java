@@ -69,6 +69,22 @@ public class MapleLogger {
 			}
 		}
 	}
+	
+	public static void clearLog(final String file) { 
+		FileOutputStream out = null;
+		try {
+			out = new FileOutputStream(file);
+			out.write(new String().getBytes());
+		} catch (IOException ess) {
+		} finally {
+			try {
+				if (out != null) {
+					out.close();
+				}
+			} catch (IOException ignore) {
+			}
+		}
+	}
 
 	private static String getString(final Throwable e) {
 		String retValue = null;

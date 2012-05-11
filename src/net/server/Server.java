@@ -23,6 +23,7 @@ package net.server;
 
 import client.MapleCharacter;
 import client.SkillFactory;
+import constants.ParanoiaConstants;
 import constants.ServerConstants;
 import gm.GMPacketCreator;
 import java.io.FileInputStream;
@@ -57,6 +58,7 @@ import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import server.CashShop.CashItemFactory;
 import server.MapleItemInformationProvider;
+import tools.MapleLogger;
 import tools.MaplePacketCreator;
 import tools.Pair;
 
@@ -135,6 +137,10 @@ public class Server implements Runnable {
 		}
 		if (!ServerConstants.DB_USE_COMPILED_VALUES) { 
 			DatabaseConnection.update("jdbc:mysql://" + p.getProperty("mysql_host") + ":" + p.getProperty("mysql_port") + "/Orpheus?autoReconnect=true", p.getProperty("mysql_user"), p.getProperty("mysql_pass"));
+		}
+		if (ParanoiaConstants.CLEAR_LOGS_ON_STARTUP) {
+			if (ParanoiaConstants.PARANOIA_CHAT_LOGGER) MapleLogger.clearLog(MapleLogger.PARANOIA_CHAT);
+			if (ParanoiaConstants.PARANOIA_COMMAND_LOGGER) MapleLogger.clearLog(MapleLogger.PARANOIA_COMMAND);
 		}
 		Runtime.getRuntime().addShutdownHook(new Thread(shutdown(false)));
 		DatabaseConnection.getConnection();
