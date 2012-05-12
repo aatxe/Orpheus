@@ -28,6 +28,7 @@ import client.ItemFactory;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import constants.ExpTable;
+import constants.ServerConstants;
 import client.MapleCharacter;
 import client.MapleClient;
 import client.MapleInventoryType;
@@ -522,5 +523,9 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 	public void warp(int id, int portal) {
 		dispose();
 		getPlayer().changeMap(id, portal);
+	}
+	
+	public String getServerName() {
+		return ServerConstants.SERVER_NAME;
 	}
 }

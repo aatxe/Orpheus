@@ -148,6 +148,27 @@ public class MapleClient {
 		return chars;
 	}
 
+	public String getFormattedCharacterList(int serverId) {
+		StringBuilder sb = new StringBuilder();
+		int n = 0;
+		for (CharNameAndId cni : loadCharactersInternal(serverId)) {
+			sb.append("#L").append(n).append("#").append(cni.name).append("#l\r\n");
+			n++;
+		}
+		return sb.toString();
+	}
+	
+	public CharNameAndId getCharacterNameAndId(int n, int serverId) {
+		int k = 0;
+		for (CharNameAndId cni : loadCharactersInternal(serverId)) {
+			if (k == n) {
+				return cni;
+			}
+			k++;
+		}
+		return null;
+	}
+	
 	private List<CharNameAndId> loadCharactersInternal(int serverId) {
 		PreparedStatement ps;
 		List<CharNameAndId> chars = new ArrayList<CharNameAndId>(15);

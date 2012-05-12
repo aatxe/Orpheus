@@ -76,6 +76,8 @@ public class GMCommands extends Commands {
 								chr.dropMessage("Failed to ban " + sub[1] + ".");
 							}
 						}
+					} else {
+						chr.dropMessage("Usage: !ban playerName reason");
 					}
 				case buff:
 					if (sub.length == 2) {
@@ -196,10 +198,10 @@ public class GMCommands extends Commands {
 				case level:
 					if (sub.length > 2) {
 						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
-						chr.setLevel(Integer.parseInt(sub[2]));
-						chr.setExp(0);
-						chr.updateSingleStat(MapleStat.LEVEL, Integer.parseInt(sub[2]));
-						chr.updateSingleStat(MapleStat.EXP, 0);
+						victim.setLevel(Integer.parseInt(sub[2]));
+						victim.setExp(0);
+						victim.updateSingleStat(MapleStat.LEVEL, Integer.parseInt(sub[2]));
+						victim.updateSingleStat(MapleStat.EXP, 0);
 					} else if (sub.length == 2) {
 						chr.setLevel(Integer.parseInt(sub[1]));
 						chr.setExp(0);

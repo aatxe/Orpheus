@@ -1710,6 +1710,25 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	public int getGuildId() {
 		return guildid;
 	}
+	
+	public static int getGuildIdById(int cid) {
+		try {
+			PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT guildid FROM characters WHERE id = ?");
+			ps.setInt(1, cid);
+			ResultSet rs = ps.executeQuery();
+			if (!rs.next()) {
+				rs.close();
+				ps.close();
+				return 0;
+			}
+			int guildid = rs.getInt("guildid");
+			rs.close();
+			ps.close();
+			return guildid;
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 
 	public int getGuildRank() {
 		return guildrank;

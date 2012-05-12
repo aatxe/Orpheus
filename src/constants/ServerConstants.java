@@ -30,7 +30,7 @@ public class ServerConstants {
 	public static final boolean USE_PARANOIA = true; // use Orpheus' everything logger, Paranoia.
 	public static final boolean USE_MTS_AS_FM_WARP = true; // Replace the Meso Trade Shop with a warp to the Free Market.
 	public static final boolean HIDE_GMS_ON_LOGIN = true; // Hide GMs upon login.
-	public static final boolean MAKE_NPCS_SCRIPTABLE = false; // Makes NPCs scriptable. (Set in ScriptableNPCConstants)
+	public static final boolean MAKE_NPCS_SCRIPTABLE = true; // Makes NPCs scriptable. (Set in ScriptableNPCConstants)
 	// Rate Configuration
 	public static final byte QUEST_EXP_RATE = 4;
 	public static final byte QUEST_MESO_RATE = 3;
