@@ -40,6 +40,13 @@ public class DeveloperCommands extends Commands {
 				default:
 					// chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
 					return false;
+				case coords:
+		            xpos = chr.getPosition().x;
+		            ypos = chr.getPosition().y;
+		            fh = chr.getMap().getFootholds().findBelow(chr.getPosition()).getId();
+		            chr.dropMessage("Position: (" + xpos + ", " + ypos + ")");
+		            chr.dropMessage("Foothold ID: " + fh);
+		            break;
 				case exprate:
 					c.getWorldServer().setExpRate((byte) (Byte.parseByte(sub[1]) % 128));
 					for (MapleCharacter mc : c.getWorldServer().getPlayerStorage().getAllCharacters()) {
@@ -228,6 +235,7 @@ public class DeveloperCommands extends Commands {
 	}
 	
 	private static enum Command {
+		coords("Prints your current coordinates."),
 		exprate("Sets the server-wide experience rate."),
 		gc("Runs the garbage collector."),
 		help("Displays this help message."),
