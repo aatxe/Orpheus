@@ -128,9 +128,11 @@ public class Server implements Runnable {
 
 	@Override
 	public void run() {
+		long loadingStartTime = System.currentTimeMillis();
 		Properties p = new Properties();
 		try {
 			p.load(new FileInputStream("orpheus.ini"));
+			Output.print("Configuration loaded.");
 		} catch (Exception e) {
 			Output.print("Missing configuration file, please run mksrv script to generate one.");
 			System.exit(0);
@@ -200,7 +202,7 @@ public class Server implements Runnable {
 		if (isGMServerEnabled()) {
 			GMServer.getInstance();
 		}
-		Output.print("Server is now online!");
+		Output.print("Server is now online! (Took " + ((System.currentTimeMillis() - loadingStartTime)) + "ms)");
 		online = true;
 	}
 
