@@ -33,6 +33,8 @@ import client.SkillFactory;
 import gm.server.GMServer;
 import java.sql.SQLException;
 import java.util.List;
+import constants.ScriptableNPCConstants;
+import constants.ServerConstants;
 import tools.DatabaseConnection;
 import net.AbstractMaplePacketHandler;
 import net.server.Channel;
@@ -145,7 +147,7 @@ public final class PlayerLoggedinHandler extends AbstractMaplePacketHandler {
 			}
 		}
 		c.announce(MaplePacketCreator.getCharInfo(player));
-		if (!player.isHidden()) {
+		if (!player.isHidden() && ServerConstants.HIDE_GMS_ON_LOGIN) {
 			player.toggleHide(true);
 		}
 		player.sendKeymap();
@@ -233,5 +235,8 @@ public final class PlayerLoggedinHandler extends AbstractMaplePacketHandler {
 		player.checkBerserk();
 		player.expirationTask();
 		player.setRates();
+		for (int i = 0; i < ScriptableNPCConstants.SCRIPTABLE_NPCS.length; i++) {
+			c.announce(MaplePacketCreator.setNPCScriptable(ScriptableNPCConstants.SCRIPTABLE_NPCS[i], ScriptableNPCConstants.SCRIPTABLE_NPCS_DESC[i]));
+		}
 	}
 }

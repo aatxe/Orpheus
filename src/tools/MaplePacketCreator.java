@@ -1354,6 +1354,41 @@ public class MaplePacketCreator {
 		mplew.write(MiniMap ? 1 : 0);
 		return mplew.getPacket();
 	}
+	
+	/**
+	 * Makes any NPC in the game scriptable.
+	 * @param npcId - The NPC's ID, found in WZ files/MCDB
+	 * @param description - If the NPC has quests, this will be the text of the menu item
+	 * @return 
+	 */
+    public static MaplePacket setNPCScriptable(int npcId, String description) {
+        MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
+        mplew.writeShort(SendOpcode.SET_NPC_SCRIPTABLE.getValue());
+        mplew.write(1); // following structure is repeated n times
+        mplew.writeInt(npcId);
+        mplew.writeMapleAsciiString(description);
+        mplew.writeInt(0); // start time
+        mplew.writeInt(Integer.MAX_VALUE); // end time
+        return mplew.getPacket();
+    }
+    
+    /**
+	 * Makes a list of any NPCs in the game scriptable.
+	 * @param npc - a list of pairs of NPC IDs and descriptions.
+	 * @return 
+	 */
+    public static MaplePacket setNPCScriptable(List<Pair<Integer, String>> npc) {
+    	MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
+    	mplew.writeShort(SendOpcode.SET_NPC_SCRIPTABLE.getValue());
+    	mplew.write(npc.size()); // following structure is repeated n times
+    	for (Pair<Integer, String> x : npc) {
+    		mplew.writeInt(x.getLeft());
+    		mplew.writeMapleAsciiString(x.getRight());
+    		mplew.writeInt(0); // start time
+    		mplew.writeInt(Integer.MAX_VALUE); // end time
+    	}
+    	return mplew.getPacket();
+    }
 
 	/**
 	 * Gets a spawn monster packet.
