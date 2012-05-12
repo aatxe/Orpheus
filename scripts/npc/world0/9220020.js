@@ -46,7 +46,7 @@ function action(mode, type, selection) {
         } else if (selection == 4) {
             cm.openShop(104104);
         } else if (selection == 5) {
-            cm.sendSimple("#r#eOther Shops#k\r\n#L0#Weapons Shop#l\r\n#L1#Maple Shop#l\r\n#L2#Timeless Shop#l\r\n#L3#Megaphone Shop#l\r\n#L4#Chair Shop#l\r\n#L5#Utilities Shop#l\r\n");
+            cm.sendSimple("#r#eOther Shops#n#k\r\n#L0#Weapons Shop#l\r\n#L1#Maple Shop#l\r\n#L2#Timeless Shop#l\r\n#L3#Megaphone Shop#l\r\n#L4#Chair Shop#l\r\n#L5#Utilities Shop#l\r\n");
         }
     } else if (status == 2) {
         if (selection == 0) {

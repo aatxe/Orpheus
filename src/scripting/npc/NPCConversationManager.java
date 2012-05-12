@@ -513,4 +513,14 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		dispose();
 		MapleShopFactory.getInstance().getShop(id).sendShop(c);
 	}
+	
+	public void warp(int id) {
+		dispose();
+		getPlayer().changeMap(id);
+	}
+	
+	public void warp(int id, int portal) {
+		dispose();
+		getPlayer().changeMap(id, portal);
+	}
 }
