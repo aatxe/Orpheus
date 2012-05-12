@@ -220,7 +220,7 @@ public class GMCommands extends Commands {
 					}
 					break;
 				case map:
-					if (sub.length >= 2) {
+					if (sub.length > 2) {
 						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
 						victim.changeMap(Integer.parseInt(sub[2]));
 					} else if (sub.length == 2) {
