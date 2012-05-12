@@ -183,6 +183,7 @@ public class PlayerCommands extends Commands {
 							i++;
 						}
 					} catch (SQLException e) {
+						MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
 					}
 					break;
 				case rebirth:
@@ -227,51 +228,58 @@ public class PlayerCommands extends Commands {
 					}
 					break;
 				case stat:
-					String stat = sub[1];
-					int amount = Integer.parseInt(sub[2]);
-					int currentValue = 0;
-					MapleStat currentStat = MapleStat.AVAILABLEAP;
-					String name = "";
-					if (stat.equalsIgnoreCase("str") || stat.equalsIgnoreCase("strength")) {
-						currentValue = chr.getStr();
-						currentStat = MapleStat.STR;
-						name = "Strength";
-					} else if (stat.equalsIgnoreCase("dex") || stat.equalsIgnoreCase("dexterity")) {
-						currentValue = chr.getDex();
-						currentStat = MapleStat.DEX;
-						name = "Dexterity";
-					} else if (stat.equalsIgnoreCase("int") || stat.equalsIgnoreCase("intellect")) {
-						currentValue = chr.getInt();
-						currentStat = MapleStat.INT;
-						name = "Intellect";
-					} else if (stat.equalsIgnoreCase("luk") || stat.equalsIgnoreCase("luck")) {
-						currentValue = chr.getLuk();
-						currentStat = MapleStat.LUK;
-						name = "Luck";
-					} else {
-						chr.message("Stat: ");
-						chr.message(" To use this command, follow it with a stat and the amount by which to change it.");
-					}
-					if (currentStat != MapleStat.AVAILABLEAP) {
-						if ((amount > 0 && amount <= chr.getRemainingAp()) || (amount < 0 && amount + chr.getRemainingAp() <= Short.MAX_VALUE)) {
-							if ((amount + currentValue <= Short.MAX_VALUE) && (amount + currentValue >= 4)) {
-								chr.setStr(currentValue + amount);
-			                    chr.updateSingleStat(currentStat, currentValue);
-			                    chr.setRemainingAp(chr.getRemainingAp() - amount);
-			                    chr.updateSingleStat(MapleStat.AVAILABLEAP, chr.getRemainingAp());
+					if (sub.length >= 3) {
+						String stat = sub[1];
+						int amount = Integer.parseInt(sub[2]);
+						int currentValue = 0;
+						MapleStat currentStat = MapleStat.AVAILABLEAP;
+						if (stat.equalsIgnoreCase("str") || stat.equalsIgnoreCase("strength")) {
+							currentValue = chr.getStr();
+							currentStat = MapleStat.STR;
+						} else if (stat.equalsIgnoreCase("dex") || stat.equalsIgnoreCase("dexterity")) {
+							currentValue = chr.getDex();
+							currentStat = MapleStat.DEX;
+						} else if (stat.equalsIgnoreCase("int") || stat.equalsIgnoreCase("intellect")) {
+							currentValue = chr.getInt();
+							currentStat = MapleStat.INT;
+						} else if (stat.equalsIgnoreCase("luk") || stat.equalsIgnoreCase("luck")) {
+							currentValue = chr.getLuk();
+							currentStat = MapleStat.LUK;
+						} else {
+							chr.message("Stat: ");
+							chr.message(" To use this command, follow it with a stat and the amount by which to change it.");
+							chr.message(" Example: @stat dex 5");
+						}
+						if (currentStat != MapleStat.AVAILABLEAP) {
+							if ((amount > 0 && amount <= chr.getRemainingAp()) || (amount < 0 && amount + chr.getRemainingAp() <= Short.MAX_VALUE)) {
+								if ((amount + currentValue <= Short.MAX_VALUE) && (amount + currentValue >= 4)) {
+									chr.setStat(currentStat, currentValue + amount);
+				                    chr.setRemainingAp(chr.getRemainingAp() - amount);
+				                    chr.updateSingleStat(currentStat, currentValue);
+				                    chr.updateSingleStat(MapleStat.AVAILABLEAP, chr.getRemainingAp());
+				                    chr.message(((amount > 0) ? "Raised " : "Lowered ") + currentStat.toString() + " by " + Math.abs(amount) + ".");
+								} else if (amount + currentValue > Short.MAX_VALUE) {
+									chr.message("That would put " + currentStat.toString() + " over the maximum of " + Short.MAX_VALUE + "!");
+								} else if (amount + currentValue < 4) {
+									chr.message("That would put " + currentStat.toString() + " under the minimum of 4!");
+								}
+							} else if (amount > chr.getRemainingAp()) {
+								chr.message("You don't have enough AP for that!");
+							} else if (amount + chr.getRemainingAp() > Short.MAX_VALUE) {
+								chr.message("That would put you over the AP cap of " + Short.MAX_VALUE + "!");
 							}
-						} else if (amount > chr.getRemainingAp()) {
-							chr.message("You don't have enough AP for that!");
-						} else if (amount + chr.getRemainingAp() > Short.MAX_VALUE) {
-							chr.message("That would put you over the AP cap of " + Short.MAX_VALUE + "!");
-						} else if (amount + currentValue > Short.MAX_VALUE) {
-							chr.message("That would put " + name + " over the maximum of " + Short.MAX_VALUE + "!");
-						} else if (amount + currentValue < 4) {
-							chr.message("That would put " + name + " under the minimum of 4!");
+							// Let's just make sure everything is up-to-date.
+		                    chr.updateSingleStat(currentStat, currentValue);
+		                    chr.updateSingleStat(MapleStat.AVAILABLEAP, chr.getRemainingAp());
+						} else {
+							chr.message("Stat: ");
+							chr.message(" To use this command, follow it with a stat and the amount by which to change it.");
+							chr.message(" Example: @stat dex 5");
 						}
 					} else {
 						chr.message("Stat: ");
 						chr.message(" To use this command, follow it with a stat and the amount by which to change it.");
+						chr.message(" Example: @stat dex 5");
 					}
 					break;
 				case stats:
@@ -305,6 +313,7 @@ public class PlayerCommands extends Commands {
 			PreparedStatement ps = (PreparedStatement) con.prepareStatement("SELECT name, gm FROM characters WHERE gm > 2 ORDER BY gm DESC, name DESC");
 			return ps.executeQuery();
 		} catch (SQLException ex) {
+			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, ex);
 			return null;
 		}
 	}
@@ -320,6 +329,7 @@ public class PlayerCommands extends Commands {
 			}
 			return ps.executeQuery();
 		} catch (SQLException ex) {
+			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, ex);
 			return null;
 		}
 	}

@@ -4162,6 +4162,25 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	public void setSlot(int slotid) {
 		slots = slotid;
 	}
+	
+	public void setStat(MapleStat stat, int value) {
+		this.updateSingleStat(stat, value);
+		switch (stat) {
+			case STR:
+				setStr(value);
+				break;
+			case DEX:
+				setDex(value);
+				break;
+			case INT:
+				setInt(value);
+				break;
+			case LUK:
+				setLuk(value);
+				break;
+		}
+		this.updateSingleStat(stat, value);
+	}
 
 	public void setStr(int str) {
 		this.str = str;

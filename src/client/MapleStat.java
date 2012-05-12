@@ -36,6 +36,49 @@ public enum MapleStat implements IntValueHolder {
 	public int getValue() {
 		return i;
 	}
+	
+	public String toString() {
+		switch (this) {
+			default:
+				return "Unknown";
+			case SKIN:
+				return "Skin";
+			case FACE:
+				return "Face";
+			case HAIR:
+				return "Hair";
+			case LEVEL:
+				return "Level";
+			case JOB:
+				return "Job";
+			case STR:
+				return "Strength";
+			case DEX:
+				return "Dexterity";
+			case INT:
+				return "Intellect";
+			case LUK:
+				return "Luck";
+			case HP:
+				return "HP";
+			case MAXHP:
+				return "Max HP";
+			case MP:
+				return "MP";
+			case MAXMP:
+				return "Max MP";
+			case AVAILABLEAP:
+				return "Available AP";
+			case AVAILABLESP:
+				return "Available SP";
+			case EXP:
+				return "Experience";
+			case FAME:
+				return "Fame";
+			case MESO:
+				return "Mesos";
+		}
+	}
 
 	public static MapleStat getByValue(int value) {
 		for (MapleStat stat : MapleStat.values()) {
