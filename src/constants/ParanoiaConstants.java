@@ -1,9 +1,13 @@
 package constants;
 
 public class ParanoiaConstants {
-	public static short PARANOIA_VERSION = 2;
+	public static short PARANOIA_VERSION = 3;
 	public static final boolean USE_TIMESTAMPS = true;
 	public static final boolean CLEAR_LOGS_ON_STARTUP = false;
+	
+	// Paranoia Console Logger settings
+	public static final boolean PARANOIA_CONSOLE_LOGGER = false;
+	public static final boolean REPLICATE_CONSOLE_EXACTLY = false; // if true, new lines added for formatting will be included in the log.
 	
 	// Paranoia Chat Logger settings
 	public static final boolean PARANOIA_CHAT_LOGGER = false;

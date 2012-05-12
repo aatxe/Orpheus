@@ -2,6 +2,8 @@ package net.server;
 
 import java.util.Calendar;
 import java.util.TimeZone;
+import tools.MapleLogger;
+import constants.ParanoiaConstants;
 
 public class Output {
 	public static void print(String message) {
@@ -10,10 +12,17 @@ public class Output {
 	
 	public static void print(String message, boolean newLine) {
 		System.out.print("[OrpheusMS] [" + now() + "] " + message + ((newLine) ? "\n" : ""));
+		if (ParanoiaConstants.PARANOIA_CONSOLE_LOGGER) {
+			MapleLogger.printFormatted(MapleLogger.PARANOIA_CONSOLE, "[OrpheusMS] " + message + ((newLine) ? "\n" : ""));
+		}
 	}
 
+	@SuppressWarnings("unused")
 	public static void printNewLine() {
 		System.out.print("\n");
+		if (ParanoiaConstants.PARANOIA_CONSOLE_LOGGER && ParanoiaConstants.REPLICATE_CONSOLE_EXACTLY) {
+			MapleLogger.printFormatted(MapleLogger.PARANOIA_CONSOLE, "");
+		}
 	}
 	
 	public static String now() {
