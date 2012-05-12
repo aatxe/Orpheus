@@ -59,6 +59,24 @@ public class GMCommands extends Commands {
 						chr.message("Usage: !ap number || !ap playerName number");
 					}
 					break;
+				case ban:
+					if (sub.length >= 3) {
+						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
+						String reason = chr.getName() + " banned " + victim.getName() + ": " + joinStringFrom(sub, 2);;
+						if (victim != null) {
+							String ip = victim.getClient().getSession().getRemoteAddress().toString().split(":")[0];
+							chr.dropMessage(victim.getName() + "'s IP was " + ip + "."); // print the IP just for the banner.
+							serv.broadcastMessage(chr.getWorld(), MaplePacketCreator.serverNotice(6, victim.getName() + " has been banned for " + reason + "."));
+							reason += " (IP: " + ip + ")"; // Add the IP afterward, no need to share that with everyone.
+							victim.ban(reason);
+						} else {
+							if (MapleCharacter.ban(sub[1], reason, false)) {
+								chr.dropMessage("Successfully banned " + sub[1] + ".");
+							} else {
+								chr.dropMessage("Failed to ban " + sub[1] + ".");
+							}
+						}
+					}
 				case buff:
 					if (sub.length == 2) {
 						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -384,6 +402,7 @@ public class GMCommands extends Commands {
 	
 	private static enum Command {
 		ap("Sets the AP of you or a victim."),
+		ban("Bans a user."),
 		buff("Applies buffs to you or a victim."),
 		dc("Disconnects a victim."),
 		dispose("Fixes NPC issues for you or a victim."),
