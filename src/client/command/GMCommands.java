@@ -300,6 +300,14 @@ public class GMCommands extends Commands {
 				case pap:
 					chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(8500001), chr.getPosition());
 					break;
+				case popup:
+					if (sub.length >= 3) {
+						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
+						victim.dropMessage(1, joinStringFrom(sub, 2));
+					} else {
+						chr.message("Usage: !popup playerName message");
+					}
+					break;
 				case pianus:
 					chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(8510000), chr.getPosition());
 					break;
@@ -423,6 +431,7 @@ public class GMCommands extends Commands {
 		maxstats("Maxes the stats of you or a victim."),
 		mesos("Gives mesos to you or a victim."),
 		pap("Summons Papulatus at your position."),
+		popup("Create a popup window for a victim."),
 		pianus("Summons Pianus at your position."),
 		notice("Makes a server-wide notice anonymously."),
 		saveall("Saves all players online!"),
