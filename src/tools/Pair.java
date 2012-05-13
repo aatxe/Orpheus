@@ -40,4 +40,12 @@ public class Pair<E, F> implements Serializable {
 	public F getRight() {
 		return right;
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public boolean equals(Object o) {
+	    if (this.getClass() != o.getClass()) return false;
+	    if (this == (Pair) o) return true;
+	    Pair compare = (Pair) o;
+	    return compare.getLeft() == this.getLeft() && compare.getRight() == this.getRight();
+	}
 }
