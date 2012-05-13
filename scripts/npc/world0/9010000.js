@@ -50,6 +50,8 @@ function action(mode, type, selection) {
             if (cm.getClient().getCharacterName(char, cm.getClient().getWorld()) != cm.getPlayer().getName()) {
                 if (!cm.getClient().isCharacterInGuild(cm.getClient().getCharacterId(char, cm.getWorld()))) {
                     cm.getClient().deleteCharacter(cm.getClient().getCharacterId(char, cm.getWorld()));
+                    cm.sendOk("I've deleted the character.");
+                    cm.dispose();
                 } else {
                     cm.sendOk("You cannot delete a character who is in a guild.");
                 }
