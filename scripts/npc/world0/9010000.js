@@ -48,10 +48,10 @@ function action(mode, type, selection) {
     } else if (status == 2) {
         if (char != -1 && mode == 1) {
             if (cm.getClient().getCharacterName(char, cm.getClient().getWorld()) != cm.getPlayer().getName()) {
-                if (cm.getClient().isCharacterInGuild(cm.getClient().getCharacterId(char, cm.getWorld()))) {
+                if (!cm.getClient().isCharacterInGuild(cm.getClient().getCharacterId(char, cm.getWorld()))) {
                     cm.getClient().deleteCharacter(cm.getClient().getCharacterId(char, cm.getWorld()));
                 } else {
-                    cm.sendOk("You cannot delete a character who's in a guild.");
+                    cm.sendOk("You cannot delete a character who is in a guild.");
                 }
             } else {
                 cm.sendOk("You cannot delete the character you're currently on!");
