@@ -166,5 +166,4 @@ public class EventManager {
 	public String getTipName() {
 		return ServerConstants.TIP_NAME;
 	}
-	}
 }
