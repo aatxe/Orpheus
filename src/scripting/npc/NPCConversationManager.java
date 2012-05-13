@@ -31,6 +31,7 @@ import constants.ExpTable;
 import constants.ServerConstants;
 import client.MapleCharacter;
 import client.MapleClient;
+import client.MapleInventory;
 import client.MapleInventoryType;
 import client.MapleJob;
 import client.MaplePet;
@@ -317,7 +318,9 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 			gainItem(5220000, (short) -1);
 		}
 		sendNext("You have obtained a #b#t" + itemid + "##k.");
-		getClient().getChannelServer().broadcastPacket(MaplePacketCreator.gachaponMessage(getPlayer().getInventory(MapleInventoryType.getByType((byte) (itemid / 1000000))).findById(itemid), c.getChannelServer().getMapFactory().getMap(gacMap[(getNpc() != 9100117 && getNpc() != 9100109) ? (getNpc() - 9100100) : getNpc() == 9100109 ? 8 : 9]).getMapName(), getPlayer()));
+		if (ServerConstants.BROADCAST_GACHAPON_ITEMS) {
+			getClient().getChannelServer().broadcastPacket(MaplePacketCreator.gachaponMessage(getPlayer().getInventory(MapleInventoryType.getByType((byte) (itemid / 1000000))).findById(itemid), c.getChannelServer().getMapFactory().getMap(gacMap[(getNpc() != 9100117 && getNpc() != 9100109) ? (getNpc() - 9100100) : getNpc() == 9100109 ? 8 : 9]).getMapName(), getPlayer()));
+		}
 	}
 
 	public void disbandAlliance(MapleClient c, int allianceId) {
@@ -527,5 +530,89 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 	
 	public String getServerName() {
 		return ServerConstants.SERVER_NAME;
+	}
+	
+	public String listEquips() {
+		StringBuilder sb = new StringBuilder();
+		MapleInventory mi = getPlayer().getInventory(MapleInventoryType.EQUIP);
+		int length = mi.list().size();
+		for (int i = 0; i < length; i++) {
+			sb.append("#L" + i + "##v" + (mi.getItem((byte) i).getItemId()) + "##l");
+		}
+		return sb.toString();
+	}
+	
+	public boolean hasItem(int itemid) {
+		return getPlayer().haveItem(itemid);
+	}
+	
+	public boolean hasItem(int itemid, int quantity) {
+		return (getPlayer().getItemQuantity(itemid, false) > quantity);
+	}
+	
+	public int getItemId(byte slot) {
+		return getPlayer().getInventory(MapleInventoryType.EQUIP).getItem(slot).getItemId();
+	}
+	
+	public void setItemOwner(byte slot) {
+		MapleInventory equip = getPlayer().getInventory(MapleInventoryType.EQUIP);
+        Equip eu = (Equip) equip.getItem(slot);
+        eu.setOwner(getName());
+	}
+	
+	public void makeItemEpic(byte slot) {
+		MapleInventory equip = getPlayer().getInventory(MapleInventoryType.EQUIP);
+        Equip eu = (Equip) equip.getItem(slot);
+		eu.setStr(Short.MAX_VALUE);
+		eu.setDex(Short.MAX_VALUE);
+		eu.setInt(Short.MAX_VALUE);
+		eu.setLuk(Short.MAX_VALUE);
+		eu.setAcc(Short.MAX_VALUE);
+		eu.setAvoid(Short.MAX_VALUE);
+		eu.setWatk(Short.MAX_VALUE);
+		eu.setWdef(Short.MAX_VALUE);
+		eu.setMatk(Short.MAX_VALUE);
+		eu.setMdef(Short.MAX_VALUE);
+		eu.setHp(Short.MAX_VALUE);
+		eu.setMp(Short.MAX_VALUE);
+		eu.setJump(Short.MAX_VALUE);
+		eu.setSpeed(Short.MAX_VALUE);
+		eu.setOwner(getName());
+	}
+	
+	public void modifyItem(byte slot, String stat, short value) {
+		MapleInventory equip = getPlayer().getInventory(MapleInventoryType.EQUIP);
+        Equip eu = (Equip) equip.getItem(slot);
+		if (stat.equalsIgnoreCase("str") || stat.equalsIgnoreCase("strength")) {
+	        eu.setStr(value);
+		} else if (stat.equalsIgnoreCase("dex") || stat.equalsIgnoreCase("dexterity")) {
+	        eu.setDex(value);
+		} else if (stat.equalsIgnoreCase("int") || stat.equalsIgnoreCase("intellect")) {
+	        eu.setInt(value);
+		} else if (stat.equalsIgnoreCase("luk") || stat.equalsIgnoreCase("luck")) {
+	        eu.setLuk(value);
+		} else if (stat.equalsIgnoreCase("hp") || stat.equalsIgnoreCase("maxhp")) {
+	        eu.setHp(value);
+		} else if (stat.equalsIgnoreCase("mp") || stat.equalsIgnoreCase("maxmp")) {
+	        eu.setMp(value);
+		} else if (stat.equalsIgnoreCase("acc") || stat.equalsIgnoreCase("accuracy")) {
+	        eu.setAcc(value);
+		} else if (stat.equalsIgnoreCase("avoid") || stat.equalsIgnoreCase("avoidability")) {
+	        eu.setAvoid(value);
+		} else if (stat.equalsIgnoreCase("watk") || stat.equalsIgnoreCase("wattack")) {
+	        eu.setWatk(value);
+		} else if (stat.equalsIgnoreCase("matk") || stat.equalsIgnoreCase("mattack")) {
+	        eu.setMatk(value);
+		} else if (stat.equalsIgnoreCase("wdef") || stat.equalsIgnoreCase("wdefense")) {
+	        eu.setWdef(value);
+		} else if (stat.equalsIgnoreCase("mdef") || stat.equalsIgnoreCase("mdefense")) {
+	        eu.setMdef(value);
+		} else if (stat.equalsIgnoreCase("jump")) {
+	        eu.setJump(value);
+		} else if (stat.equalsIgnoreCase("speed")) {
+			eu.setSpeed(value);
+		} else if (stat.equalsIgnoreCase("upgrades")) {
+			eu.setUpgradeSlots(value);
+		}
 	}
 }
