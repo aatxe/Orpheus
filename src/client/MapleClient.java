@@ -158,15 +158,30 @@ public class MapleClient {
 		return sb.toString();
 	}
 	
-	public CharNameAndId getCharacterNameAndId(int n, int serverId) {
+	public String getCharacterName(int n, int serverId) {
 		int k = 0;
 		for (CharNameAndId cni : loadCharactersInternal(serverId)) {
 			if (k == n) {
-				return cni;
+				return cni.name;
 			}
 			k++;
 		}
 		return null;
+	}
+	
+	public int getCharacterId(int n, int serverId) {
+		int k = 0;
+		for (CharNameAndId cni : loadCharactersInternal(serverId)) {
+			if (k == n) {
+				return cni.id;
+			}
+			k++;
+		}
+		return -1;
+	}
+	
+	public boolean isCharacterInGuild(int cid) {
+		return (MapleCharacter.getGuildIdById(cid) != 0);
 	}
 	
 	private List<CharNameAndId> loadCharactersInternal(int serverId) {

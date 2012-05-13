@@ -532,12 +532,15 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		return ServerConstants.SERVER_NAME;
 	}
 	
+	public int getWorld() {
+		return getPlayer().getWorld();
+	}
+	
 	public String listEquips() {
 		StringBuilder sb = new StringBuilder();
 		MapleInventory mi = getPlayer().getInventory(MapleInventoryType.EQUIP);
-		int length = mi.list().size();
-		for (int i = 0; i < length; i++) {
-			sb.append("#L" + i + "##v" + (mi.getItem((byte) i).getItemId()) + "##l");
+		for (IItem i : mi.list()) {
+			sb.append("#L" + i.getPosition() + "##v" + i.getItemId() + "##l");
 		}
 		return sb.toString();
 	}

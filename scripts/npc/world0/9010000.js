@@ -43,11 +43,19 @@ function action(mode, type, selection) {
             status = -1;
         } else {
             char = selection;
-            cm.sendYesNo("Are you sure you wish to delete #r" + cm.getClient().getCharacterNameAndId(char, cm.getClient().getWorld()).name + "#k?");
+            cm.sendYesNo("Are you sure you wish to delete #r" + cm.getClient().getCharacterName(char, cm.getWorld()) + "#k?");
         }
     } else if (status == 2) {
         if (char != -1 && mode == 1) {
-            cm.getClient().deleteCharacter(cm.getClient().getCharacterNameAndId(char, cm.getClient().getWorld()).id);
+            if (cm.getClient().getCharacterName(char, cm.getClient().getWorld()) != cm.getPlayer().getName()) {
+                if (cm.getClient().isCharacterInGuild(cm.getClient().getCharacterId(char, cm.getWorld()))) {
+                    cm.getClient().deleteCharacter(cm.getClient().getCharacterId(char, cm.getWorld()));
+                } else {
+                    cm.sendOk("You cannot delete a character who's in a guild.");
+                }
+            } else {
+                cm.sendOk("You cannot delete the character you're currently on!");
+            }
         } else {
             cm.dispose();
         }
