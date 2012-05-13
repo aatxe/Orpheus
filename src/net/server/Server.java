@@ -76,6 +76,7 @@ public class Server implements Runnable {
 	private Map<Integer, MapleAlliance> alliances = new LinkedHashMap<Integer, MapleAlliance>();
 	private boolean online = false;
 	private boolean gmServerEnabled = false;
+	private boolean debugMode = false;
 
 	public static Server getInstance() {
 		if (instance == null) {
@@ -155,8 +156,9 @@ public class Server implements Runnable {
 		tMan.start();
 		tMan.register(tMan.purge(), 300000);// Purging ftw...
 		tMan.register(new RankingWorker(), ServerConstants.RANKING_INTERVAL);
-		gmServerEnabled = Boolean.parseBoolean(p.getProperty("gmserver"));
 		try {
+			gmServerEnabled = Boolean.parseBoolean(p.getProperty("gmserver"));
+			debugMode = Boolean.parseBoolean(p.getProperty("debug"));
 			for (byte i = 0; i < Byte.parseByte(p.getProperty("worlds")); i++) {
 				long startTime = System.currentTimeMillis();
 				Output.print("Server is loading world" + i + ".");
@@ -223,6 +225,10 @@ public class Server implements Runnable {
 	
 	public boolean isGMServerEnabled() {
 		return gmServerEnabled;
+	}
+	
+	public boolean isDebugging() {
+		return debugMode;
 	}
 
 	public Properties getSubnetInfo() {

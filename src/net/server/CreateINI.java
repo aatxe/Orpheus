@@ -67,6 +67,7 @@ public class CreateINI {
 		}
 
 		sb.append(nl).append("gmserver=").append(Boolean.parseBoolean(con.readLine("GM Server (true/false): ")));
+		sb.append(nl).append("debug=").append(Boolean.parseBoolean(con.readLine("Debug Mode (true/false): ")));
 		FileOutputStream out = null;
 		try {
 			out = new FileOutputStream("orpheus.ini", false);

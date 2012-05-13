@@ -1024,4 +1024,12 @@ public class MapleClient {
 			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
 		}
 	}
+	
+	public boolean isGM() {
+		return (gmlevel >= 2);
+	}
+	
+	public boolean isDeveloper() {
+		return (gmlevel >= 4);
+	}
 }

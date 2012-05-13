@@ -25,6 +25,7 @@ import client.AutoRegister;
 import client.MapleClient;
 import java.util.Calendar;
 import net.MaplePacketHandler;
+import net.server.Server;
 import server.TimerManager;
 import tools.DateUtil;
 import tools.MaplePacketCreator;
@@ -71,6 +72,9 @@ public final class LoginPasswordHandler implements MaplePacketHandler {
 		} else if (loginok != 0) {
 			c.announce(MaplePacketCreator.getLoginFailed(loginok));
 			return;
+		}
+		if (!c.isDeveloper() && Server.getInstance().isDebugging()) {
+			c.announce(MaplePacketCreator.getLoginFailed(7));
 		}
 		if (c.finishLogin() == 0) {
 			c.announce(MaplePacketCreator.getAuthSuccess(c));
