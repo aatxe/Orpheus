@@ -32,6 +32,7 @@ import client.MapleInventoryType;
 import client.MapleWeaponType;
 import client.SkillFactory;
 import constants.ItemConstants;
+import constants.ServerConstants;
 import constants.skills.Aran;
 import constants.skills.Buccaneer;
 import constants.skills.NightLord;
@@ -93,16 +94,7 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
 					int id = item.getItemId();
 					boolean bow = ItemConstants.isArrowForBow(id);
 					boolean cbow = ItemConstants.isArrowForCrossBow(id);
-					if (item.getQuantity() > (bulletCount == 1 ? 0 : bulletCount)) { // Fixes
-																						// the
-																						// bug
-																						// where
-																						// you
-																						// can't
-																						// use
-																						// your
-																						// last
-																						// arrow.
+					if (item.getQuantity() > (bulletCount == 1 ? 0 : bulletCount)) {
 						if (type == MapleWeaponType.CLAW && ItemConstants.isThrowingStar(id) && weapon.getItemId() != 1472063) {
 							if (((id == 2070007 || id == 2070018) && player.getLevel() < 70) || (id == 2070016 && player.getLevel() < 50)) {
 							} else {
@@ -133,7 +125,9 @@ public final class RangedAttackHandler extends AbstractDealDamageHandler {
 				if (effect != null && effect.getBulletConsume() != 0) {
 					bulletConsume = (byte) (effect.getBulletConsume() * (hasShadowPartner ? 2 : 1));
 				}
-				MapleInventoryManipulator.removeById(c, MapleInventoryType.USE, projectile, bulletConsume, false, true);
+				if (!ServerConstants.UNLIMITED_PROJECTILES) {
+					MapleInventoryManipulator.removeById(c, MapleInventoryType.USE, projectile, bulletConsume, false, true);
+				}
 			}
 
 			if (projectile != 0 || soulArrow || attack.skill == 11101004 || attack.skill == 15111007 || attack.skill == 14101006) {
