@@ -323,9 +323,9 @@ public class PlayerCommands extends Commands {
 			Connection con = (Connection) DatabaseConnection.getConnection();
 			PreparedStatement ps;
 			if (!noGMs) {
-				ps = (PreparedStatement) con.prepareStatement("SELECT reborns, level, name, job FROM characters WHERE gm < 2 ORDER BY rebirths DESC, level DESC, name DESC LIMIT 10");
+				ps = (PreparedStatement) con.prepareStatement("SELECT rebirths, level, name, job FROM characters WHERE gm < 2 ORDER BY rebirths DESC, level DESC, name DESC LIMIT 10");
 			} else {
-				ps = (PreparedStatement) con.prepareStatement("SELECT reborns, level, name, job FROM characters ORDER BY rebirths DESC, level DESC, name DESC LIMIT 10");
+				ps = (PreparedStatement) con.prepareStatement("SELECT rebirths, level, name, job FROM characters ORDER BY rebirths DESC, level DESC, name DESC LIMIT 10");
 			}
 			return ps.executeQuery();
 		} catch (SQLException ex) {
