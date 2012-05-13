@@ -67,7 +67,7 @@ public class PlayerCommands extends Commands {
 					} else {
 						victim = chr;
 					}
-					chr.message(victim.getName() + ((victim.gmLevel() > 2) ? " is a GM." : " is not a GM."));
+					chr.message(victim.getName() + ((victim.isGM()) ? " is a GM." : " is not a GM."));
 					break;
 				case checkrebirths:
 					if (sub.length > 1) {
@@ -76,6 +76,22 @@ public class PlayerCommands extends Commands {
 						victim = chr;
 					}
 					chr.message(victim.getName() + " has " + victim.getRebirths() + " rebirths.");
+					break;
+				case checkrank:
+					if (sub.length > 1) {
+						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
+					} else {
+						victim = chr;
+					}
+					chr.message(victim.getName() + " is rank " + victim.getRank() + ".");
+					break;
+				case checkstaffrank:
+					if (sub.length > 1) {
+						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
+					} else {
+						victim = chr;
+					}
+					chr.message(victim.getName() + " is " + MapleRank.getById(victim.gmLevel()).toStringWithArticle());
 					break;
 				case checkstats:
 					if (sub.length > 1) {
@@ -169,6 +185,9 @@ public class PlayerCommands extends Commands {
 					chr.saveToDB(true);
 					c.getSession().close(false);
 					break;
+				case rank:
+					chr.message("You are rank " + chr.getRank() + ".");
+					break;
 				case rankings:
 					if (sub.length > 1) {
 						rs = getRankings(Boolean.parseBoolean(sub[1]));
@@ -187,7 +206,7 @@ public class PlayerCommands extends Commands {
 					}
 					break;
 				case rebirth:
-					if (chr.getLevel() >= 200) {
+					if (chr.getLevel() >= chr.getMaxLevel()) {
 						if (sub[1].equalsIgnoreCase("standard") || sub[1].equalsIgnoreCase("beginner")) {
 							chr.rebirthBeginner();
 							chr.saveToDB(true);
@@ -202,7 +221,7 @@ public class PlayerCommands extends Commands {
 							chr.message("To use this command, follow it with either beginner, noblesse, or aran.");
 						}
 					} else {
-						chr.message("You must be level 200 to do this!");
+						chr.message("You must be level " + chr.getMaxLevel() + " to do this!");
 					}
 					break;
 				case rebirths:
@@ -340,7 +359,9 @@ public class PlayerCommands extends Commands {
 		bugs("Tells players where to report bugs!"),
 		buy("Purchases a rice cake for 1,000,000,000 mesos."), 
 		checkgm("Checks if a specified player is a GM."), 
-		checkrebirths("Checks a player's rebirths."), 
+		checkrebirths("Checks a player's rebirths."),
+		checkrank("Checks a player's spot in the rankings."),
+		checkstaffrank("Checks a player's staff rank."),
 		checkstats("Checks a player's stats."), 
 		cody("Shortcut to Cody, job advancer and World Tour."), 
 		dispose("Solves NPC problems."),
@@ -352,6 +373,7 @@ public class PlayerCommands extends Commands {
 		kin("Opens a conversation with Kin."),
 		nx("Gives you 100,000 NX for " + ((ServerConstants.FREE_NX) ? "free" : "a fee")),
 		quit("Allows you to quickly exit from the game."),
+		rank("Checks your rank in the rankings."),
 		rankings("Displays the top 10 players."),
 		rebirth("Allows you to reborn at max level."), 
 		rebirths("Displays your rebirths."), 

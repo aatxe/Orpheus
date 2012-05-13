@@ -581,6 +581,7 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		eu.setJump(Short.MAX_VALUE);
 		eu.setSpeed(Short.MAX_VALUE);
 		eu.setOwner(getName());
+		getPlayer().equipChanged();
 	}
 	
 	public void modifyItem(byte slot, String stat, short value) {
@@ -617,5 +618,6 @@ public class NPCConversationManager extends AbstractPlayerInteraction {
 		} else if (stat.equalsIgnoreCase("upgrades")) {
 			eu.setUpgradeSlots(value);
 		}
+		getPlayer().equipChanged();
 	}
 }

@@ -21,6 +21,9 @@
  */
 package scripting.event;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,11 +34,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.script.Invocable;
 import javax.script.ScriptException;
+import client.MapleCharacter;
+import com.mysql.jdbc.Connection;
 import constants.ServerConstants;
 import net.server.Channel;
 import net.server.MapleParty;
+import net.server.Server;
 import server.TimerManager;
 import server.maps.MapleMap;
+import tools.DatabaseConnection;
+import tools.MapleLogger;
 
 /**
  * 
@@ -165,5 +173,31 @@ public class EventManager {
 	
 	public String getTipName() {
 		return ServerConstants.TIP_NAME;
+	}
+	
+	public void updateRankings() {
+		for (Channel chan : Server.getInstance().getAllChannels()) {
+            for (MapleCharacter plyrs : chan.getPlayerStorage().getAllCharacters()) {
+                plyrs.saveToDB(true);
+            }
+        }
+		try {
+			Connection con = (Connection) DatabaseConnection.getConnection();
+			PreparedStatement ps;
+			ResultSet rs;
+			ps = (PreparedStatement) con.prepareStatement("SELECT id, rank, rankMove FROM characters WHERE gm < 2 ORDER BY rebirths DESC, level DESC, name DESC");
+			rs = ps.executeQuery();
+			int n = 1;
+			while (rs.next()) {
+				ps = (PreparedStatement) con.prepareStatement("UPDATE characters SET rank = ?, rankMove = ? WHERE id = ?");
+				ps.setInt(1, n);
+				ps.setInt(2, rs.getInt("rank") - n);
+				ps.setInt(3, rs.getInt("id"));
+				ps.executeUpdate();
+				n++;
+			}
+		} catch (SQLException e) {
+			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
+		}	
 	}
 }

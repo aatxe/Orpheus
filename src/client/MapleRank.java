@@ -26,6 +26,25 @@ public enum MapleRank {
 		return getId() == maplerank.getId();
 	}
 	
+	public String toStringWithArticle() {
+		switch (this) {
+			case PLAYER:
+				return "a player";
+			case DONOR:
+				return "a donator";
+			case SUPPORT:
+				return "Support";
+			case GM:
+				return "a GM";
+			case DEVELOPER:
+				return "a Developer";
+			case ADMINISTRATOR:
+				return "an Administrator";
+			default:
+				return "Player";
+		}
+	}
+	
 	public String toString() {
 		switch (this) {
 			case PLAYER:

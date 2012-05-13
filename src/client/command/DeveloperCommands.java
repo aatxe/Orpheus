@@ -214,6 +214,9 @@ public class DeveloperCommands extends Commands {
 						}
 					}
 					break;
+				case updaterankings:
+					updateRankings();
+					break;
 				case zakum:
 					chr.getMap().spawnFakeMonsterOnGroundBelow(MapleLifeFactory.getMonster(8800000), chr.getPosition());
 					for (int x = 8800003; x < 8800011; x++) {
@@ -234,6 +237,27 @@ public class DeveloperCommands extends Commands {
 		DeveloperCommands.slea = slea;
 	}
 	
+	public static void updateRankings() {
+		try {
+			Connection con = (Connection) DatabaseConnection.getConnection();
+			PreparedStatement ps;
+			ResultSet rs;
+			ps = (PreparedStatement) con.prepareStatement("SELECT id, rank, rankMove FROM characters WHERE gm < 2 ORDER BY rebirths DESC, level DESC, name DESC");
+			rs = ps.executeQuery();
+			int n = 1;
+			while (rs.next()) {
+				ps = (PreparedStatement) con.prepareStatement("UPDATE characters SET rank = ?, rankMove = ? WHERE id = ?");
+				ps.setInt(1, n);
+				ps.setInt(2, rs.getInt("rank") - n);
+				ps.setInt(3, rs.getInt("id"));
+				ps.executeUpdate();
+				n++;
+			}
+		} catch (SQLException e) {
+			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
+		}	
+	}
+	
 	private static enum Command {
 		coords("Prints your current coordinates."),
 		exprate("Sets the server-wide experience rate."),
@@ -248,6 +272,7 @@ public class DeveloperCommands extends Commands {
 		say("Forces a victim to say something."),
 		shutdown("Shutdowns the server."),
 		sql("Executes an SQL query."),
+		updaterankings("Updates all the rankings."),
 		zakum("Summons Zakum at your position.");
 
 	    private final String description;

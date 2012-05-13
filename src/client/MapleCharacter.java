@@ -2427,7 +2427,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		int improvingMaxHPLevel = 0;
 		int improvingMaxMPLevel = 0;
 
-		if (isBeginnerJob()) {
+		if (isBeginnerJob() && getRebirths() == 0) {
 			remainingAp = 0;
 			if (getLevel() < 6) {
 				str += 5;

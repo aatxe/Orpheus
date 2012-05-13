@@ -30,7 +30,7 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class DistributeAPHandler extends AbstractMaplePacketHandler {
-	private static final int max = 999;
+	private static final int max = Short.MAX_VALUE;
 
 	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
 		slea.readInt();
