@@ -26,7 +26,7 @@ var status = 0;
 var equip = -1;
 
 function start() {
-    cm.sendSimple("Hey there, I'm #Inkwell#k. I can edit a stat on an item for ten rice cakes. I'll max them fantastic. Pick an item.\r\n" + cm.listEquips());
+    cm.sendSimple("Hey there, I'm #rInkwell#k. I can edit a stat on an item for ten rice cakes. I'll max them fantastic. Pick an item.\r\n" + cm.listEquips());
 }
 
 function action(mode, type, selection) {
@@ -38,7 +38,7 @@ function action(mode, type, selection) {
     if (status == 1) {
         equip = selection;
         if (cm.getPlayer().isGM()) {
-            cm.sendSimple("You've selected #v" + cm.getItemId(equip) + "#. Which stat would you like to max?\r\n#L0#Strength#l\r\n#L1#Dexterity#l\r\n#L2#Intellect#l\r\n#L3#Luck#\r\n#L4#Weapon Attack#l\r\n#L5#Weapon Defense#l\r\n#L6#Magic Attack#l\r\n#L7#Magic Defense#l\r\n#L8#Accuracy#l\r\n#L9#Everything!#l\r\n");
+            cm.sendSimple("You've selected #v" + cm.getItemId(equip) + "#. Which stat would you like to max?\r\n#L0#Strength#l\r\n#L1#Dexterity#l\r\n#L2#Intellect#l\r\n#L3#Luck#l\r\n#L4#Weapon Attack#l\r\n#L5#Weapon Defense#l\r\n#L6#Magic Attack#l\r\n#L7#Magic Defense#l\r\n#L8#Accuracy#l\r\n#L9#Everything!#l\r\n");
         } else { 
             cm.sendSimple("You've selected #v" + cm.getItemId(equip) + "#. Which stat would you like to max?\r\n#L0#Strength#l\r\n#L1#Dexterity#l\r\n#L2#Intellect#l\r\n#L3#Luck#\r\n#L4#Weapon Attack#l\r\n#L5#Weapon Defense#l\r\n#L6#Magic Attack#l\r\n#L7#Magic Defense#l\r\n#L8#Accuracy#l\r\n");
         }
@@ -78,12 +78,14 @@ function action(mode, type, selection) {
                 } else if (selection == 9 && cm.getPlayer().isGM()) {
                     cm.makeItemEpic(equip);
                 }
-                cm.sendOk("Thanks! Enjoy your day!");
+                cm.sendOk("Thanks! Enjoy your day! You'll have to relog or change channels to see any changes.");
             } else {
                 cm.sendOk("You don't have ten rice cakes!");
             }
         } else {
             cm.dispose();
         }
+    } else {
+        cm.dispose();
     }
 }
