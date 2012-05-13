@@ -39,7 +39,7 @@ function action(mode, type, selection) {
         cm.sendSimple("Hey there, I'm here to help you delete characters!\r\nSelect a character:\r\n" + cm.getClient().getFormattedCharacterList(cm.getClient().getWorld()) + "\r\n\r\n#L6#Information#l");
     } else if (status == 1) {
         if (selection == 6) {
-            cm.sendOk("#eInformation#n\r\nThe purpose of this NPC is to allow you to delete characters while PICs are disabled.\r\n\r\n#eNotice#n\r\nUpon selecting the character you wish to delete, you will be given a confirmation notice.\r\n\r\n#r#eWarning#n#k\r\nOnce you delete your character, it is gone #r#eforever#n#k. " + cm.getServerName() " and its staff will not be held responsible.");
+            cm.sendOk("#eInformation#n\r\nThe purpose of this NPC is to allow you to delete characters while PICs are disabled.\r\n\r\n#eNotice#n\r\nUpon selecting the character you wish to delete, you will be given a confirmation notice.\r\n\r\n#r#eWarning#n#k\r\nOnce you delete your character, it is gone #r#eforever#n#k. " + cm.getServerName() + " and its staff will not be held responsible.");
             status = -1;
         } else {
             char = selection;
