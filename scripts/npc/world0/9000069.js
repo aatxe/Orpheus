@@ -26,7 +26,7 @@ var status = 0;
 var equip = -1;
 
 function start() {
-    cm.sendSimple("Hey there, I'm #rInkwell#k. I can edit a stat on an item for ten rice cakes. I'll max them fantastic. Pick an item.\r\n" + cm.listEquips());
+    cm.sendSimple("Hey there, I'm #rInkwell#k. I can edit a stat on an item for just two rice cakes. I'll make them fantastic. Pick an item.\r\n" + cm.listEquips());
 }
 
 function action(mode, type, selection) {
@@ -44,9 +44,9 @@ function action(mode, type, selection) {
         }
     } else if (status == 2) {
         if (equip != -1) {
-            if (cm.hasItem(4001101, 10) || cm.getPlayer().isGM()) {
+            if (cm.hasItem(4001101, 2) || cm.getPlayer().isGM()) {
                 if (!cm.getPlayer().isGM()) {
-                    cm.gainItem(4001101, -10);
+                    cm.gainItem(4001101, -2);
                 }
                 if (selection == 0) {
                     cm.modifyItem(equip, "str", 32767);
@@ -78,9 +78,9 @@ function action(mode, type, selection) {
                 } else if (selection == 9 && cm.getPlayer().isGM()) {
                     cm.makeItemEpic(equip);
                 }
-                cm.sendOk("Thanks! Enjoy your day! You'll have to relog or change channels to see any changes.");
+                cm.sendOk("Thanks! Enjoy your day! You'll have to equip it, relog or change channels to see any changes.");
             } else {
-                cm.sendOk("You don't have ten rice cakes!");
+                cm.sendOk("You don't have two rice cakes!");
             }
         } else {
             cm.dispose();
