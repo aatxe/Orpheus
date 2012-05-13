@@ -43,5 +43,5 @@ function cancelSchedule() {
 function start() {
     scheduleNew();
     var Message = new Array("To delete a character, speak to a Maple Admin!", "For an optimal leveling experience, try the Free Market rooms!", "Remember to keep an eye out for new updates!", "This server was created by Aaron Weiss!");
-    em.getChannelServer().yellowWorldMessage("[" + em.getTipName() + "] " + Message[Math.floor(Math.random() * Message.length)]);
+    em.getChannelServer().yellowWorldMessage("[OrpheusTip] " + Message[Math.floor(Math.random() * Message.length)]);
 }
