@@ -42,7 +42,8 @@ function cancelSchedule() {
 
 function start() {
     scheduleNew();
-    var Message = new Array("To delete a character, speak to a Maple Admin!", "For an optimal leveling experience, try the Free Market rooms!", "Remember to keep an eye out for new updates!");
-    var c = Math.floor(Math.random() * Message.length);
-    em.getChannelServer().yellowWorldMessage("[OrpheusTip] " + Message[c]);
+    var msg = new Array("To delete a character, speak to a Maple Administrator!", "For an optimal leveling experience, try the Free Market rooms!", "Remember to keep an eye out for new updates!");
+    var x = Math.floor(Math.random() * 3); // debugging
+    var c = Math.floor(Math.random() * msg.length);
+    em.getChannelServer().yellowWorldMessage("[OrpheusTip] " + msg[c]);
 }
