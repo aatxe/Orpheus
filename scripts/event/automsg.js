@@ -42,6 +42,6 @@ function cancelSchedule() {
 
 function start() {
     scheduleNew();
-    var Message = new Array("Please refrain from using foul language in this game.", "Verbal and other forms of abuse will NOT be tolerated. Abusers will be blocked from the game.");
-    em.getChannelServer().yellowWorldMessage("[MapleTip] " + Message[Math.floor(Math.random() * Message.length)]);
+    var Message = new Array("To delete a character, speak to a Maple Admin!", "For an optimal leveling experience, try the Free Market rooms!", "Remember to keep an eye out for new updates!", "This server was created by Aaron Weiss!");
+    em.getChannelServer().yellowWorldMessage("[" + em.getTipName() + "] " + Message[Math.floor(Math.random() * Message.length)]);
 }

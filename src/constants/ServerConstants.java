@@ -32,6 +32,7 @@ public class ServerConstants {
 	public static final boolean HIDE_GMS_ON_LOGIN = true; // Hide GMs upon login.
 	public static final boolean MAKE_NPCS_SCRIPTABLE = true; // Makes NPCs scriptable. (Set in ScriptableNPCConstants)
 	public static final boolean BROADCAST_GACHAPON_ITEMS = true; // broadcast gachapon use!
+	public static final String TIP_NAME = "OrpheusTip"; // Tip Name for automsg
 	// Rate Configuration
 	public static final byte QUEST_EXP_RATE = 4;
 	public static final byte QUEST_MESO_RATE = 3;
@@ -39,7 +40,7 @@ public class ServerConstants {
 	public static final boolean ENABLE_AUTOREGISTER = true; // Confirmed: working.
 	public static final int CHANNEL_LOAD = 100; // Players per channel
 	public static final long RANKING_INTERVAL = 3600000;
-	public static final boolean ENABLE_PIC = true; // False: can't delete characters.
+	public static final boolean ENABLE_PIC = false; // False: must use Maple Admin to delete characters.
 	// Event Configuration
 	public static final boolean PERFECT_PITCH = false;
 	public static final boolean FREE_NX = true;

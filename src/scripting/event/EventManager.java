@@ -31,6 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.script.Invocable;
 import javax.script.ScriptException;
+import constants.ServerConstants;
 import net.server.Channel;
 import net.server.MapleParty;
 import server.TimerManager;
@@ -160,5 +161,10 @@ public class EventManager {
 		} catch (NoSuchMethodException ex) {
 			Logger.getLogger(EventManager.class.getName()).log(Level.SEVERE, null, ex);
 		}
+	}
+	
+	public String getTipName() {
+		return ServerConstants.TIP_NAME;
+	}
 	}
 }
