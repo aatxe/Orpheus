@@ -110,7 +110,7 @@ CREATE TABLE `buddies` (
   `characterid` int(11) NOT NULL,
   `buddyid` int(11) NOT NULL,
   `pending` tinyint(4) NOT NULL DEFAULT '0',
-  `group` varchar(13) DEFAULT '0',
+  `group` varchar(17) DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `buddies_ibfk_1` (`characterid`),
   CONSTRAINT `buddies_ibfk_1` FOREIGN KEY (`characterid`) REFERENCES `characters` (`id`) ON DELETE CASCADE
