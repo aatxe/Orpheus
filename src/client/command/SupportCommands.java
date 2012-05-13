@@ -93,7 +93,7 @@ public class SupportCommands extends Commands {
 					break;
 				case search:
 					try {
-						BufferedReader dis = new BufferedReader(new InputStreamReader(new URL("http://www.mapletip.com/search_java.php?search_value=" + joinStringFrom(sub, 2) + "&check=true").openConnection().getInputStream()));
+						BufferedReader dis = new BufferedReader(new InputStreamReader(new URL("http://www.mapletip.com/search_java.php?search_value=" + joinStringFrom(sub, 2).replace(" ", "%20") + "&check=true").openConnection().getInputStream()));
 						String s;
 						while ((s = dis.readLine()) != null) {
 							if (s.startsWith(" "))
