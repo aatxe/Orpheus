@@ -113,12 +113,16 @@ function jobAdv(selection){
                     case 1300:
                     case 1400:
                     case 1500:
+                    case 2100:
                         possibleJobs.push(cm.getJobId() + 10);
+                    case 2110:
+                    case 2111:
+                        possibleJobs.push(cm.getJobId() + 1);
                         break;
                 }
             }
             if (possibleJobs.length == 0) {
-                cm.sendOk("Hey, how's it going? I've been doing well here.");
+                cm.sendOk("It doesn't look like I can help you right now.");
                 cm.dispose();
             } else {
                 var text = "There are the available jobs you can take#b";
