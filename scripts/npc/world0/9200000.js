@@ -80,6 +80,9 @@ function warp(selection){
 }
 
 function jobAdv(selection){
+    if (cm.getPlayer().isAran()) {
+        cm.maxMastery();
+    }
     if (status == 0) {
         newJob = cm.getJobId() + 1;
         if (cm.getJobId() % 10 == 2) {
