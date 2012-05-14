@@ -34,7 +34,7 @@ function action(mode, type, selection) {
         cm.dispose();
         return;
     }
-    if (status == 0) {
+    if (status == 1) {
         if (cm.getJobId() == 2000) {
             cm.gainItem(1442079, 1); // gain your weapon back.
             cm.changeJobById(2100); // make you an Aran.
@@ -42,7 +42,7 @@ function action(mode, type, selection) {
         } else {
             cm.sendOk("You're not a Legend! You shouldn't be here!");
         }
-    } else if (status == 1) {
+    } else if (status == 2) {
         cm.warp(910000000); // to the free market!
         cm.dispose();
     }
