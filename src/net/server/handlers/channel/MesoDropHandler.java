@@ -23,7 +23,6 @@ package net.server.handlers.channel;
 
 import client.MapleCharacter;
 import client.MapleClient;
-import java.awt.Point;
 import net.AbstractMaplePacketHandler;
 import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;

@@ -176,11 +176,16 @@ public class EventManager {
 	}
 	
 	public void updateRankings() {
-		for (Channel chan : Server.getInstance().getAllChannels()) {
-            for (MapleCharacter plyrs : chan.getPlayerStorage().getAllCharacters()) {
-                plyrs.saveToDB(true);
-            }
-        }
+		try {
+			for (Channel chan : Server.getInstance().getAllChannels()) {
+            	for (MapleCharacter plyrs : chan.getPlayerStorage().getAllCharacters()) {
+            		plyrs.saveToDB(true);
+            	}
+        	}
+		} catch (Exception e) {
+			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e); // Log it.
+		}
+		// they're seperate, because if we fail to save, we may as well still continue updating.
 		try {
 			Connection con = (Connection) DatabaseConnection.getConnection();
 			PreparedStatement ps;
