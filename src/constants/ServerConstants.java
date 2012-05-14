@@ -34,6 +34,7 @@ public class ServerConstants {
 	public static final boolean MAKE_NPCS_SCRIPTABLE = true; // Makes NPCs scriptable. (Set in ScriptableNPCConstants)
 	public static final boolean BROADCAST_GACHAPON_ITEMS = true; // broadcast gachapon use!
 	public static final boolean UNLIMITED_PROJECTILES = false; // have unlimited projectiles (bullets, throwing stars, arrows)
+	public static final boolean ALLOW_INFO_ON_GMS = true; // if false, non-GMs cannot get info on GMs.
 	// Rate Configuration
 	public static final byte QUEST_EXP_RATE = 4;
 	public static final byte QUEST_MESO_RATE = 3;

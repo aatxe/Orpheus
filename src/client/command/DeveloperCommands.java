@@ -272,7 +272,7 @@ public class DeveloperCommands extends Commands {
 		say("Forces a victim to say something."),
 		shutdown("Shutdowns the server."),
 		sql("Executes an SQL query."),
-		updaterankings("Updates all the rankings."),
+		updaterankings("Forces an update of the rankings."),
 		zakum("Summons Zakum at your position.");
 
 	    private final String description;
