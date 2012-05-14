@@ -83,12 +83,12 @@ function jobAdv(selection){
     if (status == 0) {
         newJob = cm.getJobId() + 1;
         if (cm.getJobId() % 10 == 2) {
-            cm.sendOk("Hey, how's it going? I've been doing well here.");
+            cm.sendOk("It doesn't look like I can help you right now.");
             cm.dispose();
         } else if (cm.getJobId() % 10 >= 0 && cm.getJobId() % 100 != 0) {
             var secondJob = cm.getJobId() % 10 == 0;
             if ((secondJob && cm.getLevel() < 70) || (!secondJob && cm.getLevel() < 120)) {
-                cm.sendOk("Hey, how's it going? I've been doing well here.");
+                cm.sendOk("It doesn't look like I can help you right now.");
                 cm.dispose();
             } else
                 cm.sendYesNo("Great job getting to level " + cm.getLevel() + ". Would you like to become a #b"+cm.getJobName(newJob)+"#k ?");
@@ -126,8 +126,11 @@ function jobAdv(selection){
                 cm.dispose();
             } else {
                 var text = "There are the available jobs you can take#b";
-                for (var j = 0; j < possibleJobs.length; j++)
-                    text += "\r\n#L"+j+"#"+cm.getJobName(possibleJobs[j])+"#l";
+                for (var j = 0; j < possibleJobs.length; j++) {
+                    if (cm.getJobName(possibleJobs[j]) != "null") {
+                        text += "\r\n#L"+j+"#"+cm.getJobName(possibleJobs[j])+"#l";
+                    }
+                }
                 cm.sendSimple(text);
             }
         }
