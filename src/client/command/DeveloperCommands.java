@@ -169,7 +169,7 @@ public class DeveloperCommands extends Commands {
 					if (sub.length > 2) {
 						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
 						final String s = joinStringFrom(sub, 2);
-						victim.getMap().broadcastMessage(MaplePacketCreator.getChatText(chr.getId(), s, chr.isGM(), slea.readByte()));
+						victim.getMap().broadcastMessage(MaplePacketCreator.getChatText(victim.getId(), s, victim.isGM(), slea.readByte()));
 					} else {
 						chr.message("Usage: !say playerName multi-word message");
 					}
