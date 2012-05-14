@@ -127,7 +127,7 @@ function jobAdv(selection){
             } else {
                 var text = "There are the available jobs you can take#b";
                 for (var j = 0; j < possibleJobs.length; j++) {
-                    if (cm.getJobName(possibleJobs[j]) != "null") {
+                    if (cm.getJobName(possibleJobs[j]) != null) {
                         text += "\r\n#L"+j+"#"+cm.getJobName(possibleJobs[j])+"#l";
                     }
                 }
