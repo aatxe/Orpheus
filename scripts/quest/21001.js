@@ -79,6 +79,7 @@ function end(mode, type, selection) {
 		else if (status == 7) {
 			qm.sendNextPrev("Athena Pierce, why don't you leave for Victoria Island first? I promise I'll come for you later. I'll be alright. I must fight the Black Mage with the other heroes!", 3);
 		} else if (status == 8) {
+            qm.forceCompleteQuest();
 			qm.warp(914090010); // Initialize Aran Tutorial Scenes
 			qm.dispose();
 		}
