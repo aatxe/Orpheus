@@ -23,7 +23,7 @@ package constants;
 
 public class ServerConstants {
 	public static short VERSION = 83;
-	public static String ORPHEUS_VERSION = "5/13/12";
+	public static String ORPHEUS_VERSION = "5/17/12";
 	public static final String SERVER_NAME = "OrpheusMS";
 	public static String[] WORLD_NAMES = {"Scania", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
 	// Orpheus Feature Configuration
@@ -33,7 +33,7 @@ public class ServerConstants {
 	public static final boolean HIDE_GMS_ON_LOGIN = true; // Hide GMs upon login.
 	public static final boolean MAKE_NPCS_SCRIPTABLE = true; // Makes NPCs scriptable. (Set in ScriptableNPCConstants)
 	public static final boolean BROADCAST_GACHAPON_ITEMS = true; // broadcast gachapon use!
-	public static final boolean UNLIMITED_PROJECTILES = false; // have unlimited projectiles (bullets, throwing stars, arrows)
+	public static final boolean UNLIMITED_PROJECTILES = false; // have unlimited projectiles (don't lose bullets, throwing stars, arrows)
 	public static final boolean ALLOW_INFO_ON_GMS = true; // if false, non-GMs cannot get info on GMs.
 	// Rate Configuration
 	public static final byte QUEST_EXP_RATE = 4;
