@@ -41,6 +41,7 @@ import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class AdminCommandHandler extends AbstractMaplePacketHandler {
+	@SuppressWarnings("unused")
 	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
 		if (!c.getPlayer().isGM()) {
 			return;

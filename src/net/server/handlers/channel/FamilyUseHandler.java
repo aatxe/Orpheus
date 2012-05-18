@@ -87,6 +87,7 @@ public final class FamilyUseHandler extends AbstractMaplePacketHandler {
 	// 03 00 14 00
 	// 8C 93 3E 00
 	// 40 0D 03 00 00 00 00 00 02
+	@SuppressWarnings("unused")
 	private static MaplePacket giveBuff() {
 		MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 		mplew.writeShort(SendOpcode.GIVE_BUFF.getValue());

@@ -42,6 +42,7 @@ public class MonsterCarnival {
 	private int room;
 	private long time = 0;
 	private long timeStarted = 0;
+	@SuppressWarnings("unused")
 	private ScheduledFuture<?> schedule = null;
 
 	public MonsterCarnival(int room, byte channel, MonsterCarnivalParty red1, MonsterCarnivalParty blue1) {

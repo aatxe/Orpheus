@@ -21,13 +21,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package scripting.map;
 
+import scripting.AbstractPlayerInteraction;
+import server.quest.MapleQuest;
+import tools.MaplePacketCreator;
 import client.MapleClient;
 import client.MapleQuestStatus;
 import client.SkillFactory;
-import scripting.AbstractPlayerInteraction;
-import server.TimerManager;
-import server.quest.MapleQuest;
-import tools.MaplePacketCreator;
 
 public class MapScriptMethods extends AbstractPlayerInteraction {
 

@@ -730,7 +730,7 @@ public class MapleClient {
 			}
 		} finally {
 			player = null;
-			session.close();
+			session.close(true);
 		}
 		if (!this.serverTransition) {
 			this.updateLoginState(LOGIN_NOTLOGGEDIN);

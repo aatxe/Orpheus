@@ -21,7 +21,6 @@
  */
 package tools.data.output;
 
-import java.awt.Point;
 import java.io.ByteArrayOutputStream;
 import net.ByteArrayMaplePacket;
 import net.MaplePacket;

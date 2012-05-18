@@ -21,18 +21,16 @@
  */
 package net.server.handlers.channel;
 
-import client.MapleCharacter;
-import client.MapleClient;
-import client.MapleJob;
 import java.util.Collection;
 import net.AbstractMaplePacketHandler;
 import net.server.MapleParty;
-import net.server.MaplePartyCharacter;
-import net.server.PartyOperation;
 import server.maps.MapleMap;
 import server.maps.MapleMapObject;
 import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
+import client.MapleCharacter;
+import client.MapleClient;
+import client.MapleJob;
 
 /**
  * 
@@ -60,11 +58,10 @@ public class PartySearchStartHandler extends AbstractMaplePacketHandler {
 						// WorldChannelInterface wci =
 						// c.getChannelServer().getWorldInterface();
 						MapleParty party = c.getPlayer().getParty();
-						int partyid = party.getId();
-						party = null;// .getParty(partyid);
+						party = c.getPlayer().getParty();// .getParty(partyid);
 						if (party != null) {
 							if (party.getMembers().size() < 6) {
-								MaplePartyCharacter partyplayer = tchar.getMPC();
+								// MaplePartyCharacter partyplayer = tchar.getMPC();
 								// wci.updateParty(party.getId(),
 								// PartyOperation.JOIN, partyplayer);
 								c.getPlayer().receivePartyMemberHP();

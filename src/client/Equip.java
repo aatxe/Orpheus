@@ -346,4 +346,20 @@ public class Equip extends Item implements IEquip {
 	public byte getItemLevel() {
 		return itemLevel;
 	}
+	
+	public int getSkill0() {
+		return skill0;
+	}
+	
+	public int getSkill1() {
+		return skill1;
+	}
+	
+	public int getSkill2() {
+		return skill2;
+	}
+	
+	public int getSkill3() {
+		return skill3;
+	}
 }

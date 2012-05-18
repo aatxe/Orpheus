@@ -122,7 +122,8 @@ public abstract class AbstractDealDamageHandler extends AbstractMaplePacketHandl
         }
     }
 
-    protected synchronized void applyAttack(AttackInfo attack, final MapleCharacter player, int attackCount) {
+    @SuppressWarnings("unused")
+	protected synchronized void applyAttack(AttackInfo attack, final MapleCharacter player, int attackCount) {
         ISkill theSkill = null;
         MapleStatEffect attackEffect = null;
         try {

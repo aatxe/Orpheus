@@ -26,11 +26,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import client.MapleCharacter;
-import client.MapleClient;
-import net.server.MaplePartyCharacter;
 import server.MaplePortal;
 import tools.MaplePacketCreator;
+import client.MapleCharacter;
+import client.MapleClient;
 
 /**
  * 

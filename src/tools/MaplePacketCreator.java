@@ -2741,6 +2741,7 @@ public class MaplePacketCreator {
 		return mplew.getPacket();
 	}
 
+	@SuppressWarnings("unused")
 	private static <E extends LongValueHolder> long getLongMask(List<Pair<E, Integer>> statups) {
 		long mask = 0;
 		for (Pair<E, Integer> statup : statups) {
@@ -2749,6 +2750,7 @@ public class MaplePacketCreator {
 		return mask;
 	}
 
+	@SuppressWarnings("unused")
 	private static <E extends LongValueHolder> long getLongMaskFromList(List<E> statups) {
 		long mask = 0;
 		for (E statup : statups) {
@@ -2765,6 +2767,7 @@ public class MaplePacketCreator {
 		return mask;
 	}
 
+	@SuppressWarnings("unused")
 	private static <E extends LongValueHolder> long getLongMaskFromListD(List<MapleDisease> statups) {
 		long mask = 0;
 		for (MapleDisease statup : statups) {

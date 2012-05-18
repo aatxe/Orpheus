@@ -5,13 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.security.NoSuchAlgorithmException;
-import constants.ServerConstants;
 import tools.DatabaseConnection;
 import tools.HashCreator;
 import tools.MapleLogger;
 
 public class AutoRegister {
-	private static final boolean autoRegister = ServerConstants.ENABLE_AUTOREGISTER;
 	private static final int ACCOUNTS_PER_IP = 4;
 	private static boolean success;
 

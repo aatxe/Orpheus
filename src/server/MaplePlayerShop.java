@@ -240,6 +240,7 @@ public class MaplePlayerShop extends AbstractMapleMapObject {
 		this.description = description;
 	}
 
+	@SuppressWarnings("unused")
 	public void banPlayer(String name) {
 		if (!bannedList.contains(name)) {
 			bannedList.add(name);

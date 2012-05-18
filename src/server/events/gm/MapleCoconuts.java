@@ -60,4 +60,7 @@ public class MapleCoconuts {
 		return hittime;
 	}
 
+	public int getId() {
+		return id;
+	}
 }

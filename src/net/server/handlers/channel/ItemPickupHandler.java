@@ -69,7 +69,9 @@ public final class ItemPickupHandler extends AbstractMaplePacketHandler {
 				c.announce(MaplePacketCreator.enableActions());
 				return;
 			}
-			if (ob == null) {
+			try {
+				ob.hashCode();
+			} catch (NullPointerException e) {
 				c.announce(MaplePacketCreator.getInventoryFull());
 				c.announce(MaplePacketCreator.getShowInventoryFull());
 				return;

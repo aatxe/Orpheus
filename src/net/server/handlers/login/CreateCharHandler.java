@@ -29,7 +29,6 @@ import client.MapleInventory;
 import client.MapleInventoryType;
 import client.MapleJob;
 import client.MapleSkinColor;
-import client.SkillFactory;
 import net.AbstractMaplePacketHandler;
 import server.MapleItemInformationProvider;
 import tools.MaplePacketCreator;

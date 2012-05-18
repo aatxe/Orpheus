@@ -1378,6 +1378,10 @@ public class MapleStatEffect {
 		return cooldown;
 	}
 
+	public boolean getRepeatEffect() {
+		return repeatEffect;
+	}
+	
 	public Map<MonsterStatus, Integer> getMonsterStati() {
 		return monsterStatus;
 	}

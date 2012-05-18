@@ -59,7 +59,7 @@ public class MonsterDropCreator {
 	protected static List<Pair<Integer, MobInfo>> mobCache = new ArrayList<Pair<Integer, MobInfo>>();
 	protected static Map<Integer, Boolean> bossCache = new HashMap<Integer, Boolean>();
 
-	@SuppressWarnings("rawtypes") // messy code is messy, let's just ignore it...
+	@SuppressWarnings({"unchecked", "rawtypes"}) // messy code is messy, let's just ignore it...
 	public static void main(String args[]) throws FileNotFoundException, IOException, NotBoundException, InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException, MalformedObjectNameException {
 		MapleData data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzpath") + "/String.wz")).getData("MonsterBook.img");
 
@@ -85,7 +85,8 @@ public class MonsterDropCreator {
 			first = true;
 
 			sb.append("INSERT INTO ").append(monsterQueryData).append(" VALUES ");
-			for (Integer monsterdrop : (List<Integer>) e.getValue()) {
+			List<Integer> dropList = (List<Integer>) e.getValue();
+			for (Integer monsterdrop : dropList) {
 				final int itemid = monsterdrop;
 				final int monsterId = (Integer) e.getKey();
 				int rate = getChance(itemid, monsterId, bossCache.containsKey(monsterId));

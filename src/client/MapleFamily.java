@@ -42,7 +42,7 @@ public class MapleFamily {
 			ps.setInt(1, cid);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				this.id = rs.getInt("familyid");
+				MapleFamily.id = rs.getInt("familyid");
 			}
 			ps.close();
 			rs.close();
