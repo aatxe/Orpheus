@@ -22,6 +22,7 @@
 package tools.data.input;
 
 import java.io.IOException;
+import tools.Output;
 
 /**
  * Provides an abstract accessor to a generic Little Endian byte stream. This
@@ -59,7 +60,7 @@ public class GenericSeekableLittleEndianAccessor extends GenericLittleEndianAcce
 		try {
 			bs.seek(offset);
 		} catch (IOException e) {
-			System.out.println("Seek failed " + e);
+			Output.print("Seek failed " + e);
 		}
 	}
 
@@ -74,7 +75,7 @@ public class GenericSeekableLittleEndianAccessor extends GenericLittleEndianAcce
 		try {
 			return bs.getPosition();
 		} catch (IOException e) {
-			System.out.println("getPosition failed" + e);
+			Output.print("getPosition failed" + e);
 			return -1;
 		}
 	}

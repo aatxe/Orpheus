@@ -23,6 +23,7 @@ package tools.data.input;
 
 import java.io.IOException;
 import java.io.InputStream;
+import tools.Output;
 
 /**
  * Provides an abstract wrapper to a stream of bytes.
@@ -85,7 +86,7 @@ public class InputStreamByteStream implements ByteInputStream {
 		try {
 			return is.available();
 		} catch (IOException e) {
-			System.out.println("ERROR" + e);
+			Output.print("ERROR" + e);
 			return 0;
 		}
 	}

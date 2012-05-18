@@ -29,6 +29,7 @@ import client.MapleQuestStatus;
 import java.lang.reflect.UndeclaredThrowableException;
 import scripting.AbstractScriptManager;
 import server.quest.MapleQuest;
+import tools.Output;
 
 /**
  * 
@@ -66,7 +67,7 @@ public class QuestScriptManager extends AbstractScriptManager {
 			qs.start((byte) 1, (byte) 0, 0); // start it off as something
 		} catch (UndeclaredThrowableException ute) {
 			ute.printStackTrace();
-			System.out.println("Error executing Quest script. (" + quest + ") UndeclaredThrowableException.");
+			Output.print("Error executing Quest script. (" + quest + ") UndeclaredThrowableException.");
 			dispose(c);
 		}
 	}
@@ -77,7 +78,7 @@ public class QuestScriptManager extends AbstractScriptManager {
 			try {
 				qs.start(mode, type, selection);
 			} catch (Exception e) {
-				System.out.println("Error executing Quest script. (" + c.getQM().getQuest() + ") " + e);
+				Output.print("Error executing Quest script. (" + c.getQM().getQuest() + ") " + e);
 				dispose(c);
 			}
 		}
@@ -105,7 +106,7 @@ public class QuestScriptManager extends AbstractScriptManager {
 			scripts.put(c, qs);
 			qs.end((byte) 1, (byte) 0, 0); // start it off as something
 		} catch (Exception e) {
-			System.out.println("Error executing Quest script. (" + quest + ") " + e);
+			Output.print("Error executing Quest script. (" + quest + ") " + e);
 			dispose(c);
 		}
 	}
@@ -116,7 +117,7 @@ public class QuestScriptManager extends AbstractScriptManager {
 			try {
 				qs.end(mode, type, selection);
 			} catch (Exception e) {
-				System.out.println("Error executing Quest script. (" + c.getQM().getQuest() + ") " + e);
+				Output.print("Error executing Quest script. (" + c.getQM().getQuest() + ") " + e);
 				dispose(c);
 			}
 		}

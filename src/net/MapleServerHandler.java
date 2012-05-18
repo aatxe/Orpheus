@@ -23,10 +23,10 @@ package net;
 
 import client.MapleClient;
 import constants.ServerConstants;
-import net.server.Output;
 import net.server.Server;
 import tools.MapleAESOFB;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.data.input.ByteArrayByteStream;
 import tools.data.input.GenericSeekableLittleEndianAccessor;
 import tools.data.input.SeekableLittleEndianAccessor;

@@ -26,11 +26,12 @@ import client.MapleClient;
 //import client.command.CommandProcessor;
 import net.AbstractMaplePacketHandler;
 //import tools.MaplePacketCreator;
+import tools.Output;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class SpouseChatHandler extends AbstractMaplePacketHandler {
 	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-		System.out.println(slea.toString());
+		Output.print(slea.toString());
 		// slea.readMapleAsciiString();//recipient
 		// String msg = slea.readMapleAsciiString();
 		// if (!CommandProcessor.processCommand(c, msg))

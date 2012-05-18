@@ -51,6 +51,7 @@ import constants.ItemConstants;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.ReadLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock.WriteLock;
+import tools.Output;
 import tools.Randomizer;
 import net.MaplePacket;
 import net.server.Channel;
@@ -960,7 +961,7 @@ public class MapleMap {
 			} else if (monster.getId() == 9300061) {
 				monsterItemDrop(monster, new Item(4001101, (byte) 0, (short) 1), monster.getDropPeriodTime() / 3);
 			} else {
-				System.out.println("UNCODED TIMED MOB DETECTED: " + monster.getId());
+				Output.print("UNCODED TIMED MOB DETECTED: " + monster.getId());
 			}
 		}
 		spawnedMonstersOnMap.incrementAndGet();

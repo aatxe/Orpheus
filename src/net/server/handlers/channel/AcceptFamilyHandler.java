@@ -25,6 +25,7 @@ import client.MapleCharacter;
 import client.MapleClient;
 import net.AbstractMaplePacketHandler;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
@@ -33,7 +34,7 @@ import tools.data.input.SeekableLittleEndianAccessor;
  */
 public final class AcceptFamilyHandler extends AbstractMaplePacketHandler {
 	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-		System.out.println(slea.toString());
+		Output.print(slea.toString());
 		int inviterId = slea.readInt();
 		// String inviterName = slea.readMapleAsciiString();
 		MapleCharacter inviter = c.getWorldServer().getPlayerStorage().getCharacterById(inviterId);

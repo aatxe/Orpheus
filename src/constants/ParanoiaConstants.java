@@ -6,8 +6,8 @@ public class ParanoiaConstants {
 	public static final boolean CLEAR_LOGS_ON_STARTUP = false;
 	
 	// Paranoia Console Logger settings
-	public static final boolean PARANOIA_CONSOLE_LOGGER = false;
-	public static final boolean REPLICATE_CONSOLE_EXACTLY = false; // if true, new lines added for formatting will be included in the log.
+	public static final boolean PARANOIA_CONSOLE_LOGGER = true;
+	public static final boolean REPLICATE_CONSOLE_EXACTLY = true; // if true, new lines added for formatting will be included in the log.
 	
 	// Paranoia Chat Logger settings
 	public static final boolean PARANOIA_CHAT_LOGGER = false;

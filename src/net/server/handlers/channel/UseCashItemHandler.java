@@ -48,6 +48,7 @@ import server.MapleShopFactory;
 import server.maps.MapleMap;
 import server.maps.MapleTVEffect;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.Pair;
 import tools.data.input.SeekableLittleEndianAccessor;
 
@@ -532,7 +533,7 @@ public final class UseCashItemHandler extends AbstractMaplePacketHandler {
 		} else if (itemType == 561) { // VEGA'S SPELL
 			c.announce(MaplePacketCreator.enableActions());
 		} else {
-			System.out.println("NEW CASH ITEM: " + itemType + "\n" + slea.toString());
+			Output.print("NEW CASH ITEM: " + itemType + "\n" + slea.toString());
 			c.announce(MaplePacketCreator.enableActions());
 		}
 	}

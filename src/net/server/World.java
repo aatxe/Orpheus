@@ -41,6 +41,7 @@ import net.server.guild.MapleGuildCharacter;
 import net.server.guild.MapleGuildSummary;
 import tools.DatabaseConnection;
 import tools.MaplePacketCreator;
+import tools.Output;
 
 /**
  * 
@@ -322,7 +323,7 @@ public class World {
 				party.setLeader(target);
 				break;
 			default:
-				System.out.println("Unhandeled updateParty operation " + operation.name());
+				Output.print("Unhandled updateParty operation " + operation.name() + ".");
 		}
 		updateParty(party, operation, target);
 	}

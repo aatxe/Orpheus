@@ -12,6 +12,7 @@ import client.MapleInventoryType;
 import net.AbstractMaplePacketHandler;
 import server.MapleItemInformationProvider;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
@@ -21,7 +22,7 @@ import tools.data.input.SeekableLittleEndianAccessor;
 public class WeddingHandler extends AbstractMaplePacketHandler {
 
 	public void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-		System.out.println("Wedding Packet: " + slea);
+		Output.print("Wedding Packet: " + slea);
 		MapleCharacter chr = c.getPlayer();
 		byte operation = slea.readByte();
 		switch (operation) {

@@ -33,6 +33,7 @@ import client.MapleClient;
 import client.MapleInventoryType;
 import constants.ItemConstants;
 import tools.MaplePacketCreator;
+import tools.Output;
 
 /**
  * 
@@ -257,7 +258,7 @@ public class MapleInventoryManipulator {
 				numSlotsNeeded = 1;
 			} else {
 				numSlotsNeeded = 1;
-				System.out.println("checkSpace error");
+				Output.print("checkSpace error");
 			}
 			return !c.getPlayer().getInventory(type).isFull(numSlotsNeeded - 1);
 		} else {
@@ -417,7 +418,7 @@ public class MapleInventoryManipulator {
 		Equip source = (Equip) c.getPlayer().getInventory(MapleInventoryType.EQUIPPED).getItem(src);
 		Equip target = (Equip) c.getPlayer().getInventory(MapleInventoryType.EQUIP).getItem(dst);
 		if (dst < 0) {
-			System.out.println("Unequipping to negative slot.");
+			Output.print("Unequipping to negative slot.");
 		}
 		if (source == null) {
 			return;

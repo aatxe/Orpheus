@@ -52,7 +52,7 @@ public class DatabaseConnection {
 			try {
 				Class.forName("com.mysql.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
-				System.out.println("Could not locate the JDBC mysql driver.");
+				Output.print("Could not locate the JDBC mysql driver.");
 			}
 		}
 
@@ -65,7 +65,7 @@ public class DatabaseConnection {
 			try {
 				return DriverManager.getConnection(url, user, pass);
 			} catch (SQLException sql) {
-				System.out.println("Could not create a SQL Connection object. Please make sure you've correctly configured the database properties inside constants/ServerConstants.java. MAKE SURE YOU COMPILED!");
+				Output.print("Could not create a SQL Connection object. Please make sure you've correctly configured the database properties inside constants/ServerConstants.java. MAKE SURE YOU COMPILED!");
 				return null;
 			}
 		}

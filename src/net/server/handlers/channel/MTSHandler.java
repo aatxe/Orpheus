@@ -35,6 +35,7 @@ import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import server.MTSItemInfo;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.Pair;
 import tools.data.input.SeekableLittleEndianAccessor;
 import java.sql.Connection;
@@ -328,7 +329,7 @@ public final class MTSHandler extends AbstractMaplePacketHandler {
 					rs.close();
 					ps.close();
 				} catch (SQLException e) {
-					System.out.println("MTS Transfer error: " + e);
+					Output.print("MTS Transfer error: " + e);
 				}
 			} else if (op == 9) { // add to cart
 				int id = slea.readInt(); // id of the item

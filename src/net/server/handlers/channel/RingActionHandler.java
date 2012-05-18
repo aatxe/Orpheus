@@ -30,6 +30,7 @@ import net.AbstractMaplePacketHandler;
 import tools.data.input.SeekableLittleEndianAccessor;
 //import scripting.npc.NPCScriptManager;
 import tools.MaplePacketCreator;
+import tools.Output;
 
 /**
  * @author Jvlaple
@@ -94,7 +95,7 @@ public final class RingActionHandler extends AbstractMaplePacketHandler {
 				c.announce(MaplePacketCreator.sendGroomWishlist()); // WTF<
 				break;
 			default:
-				System.out.println("NEW RING ACTION " + mode);
+				Output.print("NEW RING ACTION " + mode);
 				break;
 		}
 	}

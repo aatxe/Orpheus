@@ -1,6 +1,6 @@
 package gm;
 
-import net.server.Output;
+import tools.Output;
 import gm.server.handler.*;
 
 /**

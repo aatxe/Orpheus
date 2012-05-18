@@ -28,6 +28,7 @@ import net.AbstractMaplePacketHandler;
 import tools.data.input.SeekableLittleEndianAccessor;
 import java.util.Iterator;
 import tools.MaplePacketCreator;
+import tools.Output;
 import client.MapleCharacter;
 import net.server.Server;
 
@@ -146,13 +147,13 @@ public final class GuildOperationHandler extends AbstractMaplePacketHandler {
 				break;
 			case 0x06:
 				if (mc.getGuildId() > 0) {
-					System.out.println("[hax] " + mc.getName() + " attempted to join a guild when s/he is already in one.");
+					Output.print("[GOH] " + mc.getName() + " attempted to join a guild when s/he is already in one.");
 					return;
 				}
 				gid = slea.readInt();
 				int cid = slea.readInt();
 				if (cid != mc.getId()) {
-					System.out.println("[hax] " + mc.getName() + " attempted to join a guild with a different character id.");
+					Output.print("[GOH] " + mc.getName() + " attempted to join a guild with a different character id.");
 					return;
 				}
 				name = mc.getName().toLowerCase();
@@ -167,7 +168,7 @@ public final class GuildOperationHandler extends AbstractMaplePacketHandler {
 					}
 				}
 				if (!bOnList) {
-					System.out.println("[hax] " + mc.getName() + " is trying to join a guild that never invited him/her (or that the invitation has expired)");
+					Output.print("[GOH] " + mc.getName() + " is trying to join a guild that never invited him/her (or that the invitation has expired)");
 					return;
 				}
 				mc.setGuildId(gid); // joins the guild

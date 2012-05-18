@@ -33,6 +33,7 @@ import client.SkillFactory;
 import net.AbstractMaplePacketHandler;
 import server.MapleItemInformationProvider;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class CreateCharHandler extends AbstractMaplePacketHandler {
@@ -69,12 +70,7 @@ public final class CreateCharHandler extends AbstractMaplePacketHandler {
 				newchar.getInventory(MapleInventoryType.ETC).addItem(new Item(4161048, (byte) 0, (short) 1));
 			} else {
 				c.disconnect(); // Muhaha
-				System.out.println("[CHAR CREATION] A new job ID has been found: " + job); // I
-																							// should
-																							// ban
-																							// for
-																							// packet
-																							// editing!
+				Output.print("[CHAR CREATION] A new job ID has been found: " + job); // Should probably ban for packet editing.
 				return;
 			}
 		}

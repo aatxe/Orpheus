@@ -37,6 +37,7 @@ import client.MaplePet;
 import constants.ItemConstants;
 import tools.DatabaseConnection;
 import tools.MaplePacketCreator;
+import tools.Output;
 
 /**
  * 
@@ -82,7 +83,7 @@ public class MapleShop {
 		MapleShopItem item = findBySlot(slot);
 		if (item != null) {
 			if (item.getItemId() != itemId) {
-				System.out.println("Wrong slot number in shop " + id);
+				Output.print("Wrong slot number in shop " + id);
 				return;
 			}
 		} else

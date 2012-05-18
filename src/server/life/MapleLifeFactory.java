@@ -32,6 +32,7 @@ import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
 import provider.wz.MapleDataType;
+import tools.Output;
 import tools.Pair;
 import tools.StringUtil;
 
@@ -49,7 +50,7 @@ public class MapleLifeFactory {
 		} else if (type.equalsIgnoreCase("m")) {
 			return getMonster(id);
 		} else {
-			System.out.println("Unknown Life type: " + type);
+			Output.print("Unknown MapleLife type: " + type);
 			return null;
 		}
 	}

@@ -35,6 +35,7 @@ import javax.script.ScriptException;
 import client.MapleClient;
 import java.lang.reflect.UndeclaredThrowableException;
 import server.MaplePortal;
+import tools.Output;
 
 public class PortalScriptManager {
 	private static PortalScriptManager instance = new PortalScriptManager();
@@ -65,9 +66,9 @@ public class PortalScriptManager {
 			fr = new FileReader(scriptFile);
 			((Compilable) portal).compile(fr).eval();
 		} catch (ScriptException e) {
-			System.out.println("THROW " + e);
+			Output.print("THROW " + e);
 		} catch (IOException e) {
-			System.out.println("THROW " + e);
+			Output.print("THROW " + e);
 		} catch (UndeclaredThrowableException ute) {
 			ute.printStackTrace();
 		} finally {
@@ -75,7 +76,7 @@ public class PortalScriptManager {
 				try {
 					fr.close();
 				} catch (IOException e) {
-					System.out.println("ERROR CLOSING " + e);
+					Output.print("ERROR CLOSING " + e);
 				}
 			}
 		}

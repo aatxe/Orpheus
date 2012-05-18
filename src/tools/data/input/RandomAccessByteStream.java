@@ -23,6 +23,7 @@ package tools.data.input;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import tools.Output;
 
 /**
  * Provides an abstract layer to a byte stream. This layer can be accessed
@@ -76,7 +77,7 @@ public class RandomAccessByteStream implements SeekableInputStreamBytestream {
 		try {
 			return raf.length() - raf.getFilePointer();
 		} catch (IOException e) {
-			System.out.println("ERROR " + e);
+			Output.print("ERROR " + e);
 			return 0;
 		}
 	}

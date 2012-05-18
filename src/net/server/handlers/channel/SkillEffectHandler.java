@@ -40,6 +40,7 @@ import constants.skills.ThunderBreaker;
 import constants.skills.WindArcher;
 import net.AbstractMaplePacketHandler;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class SkillEffectHandler extends AbstractMaplePacketHandler {
@@ -69,7 +70,7 @@ public final class SkillEffectHandler extends AbstractMaplePacketHandler {
 				c.getPlayer().getMap().broadcastMessage(c.getPlayer(), MaplePacketCreator.skillEffect(c.getPlayer(), skillId, level, flags, speed, aids), false);
 				return;
 			default:
-				System.out.println(c.getPlayer() + " entered SkillEffectHandler without being handled using " + skillId + ".");
+				Output.print(c.getPlayer() + " entered SkillEffectHandler without being handled using " + skillId + ".");
 				return;
 		}
 	}

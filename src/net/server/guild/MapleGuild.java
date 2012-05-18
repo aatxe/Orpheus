@@ -34,6 +34,7 @@ import client.MapleCharacter;
 import client.MapleClient;
 import java.util.LinkedList;
 import tools.DatabaseConnection;
+import tools.Output;
 import net.MaplePacket;
 import net.server.Channel;
 import net.server.Server;
@@ -103,7 +104,7 @@ public class MapleGuild {
 			ps.close();
 			rs.close();
 		} catch (SQLException se) {
-			System.out.println("unable to read guild information from sql" + se);
+			Output.print("Unable to read guild information from database.\n" + se);
 			return;
 		}
 	}
@@ -269,7 +270,7 @@ public class MapleGuild {
 					}
 				}
 			} catch (Exception re) {
-				System.out.println("Failed to contact channel(s) for broadcast.");// fu?
+				Output.print("Failed to contact channels for broadcast."); // fu?
 			}
 		}
 	}
@@ -391,7 +392,7 @@ public class MapleGuild {
 								ps.executeUpdate();
 								ps.close();
 							} catch (SQLException e) {
-								System.out.println("expelMember - MapleGuild " + e);
+								Output.print("Failed to expel a member from a guild.\n" + e);
 							}
 							Server.getInstance().getWorld(mgc.getWorld()).setOfflineGuildStatus((short) 0, (byte) 5, cid);
 						}
@@ -402,7 +403,7 @@ public class MapleGuild {
 					return;
 				}
 			}
-			System.out.println("Unable to find member with name " + name + " and id " + cid);
+			Output.print("Unable to find guild member with name " + name + " and id " + cid);
 		}
 	}
 
@@ -527,7 +528,7 @@ public class MapleGuild {
 			ps.close();
 			rs.close();
 		} catch (SQLException e) {
-			System.out.println("failed to display guild ranks. " + e);
+			Output.print("Failed to display guild ranks.\n" + e);
 		}
 	}
 

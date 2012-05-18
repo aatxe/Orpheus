@@ -28,6 +28,7 @@ import client.MapleClient;
 import client.MapleCharacter;
 import java.lang.reflect.UndeclaredThrowableException;
 import scripting.AbstractScriptManager;
+import tools.Output;
 
 /**
  * 
@@ -46,7 +47,7 @@ public class NPCScriptManager extends AbstractScriptManager {
 		try {
 			NPCConversationManager cm = new NPCConversationManager(c, npc);
 			if (cms.containsKey(c)) {
-				System.out.println("FUU D:");
+				Output.print("FUU D:");
 				dispose(c);
 				return;
 			}
@@ -72,12 +73,12 @@ public class NPCScriptManager extends AbstractScriptManager {
 			}
 		} catch (UndeclaredThrowableException ute) {
 			ute.printStackTrace();
-			System.out.println("Error: NPC " + npc + ". UndeclaredThrowableException.");
+			Output.print("Error: NPC " + npc + ". UndeclaredThrowableException.");
 			dispose(c);
 			cms.remove(c);
 			notice(c, npc);
 		} catch (Exception e) {
-			System.out.println("Error: NPC " + npc + ".");
+			Output.print("Error: NPC " + npc + ".");
 			dispose(c);
 			cms.remove(c);
 			notice(c, npc);
@@ -91,11 +92,11 @@ public class NPCScriptManager extends AbstractScriptManager {
 				ns.action(mode, type, selection);
 			} catch (UndeclaredThrowableException ute) {
 				ute.printStackTrace();
-				System.out.println("Error: NPC " + getCM(c).getNpc() + ". UndeclaredThrowableException.");
+				Output.print("Error: NPC " + getCM(c).getNpc() + ". UndeclaredThrowableException.");
 				dispose(c);
 				notice(c, getCM(c).getNpc());
 			} catch (Exception e) {
-				System.out.println("Error: NPC " + getCM(c).getNpc() + ".");
+				Output.print("Error: NPC " + getCM(c).getNpc() + ".");
 				dispose(c);
 				notice(c, getCM(c).getNpc());
 			}

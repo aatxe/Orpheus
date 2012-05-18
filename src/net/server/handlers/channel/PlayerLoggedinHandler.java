@@ -46,9 +46,9 @@ import net.server.Server;
 import net.server.World;
 import net.server.guild.MapleAlliance;
 import net.server.guild.MapleGuild;
-import net.server.Output;
 import tools.MaplePacketCreator;
 import tools.MapleLogger;
+import tools.Output;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class PlayerLoggedinHandler extends AbstractMaplePacketHandler {

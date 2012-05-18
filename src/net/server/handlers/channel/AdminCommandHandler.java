@@ -25,6 +25,7 @@ import client.MapleCharacter;
 import client.MapleClient;
 import client.MapleInventory;
 import client.MapleInventoryType;
+import tools.Output;
 import tools.Randomizer;
 import java.util.Arrays;
 import java.util.List;
@@ -171,12 +172,12 @@ public final class AdminCommandHandler extends AbstractMaplePacketHandler {
 				break;
 			case 0x77: // Testing purpose
 				if (slea.available() == 4)
-					System.out.println(slea.readInt());
+					Output.print("[ACH] " + slea.readInt());
 				else if (slea.available() == 2)
-					System.out.println(slea.readShort());
+					Output.print("[ACH] " + slea.readShort());
 				break;
 			default:
-				System.out.println("New GM packet encountered (MODE : " + mode + ": " + slea.toString());
+				Output.print("New GM packet encountered (MODE : " + mode + ": " + slea.toString());
 				break;
 		}
 	}

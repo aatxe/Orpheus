@@ -55,6 +55,7 @@ import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
 import tools.ArrayMap;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.Pair;
 
 public class MapleMonster extends AbstractLoadedMapleLife {
@@ -495,7 +496,7 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 			case WEAK:
 				break;
 			default: {
-				System.out.println("Unknown elemental effectiveness: " + stats.getEffectiveness(status.getSkill().getElement()));
+				Output.print("Unknown elemental effectiveness: " + stats.getEffectiveness(status.getSkill().getElement()));
 				return false;
 			}
 		}

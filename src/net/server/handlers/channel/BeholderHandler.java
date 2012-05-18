@@ -26,6 +26,7 @@ import constants.skills.DarkKnight;
 import java.util.Collection;
 import net.AbstractMaplePacketHandler;
 import server.maps.MapleSummon;
+import tools.Output;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
@@ -34,7 +35,7 @@ import tools.data.input.SeekableLittleEndianAccessor;
  */
 public final class BeholderHandler extends AbstractMaplePacketHandler {// broken
 	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
-		System.out.println(slea.toString());
+		Output.print("[BH] " + slea.toString());
 		Collection<MapleSummon> summons = c.getPlayer().getSummons().values();
 		int oid = slea.readInt();
 		MapleSummon summon = null;

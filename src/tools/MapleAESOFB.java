@@ -40,9 +40,9 @@ public class MapleAESOFB {
 		try {
 			cipher = Cipher.getInstance("AES");
 		} catch (NoSuchAlgorithmException e) {
-			System.out.println("ERROR " + e);
+			Output.print("ERROR " + e);
 		} catch (NoSuchPaddingException e) {
-			System.out.println("ERROR " + e);
+			Output.print("ERROR " + e);
 		}
 		try {
 			cipher.init(Cipher.ENCRYPT_MODE, skeySpec);

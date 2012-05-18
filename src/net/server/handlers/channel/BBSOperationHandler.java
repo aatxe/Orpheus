@@ -28,6 +28,7 @@ import java.sql.SQLException;
 import client.MapleCharacter;
 import client.MapleClient;
 import tools.DatabaseConnection;
+import tools.Output;
 import net.AbstractMaplePacketHandler;
 import tools.MaplePacketCreator;
 import tools.data.input.SeekableLittleEndianAccessor;
@@ -89,7 +90,7 @@ public final class BBSOperationHandler extends AbstractMaplePacketHandler {
 				deleteBBSReply(c, replyid);
 				break;
 			default:
-				System.out.println("Unhandled BBS mode: " + slea.toString());
+				Output.print("Unhandled BBS mode: " + slea.toString());
 		}
 	}
 
@@ -312,7 +313,7 @@ public final class BBSOperationHandler extends AbstractMaplePacketHandler {
 		} catch (RuntimeException re) {// btw we get this everytime for some
 										// reason, but replies work!
 			re.printStackTrace();
-			System.out.println("The number of reply rows does not match the replycount in thread.");
+			Output.print("The number of reply rows does not match the replycount in thread.");
 		}
 	}
 }

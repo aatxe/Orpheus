@@ -39,6 +39,7 @@ import server.CashShop.CashItemFactory;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class CashOperationHandler extends AbstractMaplePacketHandler {
@@ -273,7 +274,7 @@ public final class CashOperationHandler extends AbstractMaplePacketHandler {
 			}
 			c.announce(MaplePacketCreator.showCash(c.getPlayer()));
 		} else {
-			System.out.println(slea);
+			Output.print(slea.toString());
 		}
 	}
 

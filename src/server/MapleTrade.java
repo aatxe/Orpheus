@@ -31,6 +31,7 @@ import client.MapleInventoryType;
 import constants.ItemConstants;
 import java.util.ArrayList;
 import tools.MaplePacketCreator;
+import tools.Output;
 
 /**
  * 
@@ -84,18 +85,7 @@ public class MapleTrade {
 		meso = 0;
 		for (IItem item : exchangeItems) {
 			if ((item.getFlag() & ItemConstants.KARMA) == ItemConstants.KARMA)
-				item.setFlag((byte) (item.getFlag() ^ ItemConstants.KARMA)); // items
-																				// with
-																				// scissors
-																				// of
-																				// karma
-																				// used
-																				// on
-																				// them
-																				// are
-																				// reset
-																				// once
-																				// traded
+				item.setFlag((byte) (item.getFlag() ^ ItemConstants.KARMA)); // yay, reset trade flag.
 			else if (item.getType() == IItem.ITEM && (item.getFlag() & ItemConstants.SPIKES) == ItemConstants.SPIKES)
 				item.setFlag((byte) (item.getFlag() ^ ItemConstants.SPIKES));
 
@@ -142,7 +132,7 @@ public class MapleTrade {
 			throw new RuntimeException("Trade is locked.");
 		}
 		if (meso < 0) {
-			System.out.println("[h4x] " + chr.getName() + " Trying to trade < 0 mesos");
+			Output.print("[MT] " + chr.getName() + " Trying to trade < 0 mesos");
 			return;
 		}
 		if (chr.getMeso() >= meso) {

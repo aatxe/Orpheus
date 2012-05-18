@@ -80,7 +80,6 @@ import java.util.regex.Pattern;
 import net.MaplePacket;
 import net.server.Channel;
 import net.server.MapleMessengerCharacter;
-import net.server.Output;
 import net.server.PartyOperation;
 import net.server.PlayerBuffValueHolder;
 import net.server.PlayerCoolDownValueHolder;
@@ -124,6 +123,7 @@ import server.partyquest.PartyQuest;
 import server.quest.MapleQuest;
 import tools.DatabaseConnection;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.Pair;
 import tools.Randomizer;
 

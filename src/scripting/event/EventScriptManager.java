@@ -30,6 +30,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 import net.server.Channel;
 import scripting.AbstractScriptManager;
+import tools.Output;
 
 /**
  * 
@@ -73,10 +74,10 @@ public class EventScriptManager extends AbstractScriptManager {
 				entry.iv.invokeFunction("init", (Object) null);
 			} catch (ScriptException ex) {
 				Logger.getLogger(EventScriptManager.class.getName()).log(Level.SEVERE, null, ex);
-				System.out.println("Error on script: " + entry.em.getName());
+				Output.print("Error on script: " + entry.em.getName());
 			} catch (NoSuchMethodException ex) {
 				Logger.getLogger(EventScriptManager.class.getName()).log(Level.SEVERE, null, ex);
-				System.out.println("Error on script: " + entry.em.getName());
+				Output.print("Error on script: " + entry.em.getName());
 			}
 		}
 	}

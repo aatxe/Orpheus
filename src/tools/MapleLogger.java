@@ -4,7 +4,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import net.server.Output;
 import constants.ParanoiaConstants;
 
 public class MapleLogger {
