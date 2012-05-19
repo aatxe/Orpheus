@@ -21,6 +21,15 @@ public class AdminCommands extends Commands {
 				default:
 					// chr.yellowMessage("Command: " + heading + sub[0] + ": does not exist.");
 					return false;
+				case clearlogs:
+					if (ParanoiaConstants.ALLOW_CLEARLOGS_COMMAND) {
+						if (ParanoiaConstants.PARANOIA_CONSOLE_LOGGER) MapleLogger.clearLog(MapleLogger.PARANOIA_CONSOLE);
+						if (ParanoiaConstants.PARANOIA_CHAT_LOGGER) MapleLogger.clearLog(MapleLogger.PARANOIA_CHAT);
+						if (ParanoiaConstants.PARANOIA_COMMAND_LOGGER) MapleLogger.clearLog(MapleLogger.PARANOIA_COMMAND);
+						chr.message("Done.");
+					} else {
+						chr.dropMessage("Paranoia Log Clearing is forbidden by the server.");
+					}
 				case help:
 					if (sub.length > 1) {
 						if (sub[1].equalsIgnoreCase("admin")) {
@@ -53,6 +62,7 @@ public class AdminCommands extends Commands {
 	}
 	
 	private static enum Command {
+		clearlogs("Clear Paranoia log files."),
 		help("Displays this help message."),
 		setgmlevel("Sets a victim's GM level.");
 

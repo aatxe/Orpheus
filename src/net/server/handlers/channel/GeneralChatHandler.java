@@ -21,11 +21,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package net.server.handlers.channel;
 
+import paranoia.BlacklistHandler;
 import constants.ParanoiaConstants;
 import constants.ServerConstants;
 import client.MapleCharacter;
 import tools.MapleLogger;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.data.input.SeekableLittleEndianAccessor;
 import client.MapleClient;
 import client.command.AdminCommands;
@@ -92,7 +94,17 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 						break;
 				}
 			}
+			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.ENABLE_BLACKLISTING && ParanoiaConstants.LOG_BLACKLIST_COMMAND) {
+				if (BlacklistHandler.isBlacklisted(c.getAccID())) {
+					BlacklistHandler.printBlacklistLog("[" + c.getPlayer().getName() + "] Used " + heading + sp[0] + ((sp.length > 1) ? " with parameters: " + Output.joinStringFrom(sp, 1) : "."), c.getAccID());
+				}
+			}
 		} else {
+			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.ENABLE_BLACKLISTING && ParanoiaConstants.LOG_BLACKLIST_CHAT) {
+				if (BlacklistHandler.isBlacklisted(c.getAccID())) {
+					BlacklistHandler.printBlacklistLog("[General] [" + c.getPlayer().getName() + "] " + s, c.getAccID());
+				}
+			}
 			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_CHAT_LOGGER && ParanoiaConstants.LOG_GENERAL_CHAT) {
 				MapleLogger.printFormatted(MapleLogger.PARANOIA_CHAT, "[General] [" + c.getPlayer().getName() + "] " + s);
 			}

@@ -1032,4 +1032,23 @@ public class MapleClient {
 	public boolean isDeveloper() {
 		return (gmlevel >= 4);
 	}
+	
+	public static String getAccountNameById(int id) {
+		try {
+			PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT name FROM accounts WHERE id = ?");
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (!rs.next()) {
+				rs.close();
+				ps.close();
+				return null;
+			}
+			String name = rs.getString("name");
+			rs.close();
+			ps.close();
+			return name;
+		} catch (Exception e) {
+		}
+		return null;
+	}
 }

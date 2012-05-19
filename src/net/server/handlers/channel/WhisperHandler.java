@@ -26,6 +26,7 @@ import client.MapleClient;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import paranoia.BlacklistHandler;
 import constants.ParanoiaConstants;
 import constants.ServerConstants;
 import net.AbstractMaplePacketHandler;
@@ -48,6 +49,11 @@ public final class WhisperHandler extends AbstractMaplePacketHandler {
 			String text = slea.readMapleAsciiString();
 			MapleCharacter player = c.getChannelServer().getPlayerStorage().getCharacterByName(recipient);
 			if (player != null) {
+				if (ServerConstants.USE_PARANOIA && ParanoiaConstants.ENABLE_BLACKLISTING && ParanoiaConstants.LOG_BLACKLIST_CHAT) {
+					if (BlacklistHandler.isBlacklisted(c.getAccID())) {
+						BlacklistHandler.printBlacklistLog("[Whisper] [" + c.getPlayer().getName() + " > " + recipient + "] " + text, c.getAccID());
+					}
+				}
 				if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_CHAT_LOGGER && ParanoiaConstants.LOG_WHISPERS) {
 					MapleLogger.printFormatted(MapleLogger.PARANOIA_CHAT, "[Whisper] [" + c.getPlayer().getName() + " > " + recipient + "] " + text);
 				}

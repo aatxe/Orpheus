@@ -31,4 +31,15 @@ public class Output {
 		// int milliseconds = calendar.get(Calendar.MILLISECOND);
 		return ((hours + (TimeZone.getDefault().useDaylightTime() ? 0 : -1)) + ":" + ((minutes < 10) ? "0" + minutes : "" + minutes) + ":" + ((seconds < 10) ? "0" + seconds : "" + seconds));
 	}
+	
+	public static String joinStringFrom(String arr[], int start) {
+		StringBuilder builder = new StringBuilder();
+		for (int i = start; i < arr.length; i++) {
+			builder.append(arr[i]);
+			if (i != arr.length - 1) {
+				builder.append(" ");
+			}
+		}
+		return builder.toString();
+	}
 }

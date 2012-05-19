@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import paranoia.ParanoiaInformation;
+import paranoia.ParanoiaInformationHandler;
 import constants.ParanoiaConstants;
 import constants.ServerConstants;
 import server.TimerManager;
@@ -88,6 +90,24 @@ public class DeveloperCommands extends Commands {
 				case packet:
 					chr.getMap().broadcastMessage(MaplePacketCreator.customPacket(joinStringFrom(sub, 1)));
 					break;
+				case paranoia:
+					if (ParanoiaConstants.ALLOW_QUERY_COMMAND) {
+						try {
+							String k = sub[1];
+							if (k == "help") {
+								chr.dropMessage("Paranoia Information Querying Help");
+								for (ParanoiaInformation pi : ParanoiaInformation.values()) {
+									chr.dropMessage(pi.name() + " - " + pi.explain());
+								}
+							} else {
+								chr.dropMessage(ParanoiaInformationHandler.getFormattedValue(k));
+							}
+						} catch (ArrayIndexOutOfBoundsException e) {
+							chr.dropMessage("Usage: !paranoia value || !paranoia help");
+						}
+					} else {
+						chr.dropMessage("Paranoia Information Querying is forbidden by the server.");
+					}
 				case pinkbean:
 					chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(8820009), chr.getPosition());
 					break;
@@ -266,6 +286,7 @@ public class DeveloperCommands extends Commands {
 		horntail("Summons Horntail at your position."),
 		npc("Spawns an NPC at your position."),
 		packet("Executes a custom packet."),
+		paranoia("Gathers information about Paranoia"),
 		pmob("Permanently spawns a mob at your position."),
 		pnpc("Permanently spawns an NPC at your position."),
 		pinkbean("Summons Pinkbean at your position."),

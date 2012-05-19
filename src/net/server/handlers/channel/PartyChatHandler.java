@@ -21,6 +21,7 @@
  */
 package net.server.handlers.channel;
 
+import paranoia.BlacklistHandler;
 import constants.ParanoiaConstants;
 import constants.ServerConstants;
 import client.MapleCharacter;
@@ -49,15 +50,30 @@ public final class PartyChatHandler extends AbstractMaplePacketHandler {
 			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_CHAT_LOGGER && ParanoiaConstants.LOG_BUDDY_CHAT) {
 				MapleLogger.printFormatted(MapleLogger.PARANOIA_CHAT, "[Buddy] [" + c.getPlayer().getName() + "] " + chattext);
 			}
+			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.ENABLE_BLACKLISTING && ParanoiaConstants.LOG_BLACKLIST_CHAT) {
+				if (BlacklistHandler.isBlacklisted(c.getAccID())) {
+					BlacklistHandler.printBlacklistLog("[Buddy] [" + c.getPlayer().getName() + "] " + chattext, c.getAccID());
+				}
+			}
 			world.buddyChat(recipients, player.getId(), player.getName(), chattext);
 		} else if (type == 1 && player.getParty() != null) {
 			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_CHAT_LOGGER && ParanoiaConstants.LOG_PARTY_CHAT) {
 				MapleLogger.printFormatted(MapleLogger.PARANOIA_CHAT, "[Party] [" + c.getPlayer().getName() + "] " + chattext);
 			}
+			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.ENABLE_BLACKLISTING && ParanoiaConstants.LOG_BLACKLIST_CHAT) {
+				if (BlacklistHandler.isBlacklisted(c.getAccID())) {
+					BlacklistHandler.printBlacklistLog("[Party] [" + c.getPlayer().getName() + "] " + chattext, c.getAccID());
+				}
+			}
 			world.partyChat(player.getParty(), chattext, player.getName());
 		} else if (type == 2 && player.getGuildId() > 0) {
 			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_CHAT_LOGGER && ParanoiaConstants.LOG_GUILD_CHAT) {
 				MapleLogger.printFormatted(MapleLogger.PARANOIA_CHAT, "[Guild] [" + c.getPlayer().getName() + "] " + chattext);
+			}
+			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.ENABLE_BLACKLISTING && ParanoiaConstants.LOG_BLACKLIST_CHAT) {
+				if (BlacklistHandler.isBlacklisted(c.getAccID())) {
+					BlacklistHandler.printBlacklistLog("[Guild] [" + c.getPlayer().getName() + "] " + chattext, c.getAccID());
+				}
 			}
 			Server.getInstance().guildChat(player.getGuildId(), player.getName(), player.getId(), chattext);
 		} else if (type == 3 && player.getGuild() != null) {
@@ -65,6 +81,11 @@ public final class PartyChatHandler extends AbstractMaplePacketHandler {
 			if (allianceId > 0) {
 				if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_CHAT_LOGGER && ParanoiaConstants.LOG_ALLIANCE_CHAT) {
 					MapleLogger.printFormatted(MapleLogger.PARANOIA_CHAT, "[Alliance] [" + c.getPlayer().getName() + "] " + chattext);
+				}
+				if (ServerConstants.USE_PARANOIA && ParanoiaConstants.ENABLE_BLACKLISTING && ParanoiaConstants.LOG_BLACKLIST_CHAT) {
+					if (BlacklistHandler.isBlacklisted(c.getAccID())) {
+						BlacklistHandler.printBlacklistLog("[Alliance] [" + c.getPlayer().getName() + "] " + chattext, c.getAccID());
+					}
 				}
 				Server.getInstance().allianceMessage(allianceId, MaplePacketCreator.multiChat(player.getName(), chattext, 3), player.getId(), -1);
 			}

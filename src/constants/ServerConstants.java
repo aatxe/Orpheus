@@ -31,23 +31,24 @@ public class ServerConstants {
 	public static final boolean USE_PARANOIA = true; // use Orpheus' everything logger, Paranoia.
 	public static final boolean USE_MTS_AS_FM_WARP = true; // Replace the Meso Trade Shop with a warp to the Free Market.
 	public static final boolean HIDE_GMS_ON_LOGIN = true; // Hide GMs upon login.
-	public static final boolean MAKE_NPCS_SCRIPTABLE = true; // Makes NPCs scriptable. (Set in ScriptableNPCConstants)
+	public static final boolean MAKE_NPCS_SCRIPTABLE = true; // Makes NPCs scriptable. (Setup in ScriptableNPCConstants)
 	public static final boolean BROADCAST_GACHAPON_ITEMS = true; // broadcast gachapon use!
 	public static final boolean UNLIMITED_PROJECTILES = false; // have unlimited projectiles (don't lose bullets, throwing stars, arrows)
 	public static final boolean ALLOW_INFO_ON_GMS = true; // if false, non-GMs cannot get info on GMs.
+	public static final boolean CLEAR_ERROR_LOGS_ON_BOOT = true; // if true, error logs will be cured on boot.
 	// Rate Configuration
 	public static final byte QUEST_EXP_RATE = 4;
 	public static final byte QUEST_MESO_RATE = 3;
 	// Login Configuration
 	public static final boolean ENABLE_AUTOREGISTER = true; // Confirmed: working.
 	public static final int CHANNEL_LOAD = 100; // Players per channel
-	public static final long RANKING_INTERVAL = 3600000;
+	public static final long RANKING_INTERVAL = 3600000; // not used if the rankings event is used.
 	public static final boolean ENABLE_PIC = false; // False: must use Maple Admin to delete characters.
 	// Event Configuration
 	public static final boolean PERFECT_PITCH = false;
 	public static final boolean FREE_NX = true;
 	public static final int NX_COST = 1000000; // 1,000,000
-	public static final String EVENTS = "automsg KerningPQ Boats Subway AirPlane elevator rankings";
+	public static final String EVENTS = "automsg KerningPQ Boats Subway AirPlane elevator rankings"; // there is a rankings event to replace the default rankings tool.
 	// IP Configuration
 	public static final String HOST = "50.116.55.23";
 	// Database Configuration

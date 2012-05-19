@@ -12,6 +12,7 @@ public class MapleLogger {
 	public static final String PARANOIA_CHAT = "chat.log";
 	public static final String PARANOIA_COMMAND = "commands.log";
 	public static final String PARANOIA_CONSOLE = "console.log";
+	public static final String PARANOIA_BLACKLIST = "blacklist/";
 
 	// private static final SimpleDateFormat sdf = new
 	// SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

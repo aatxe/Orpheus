@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import constants.ParanoiaConstants;
 import constants.ServerConstants;
+import paranoia.BlacklistHandler;
 import provider.MapleData;
 import provider.MapleDataProviderFactory;
 import net.server.Channel;
@@ -78,6 +79,24 @@ public class GMCommands extends Commands {
 						}
 					} else {
 						chr.dropMessage("Usage: !ban playerName reason");
+					}
+				case blacklist:
+					if (ParanoiaConstants.ALLOW_BLACKLIST_COMMAND && ParanoiaConstants.ENABLE_BLACKLISTING) {
+						if (sub.length >= 2) {
+							victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
+							if (BlacklistHandler.isBlacklisted(victim.getAccountID())) {
+								chr.dropMessage(victim.getName() + " is already blacklisted.");
+							} else {
+								BlacklistHandler.addToBlacklist(victim.getAccountID());
+								chr.message("Done.");
+							}
+						} else {
+							chr.dropMessage("!blacklist playerName");
+						}
+					} else if (!ParanoiaConstants.ENABLE_BLACKLISTING) {
+						chr.dropMessage("Blacklisting is disabled on the server.");
+					} else if (!ParanoiaConstants.ALLOW_BLACKLIST_COMMAND) {
+						chr.dropMessage("Blacklisting users is forbidden by the server.");
 					}
 				case buff:
 					if (sub.length == 2) {
@@ -413,6 +432,7 @@ public class GMCommands extends Commands {
 	private static enum Command {
 		ap("Sets the AP of you or a victim."),
 		ban("Bans a user."),
+		blacklist("Adds a user to the Paranoia blacklist."),
 		buff("Applies buffs to you or a victim."),
 		dc("Disconnects a victim."),
 		dispose("Fixes NPC issues for you or a victim."),

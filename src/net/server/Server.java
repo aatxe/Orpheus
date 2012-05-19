@@ -26,6 +26,7 @@ import client.SkillFactory;
 import constants.ParanoiaConstants;
 import constants.ServerConstants;
 import gm.GMPacketCreator;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -130,6 +131,15 @@ public class Server implements Runnable {
 	@Override
 	public void run() {
 		long loadingStartTime = System.currentTimeMillis();
+		if (ServerConstants.CLEAR_ERROR_LOGS_ON_BOOT) {
+			if (new File(MapleLogger.ACCOUNT_STUCK).exists()) MapleLogger.clearLog(MapleLogger.ACCOUNT_STUCK);
+			if (new File(MapleLogger.EXCEPTION_CAUGHT).exists()) MapleLogger.clearLog(MapleLogger.EXCEPTION_CAUGHT);
+		}
+		if (ParanoiaConstants.CLEAR_LOGS_ON_STARTUP) {
+			if (ParanoiaConstants.PARANOIA_CONSOLE_LOGGER) MapleLogger.clearLog(MapleLogger.PARANOIA_CONSOLE);
+			if (ParanoiaConstants.PARANOIA_CHAT_LOGGER) MapleLogger.clearLog(MapleLogger.PARANOIA_CHAT);
+			if (ParanoiaConstants.PARANOIA_COMMAND_LOGGER) MapleLogger.clearLog(MapleLogger.PARANOIA_COMMAND);
+		}
 		Properties p = new Properties();
 		try {
 			p.load(new FileInputStream("orpheus.ini"));
@@ -140,10 +150,6 @@ public class Server implements Runnable {
 		}
 		if (!ServerConstants.DB_USE_COMPILED_VALUES) { 
 			DatabaseConnection.update("jdbc:mysql://" + p.getProperty("mysql_host") + ":" + p.getProperty("mysql_port") + "/Orpheus?autoReconnect=true", p.getProperty("mysql_user"), p.getProperty("mysql_pass"));
-		}
-		if (ParanoiaConstants.CLEAR_LOGS_ON_STARTUP) {
-			if (ParanoiaConstants.PARANOIA_CHAT_LOGGER) MapleLogger.clearLog(MapleLogger.PARANOIA_CHAT);
-			if (ParanoiaConstants.PARANOIA_COMMAND_LOGGER) MapleLogger.clearLog(MapleLogger.PARANOIA_COMMAND);
 		}
 		Runtime.getRuntime().addShutdownHook(new Thread(shutdown(false)));
 		DatabaseConnection.getConnection();
