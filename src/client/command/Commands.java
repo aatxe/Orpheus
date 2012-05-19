@@ -26,5 +26,13 @@ public abstract class Commands {
 		return builder.toString();
 	}
 	
+	protected static String getHelp() {
+		return Commands.getHelp(-1);
+	}
+	
+	protected static String getHelp(int page) {
+		return "Command.getHelp() was not overridden.";
+	}
+	
 	public static enum Command {};
 }

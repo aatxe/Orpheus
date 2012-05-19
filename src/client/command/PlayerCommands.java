@@ -20,6 +20,8 @@ import client.MapleRank;
 import client.MapleStat;
 
 public class PlayerCommands extends Commands {
+	private static final char heading = '@';
+	
 	@SuppressWarnings("unused")
 	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();
@@ -151,9 +153,10 @@ public class PlayerCommands extends Commands {
 					}
 					break;
 				case help:
-					chr.dropMessage(ServerConstants.SERVER_NAME + "'s PlayerCommands Help");
-					for (Command cmd : Command.values()) {
-						chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
+					if (sub.length >= 2 && ServerConstants.PAGINATE_HELP) {
+						getHelp(Integer.parseInt(sub[1]));
+					} else {
+						getHelp();
 					}
 					break;
 				case kin:
@@ -350,6 +353,33 @@ public class PlayerCommands extends Commands {
 		} catch (SQLException ex) {
 			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, ex);
 			return null;
+		}
+	}
+
+	protected static void getHelp(MapleCharacter chr) {
+		PlayerCommands.getHelp(-1, chr);
+	}
+
+	protected static void getHelp(int page, MapleCharacter chr) {
+        int pageNumber = (int) (Command.values().length / ServerConstants.ENTRIES_PER_PAGE);
+        if (Command.values().length % ServerConstants.ENTRIES_PER_PAGE > 0) {
+        	pageNumber++;
+        }
+		if (page <= 0 || pageNumber == 1) {
+			chr.dropMessage(ServerConstants.SERVER_NAME + "'s PlayerCommands Help");
+			for (Command cmd : Command.values()) {
+				chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
+			}
+		} else {
+	        if (page > pageNumber) {
+	        	page = pageNumber;
+	        }
+	        int lastPageEntry = (Command.values().length - Math.max(0, Command.values().length - (page * ServerConstants.ENTRIES_PER_PAGE)));
+	        lastPageEntry -= 1;
+			chr.dropMessage(ServerConstants.SERVER_NAME + "'s PlayerCommands Help (Page " + page + " / " + pageNumber + ")");
+	        for (int i = lastPageEntry; i <= lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
+				chr.dropMessage(heading + Command.values()[i].name() + " - " + Command.values()[i].getDescription());
+	        }
 		}
 	}
 	

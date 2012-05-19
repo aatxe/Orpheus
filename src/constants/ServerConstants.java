@@ -36,6 +36,8 @@ public class ServerConstants {
 	public static final boolean UNLIMITED_PROJECTILES = false; // have unlimited projectiles (don't lose bullets, throwing stars, arrows)
 	public static final boolean ALLOW_INFO_ON_GMS = true; // if false, non-GMs cannot get info on GMs.
 	public static final boolean CLEAR_ERROR_LOGS_ON_BOOT = true; // if true, error logs will be cured on boot.
+	public static final boolean PAGINATE_HELP = true; // if true, help messages will be displayed in pages.
+	public static final short ENTRIES_PER_PAGE = 8; // the number of entries to display on each page.
 	// Rate Configuration
 	public static final byte QUEST_EXP_RATE = 4;
 	public static final byte QUEST_MESO_RATE = 3;

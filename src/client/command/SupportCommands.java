@@ -19,6 +19,7 @@ import client.MaplePet;
 import client.MapleRank;
 
 public class SupportCommands extends Commands {
+	private static final char heading = '!';
 	@SuppressWarnings("unused")
 	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();
@@ -43,9 +44,10 @@ public class SupportCommands extends Commands {
 				case help:
 					if (sub.length > 1) {
 						if (sub[1].equalsIgnoreCase("support")) {
-							chr.dropMessage(ServerConstants.SERVER_NAME + "'s SupportCommands Help");
-							for (Command cmd : Command.values()) {
-								chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
+							if (sub.length > 2 && ServerConstants.PAGINATE_HELP) {
+								getHelp(Integer.parseInt(sub[2]));
+							} else {
+								getHelp();
 							}
 							break;
 						} else {
@@ -161,6 +163,33 @@ public class SupportCommands extends Commands {
 			return "Cash";
 		} else {
 			return "";
+		}
+	}
+	
+	protected static void getHelp(MapleCharacter chr) {
+		SupportCommands.getHelp(-1, chr);
+	}
+
+	protected static void getHelp(int page, MapleCharacter chr) {
+        int pageNumber = (int) (Command.values().length / ServerConstants.ENTRIES_PER_PAGE);
+        if (Command.values().length % ServerConstants.ENTRIES_PER_PAGE > 0) {
+        	pageNumber++;
+        }
+		if (page <= 0 || pageNumber == 1) {
+			chr.dropMessage(ServerConstants.SERVER_NAME + "'s SupportCommands Help");
+			for (Command cmd : Command.values()) {
+				chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
+			}
+		} else {
+	        if (page > pageNumber) {
+	        	page = pageNumber;
+	        }
+	        int lastPageEntry = (Command.values().length - Math.max(0, Command.values().length - (page * ServerConstants.ENTRIES_PER_PAGE)));
+	        lastPageEntry -= 1;
+			chr.dropMessage(ServerConstants.SERVER_NAME + "'s SupportCommands Help (Page " + page + " / " + pageNumber + ")");
+	        for (int i = lastPageEntry; i <= lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
+				chr.dropMessage(heading + Command.values()[i].name() + " - " + Command.values()[i].getDescription());
+	        }
 		}
 	}
 
