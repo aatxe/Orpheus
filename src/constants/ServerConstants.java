@@ -23,7 +23,7 @@ package constants;
 
 public class ServerConstants {
 	public static short VERSION = 83;
-	public static String ORPHEUS_VERSION = "5/17/12";
+	public static String ORPHEUS_VERSION = "5/19/12";
 	public static final String SERVER_NAME = "OrpheusMS";
 	public static String[] WORLD_NAMES = {"Scania", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
 	// Orpheus Feature Configuration
@@ -38,6 +38,7 @@ public class ServerConstants {
 	public static final boolean CLEAR_ERROR_LOGS_ON_BOOT = true; // if true, error logs will be cured on boot.
 	public static final boolean PAGINATE_HELP = true; // if true, help messages will be displayed in pages.
 	public static final short ENTRIES_PER_PAGE = 8; // the number of entries to display on each page.
+	public static final int MAX_CHAT_MESSAGE_LENGTH = Byte.MAX_VALUE; // the number of characters allowed in chat messages. (fixes DC hax)
 	// Rate Configuration
 	public static final byte QUEST_EXP_RATE = 4;
 	public static final byte QUEST_MESO_RATE = 3;

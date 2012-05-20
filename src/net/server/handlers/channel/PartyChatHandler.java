@@ -46,6 +46,10 @@ public final class PartyChatHandler extends AbstractMaplePacketHandler {
 		}
 		String chattext = slea.readMapleAsciiString();
 		World world = c.getWorldServer();
+		if (chattext.length() > ServerConstants.MAX_CHAT_MESSAGE_LENGTH) {
+			player.dropMessage("Your message is too long.");
+			return; // packet editing, fucker.
+		}
 		if (type == 0) {
 			if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_CHAT_LOGGER && ParanoiaConstants.LOG_BUDDY_CHAT) {
 				MapleLogger.printFormatted(MapleLogger.PARANOIA_CHAT, "[Buddy] [" + c.getPlayer().getName() + "] " + chattext);

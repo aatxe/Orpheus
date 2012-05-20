@@ -57,8 +57,12 @@ public final class WhisperHandler extends AbstractMaplePacketHandler {
 				if (ServerConstants.USE_PARANOIA && ParanoiaConstants.PARANOIA_CHAT_LOGGER && ParanoiaConstants.LOG_WHISPERS) {
 					MapleLogger.printFormatted(MapleLogger.PARANOIA_CHAT, "[Whisper] [" + c.getPlayer().getName() + " > " + recipient + "] " + text);
 				}
-				player.getClient().announce(MaplePacketCreator.getWhisper(c.getPlayer().getName(), c.getChannel(), text));
-				c.announce(MaplePacketCreator.getWhisperReply(recipient, (byte) 1));
+				if (text.length() <= ServerConstants.MAX_CHAT_MESSAGE_LENGTH) {
+					player.getClient().announce(MaplePacketCreator.getWhisper(c.getPlayer().getName(), c.getChannel(), text));
+					c.announce(MaplePacketCreator.getWhisperReply(recipient, (byte) 1));
+				} else {
+					player.dropMessage("Your message was too long.");
+				}
 			} else {// not found
 				World world = c.getWorldServer();
 				if (world.isConnected(recipient)) {

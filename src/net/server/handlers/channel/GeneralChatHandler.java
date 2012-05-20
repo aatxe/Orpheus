@@ -109,7 +109,11 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 				MapleLogger.printFormatted(MapleLogger.PARANOIA_CHAT, "[General] [" + c.getPlayer().getName() + "] " + s);
 			}
 			if (!chr.isHidden()) {
-				chr.getMap().broadcastMessage(MaplePacketCreator.getChatText(chr.getId(), s, (chr.isGM() && chr.getGMText()), slea.readByte()));
+				if (s.length() <= ServerConstants.MAX_CHAT_MESSAGE_LENGTH) {
+					chr.getMap().broadcastMessage(MaplePacketCreator.getChatText(chr.getId(), s, (chr.isGM() && chr.getGMText()), slea.readByte()));
+				} else {
+					chr.dropMessage("Your message was too long.");
+				}
 			} else {
 				chr.getMap().broadcastGMMessage(MaplePacketCreator.getChatText(chr.getId(), s, (chr.isGM() && chr.getGMText()), slea.readByte()));
 			}
