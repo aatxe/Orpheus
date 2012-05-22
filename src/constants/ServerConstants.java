@@ -39,6 +39,8 @@ public class ServerConstants {
 	public static final boolean PAGINATE_HELP = true; // if true, help messages will be displayed in pages.
 	public static final short ENTRIES_PER_PAGE = 8; // the number of entries to display on each page.
 	public static final int MAX_CHAT_MESSAGE_LENGTH = Byte.MAX_VALUE; // the number of characters allowed in chat messages. (fixes DC hax)
+	public static final boolean AUTO_UNSTUCK_ACCOUNTS = true; // if true, automatically attempt to unstuck stuck accounts.
+	public static final boolean GREET_PLAYERS_ON_LOGIN = true; // if true, it will announce when players have logged in.
 	// Rate Configuration
 	public static final byte QUEST_EXP_RATE = 4;
 	public static final byte QUEST_MESO_RATE = 3;

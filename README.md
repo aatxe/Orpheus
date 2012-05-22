@@ -14,3 +14,6 @@ The project began based off of revision 116, but as it is continuing to be updat
 
 ## Can I use OrpheusMS? ##
 This question should be kind of obvious, as you're pretty much staring at the source code for it right now, but *absolutely*! I love the idea of someone else taking advantage of the work I put in, and that's why I've made this project open source. Feel free to use it as you will!
+
+## Is there any licensing on OrpheusMS? ##
+Yup! OrpheusMS is licensed under the Creative Commons 3.0 license with the rights BY-NC-SA. This means that attribution is required, derivative works must be non-commercial, and must be distributed under the same license. For more information, check [here](http://creativecommons.org/licenses/by-nc-sa/3.0/).

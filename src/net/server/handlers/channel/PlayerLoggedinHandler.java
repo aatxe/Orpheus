@@ -91,7 +91,9 @@ public final class PlayerLoggedinHandler extends AbstractMaplePacketHandler {
 							sb.append("[" + Output.now() + "] The player ").append((c.getWorldServer().isConnected(charName)) ? "is" : "isn't").append(" connected to the world server.\r\n");
 							sb.append("[" + Output.now() + "] The player has character ").append(charName).append(" connected.\r\n");
 							MapleLogger.print(MapleLogger.ACCOUNT_STUCK, sb.toString());
-							// ch.removePlayer(ch.getPlayerStorage().getCharacterByName(charName)); // unstuck
+							if (ServerConstants.AUTO_UNSTUCK_ACCOUNTS) {
+								ch.removePlayer(ch.getPlayerStorage().getCharacterByName(charName)); // unstuck
+							}
 							allowLogin = false;
 						}
 					}
@@ -235,8 +237,13 @@ public final class PlayerLoggedinHandler extends AbstractMaplePacketHandler {
 		player.checkBerserk();
 		player.expirationTask();
 		player.setRates();
-		for (int i = 0; i < ScriptableNPCConstants.SCRIPTABLE_NPCS.length; i++) {
-			c.announce(MaplePacketCreator.setNPCScriptable(ScriptableNPCConstants.SCRIPTABLE_NPCS[i], ScriptableNPCConstants.SCRIPTABLE_NPCS_DESC[i]));
+		if (ServerConstants.MAKE_NPCS_SCRIPTABLE) {
+			for (int i = 0; i < ScriptableNPCConstants.SCRIPTABLE_NPCS.length; i++) {
+				c.announce(MaplePacketCreator.setNPCScriptable(ScriptableNPCConstants.SCRIPTABLE_NPCS[i], ScriptableNPCConstants.SCRIPTABLE_NPCS_DESC[i]));
+			}
+		}
+		if (ServerConstants.GREET_PLAYERS_ON_LOGIN) {
+			Server.getInstance().broadcastMessage(player.getWorld(), MaplePacketCreator.serverNotice(6, "[Notice] " + player.getName() + " has logged in."));
 		}
 	}
 }
