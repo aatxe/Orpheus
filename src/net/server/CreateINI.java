@@ -14,6 +14,9 @@ public class CreateINI {
 	public static void main(String args[]) {
 		StringBuilder sb = new StringBuilder();
 		String nl = "\n";
+		if (System.getProperty("os.name").startsWith("Windows")) {
+			nl = "\r\n";
+		}
 		byte worlds;
 		Console con = System.console();
 
