@@ -23,7 +23,7 @@ package constants;
 
 public class ServerConstants {
 	public static short VERSION = 83;
-	public static String ORPHEUS_VERSION = "5/19/12";
+	public static String ORPHEUS_VERSION = "5/22/12";
 	public static final String SERVER_NAME = "OrpheusMS";
 	public static String[] WORLD_NAMES = {"Scania", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
 	// Orpheus Feature Configuration
@@ -42,8 +42,8 @@ public class ServerConstants {
 	public static final boolean AUTO_UNSTUCK_ACCOUNTS = true; // if true, automatically attempt to unstuck stuck accounts.
 	public static final boolean GREET_PLAYERS_ON_LOGIN = true; // if true, it will announce when players have logged in.
 	// Rate Configuration
-	public static final byte QUEST_EXP_RATE = 4;
-	public static final byte QUEST_MESO_RATE = 3;
+	public static final byte QUEST_EXP_RATE = 1;
+	public static final byte QUEST_MESO_RATE = 1;
 	// Login Configuration
 	public static final boolean ENABLE_AUTOREGISTER = true; // Confirmed: working.
 	public static final int CHANNEL_LOAD = 100; // Players per channel

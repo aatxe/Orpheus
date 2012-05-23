@@ -161,7 +161,14 @@ public class Server implements Runnable {
 		TimerManager tMan = TimerManager.getInstance();
 		tMan.start();
 		tMan.register(tMan.purge(), 300000);// Purging ftw...
-		tMan.register(new RankingWorker(), ServerConstants.RANKING_INTERVAL);
+		boolean bindRankings = true;
+		String[] events = ServerConstants.EVENTS.split(" ");
+		for (int i = 0; i < events.length; i++) {
+			if (events[i].equalsIgnoreCase("rankings")) {
+				bindRankings = false;
+			}
+		}
+		if (bindRankings) tMan.register(new RankingWorker(), ServerConstants.RANKING_INTERVAL);
 		try {
 			gmServerEnabled = Boolean.parseBoolean(p.getProperty("gmserver"));
 			debugMode = Boolean.parseBoolean(p.getProperty("debug"));
@@ -189,7 +196,6 @@ public class Server implements Runnable {
 			e.printStackTrace();
 			System.exit(0);
 		}
-
 		acceptor.getSessionConfig().setIdleTime(IdleStatus.BOTH_IDLE, 30);
 		acceptor.setHandler(new MapleServerHandler(PacketProcessor.getProcessor()));
 		try {
@@ -216,6 +222,14 @@ public class Server implements Runnable {
 
 	public void shutdown() {
 		try {
+			worlds.clear();
+			worlds = null;
+			channels.clear();
+			channels = null;
+			worldRecommendedList.clear();
+			worldRecommendedList = null;
+			load.clear();
+			load = null;
 			TimerManager.getInstance().stop();
 			acceptor.unbind();
 			Output.print("Server is now offline.");
@@ -527,7 +541,7 @@ public class Server implements Runnable {
 		server.broadcastOutGame(GMPacketCreator.chat(message), exclude);
 	}
 
-	public final Runnable shutdown(final boolean restart) {// only once :D
+	public final Runnable shutdown(final boolean restart) { // only once :D
 		return new Runnable() {
 
 			@Override
@@ -542,7 +556,8 @@ public class Server implements Runnable {
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException ie) {
-							System.err.println("FUCK MY LIFE");
+							// Well, shit.
+							w.getPlayerStorage().disconnectAll(); // try to save us.
 						}
 					}
 				}
@@ -551,7 +566,8 @@ public class Server implements Runnable {
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException ie) {
-							System.err.println("FUCK MY LIFE");
+							// Well, shit.
+							ch.getPlayerStorage().disconnectAll(); // try to save us.
 						}
 					}
 				}
@@ -564,7 +580,8 @@ public class Server implements Runnable {
 						try {
 							Thread.sleep(1000);
 						} catch (InterruptedException ie) {
-							System.err.println("FUCK MY LIFE");
+							// Well, damn.
+							ch.shutdown(); // try to save us.
 						}
 					}
 				}
