@@ -52,6 +52,10 @@ public class MapleLogger {
 	}
 	
 	public static void printFormatted(final String file, final String s) {
+		MapleLogger.printFormatted(file, s, true);
+	}
+	
+	public static void printFormatted(final String file, final String s, final boolean newLine) {
 		FileOutputStream out = null;
 		try {
 			out = new FileOutputStream(file, true);
@@ -59,7 +63,9 @@ public class MapleLogger {
 				out.write(("[" + Output.now() + "] ").getBytes());
 			}
 			out.write(s.getBytes());
-			out.write(("\n").getBytes());
+			if (newLine) {
+				out.write(("\n").getBytes());
+			}
 		} catch (IOException ess) {
 		} finally {
 			try {

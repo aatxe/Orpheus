@@ -19,7 +19,7 @@ import client.MapleJob;
 import client.MapleRank;
 import client.MapleStat;
 
-public class PlayerCommands extends Commands {
+public class PlayerCommands extends EnumeratedCommands {
 	private static final char heading = '@';
 	
 	@SuppressWarnings("unused")

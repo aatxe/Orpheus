@@ -4,7 +4,7 @@ SET FOREIGN_KEY_CHECKS=0;
 --  -- Comment out to disable.
 -- ----------------------------
 CREATE DATABASE `Orpheus`;
-USE `Orpheus`;
+USING `Orpheus`;
 
 -- ----------------------------
 -- Table structure for `accounts`

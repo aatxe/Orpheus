@@ -16,7 +16,8 @@ import client.MapleCharacter;
 import client.MapleClient;
 import client.MapleStat;
 
-public class DonorCommands extends Commands {
+public class DonorCommands extends EnumeratedCommands {
+	private static final int gmLevel = 1;
 	private static final char heading = '@';
 	
 	@SuppressWarnings("unused")

@@ -31,7 +31,7 @@ import tools.Output;
 import tools.data.input.SeekableLittleEndianAccessor;
 import client.MapleClient;
 import client.command.AdminCommands;
-import client.command.Commands;
+import client.command.EnumeratedCommands;
 import client.command.DeveloperCommands;
 import client.command.DonorCommands;
 import client.command.GMCommands;
@@ -70,7 +70,7 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 						commandExecuted = PlayerCommands.execute(c, sp, heading);
 						if (commandExecuted) break;
 					default:
-						Commands.execute(c, sp, heading);
+						EnumeratedCommands.execute(c, sp, heading);
 						break;
 				}
 			} else {
@@ -90,7 +90,7 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 						commandExecuted = SupportCommands.execute(c, sp, heading);
 						if (commandExecuted) break;
 					default:
-						Commands.execute(c, sp, heading);
+						EnumeratedCommands.execute(c, sp, heading);
 						break;
 				}
 			}

@@ -18,8 +18,10 @@ import client.MapleJob;
 import client.MaplePet;
 import client.MapleRank;
 
-public class SupportCommands extends Commands {
+public class SupportCommands extends EnumeratedCommands {
+	private static final int gmLevel = 2;
 	private static final char heading = '!';
+	
 	@SuppressWarnings("unused")
 	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();

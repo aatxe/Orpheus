@@ -33,7 +33,8 @@ import client.MapleJob;
 import client.MapleStat;
 import client.SkillFactory;
 
-public class GMCommands extends Commands {
+public class GMCommands extends EnumeratedCommands {
+	private static final int gmLevel = 3;
 	private static final char heading = '!';
 	
 	@SuppressWarnings("unused")

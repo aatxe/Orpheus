@@ -8,7 +8,8 @@ import net.server.Channel;
 import client.MapleCharacter;
 import client.MapleClient;
 
-public class AdminCommands extends Commands {
+public class AdminCommands extends EnumeratedCommands {
+	private static final int gmLevel = 5;
 	private static final char heading = '!';
 	
 	@SuppressWarnings("unused")

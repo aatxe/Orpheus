@@ -12,7 +12,7 @@ public class Output {
 	public static void print(String message, boolean newLine) {
 		System.out.print("[OrpheusMS] [" + now() + "] " + message + ((newLine) ? "\n" : ""));
 		if (ParanoiaConstants.PARANOIA_CONSOLE_LOGGER) {
-			MapleLogger.printFormatted(MapleLogger.PARANOIA_CONSOLE, "[OrpheusMS] " + message + ((newLine) ? "\n" : ""));
+			MapleLogger.printFormatted(MapleLogger.PARANOIA_CONSOLE, "[OrpheusMS] " + message, newLine);
 		}
 	}
 

@@ -21,8 +21,9 @@ import net.server.Server;
 import client.MapleCharacter;
 import client.MapleClient;
 
-public class DeveloperCommands extends Commands {
+public class DeveloperCommands extends EnumeratedCommands {
 	private static SeekableLittleEndianAccessor slea;
+	private static final int gmLevel = 4;
 	private static final char heading = '!';
 	
 	public static boolean execute(MapleClient c, String[] sub, char heading) {
