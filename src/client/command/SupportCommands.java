@@ -47,9 +47,9 @@ public class SupportCommands extends EnumeratedCommands {
 					if (sub.length > 1) {
 						if (sub[1].equalsIgnoreCase("support")) {
 							if (sub.length > 2 && ServerConstants.PAGINATE_HELP) {
-								getHelp(Integer.parseInt(sub[2]));
+								getHelp(Integer.parseInt(sub[2]), chr);
 							} else {
-								getHelp();
+								getHelp(chr);
 							}
 							break;
 						} else {

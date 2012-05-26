@@ -154,9 +154,9 @@ public class PlayerCommands extends EnumeratedCommands {
 					break;
 				case help:
 					if (sub.length >= 2 && ServerConstants.PAGINATE_HELP) {
-						getHelp(Integer.parseInt(sub[1]));
+						getHelp(Integer.parseInt(sub[1]), chr);
 					} else {
-						getHelp();
+						getHelp(chr);
 					}
 					break;
 				case kin:

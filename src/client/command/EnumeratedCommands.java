@@ -1,8 +1,10 @@
 package client.command;
 
 import tools.MapleLogger;
+import tools.Output;
 import constants.ParanoiaConstants;
 import constants.ServerConstants;
+import client.MapleCharacter;
 import client.MapleClient;
 
 public abstract class EnumeratedCommands extends Commands {
@@ -15,12 +17,12 @@ public abstract class EnumeratedCommands extends Commands {
 		return false;
 	}
 	
-	protected static String getHelp() {
-		return EnumeratedCommands.getHelp(-1);
+	protected static void getHelp(MapleCharacter chr) {
+		EnumeratedCommands.getHelp(-1, chr);
 	}
 	
-	protected static String getHelp(int page) {
-		return "Command.getHelp() was not overridden.";
+	protected static void getHelp(int page, MapleCharacter chr) {
+		chr.dropMessage("Command.getHelp() was not overridden.");
 	}
 	
 	public static enum Command {};
