@@ -16,6 +16,7 @@ public class ParanoiaConstants {
 	
 	// Paranoia Blacklisting settings -- support for account logging with everything
 	public static final boolean ENABLE_BLACKLISTING = false;
+	public static final boolean LOAD_BLACKLIST_ON_STARTUP = true;
 	public static final boolean LOG_BLACKLIST_CHAT = true;
 	public static final boolean LOG_BLACKLIST_COMMAND = true;
 	

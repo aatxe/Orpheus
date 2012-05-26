@@ -56,6 +56,7 @@ import org.apache.mina.core.filterchain.IoFilter;
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.session.IdleStatus;
 import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
+import paranoia.BlacklistHandler;
 import server.CashShop.CashItemFactory;
 import server.MapleItemInformationProvider;
 import tools.MapleLogger;
@@ -128,6 +129,7 @@ public class Server implements Runnable {
 		return channels.get(world).get(channel);
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void run() {
 		long loadingStartTime = System.currentTimeMillis();
@@ -215,6 +217,12 @@ public class Server implements Runnable {
 		Output.print("Loading completed in " + ((System.currentTimeMillis() - startTime)) + "ms.");
 		if (isGMServerEnabled()) {
 			GMServer.getInstance();
+		}
+		if (ParanoiaConstants.ENABLE_BLACKLISTING && ParanoiaConstants.LOAD_BLACKLIST_ON_STARTUP) {
+			Output.print("Loading Paranoia blacklist.");
+			startTime = System.currentTimeMillis();
+			BlacklistHandler.getBlacklistedAccountIds();
+			Output.print("Loading completed in " + ((System.currentTimeMillis() - startTime)) + "ms.");
 		}
 		Output.print("Server is now online! (Took " + ((System.currentTimeMillis() - loadingStartTime)) + "ms)");
 		online = true;
