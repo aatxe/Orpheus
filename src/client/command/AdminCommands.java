@@ -93,6 +93,14 @@ public class AdminCommands extends EnumeratedCommands {
 		}
 	}
 	
+	public static int getRequiredStaffRank() {
+		return gmLevel;
+	}
+	
+	public static char getHeading() {
+		return heading;
+	}
+	
 	private static enum Command {
 		clearlogs("Clear Paranoia log files."),
 		help("Displays this help message."),

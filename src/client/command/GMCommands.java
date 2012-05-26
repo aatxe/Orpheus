@@ -101,6 +101,7 @@ public class GMCommands extends EnumeratedCommands {
 					} else if (!ParanoiaConstants.ALLOW_BLACKLIST_COMMAND) {
 						chr.dropMessage("Blacklisting users is forbidden by the server.");
 					}
+					break;
 				case buff:
 					if (sub.length == 2) {
 						victim = cserv.getPlayerStorage().getCharacterByName(sub[1]);
@@ -458,6 +459,14 @@ public class GMCommands extends EnumeratedCommands {
 				chr.dropMessage(heading + Command.values()[i].name() + " - " + Command.values()[i].getDescription());
 	        }
 		}
+	}
+	
+	public static int getRequiredStaffRank() {
+		return gmLevel;
+	}
+	
+	public static char getHeading() {
+		return heading;
 	}
 	
 	private static enum Command {

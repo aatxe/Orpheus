@@ -115,6 +115,14 @@ public class DonorCommands extends EnumeratedCommands {
 	        }
 		}
 	}
+	
+	public static int getRequiredStaffRank() {
+		return gmLevel;
+	}
+	
+	public static char getHeading() {
+		return heading;
+	}
 
 	private static enum Command {
 		donor("Rewards you for donating!"), 

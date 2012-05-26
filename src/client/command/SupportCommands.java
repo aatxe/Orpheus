@@ -194,6 +194,14 @@ public class SupportCommands extends EnumeratedCommands {
 	        }
 		}
 	}
+	
+	public static int getRequiredStaffRank() {
+		return gmLevel;
+	}
+	
+	public static char getHeading() {
+		return heading;
+	}
 
 	private static enum Command {
 		announce("Makes a server-wide announcement."),

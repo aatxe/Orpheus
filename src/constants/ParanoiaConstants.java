@@ -1,16 +1,17 @@
 package constants;
 
 public class ParanoiaConstants {
-	public static short PARANOIA_VERSION = 6;
+	public static short PARANOIA_VERSION = 7;
 	
 	// Paranoia General settings -- basic config stuffs
 	public static final boolean USE_TIMESTAMPS = true;
 	public static final boolean CLEAR_LOGS_ON_STARTUP = false;
 	
 	// Paranoia Interface settings -- support for user interfacing with Paranonia
-	public static final boolean ALLOW_CLEARLOGS_COMMAND = false; // clears logs with Admin !clearlogs
-	public static final boolean ALLOW_QUERY_COMMAND = false; // check Paranoia settings with Dev !paranoia
+	public static final boolean ALLOW_CLEARLOGS_COMMAND = true; // clears logs with Admin !clearlogs
+	public static final boolean ALLOW_QUERY_COMMAND = true; // check Paranoia settings with Dev !paranoia
 	public static final boolean ALLOW_BLACKLIST_COMMAND = false; // blacklist users with GM !blacklist
+	public static final boolean ALLOW_RELOADBLACKLIST_COMMAND = false; // reload blacklist with Dev !reloadblacklist
 	public static final boolean CLEARLOG_CLEARS_BLACKLIST = false; // allow !clearlogs to clear blacklists.
 	
 	// Paranoia Blacklisting settings -- support for account logging with everything

@@ -46,8 +46,13 @@ public class BlacklistHandler {
 		}
 	}
 	
+	public static void reloadBlacklist() {
+		loadFromCsv(BlacklistHandler.BLACKLIST);
+	}
+	
 	protected static Integer[] loadFromCsv(final String csv) {
 		cache = new ArrayList<Integer>();
+		System.gc(); // garbage collect, to make sure we clean up the old cache object.
 		try {
 			FileInputStream in = new FileInputStream(csv);
 			BufferedReader br = new BufferedReader(new InputStreamReader(in, Charset.forName("UTF-8")));

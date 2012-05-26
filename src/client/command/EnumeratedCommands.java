@@ -1,7 +1,6 @@
 package client.command;
 
 import tools.MapleLogger;
-import tools.Output;
 import constants.ParanoiaConstants;
 import constants.ServerConstants;
 import client.MapleCharacter;

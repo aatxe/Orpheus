@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import paranoia.BlacklistHandler;
 import paranoia.ParanoiaInformation;
 import paranoia.ParanoiaInformationHandler;
 import constants.ParanoiaConstants;
@@ -26,6 +27,7 @@ public class DeveloperCommands extends EnumeratedCommands {
 	private static final int gmLevel = 4;
 	private static final char heading = '!';
 	
+	@SuppressWarnings("unused")
 	public static boolean execute(MapleClient c, String[] sub, char heading) {
 		MapleCharacter chr = c.getPlayer();
 		Channel cserv = c.getChannelServer();
@@ -111,6 +113,7 @@ public class DeveloperCommands extends EnumeratedCommands {
 					} else {
 						chr.dropMessage("Paranoia Information Querying is forbidden by the server.");
 					}
+					break;
 				case pinkbean:
 					chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(8820009), chr.getPosition());
 					break;
@@ -187,6 +190,16 @@ public class DeveloperCommands extends EnumeratedCommands {
 		            } else {
 		                chr.dropMessage("You have entered an invalid NPC id.");
 		            }
+					break;
+				case reloadblacklist:
+					if (ServerConstants.USE_PARANOIA && ParanoiaConstants.ENABLE_BLACKLISTING && ParanoiaConstants.ALLOW_RELOADBLACKLIST_COMMAND) {
+						BlacklistHandler.reloadBlacklist();
+						chr.message("Done.");
+					} else if (!ParanoiaConstants.ENABLE_BLACKLISTING) {
+						chr.dropMessage("Blacklisting is disabled on the server.");
+					} else if (!ParanoiaConstants.ALLOW_RELOADBLACKLIST_COMMAND) {
+						chr.dropMessage("Reloading blacklist is forbidden by the server.");
+					}
 					break;
 				case say:
 					if (sub.length > 2) {
@@ -308,6 +321,14 @@ public class DeveloperCommands extends EnumeratedCommands {
 		}
 	}
 	
+	public static int getRequiredStaffRank() {
+		return gmLevel;
+	}
+	
+	public static char getHeading() {
+		return heading;
+	}
+	
 	private static enum Command {
 		coords("Prints your current coordinates."),
 		exprate("Sets the server-wide experience rate."),
@@ -316,10 +337,11 @@ public class DeveloperCommands extends EnumeratedCommands {
 		horntail("Summons Horntail at your position."),
 		npc("Spawns an NPC at your position."),
 		packet("Executes a custom packet."),
-		paranoia("Gathers information about Paranoia"),
+		paranoia("Gathers information about Paranoia."),
 		pmob("Permanently spawns a mob at your position."),
 		pnpc("Permanently spawns an NPC at your position."),
 		pinkbean("Summons Pinkbean at your position."),
+		reloadblacklist("Reloads the Paranoia blacklist."),
 		say("Forces a victim to say something."),
 		shutdown("Shutdowns the server."),
 		sql("Executes an SQL query."),
