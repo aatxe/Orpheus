@@ -109,8 +109,8 @@ public class CommandLoader {
 		while (e.hasMoreElements()) {
 			try {
 				JarEntry je = e.nextElement();
-				if (je.getName().endsWith("class") && !je.isDirectory()) {
-					Class<?> jarClass = Class.forName(je.getName());
+				if (je.getName().endsWith(".class") && !je.isDirectory()) {
+					Class<?> jarClass = Class.forName(je.getName().substring(0, je.getName().lastIndexOf(".class")));
 					Class<? extends Commands> cmdClass = jarClass.asSubclass(Commands.class);
 					commands.add(cmdClass);
 				}
@@ -128,8 +128,8 @@ public class CommandLoader {
 		while (e.hasMoreElements()) {
 			try {
 				JarEntry je = e.nextElement();
-				if (je.getName().endsWith("class") && !je.isDirectory()) {
-					Class<?> jarClass = Class.forName(je.getName());
+				if (je.getName().endsWith(".class") && !je.isDirectory()) {
+					Class<?> jarClass = Class.forName(je.getName().substring(0, je.getName().lastIndexOf(".class")));
 					Class<? extends AbstractCommandProcessor> cpClass = jarClass.asSubclass(AbstractCommandProcessor.class);
 					Constructor<? extends AbstractCommandProcessor> cpConstructor = cpClass.getConstructor();
 					commandProcessor = cpConstructor.newInstance();
