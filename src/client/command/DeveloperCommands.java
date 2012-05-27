@@ -115,7 +115,7 @@ public class DeveloperCommands extends EnumeratedCommands {
 					break;
 				case paranoia:
 					if (ParanoiaConstants.ALLOW_QUERY_COMMAND) {
-						if (sub.length > 2) {
+						if (sub.length > 1) {
 							if (sub[1].equalsIgnoreCase("help")) {
 								chr.dropMessage("Paranoia Information Querying Help");
 								for (ParanoiaInformation pi : ParanoiaInformation.values()) {
