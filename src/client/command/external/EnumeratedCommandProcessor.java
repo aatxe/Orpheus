@@ -2,13 +2,6 @@ package client.command.external;
 
 import client.MapleCharacter;
 import client.MapleClient;
-import client.command.AdminCommands;
-import client.command.DeveloperCommands;
-import client.command.DonorCommands;
-import client.command.EnumeratedCommands;
-import client.command.GMCommands;
-import client.command.PlayerCommands;
-import client.command.SupportCommands;
 
 public class EnumeratedCommandProcessor extends AbstractCommandProcessor {
 	@Override
