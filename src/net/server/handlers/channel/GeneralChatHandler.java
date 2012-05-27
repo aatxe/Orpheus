@@ -31,9 +31,9 @@ import tools.Output;
 import tools.data.input.SeekableLittleEndianAccessor;
 import client.MapleClient;
 import client.command.AdminCommands;
-import client.command.EnumeratedCommands;
 import client.command.DeveloperCommands;
 import client.command.DonorCommands;
+import client.command.EnumeratedCommands;
 import client.command.GMCommands;
 import client.command.PlayerCommands;
 import client.command.SupportCommands;
@@ -52,6 +52,8 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 		 * easier to understand and work with. I apologize for the mess!
 		 * 
 		 * As of May 6th, the daemons should be a little cleaner.
+		 * 
+		 * As of May 27th, daemons are messier because of the CommandLoader.
 		 */
 		if (heading == '/' || heading == '!' || heading == '@') {
 			String[] sp = s.split(" ");

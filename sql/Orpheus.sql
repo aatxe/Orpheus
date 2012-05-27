@@ -3,8 +3,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Make things easier for noobs!
 --  -- Comment out to disable.
 -- ----------------------------
-CREATE DATABASE `Orpheus`;
-USING `Orpheus`;
+CREATE DATABASE IF NOT EXISTS `Orpheus`;
+USE Orpheus;
 
 -- ----------------------------
 -- Table structure for `accounts`

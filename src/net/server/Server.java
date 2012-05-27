@@ -23,6 +23,7 @@ package net.server;
 
 import client.MapleCharacter;
 import client.SkillFactory;
+import client.command.external.CommandLoader;
 import constants.ParanoiaConstants;
 import constants.ServerConstants;
 import gm.GMPacketCreator;
@@ -223,6 +224,17 @@ public class Server implements Runnable {
 			startTime = System.currentTimeMillis();
 			BlacklistHandler.getBlacklistedAccountIds();
 			Output.print("Loading completed in " + ((System.currentTimeMillis() - startTime)) + "ms.");
+		}
+		if (ServerConstants.LOAD_COMMANDS_ON_BOOT && ServerConstants.USE_EXTERNAL_COMMAND_LOADER) {
+			try {
+				Output.print("Loading commands.");
+				startTime = System.currentTimeMillis();
+				CommandLoader.getInstance().load(ServerConstants.COMMAND_JAR_PATH);
+				Output.print("Loading completed in " + ((System.currentTimeMillis() - startTime)) + "ms.");
+			} catch (Exception e) {
+				Output.print("Failed to load commands.");
+				MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
+			}
 		}
 		Output.print("Server is now online! (Took " + ((System.currentTimeMillis() - loadingStartTime)) + "ms)");
 		online = true;

@@ -30,8 +30,11 @@ public class ServerConstants {
 	
 	// Start-Up Configuration
 	public static final boolean CLEAR_ERROR_LOGS_ON_BOOT = true; // if true, error logs will be cleared on boot.
+	public static final boolean LOAD_COMMANDS_ON_BOOT = true; // if true, commands will be loaded on boot.
 	
 	// Orpheus Source Configuration
+	public static final boolean USE_EXTERNAL_COMMAND_LOADER = true; // if true, commands will be loaded externally. (Beginners should set to false)
+	public static final String COMMAND_JAR_PATH = "dist/Commands.jar"; // path to Commands, also supports loading all jars in a directory.
 	public static final boolean USE_PARANOIA = true; // use Orpheus' everything logger, Paranoia.
 	public static final boolean MAKE_NPCS_SCRIPTABLE = true; // Makes NPCs scriptable. (Setup in ScriptableNPCConstants)
 	public static final int MAX_CHAT_MESSAGE_LENGTH = Byte.MAX_VALUE; // the number of characters allowed in chat messages. (fixes DC hax)
@@ -44,7 +47,7 @@ public class ServerConstants {
 	public static final boolean BROADCAST_GACHAPON_ITEMS = true; // if true, server will announce when a gachapon is used.
 	
 	// Rate Configuration
-	public static final boolean BEGINNERS_USE_GMS_RATES = false; // if true, beginners will use GMS rates instead of higher.
+	public static final boolean BEGINNERS_USE_GMS_RATES = false; // if true, beginners will use GMS rates instead of server rates.
 	public static final byte QUEST_EXP_RATE = 1; // experience rate from quests
 	public static final byte QUEST_MESO_RATE = 1; // meso rate from quests
 	
