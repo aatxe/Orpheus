@@ -37,6 +37,7 @@ import client.command.EnumeratedCommands;
 import client.command.GMCommands;
 import client.command.PlayerCommands;
 import client.command.SupportCommands;
+import client.command.external.CommandLoader;
 
 public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 
@@ -58,7 +59,21 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 		if (heading == '/' || heading == '!' || heading == '@') {
 			String[] sp = s.split(" ");
 			sp[0] = sp[0].toLowerCase().substring(1);
-			if (heading == '@' || heading == '/') {
+			if (ServerConstants.USE_EXTERNAL_COMMAND_LOADER) {
+				if (!CommandLoader.isInitialized()) {
+					try {
+						Output.print("Loading commands.");
+						long startTime = System.currentTimeMillis();
+						CommandLoader.getInstance().load(ServerConstants.COMMAND_JAR_PATH);
+						Output.print("Loading completed in " + ((System.currentTimeMillis() - startTime)) + "ms.");
+					} catch (Exception e) {
+						Output.print("Failed to load commands.");
+						MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
+					}
+				} else if (CommandLoader.isInitialized() && CommandLoader.getInstance().getCommandProcessor() != null) {
+					CommandLoader.getInstance().getCommandProcessor().execute(c, sp, heading);
+				}
+			} else if (heading == '@' || heading == '/') {
 				boolean commandExecuted = true;
 				switch (chr.gmLevel()) {
 					case 5:
