@@ -134,77 +134,77 @@ public class DeveloperCommands extends EnumeratedCommands {
 					break;
 				case pmob:
 					npcId = Integer.parseInt(sub[1]);
-		            mobTime = Integer.parseInt(sub[2]);
-		            xpos = chr.getPosition().x;
-		            ypos = chr.getPosition().y;
-		            fh = chr.getMap().getFootholds().findBelow(chr.getPosition()).getId();
-		            if (sub[2] == null) {
-		                mobTime = 0;
-		            }
-		            MapleMonster mob = MapleLifeFactory.getMonster(npcId);
-		            if (mob != null && !mob.getName().equals("MISSINGNO")) {
-		                mob.setPosition(chr.getPosition());
-		                mob.setCy(ypos);
-		                mob.setRx0(xpos + 50);
-		                mob.setRx1(xpos - 50);
-		                mob.setFh(fh);
-		                try {
-		                    Connection con = DatabaseConnection.getConnection();
-		                    PreparedStatement ps = con.prepareStatement("INSERT INTO spawns ( idd, f, fh, cy, rx0, rx1, type, x, y, mid, mobtime ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
-		                    ps.setInt(1, npcId);
-		                    ps.setInt(2, 0);
-		                    ps.setInt(3, fh);
-		                    ps.setInt(4, ypos);
-		                    ps.setInt(5, xpos + 50);
-		                    ps.setInt(6, xpos - 50);
-		                    ps.setString(7, "m");
-		                    ps.setInt(8, xpos);
-		                    ps.setInt(9, ypos);
-		                    ps.setInt(10, chr.getMapId());
-		                    ps.setInt(11, mobTime);
-		                    ps.executeUpdate();
-		                } catch (SQLException e) {
-		                    chr.dropMessage("Failed to save mob to the database.");
-		                }
-		                chr.getMap().addMonsterSpawn(mob, mobTime, 0);
-		            } else {
-		                chr.dropMessage("You have entered an invalid mob ID.");
-		            }
+					mobTime = Integer.parseInt(sub[2]);
+					xpos = chr.getPosition().x;
+					ypos = chr.getPosition().y;
+					fh = chr.getMap().getFootholds().findBelow(chr.getPosition()).getId();
+					if (sub[2] == null) {
+						mobTime = 0;
+					}
+					MapleMonster mob = MapleLifeFactory.getMonster(npcId);
+					if (mob != null && !mob.getName().equals("MISSINGNO")) {
+						mob.setPosition(chr.getPosition());
+						mob.setCy(ypos);
+						mob.setRx0(xpos + 50);
+						mob.setRx1(xpos - 50);
+						mob.setFh(fh);
+						try {
+							Connection con = DatabaseConnection.getConnection();
+							PreparedStatement ps = con.prepareStatement("INSERT INTO spawns ( idd, f, fh, cy, rx0, rx1, type, x, y, mid, mobtime ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
+							ps.setInt(1, npcId);
+							ps.setInt(2, 0);
+							ps.setInt(3, fh);
+							ps.setInt(4, ypos);
+							ps.setInt(5, xpos + 50);
+							ps.setInt(6, xpos - 50);
+							ps.setString(7, "m");
+							ps.setInt(8, xpos);
+							ps.setInt(9, ypos);
+							ps.setInt(10, chr.getMapId());
+							ps.setInt(11, mobTime);
+							ps.executeUpdate();
+						} catch (SQLException e) {
+							chr.dropMessage("Failed to save mob to the database.");
+						}
+						chr.getMap().addMonsterSpawn(mob, mobTime, 0);
+					} else {
+						chr.dropMessage("You have entered an invalid mob ID.");
+					}
 					break;
 				case pnpc:
 					npcId = Integer.parseInt(sub[1]);
-		            npc = MapleLifeFactory.getNPC(npcId);
-		            xpos = chr.getPosition().x;
-		            ypos = chr.getPosition().y;
-		            fh = chr.getMap().getFootholds().findBelow(chr.getPosition()).getId();
-		            if (npc != null && !npc.getName().equals("MISSINGNO")) {
-		                npc.setPosition(chr.getPosition());
-		                npc.setCy(ypos);
-		                npc.setRx0(xpos + 50);
-		                npc.setRx1(xpos - 50);
-		                npc.setFh(fh);
-		                try {
-		                    Connection con = DatabaseConnection.getConnection();
-		                    PreparedStatement ps = con.prepareStatement("INSERT INTO spawns ( idd, f, fh, cy, rx0, rx1, type, x, y, mid ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
-		                    ps.setInt(1, npcId);
-		                    ps.setInt(2, 0);
-		                    ps.setInt(3, fh);
-		                    ps.setInt(4, ypos);
-		                    ps.setInt(5, xpos + 50);
-		                    ps.setInt(6, xpos - 50);
-		                    ps.setString(7, "n");
-		                    ps.setInt(8, xpos);
-		                    ps.setInt(9, ypos);
-		                    ps.setInt(10, chr.getMapId());
-		                    ps.executeUpdate();
-		                } catch (SQLException e) {
-		                    chr.dropMessage("Failed to save NPC to the database.");
-		                }
-		                chr.getMap().addMapObject(npc);
-		                chr.getMap().broadcastMessage(MaplePacketCreator.spawnNPC(npc));
-		            } else {
-		                chr.dropMessage("You have entered an invalid NPC id.");
-		            }
+					npc = MapleLifeFactory.getNPC(npcId);
+					xpos = chr.getPosition().x;
+					ypos = chr.getPosition().y;
+					fh = chr.getMap().getFootholds().findBelow(chr.getPosition()).getId();
+					if (npc != null && !npc.getName().equals("MISSINGNO")) {
+						npc.setPosition(chr.getPosition());
+						npc.setCy(ypos);
+						npc.setRx0(xpos + 50);
+						npc.setRx1(xpos - 50);
+						npc.setFh(fh);
+						try {
+							Connection con = DatabaseConnection.getConnection();
+							PreparedStatement ps = con.prepareStatement("INSERT INTO spawns ( idd, f, fh, cy, rx0, rx1, type, x, y, mid ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )");
+							ps.setInt(1, npcId);
+							ps.setInt(2, 0);
+							ps.setInt(3, fh);
+							ps.setInt(4, ypos);
+							ps.setInt(5, xpos + 50);
+							ps.setInt(6, xpos - 50);
+							ps.setString(7, "n");
+							ps.setInt(8, xpos);
+							ps.setInt(9, ypos);
+							ps.setInt(10, chr.getMapId());
+							ps.executeUpdate();
+						} catch (SQLException e) {
+							chr.dropMessage("Failed to save NPC to the database.");
+						}
+						chr.getMap().addMapObject(npc);
+						chr.getMap().broadcastMessage(MaplePacketCreator.spawnNPC(npc));
+					} else {
+						chr.dropMessage("You have entered an invalid NPC id.");
+					}
 					break;
 				case reloadblacklist:
 					if (ServerConstants.USE_PARANOIA && ParanoiaConstants.ENABLE_BLACKLISTING && ParanoiaConstants.ALLOW_RELOADBLACKLIST_COMMAND) {
