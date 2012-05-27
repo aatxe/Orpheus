@@ -54,7 +54,7 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 		 * 
 		 * As of May 6th, the daemons should be a little cleaner.
 		 * 
-		 * As of May 27th, daemons are messier because of the CommandLoader.
+		 * As of May 27th, daemons are messier because of CommandLoader and extern commands.
 		 */
 		if (heading == '/' || heading == '!' || heading == '@') {
 			String[] sp = s.split(" ");
@@ -72,6 +72,8 @@ public final class GeneralChatHandler extends net.AbstractMaplePacketHandler {
 					}
 				} else if (CommandLoader.isInitialized() && CommandLoader.getInstance().getCommandProcessor() != null) {
 					CommandLoader.getInstance().getCommandProcessor().execute(c, sp, heading);
+				} else {
+					Output.print("External CommandLoader is broken.");
 				}
 			} else if (heading == '@' || heading == '/') {
 				boolean commandExecuted = true;
