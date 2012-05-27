@@ -109,9 +109,11 @@ public class CommandLoader {
 		while (e.hasMoreElements()) {
 			try {
 				JarEntry je = e.nextElement();
-				Class<?> jarClass = Class.forName(je.getName());
-				Class<? extends Commands> cmdClass = jarClass.asSubclass(Commands.class);
-				commands.add(cmdClass);
+				if (je.getName().endsWith("class") && !je.isDirectory()) {
+					Class<?> jarClass = Class.forName(je.getName());
+					Class<? extends Commands> cmdClass = jarClass.asSubclass(Commands.class);
+					commands.add(cmdClass);
+				}
 			} catch (ClassNotFoundException ex) {
 				MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, ex); // something stupid happened.
 			} catch (ClassCastException ex) {
@@ -126,10 +128,12 @@ public class CommandLoader {
 		while (e.hasMoreElements()) {
 			try {
 				JarEntry je = e.nextElement();
-				Class<?> jarClass = Class.forName(je.getName());
-				Class<? extends AbstractCommandProcessor> cpClass = jarClass.asSubclass(AbstractCommandProcessor.class);
-				Constructor<? extends AbstractCommandProcessor> cpConstructor = cpClass.getConstructor();
-				commandProcessor = cpConstructor.newInstance();
+				if (je.getName().endsWith("class") && !je.isDirectory()) {
+					Class<?> jarClass = Class.forName(je.getName());
+					Class<? extends AbstractCommandProcessor> cpClass = jarClass.asSubclass(AbstractCommandProcessor.class);
+					Constructor<? extends AbstractCommandProcessor> cpConstructor = cpClass.getConstructor();
+					commandProcessor = cpConstructor.newInstance();
+				}
 			} catch (ClassNotFoundException ex) {
 				MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, ex); // something stupid happened.
 			} catch (ClassCastException ex) {
