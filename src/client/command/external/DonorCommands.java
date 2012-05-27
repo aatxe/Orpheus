@@ -110,7 +110,7 @@ public class DonorCommands extends EnumeratedCommands {
 	        int lastPageEntry = (Command.values().length - Math.max(0, Command.values().length - (page * ServerConstants.ENTRIES_PER_PAGE)));
 	        lastPageEntry -= 1;
 			chr.dropMessage(ServerConstants.SERVER_NAME + "'s DonorCommands Help (Page " + page + " / " + pageNumber + ")");
-	        for (int i = lastPageEntry; i <= lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
+	        for (int i = lastPageEntry; i < lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
 				chr.dropMessage(heading + Command.values()[i].name() + " - " + Command.values()[i].getDescription());
 	        }
 		}
