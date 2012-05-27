@@ -2,7 +2,7 @@ INSERT INTO `shops` (`shopid`,`npcid`) VALUES
 (1338,9090000);
 
 INSERT INTO `shopitems` (`shopitemid`,`shopid`,`itemid`,`price`,`position`) VALUES
-(6533,1338,2000000,50,1),
+ (6533,1338,2000000,50,1),
  (6534,1338,2000001,150,2),
  (6535,1338,2000002,300,3),
  (6536,1338,2000003,100,4),
