@@ -53,11 +53,21 @@ public class DeveloperCommands extends EnumeratedCommands {
 		            chr.dropMessage("Position: (" + xpos + ", " + ypos + ")");
 		            chr.dropMessage("Foothold ID: " + fh);
 		            break;
-				case exprate:
-					c.getWorldServer().setExpRate((byte) (Byte.parseByte(sub[1]) % 128));
+				case droprate:
+					c.getWorldServer().setDropRate(Integer.parseInt(sub[1]));
 					for (MapleCharacter mc : c.getWorldServer().getPlayerStorage().getAllCharacters()) {
 						mc.setRates();
 					}
+					Server.getInstance().broadcastMessage(chr.getWorld(), MaplePacketCreator.serverNotice(1, "[Notice] The drop rate has changed to " + sub[1] + "."));
+					chr.message("Done.");
+					break;
+				case exprate:
+					c.getWorldServer().setExpRate(Integer.parseInt(sub[1]));
+					for (MapleCharacter mc : c.getWorldServer().getPlayerStorage().getAllCharacters()) {
+						mc.setRates();
+					}
+					Server.getInstance().broadcastMessage(chr.getWorld(), MaplePacketCreator.serverNotice(1, "[Notice] The experience rate has changed to " + sub[1] + "."));
+					chr.message("Done.");
 					break;
 				case gc:
 		            System.gc();
@@ -79,6 +89,14 @@ public class DeveloperCommands extends EnumeratedCommands {
 					}
 				case horntail:
 					chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(8810026), chr.getPosition());
+					break;
+				case mesorate:
+					c.getWorldServer().setMesoRate(Integer.parseInt(sub[1]));
+					for (MapleCharacter mc : c.getWorldServer().getPlayerStorage().getAllCharacters()) {
+						mc.setRates();
+					}
+					Server.getInstance().broadcastMessage(chr.getWorld(), MaplePacketCreator.serverNotice(1, "[Notice] The meso rate has changed to " + sub[1] + "."));
+					chr.message("Done.");
 					break;
 				case npc:
 					npc = MapleLifeFactory.getNPC(Integer.parseInt(sub[1]));
@@ -331,10 +349,12 @@ public class DeveloperCommands extends EnumeratedCommands {
 	
 	private static enum Command {
 		coords("Prints your current coordinates."),
+		droprate("Sets the server-wide drop rate."),
 		exprate("Sets the server-wide experience rate."),
 		gc("Runs the garbage collector."),
 		help("Displays this help message."),
 		horntail("Summons Horntail at your position."),
+		mesorate("Sets the server-wide meso rate."),
 		npc("Spawns an NPC at your position."),
 		packet("Executes a custom packet."),
 		paranoia("Gathers information about Paranoia."),

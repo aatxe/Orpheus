@@ -13,12 +13,16 @@ public class CommandLoader {
     protected final Map<String, Commands> commands = new HashMap<String, Commands>();
 
     public boolean loadCommands(File file) throws FileNotFoundException, InvalidCommandException {
+    	return this.loadCommands(file, true);
+    }
+    
+    public boolean loadCommands(File file, boolean ignoreIncorrectFiles) throws FileNotFoundException, InvalidCommandException {
     	if (!file.exists()) {
     		throw new FileNotFoundException("CommandLoader: Could not find file: " + file.getName());
     	} else if (file.isDirectory()) {
     		boolean ret = true;
     		for (File f : file.listFiles()) {
-    			ret = ret & loadCommands(f);
+    			ret = ret & loadCommands(f, ignoreIncorrectFiles);
     		}
     	} else if (file.isFile()) {
     		if (file.getName().endsWith("jar")) {
@@ -29,7 +33,7 @@ public class CommandLoader {
 					ex.printStackTrace();
 					throw new InvalidCommandException(-1, "CommandLoader: Unknown error occurred while loading: " + file.getName());
 				}
-    		} else {
+    		} else if (!ignoreIncorrectFiles) {
     			throw new InvalidCommandException(1, "CommandLoader: File is not a jar: " + file.getName());
     		}
     	}

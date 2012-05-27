@@ -49,7 +49,8 @@ import tools.Output;
  */
 public class World {
 
-	private byte id, flag, exprate, droprate, mesorate, bossdroprate;
+	private byte id, flag;
+	private int exprate, droprate, mesorate, bossdroprate;
 	private String eventmsg;
 	private List<Channel> channels = new ArrayList<Channel>();
 	private Map<Integer, MapleParty> parties = new HashMap<Integer, MapleParty>();
@@ -60,7 +61,7 @@ public class World {
 	private Map<Integer, MapleGuildSummary> gsStore = new HashMap<Integer, MapleGuildSummary>();
 	private PlayerStorage players = new PlayerStorage();
 
-	public World(byte world, byte flag, String eventmsg, byte exprate, byte droprate, byte mesorate, byte bossdroprate) {
+	public World(byte world, byte flag, String eventmsg, int exprate, int droprate, int mesorate, int bossdroprate) {
 		this.id = world;
 		this.flag = flag;
 		this.eventmsg = eventmsg;
@@ -100,31 +101,31 @@ public class World {
 		return eventmsg;
 	}
 
-	public byte getExpRate() {
+	public int getExpRate() {
 		return exprate;
 	}
 
-	public void setExpRate(byte exp) {
+	public void setExpRate(int exp) {
 		this.exprate = exp;
 	}
 
-	public byte getDropRate() {
+	public int getDropRate() {
 		return droprate;
 	}
 
-	public void setDropRate(byte drop) {
+	public void setDropRate(int drop) {
 		this.droprate = drop;
 	}
 
-	public byte getMesoRate() {
+	public int getMesoRate() {
 		return mesorate;
 	}
 
-	public void setMesoRate(byte meso) {
+	public void setMesoRate(int meso) {
 		this.mesorate = meso;
 	}
 
-	public byte getBossDropRate() {
+	public int getBossDropRate() {
 		return bossdroprate;
 	}
 

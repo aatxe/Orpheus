@@ -242,8 +242,11 @@ public final class PlayerLoggedinHandler extends AbstractMaplePacketHandler {
 				c.announce(MaplePacketCreator.setNPCScriptable(ScriptableNPCConstants.SCRIPTABLE_NPCS[i], ScriptableNPCConstants.SCRIPTABLE_NPCS_DESC[i]));
 			}
 		}
-		if (ServerConstants.GREET_PLAYERS_ON_LOGIN) {
+		if (ServerConstants.GREET_PLAYERS_ON_LOGIN && !player.isGM()) {
 			Server.getInstance().broadcastMessage(player.getWorld(), MaplePacketCreator.serverNotice(6, "[Notice] " + player.getName() + " has logged in."));
+		}
+		if (ServerConstants.GREET_GMS_ON_LOGIN && player.isGM()) {
+			Server.getInstance().broadcastMessage(player.getWorld(), MaplePacketCreator.serverNotice(6, "[Notice] " + player.getName() + " (" + player.getStaffRank() + ") has logged in."));
 		}
 	}
 }
