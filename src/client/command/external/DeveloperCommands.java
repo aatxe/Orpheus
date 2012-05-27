@@ -113,17 +113,16 @@ public class DeveloperCommands extends EnumeratedCommands {
 					break;
 				case paranoia:
 					if (ParanoiaConstants.ALLOW_QUERY_COMMAND) {
-						try {
-							String k = sub[1];
-							if (k == "help") {
+						if (sub.length > 2) {
+							if (sub[1] == "help") {
 								chr.dropMessage("Paranoia Information Querying Help");
 								for (ParanoiaInformation pi : ParanoiaInformation.values()) {
 									chr.dropMessage(pi.name() + " - " + pi.explain());
 								}
 							} else {
-								chr.dropMessage(ParanoiaInformationHandler.getFormattedValue(k));
+								chr.dropMessage(ParanoiaInformationHandler.getFormattedValue(sub[1]));
 							}
-						} catch (ArrayIndexOutOfBoundsException e) {
+						} else {
 							chr.dropMessage("Usage: !paranoia value || !paranoia help");
 						}
 					} else {
@@ -215,6 +214,20 @@ public class DeveloperCommands extends EnumeratedCommands {
 						chr.dropMessage("Blacklisting is disabled on the server.");
 					} else if (!ParanoiaConstants.ALLOW_RELOADBLACKLIST_COMMAND) {
 						chr.dropMessage("Reloading blacklist is forbidden by the server.");
+					}
+					break;
+				case reloadcommands:
+					if (ServerConstants.USE_EXTERNAL_COMMAND_LOADER) {
+						CommandLoader.clean();
+						try {
+							CommandLoader.getInstance().load(ServerConstants.COMMAND_JAR_PATH);
+							chr.message("Done.");
+						} catch (Exception e) {
+							chr.dropMessage("Reload failed. Check exceptions.log.");
+							MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
+						}
+					} else {
+						chr.dropMessage("The server does not use external command loading.");
 					}
 					break;
 				case say:
@@ -356,6 +369,7 @@ public class DeveloperCommands extends EnumeratedCommands {
 		pnpc("Permanently spawns an NPC at your position."),
 		pinkbean("Summons Pinkbean at your position."),
 		reloadblacklist("Reloads the Paranoia blacklist."),
+		reloadcommands("Reloads the external commands."),
 		say("Forces a victim to say something."),
 		shutdown("Shutdowns the server."),
 		sql("Executes an SQL query."),
