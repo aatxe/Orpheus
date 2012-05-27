@@ -115,17 +115,16 @@ public class DeveloperCommands extends EnumeratedCommands {
 					break;
 				case paranoia:
 					if (ParanoiaConstants.ALLOW_QUERY_COMMAND) {
-						try {
-							String k = sub[1];
-							if (k == "help") {
+						if (sub.length > 2) {
+							if (sub[1] == "help") {
 								chr.dropMessage("Paranoia Information Querying Help");
 								for (ParanoiaInformation pi : ParanoiaInformation.values()) {
 									chr.dropMessage(pi.name() + " - " + pi.explain());
 								}
 							} else {
-								chr.dropMessage(ParanoiaInformationHandler.getFormattedValue(k));
+								chr.dropMessage(ParanoiaInformationHandler.getFormattedValue(sub[1]));
 							}
-						} catch (ArrayIndexOutOfBoundsException e) {
+						} else {
 							chr.dropMessage("Usage: !paranoia value || !paranoia help");
 						}
 					} else {
