@@ -10,4 +10,4 @@ An external CommandLoader is the fancy terminology for Orpheus' new command syst
 Well, that's not a problem! It can be disabled easily! Simply head over to your ServerConstants and turn off the setting that enables the usage of the command loader! That's it!
 
 ## Special Thanks ##
-Thanks to @angelsl for the idea!
+Thanks to [angelsl](https://github.com/angelsl) for the idea!
