@@ -223,6 +223,11 @@ public class PlayerCommands extends EnumeratedCommands {
 						chr.dropMessage("Note: [H] means Hardcore Character, [HD] means Dead Hardcore Character.");
 					}
 					break;
+				case rates:
+					chr.dropMessage(ServerConstants.SERVER_NAME + " Rates");
+					chr.dropMessage("Experience: x" + chr.getClient().getWorldServer().getExpRate());
+					chr.dropMessage("Mesos: x" + chr.getClient().getWorldServer().getMesoRate());
+					chr.dropMessage("Drop: x" + chr.getClient().getWorldServer().getDropRate());
 				case rebirth:
 					if (chr.getLevel() >= chr.getMaxLevel()) {
 						if (sub[1].equalsIgnoreCase("standard") || sub[1].equalsIgnoreCase("beginner")) {
@@ -429,6 +434,7 @@ public class PlayerCommands extends EnumeratedCommands {
 		quit("Allows you to quickly exit from the game."),
 		rank("Checks your rank in the rankings."),
 		rankings("Displays the top 10 players."),
+		rates("Checks the server's rates."),
 		rebirth("Allows you to reborn at max level."), 
 		rebirths("Displays your rebirths."), 
 		save("Saves your character to the database."),
