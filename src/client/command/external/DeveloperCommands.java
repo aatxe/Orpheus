@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import net.server.Channel;
+import net.server.Server;
 import paranoia.BlacklistHandler;
 import paranoia.ParanoiaInformation;
 import paranoia.ParanoiaInformationHandler;
-import constants.ParanoiaConstants;
-import constants.ServerConstants;
 import server.TimerManager;
 import server.life.MapleLifeFactory;
 import server.life.MapleMonster;
@@ -16,10 +16,10 @@ import server.life.MapleNPC;
 import tools.DatabaseConnection;
 import tools.MapleLogger;
 import tools.MaplePacketCreator;
-import net.server.Channel;
-import net.server.Server;
 import client.MapleCharacter;
 import client.MapleClient;
+import constants.ParanoiaConstants;
+import constants.ServerConstants;
 
 public class DeveloperCommands extends EnumeratedCommands {
 	private static final int gmLevel = 4;
@@ -334,15 +334,14 @@ public class DeveloperCommands extends EnumeratedCommands {
 				chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
 			}
 		} else {
-	        if (page > pageNumber) {
-	        	page = pageNumber;
-	        }
-	        int lastPageEntry = (Command.values().length - Math.max(0, Command.values().length - (page * ServerConstants.ENTRIES_PER_PAGE)));
-	        lastPageEntry -= 1;
+			if (page > pageNumber) {
+				page = pageNumber;
+			}
+			int lastPageEntry = Math.min(0, (page - 1) * ServerConstants.ENTRIES_PER_PAGE);
 			chr.dropMessage(ServerConstants.SERVER_NAME + "'s DeveloperCommands Help (Page " + page + " / " + pageNumber + ")");
-	        for (int i = lastPageEntry; i < lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
+			for (int i = lastPageEntry; i < lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
 				chr.dropMessage(heading + Command.values()[i].name() + " - " + Command.values()[i].getDescription());
-	        }
+			}
 		}
 	}
 	

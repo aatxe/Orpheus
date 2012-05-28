@@ -104,15 +104,14 @@ public class DonorCommands extends EnumeratedCommands {
 				chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
 			}
 		} else {
-	        if (page > pageNumber) {
-	        	page = pageNumber;
-	        }
-	        int lastPageEntry = (Command.values().length - Math.max(0, Command.values().length - (page * ServerConstants.ENTRIES_PER_PAGE)));
-	        lastPageEntry -= 1;
+			if (page > pageNumber) {
+				page = pageNumber;
+			}
+			int lastPageEntry = Math.min(0, (page - 1) * ServerConstants.ENTRIES_PER_PAGE);
 			chr.dropMessage(ServerConstants.SERVER_NAME + "'s DonorCommands Help (Page " + page + " / " + pageNumber + ")");
-	        for (int i = lastPageEntry; i < lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
+			for (int i = lastPageEntry; i < lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
 				chr.dropMessage(heading + Command.values()[i].name() + " - " + Command.values()[i].getDescription());
-	        }
+			}
 		}
 	}
 	

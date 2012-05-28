@@ -4,19 +4,19 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.sql.ResultSet;
+import net.server.Channel;
+import net.server.Server;
 import server.MapleInventoryManipulator;
 import tools.MapleLogger;
 import tools.MaplePacketCreator;
-import constants.ItemConstants;
-import constants.ParanoiaConstants;
-import constants.ServerConstants;
-import net.server.Channel;
-import net.server.Server;
 import client.MapleCharacter;
 import client.MapleClient;
 import client.MapleJob;
 import client.MaplePet;
 import client.MapleRank;
+import constants.ItemConstants;
+import constants.ParanoiaConstants;
+import constants.ServerConstants;
 
 public class SupportCommands extends EnumeratedCommands {
 	private static final int gmLevel = 2;
@@ -183,15 +183,14 @@ public class SupportCommands extends EnumeratedCommands {
 				chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
 			}
 		} else {
-	        if (page > pageNumber) {
-	        	page = pageNumber;
-	        }
-	        int lastPageEntry = (Command.values().length - Math.max(0, Command.values().length - (page * ServerConstants.ENTRIES_PER_PAGE)));
-	        lastPageEntry -= 1;
+			if (page > pageNumber) {
+				page = pageNumber;
+			}
+			int lastPageEntry = Math.min(0, (page - 1) * ServerConstants.ENTRIES_PER_PAGE);
 			chr.dropMessage(ServerConstants.SERVER_NAME + "'s SupportCommands Help (Page " + page + " / " + pageNumber + ")");
-	        for (int i = lastPageEntry; i < lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
+			for (int i = lastPageEntry; i < lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
 				chr.dropMessage(heading + Command.values()[i].name() + " - " + Command.values()[i].getDescription());
-	        }
+			}
 		}
 	}
 	

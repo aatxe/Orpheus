@@ -5,13 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.List;
-import constants.ParanoiaConstants;
-import constants.ServerConstants;
+import net.server.Channel;
+import net.server.Server;
 import paranoia.BlacklistHandler;
 import provider.MapleData;
 import provider.MapleDataProviderFactory;
-import net.server.Channel;
-import net.server.Server;
 import scripting.npc.NPCScriptManager;
 import server.MapleItemInformationProvider;
 import server.MapleShopFactory;
@@ -32,6 +30,8 @@ import client.MapleInventoryType;
 import client.MapleJob;
 import client.MapleStat;
 import client.SkillFactory;
+import constants.ParanoiaConstants;
+import constants.ServerConstants;
 
 public class GMCommands extends EnumeratedCommands {
 	private static final int gmLevel = 3;
@@ -449,15 +449,14 @@ public class GMCommands extends EnumeratedCommands {
 				chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
 			}
 		} else {
-	        if (page > pageNumber) {
-	        	page = pageNumber;
-	        }
-	        int lastPageEntry = (Command.values().length - Math.max(0, Command.values().length - (page * ServerConstants.ENTRIES_PER_PAGE)));
-	        lastPageEntry -= 1;
+			if (page > pageNumber) {
+				page = pageNumber;
+			}
+			int lastPageEntry = Math.min(0, (page - 1) * ServerConstants.ENTRIES_PER_PAGE);
 			chr.dropMessage(ServerConstants.SERVER_NAME + "'s GMCommands Help (Page " + page + " / " + pageNumber + ")");
-	        for (int i = lastPageEntry; i < lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
+			for (int i = lastPageEntry; i < lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
 				chr.dropMessage(heading + Command.values()[i].name() + " - " + Command.values()[i].getDescription());
-	        }
+			}
 		}
 	}
 	

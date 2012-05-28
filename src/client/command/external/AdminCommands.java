@@ -1,12 +1,12 @@
 package client.command.external;
 
 import java.sql.ResultSet;
-import tools.MapleLogger;
-import constants.ParanoiaConstants;
-import constants.ServerConstants;
 import net.server.Channel;
+import tools.MapleLogger;
 import client.MapleCharacter;
 import client.MapleClient;
+import constants.ParanoiaConstants;
+import constants.ServerConstants;
 
 public class AdminCommands extends EnumeratedCommands {
 	private static final int gmLevel = 5;
@@ -81,15 +81,14 @@ public class AdminCommands extends EnumeratedCommands {
 				chr.dropMessage(heading + cmd.name() + " - " + cmd.getDescription());
 			}
 		} else {
-	        if (page > pageNumber) {
-	        	page = pageNumber;
-	        }
-	        int lastPageEntry = (Command.values().length - Math.max(0, Command.values().length - (page * ServerConstants.ENTRIES_PER_PAGE)));
-	        lastPageEntry -= 1;
+			if (page > pageNumber) {
+				page = pageNumber;
+			}
+			int lastPageEntry = Math.min(0, (page - 1) * ServerConstants.ENTRIES_PER_PAGE);
 			chr.dropMessage(ServerConstants.SERVER_NAME + "'s AdminCommands Help (Page " + page + " / " + pageNumber + ")");
-	        for (int i = lastPageEntry; i < lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
+			for (int i = lastPageEntry; i < lastPageEntry + ServerConstants.ENTRIES_PER_PAGE; i++) {
 				chr.dropMessage(heading + Command.values()[i].name() + " - " + Command.values()[i].getDescription());
-	        }
+			}
 		}
 	}
 	
