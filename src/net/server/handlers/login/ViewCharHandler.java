@@ -25,6 +25,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import constants.ServerConstants;
 import client.MapleCharacter;
 import client.MapleClient;
 import tools.DatabaseConnection;
@@ -35,7 +36,12 @@ import tools.data.input.SeekableLittleEndianAccessor;
 public final class ViewCharHandler extends AbstractMaplePacketHandler {
 	public final void handlePacket(SeekableLittleEndianAccessor slea, MapleClient c) {
 		try {
-			PreparedStatement ps = DatabaseConnection.getConnection().prepareStatement("SELECT world, id FROM characters WHERE accountid = ?");
+			PreparedStatement ps;
+			if (ServerConstants.ENABLE_HARDCORE_MODE) {
+				ps = DatabaseConnection.getConnection().prepareStatement("SELECT world, id FROM characters WHERE accountid = ? AND dead != 1");
+			} else {
+				ps = DatabaseConnection.getConnection().prepareStatement("SELECT world, id FROM characters WHERE accountid = ?");
+			}
 			ps.setInt(1, c.getAccID());
 			short charsNum = 0;
 			List<Byte> worlds = new ArrayList<Byte>();

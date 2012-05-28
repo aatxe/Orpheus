@@ -242,6 +242,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	private int[] viptrockmaps = new int[10];
 	private Map<String, MapleEvents> events = new LinkedHashMap<String, MapleEvents>();
 	private PartyQuest partyQuest = null;
+	private boolean hardcore = false;
+	private boolean dead = false;
 
 	private MapleCharacter() {
 		setStance(0);
@@ -1289,6 +1291,11 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		if (!entered.containsKey(mapid)) {
 			entered.put(mapid, script);
 		}
+	}
+
+	public void enterHardcore() {
+		hardcore = true;
+		saveToDB(true);
 	}
 
 	public void equipChanged() {
@@ -2397,6 +2404,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		return gmLevel > 1;
 	}
 
+	public boolean isHardcoreMode() {
+		return hardcore && ServerConstants.ENABLE_HARDCORE_MODE;
+	}
+	
 	public boolean isHidden() {
 		return hidden;
 	}
@@ -2600,6 +2611,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			ret.vanquisherStage = rs.getInt("vanquisherStage");
 			ret.dojoPoints = rs.getInt("dojoPoints");
 			ret.dojoStage = rs.getInt("lastDojoStage");
+			if (ServerConstants.ENABLE_HARDCORE_MODE) {
+				ret.hardcore = rs.getInt("hardcore") == 1;
+				ret.dead = rs.getInt("dead") == 1;
+			}
 			if (ret.guildid > 0) {
 				ret.mgc = new MapleGuildCharacter(ret);
 			}
@@ -3041,6 +3056,11 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			client.announce(MaplePacketCreator.cancelChair(-1));
 			getMap().broadcastMessage(this, MaplePacketCreator.showChair(getId(), 0), false);
 		}
+		if (isHardcoreMode()) {
+			dead = true;
+			saveToDB(true);
+			client.disconnect();
+		}
 		client.announce(MaplePacketCreator.enableActions());
 	}
 
@@ -3410,10 +3430,18 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			con.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
 			con.setAutoCommit(false);
 			PreparedStatement ps;
-			if (update) {
-				ps = con.prepareStatement("UPDATE characters SET level = ?, fame = ?, str = ?, dex = ?, luk = ?, `int` = ?, exp = ?, gachaexp = ?, hp = ?, mp = ?, maxhp = ?, maxmp = ?, sp = ?, ap = ?, rebirths = ?, gm = ?, skincolor = ?, gender = ?, job = ?, hair = ?, face = ?, map = ?, meso = ?, hpMpUsed = ?, spawnpoint = ?, party = ?, buddyCapacity = ?, messengerid = ?, messengerposition = ?, mountlevel = ?, mountexp = ?, mounttiredness= ?, equipslots = ?, useslots = ?, setupslots = ?, etcslots = ?,  monsterbookcover = ?, vanquisherStage = ?, dojoPoints = ?, lastDojoStage = ?, finishedDojoTutorial = ?, vanquisherKills = ?, matchcardwins = ?, matchcardlosses = ?, matchcardties = ?, omokwins = ?, omoklosses = ?, omokties = ? WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
+			if (ServerConstants.ENABLE_HARDCORE_MODE) {
+				if (update) {
+					ps = con.prepareStatement("UPDATE characters SET level = ?, fame = ?, str = ?, dex = ?, luk = ?, `int` = ?, exp = ?, gachaexp = ?, hp = ?, mp = ?, maxhp = ?, maxmp = ?, sp = ?, ap = ?, rebirths = ?, gm = ?, skincolor = ?, gender = ?, job = ?, hair = ?, face = ?, map = ?, meso = ?, hpMpUsed = ?, spawnpoint = ?, party = ?, buddyCapacity = ?, messengerid = ?, messengerposition = ?, mountlevel = ?, mountexp = ?, mounttiredness= ?, equipslots = ?, useslots = ?, setupslots = ?, etcslots = ?,  monsterbookcover = ?, vanquisherStage = ?, dojoPoints = ?, lastDojoStage = ?, finishedDojoTutorial = ?, vanquisherKills = ?, matchcardwins = ?, matchcardlosses = ?, matchcardties = ?, omokwins = ?, omoklosses = ?, omokties = ?, hardcore = ?, dead = ? WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
+				} else {
+					ps = con.prepareStatement("INSERT INTO characters (level, fame, str, dex, luk, `int`, exp, gachaexp, hp, mp, maxhp, maxmp, sp, ap, rebirths, gm, skincolor, gender, job, hair, face, map, meso, hpMpUsed, spawnpoint, party, buddyCapacity, messengerid, messengerposition, mountlevel, mounttiredness, mountexp, equipslots, useslots, setupslots, etcslots, monsterbookcover, vanquisherStage, dojopoints, lastDojoStage, finishedDojoTutorial, vanquisherKills, matchcardwins, matchcardlosses, matchcardties, omokwins, omoklosses, omokties, hardcore, dead, accountid, name, world) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+				}
 			} else {
-				ps = con.prepareStatement("INSERT INTO characters (level, fame, str, dex, luk, `int`, exp, gachaexp, hp, mp, maxhp, maxmp, sp, ap, rebirths, gm, skincolor, gender, job, hair, face, map, meso, hpMpUsed, spawnpoint, party, buddyCapacity, messengerid, messengerposition, mountlevel, mounttiredness, mountexp, equipslots, useslots, setupslots, etcslots, monsterbookcover, vanquisherStage, dojopoints, lastDojoStage, finishedDojoTutorial, vanquisherKills, matchcardwins, matchcardlosses, matchcardties, omokwins, omoklosses, omokties, accountid, name, world) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+				if (update) {
+					ps = con.prepareStatement("UPDATE characters SET level = ?, fame = ?, str = ?, dex = ?, luk = ?, `int` = ?, exp = ?, gachaexp = ?, hp = ?, mp = ?, maxhp = ?, maxmp = ?, sp = ?, ap = ?, rebirths = ?, gm = ?, skincolor = ?, gender = ?, job = ?, hair = ?, face = ?, map = ?, meso = ?, hpMpUsed = ?, spawnpoint = ?, party = ?, buddyCapacity = ?, messengerid = ?, messengerposition = ?, mountlevel = ?, mountexp = ?, mounttiredness= ?, equipslots = ?, useslots = ?, setupslots = ?, etcslots = ?,  monsterbookcover = ?, vanquisherStage = ?, dojoPoints = ?, lastDojoStage = ?, finishedDojoTutorial = ?, vanquisherKills = ?, matchcardwins = ?, matchcardlosses = ?, matchcardties = ?, omokwins = ?, omoklosses = ?, omokties = ? WHERE id = ?", Statement.RETURN_GENERATED_KEYS);
+				} else {
+					ps = con.prepareStatement("INSERT INTO characters (level, fame, str, dex, luk, `int`, exp, gachaexp, hp, mp, maxhp, maxmp, sp, ap, rebirths, gm, skincolor, gender, job, hair, face, map, meso, hpMpUsed, spawnpoint, party, buddyCapacity, messengerid, messengerposition, mountlevel, mounttiredness, mountexp, equipslots, useslots, setupslots, etcslots, monsterbookcover, vanquisherStage, dojopoints, lastDojoStage, finishedDojoTutorial, vanquisherKills, matchcardwins, matchcardlosses, matchcardties, omokwins, omoklosses, omokties, accountid, name, world) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+				}
 			}
 			if (gmLevel < 1 && level > 199) {
 				ps.setInt(1, isCygnus() ? 120 : 200);
@@ -3510,12 +3538,24 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			ps.setInt(46, omokwins);
 			ps.setInt(47, omoklosses);
 			ps.setInt(48, omokties);
-			if (update) {
-				ps.setInt(49, id);
+			if (ServerConstants.ENABLE_HARDCORE_MODE) {
+				ps.setInt(49, hardcore ? 1 : 0);
+				ps.setInt(50, dead ? 1 : 0);
+				if (update) {
+					ps.setInt(51, id);
+				} else {
+					ps.setInt(51, accountid);
+					ps.setString(52, name);
+					ps.setInt(53, world);
+				}
 			} else {
-				ps.setInt(49, accountid);
-				ps.setString(50, name);
-				ps.setInt(51, world);
+				if (update) {
+					ps.setInt(49, id);
+				} else {
+					ps.setInt(49, accountid);
+					ps.setString(50, name);
+					ps.setInt(51, world);
+				}
 			}
 			int updateRows = ps.executeUpdate();
 			if (!update) {
@@ -3826,6 +3866,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			} else {
 				this.expRate = worldz.getExpRate();
 			}
+		}
+		if (isHardcoreMode()) {
+			this.expRate *= 2;
+			this.mesoRate *= 2;
 		}
 	}
 

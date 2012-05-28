@@ -137,6 +137,13 @@ public class PlayerCommands extends EnumeratedCommands {
 					} catch (SQLException e) {
 					}
 					break;
+				case hardcore:
+					if (ServerConstants.ENABLE_HARDCORE_MODE) {
+						chr.enterHardcore();
+						chr.dropMessage("You will now receive 2X experience and mesos, but death means the end of your journey.");
+					} else {
+						chr.dropMessage("Hardcore Mode is disabled by the server. Sorry!");
+					}
 				case heal:
 					cost = ((chr.getMaxHp() / 4) * (chr.getMaxHp() / 4));
 					if (chr.getMeso() >= cost && chr.getHp() < chr.getMaxHp()) {
@@ -201,11 +208,19 @@ public class PlayerCommands extends EnumeratedCommands {
 					int i = 1;
 					try {
 						while (rs.next()) {
-							chr.dropMessage(i + ". " + rs.getString("name") + " (Level " + rs.getInt("level") + " " + MapleJob.getById(rs.getInt("job")).toString() + ") - " + rs.getInt("rebirths") + " Rebirths.");
+							if (ServerConstants.ENABLE_HARDCORE_MODE && rs.getInt("hardcore") == 1) {
+								String tag = (rs.getInt("dead") == 1) ? "HD" : "H";
+								chr.dropMessage(i + ". " + rs.getString("name") + "[" + tag + "] (Level " + rs.getInt("level") + " " + MapleJob.getById(rs.getInt("job")).toString() + ") - " + rs.getInt("rebirths") + " Rebirths.");
+							} else {
+								chr.dropMessage(i + ". " + rs.getString("name") + " (Level " + rs.getInt("level") + " " + MapleJob.getById(rs.getInt("job")).toString() + ") - " + rs.getInt("rebirths") + " Rebirths.");
+							}
 							i++;
 						}
 					} catch (SQLException e) {
 						MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
+					}
+					if (ServerConstants.ENABLE_HARDCORE_MODE) {
+						chr.dropMessage("Note: [H] means Hardcore Character, [HD] means Dead Hardcore Character.");
 					}
 					break;
 				case rebirth:
@@ -344,10 +359,18 @@ public class PlayerCommands extends EnumeratedCommands {
 		try {
 			Connection con = (Connection) DatabaseConnection.getConnection();
 			PreparedStatement ps;
-			if (!noGMs) {
-				ps = (PreparedStatement) con.prepareStatement("SELECT rebirths, level, name, job FROM characters WHERE gm < 2 ORDER BY rebirths DESC, level DESC, name DESC LIMIT 10");
+			if (ServerConstants.ENABLE_HARDCORE_MODE) {
+				if (!noGMs) {
+					ps = (PreparedStatement) con.prepareStatement("SELECT rebirths, level, name, job, hardcore, dead FROM characters WHERE gm < 2 ORDER BY rebirths DESC, level DESC, name DESC LIMIT 10");
+				} else {
+					ps = (PreparedStatement) con.prepareStatement("SELECT rebirths, level, name, job, hardcore, dead FROM characters ORDER BY rebirths DESC, level DESC, name DESC LIMIT 10");
+				}
 			} else {
-				ps = (PreparedStatement) con.prepareStatement("SELECT rebirths, level, name, job FROM characters ORDER BY rebirths DESC, level DESC, name DESC LIMIT 10");
+				if (!noGMs) {
+					ps = (PreparedStatement) con.prepareStatement("SELECT rebirths, level, name, job FROM characters WHERE gm < 2 ORDER BY rebirths DESC, level DESC, name DESC LIMIT 10");
+				} else {
+					ps = (PreparedStatement) con.prepareStatement("SELECT rebirths, level, name, job FROM characters ORDER BY rebirths DESC, level DESC, name DESC LIMIT 10");
+				}
 			}
 			return ps.executeQuery();
 		} catch (SQLException ex) {
@@ -398,6 +421,7 @@ public class PlayerCommands extends EnumeratedCommands {
 		emo("Kills yourself."),
 		fmnpc("Shortcut to the FM NPC, Charles."),
 		gmlist("Presents a list of all GMs."),
+		hardcore("Opts into hardcore mode, where experience is plentiful, and death is permanent."),
 		heal("Heals you, for a fee."),
 		help("Displays this help message."),
 		kin("Opens a conversation with Kin."),
