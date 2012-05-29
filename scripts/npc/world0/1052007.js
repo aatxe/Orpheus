@@ -25,12 +25,12 @@ oldSelection = -1;
 
 function start() {
     var text = "Here's the ticket reader.";
-    if (cm.haveItem(4031713) || cm.haveItem(4031036) || cm.haveItem(4031037) || cm.haveItem(4031038))
+    if (cm.haveItem(4031711) || cm.haveItem(4031036) || cm.haveItem(4031037) || cm.haveItem(4031038))
         text += " You will be brought in inmmediately. Which ticket you would like to use?#b";
     else
         close = true;
-    if (cm.haveItem(4031713))
-        text += "\r\n#L3##t4031713#";
+    if (cm.haveItem(4031711))
+        text += "\r\n#L3##t4031711#";
     for (var i = 0; i < 3; i++)
         if (cm.haveItem(4031036 + i))
             text += "\r\n#L" + i + "##t" + (4031036 + i) +"#";
@@ -64,7 +64,7 @@ function action(mode, type, selection) {
         oldSelection = selection;
     } else if (status == 1) {
         if (oldSelection == 3) {
-            cm.gainItem(4031713, -1);
+            cm.gainItem(4031711, -1);
             cm.warp(600010004);
         } else {
             cm.gainItem(4031036 + oldSelection, -1);
