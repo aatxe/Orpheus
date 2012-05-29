@@ -163,6 +163,7 @@ public class PlayerCommands extends EnumeratedCommands {
 					} else {
 						chr.dropMessage("Hardcore Mode is disabled by the server. Sorry!");
 					}
+					break;
 				case heal:
 					cost = ((chr.getMaxHp() / 4) * (chr.getMaxHp() / 4));
 					if (chr.getMeso() >= cost && chr.getHp() < chr.getMaxHp()) {
@@ -445,7 +446,7 @@ public class PlayerCommands extends EnumeratedCommands {
 		emo("Kills yourself."),
 		fmnpc("Shortcut to the FM NPC, Charles."),
 		gmlist("Presents a list of all GMs."),
-		hardcore("Opts into hardcore mode, where experience is plentiful, and death is permanent."),
+		hardcore("Enter hardcore mode, where experience is plentiful, and death is permanent."),
 		heal("Heals you, for a fee."),
 		help("Displays this help message."),
 		kin("Opens a conversation with Kin."),
