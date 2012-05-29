@@ -30,16 +30,16 @@
 **/
 
 function start() {
-    if(cm.haveItem(4031045)){
+    if (cm.haveItem(4031045)) {
         var em = cm.getEventManager("Boats");
-        if (em.getProperty("entry") == "true")
+        if (em.getProperty("entry") == "true") {
             cm.sendYesNo("Do you wants to go to Orbis?");
-        else{
+        } else {
             cm.sendOk("The boat to Orbis is ready to take off, please be patience for next one.");
             cm.dispose();
         }
-    }else{
-        cm.sendOk("Make sure you got a Orbis ticket to travel in this boat. Check your inventory.");
+    } else {
+        cm.sendOk("You don't seem to have a #b#t4031045##k! You'll need one to get on the boat! Go buy one from Joel!");
         cm.dispose();
     }
 }
