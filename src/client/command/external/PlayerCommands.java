@@ -48,6 +48,25 @@ public class PlayerCommands extends EnumeratedCommands {
 					chr.setChalkboard("");
 					chr.dropMessage("Welcome back!");
 					break;
+				case birthday:
+					if (sub.length >= 2) {
+						try {
+							String[] birthday = sub[1].split("-");
+							if (birthday[0].length() == 4) {
+								c.setBirthday(birthday[1], birthday[2], birthday[0]);
+							} else {
+								c.setBirthday(birthday[0], birthday[1], birthday[2]);
+							}
+							chr.dropMessage("Your birthday is set! You may need to relog for this to take effect!");
+						} catch (Exception e) {
+							chr.dropMessage("Birthday: ");
+							chr.dropMessage("To use, proceed the command by your birthday in either YYYY-MM-DD or MM-DD-YYYY format.");
+						}
+					} else {
+						chr.dropMessage("Birthday: ");
+						chr.dropMessage("To use, proceed the command by your birthday in either YYYY-MM-DD or MM-DD-YYYY format.");
+					}
+					break;
 				case bugs:
 					chr.dropMessage("Report bugs at https://github.com/aaronweiss74/Orpheus/issues");
 					break;
@@ -413,6 +432,7 @@ public class PlayerCommands extends EnumeratedCommands {
 	private static enum Command {
 		afk("Marks you as away, or with an optional message."),
 		back("Marks you as returned."),
+		birthday("Sets your birthday for the Cash Shop!"),
 		bugs("Tells players where to report bugs!"),
 		buy("Purchases a rice cake for 1,000,000,000 mesos."), 
 		checkgm("Checks if a specified player is a GM."), 
