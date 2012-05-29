@@ -65,6 +65,7 @@ import tools.MaplePacketCreator;
 import tools.HexTool;
 import tools.Output;
 import org.apache.mina.core.session.IoSession;
+import constants.ServerConstants;
 import server.MapleMiniGame;
 import server.quest.MapleQuest;
 import tools.MapleLogger;
@@ -188,7 +189,11 @@ public class MapleClient {
 		PreparedStatement ps;
 		List<CharNameAndId> chars = new ArrayList<CharNameAndId>(15);
 		try {
-			ps = DatabaseConnection.getConnection().prepareStatement("SELECT id, name FROM characters WHERE accountid = ? AND world = ?");
+			if (ServerConstants.ENABLE_HARDCORE_MODE) {
+				ps = DatabaseConnection.getConnection().prepareStatement("SELECT id, name FROM characters WHERE accountid = ? AND world = ? AND dead != 1");
+			} else {
+				ps = DatabaseConnection.getConnection().prepareStatement("SELECT id, name FROM characters WHERE accountid = ? AND world = ?");
+			}
 			ps.setInt(1, this.getAccID());
 			ps.setInt(2, serverId);
 			ResultSet rs = ps.executeQuery();

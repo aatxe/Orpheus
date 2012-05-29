@@ -854,11 +854,14 @@ public class MaplePacketCreator {
 		mplew.writeShort(SendOpcode.CHARLIST.getValue());
 		mplew.write(0);
 		List<MapleCharacter> chars = c.loadCharacters(serverId);
-		mplew.write((byte) chars.size());
+		byte length = (byte) chars.size();
 		for (MapleCharacter chr : chars) {
 			if (chr.isHardcoreDead()) {
-				continue;
+				length--;
 			}
+		}
+		mplew.write(length);
+		for (MapleCharacter chr : chars) {
 			addCharEntry(mplew, chr, false);
 		}
 		if (ServerConstants.ENABLE_PIC) {
