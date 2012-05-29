@@ -2379,6 +2379,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	public boolean isAlive() {
 		return hp > 0;
 	}
+	
+	public boolean isHardcoreDead() {
+		return dead;
+	}
 
 	public boolean isBuffFrom(MapleBuffStat stat, ISkill skill) {
 		MapleBuffStatValueHolder mbsvh = effects.get(stat);

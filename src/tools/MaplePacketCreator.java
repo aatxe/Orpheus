@@ -856,6 +856,9 @@ public class MaplePacketCreator {
 		List<MapleCharacter> chars = c.loadCharacters(serverId);
 		mplew.write((byte) chars.size());
 		for (MapleCharacter chr : chars) {
+			if (chr.isHardcoreDead()) {
+				continue;
+			}
 			addCharEntry(mplew, chr, false);
 		}
 		if (ServerConstants.ENABLE_PIC) {
