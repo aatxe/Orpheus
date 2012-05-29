@@ -23,7 +23,7 @@ package constants;
 
 public class ServerConstants {
 	public static short VERSION = 83; // MapleStory version number
-	public static String ORPHEUS_VERSION = "5/28/12"; // date of version publishing
+	public static String ORPHEUS_VERSION = "5/29/12"; // date of version publishing
 	public static final String SERVER_NAME = "OrpheusMS"; // Server's name
 	public static final String TIP_NAME = "OrpheusTip"; // Tip Name for automsg
 	public static String[] WORLD_NAMES = {"Scania", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
@@ -35,8 +35,8 @@ public class ServerConstants {
 	// Orpheus Source Configuration
 	public static final boolean USE_EXTERNAL_COMMAND_LOADER = true; // if true, commands will be loaded externally. (Beginners should set to false)
 	public static final String COMMAND_JAR_PATH = "dist/Commands.jar"; // path to Commands, also supports loading all jars in a directory.
-	public static final boolean USE_PARANOIA = true; // use Orpheus' everything logger, Paranoia.
-	public static final boolean MAKE_NPCS_SCRIPTABLE = true; // Makes NPCs scriptable. (Setup in ScriptableNPCConstants)
+	public static final boolean USE_PARANOIA = true; // if true, server uses Orpheus' everything logger, Paranoia.
+	public static final boolean MAKE_NPCS_SCRIPTABLE = true; // if true, the server will force NPCs to be scriptable. (Setup in ScriptableNPCConstants)
 	public static final int MAX_CHAT_MESSAGE_LENGTH = Byte.MAX_VALUE; // the number of characters allowed in chat messages. (fixes DC hax)
 	public static final boolean PAGINATE_HELP = true; // if true, help messages will be displayed in pages.
 	public static final short ENTRIES_PER_PAGE = 8; // the number of entries to display on each page.
@@ -55,7 +55,7 @@ public class ServerConstants {
 	public static final boolean AUTO_UNSTUCK_ACCOUNTS = true; // if true, automatically attempt to unstuck stuck accounts.
 	public static final boolean ENABLE_AUTOREGISTER = true; // if true, enables autoregistration upon login of nonexistant accounts.
 	public static final boolean ENABLE_PIC = false; // if false, requires use of Maple Admin to delete characters.	
-	public static final boolean HIDE_GMS_ON_LOGIN = true; // Hide GMs upon login.
+	public static final boolean HIDE_GMS_ON_LOGIN = true; // if true, GMs will appear hidden on login.
 	public static final int CHANNEL_LOAD = 100; // Players per channel
 	public static final long RANKING_INTERVAL = 3600000; // ranking interval, not used if the rankings event is used.
 	

@@ -628,6 +628,10 @@ public class MapleClient {
 			throw new RuntimeException("login state");
 		}
 	}
+	
+	public void setBirthday(String month, String day, String year) {
+		birthday.set(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
+	}
 
 	public boolean checkBirthDate(Calendar date) {
 		return date.get(Calendar.YEAR) == birthday.get(Calendar.YEAR) && date.get(Calendar.MONTH) == birthday.get(Calendar.MONTH) && date.get(Calendar.DAY_OF_MONTH) == birthday.get(Calendar.DAY_OF_MONTH);
