@@ -30,7 +30,7 @@ function start() {
     else
         close = true;
     if(cm.haveItem(4031713))
-        text += "\r\n#L0##4031713#";
+        text += "\r\n#L0##t4031713#";
     if(close){
         cm.sendOk(text);
         cm.dispose();
