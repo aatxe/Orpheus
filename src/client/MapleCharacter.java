@@ -1,5 +1,7 @@
 /* 
-This file is part of the OdinMS Maple Story Server
+
+Basic Information:
+[quote]While there's already plenty of information in the readme file, I will explain some here. Orpheus is a v.83 repack based off of the MoopleDEV source, specifically revision 116. All of the original work in Orpheus was made by myself.[/quote]This file is part of the OdinMS Maple Story Server
 Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc>
 Matthias Butz <matze@odinms.de>
 Jan Christian Meyer <vimes@odinms.de>
