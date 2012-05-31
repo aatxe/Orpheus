@@ -132,6 +132,14 @@ public class DeveloperCommands extends EnumeratedCommands {
 				case pinkbean:
 					chr.getMap().spawnMonsterOnGroudBelow(MapleLifeFactory.getMonster(8820009), chr.getPosition());
 					break;
+				case playernpc:
+					if (sub.length > 2) {
+						chr.playerNPC(c.getChannelServer().getPlayerStorage().getCharacterByName(sub[1]), Integer.parseInt(sub[2]));
+					} else if (sub.length == 2) {
+						chr.playerNPC(chr, Integer.parseInt(sub[1]));
+					} else {
+						chr.dropMessage("Usage: !playernpc characterName scriptId || !playernpc scriptId");
+					}
 				case pmob:
 					npcId = Integer.parseInt(sub[1]);
 					mobTime = Integer.parseInt(sub[2]);
@@ -364,6 +372,7 @@ public class DeveloperCommands extends EnumeratedCommands {
 		npc("Spawns an NPC at your position."),
 		packet("Executes a custom packet."),
 		paranoia("Gathers information about Paranoia."),
+		playernpc("Adds an NPC that mimics you or another player."),
 		pmob("Permanently spawns a mob at your position."),
 		pnpc("Permanently spawns an NPC at your position."),
 		pinkbean("Summons Pinkbean at your position."),

@@ -230,7 +230,7 @@ public class PlayerCommands extends EnumeratedCommands {
 						while (rs.next()) {
 							if (ServerConstants.ENABLE_HARDCORE_MODE && rs.getInt("hardcore") == 1) {
 								String tag = (rs.getInt("dead") == 1) ? "HD" : "H";
-								chr.dropMessage(i + ". " + rs.getString("name") + "[" + tag + "] (Level " + rs.getInt("level") + " " + MapleJob.getById(rs.getInt("job")).toString() + ") - " + rs.getInt("rebirths") + " Rebirths.");
+								chr.dropMessage(i + ". " + rs.getString("name") + " [" + tag + "] (Level " + rs.getInt("level") + " " + MapleJob.getById(rs.getInt("job")).toString() + ") - " + rs.getInt("rebirths") + " Rebirths.");
 							} else {
 								chr.dropMessage(i + ". " + rs.getString("name") + " (Level " + rs.getInt("level") + " " + MapleJob.getById(rs.getInt("job")).toString() + ") - " + rs.getInt("rebirths") + " Rebirths.");
 							}
