@@ -2,6 +2,6 @@
  * 	@author Aaron
 */
 function start() {
-    cm.sendSimple("I'm a Code Monkey!");
+    cm.sendOk("I'm a Code Monkey!");
     cm.dispose();
 }
