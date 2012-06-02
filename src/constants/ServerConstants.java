@@ -23,7 +23,7 @@ package constants;
 
 public class ServerConstants {
 	public static short VERSION = 83; // MapleStory version number
-	public static String ORPHEUS_VERSION = "5/29/12"; // date of version publishing
+	public static String ORPHEUS_VERSION = "6/2/12"; // date of version publishing
 	public static final String SERVER_NAME = "OrpheusMS"; // Server's name
 	public static final String TIP_NAME = "OrpheusTip"; // Tip Name for automsg
 	public static String[] WORLD_NAMES = {"Scania", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
@@ -68,6 +68,12 @@ public class ServerConstants {
 	public static final boolean PERFECT_PITCH = false; // if true, Perfect Pitch can be earned by players.
 	public static final boolean ENABLE_HARDCORE_MODE = true; // if true, players can enter hardcore mode for double exp and mesos.
 	public static final String EVENTS = "automsg KerningPQ Boats Subway AirPlane elevator rankings"; // there is a rankings event to replace the default rankings tool.
+	
+	// Pet Configuration
+	public static final long PET_FULLNESS_REPEAT_TIME = 180000; // time between fullness updates in ms.
+	public static final long PET_FULLNESS_START_DELAY = 18000; // delay before initial fullness update in ms.
+	public static final boolean PETS_NEVER_HUNGRY = false; // if true, pets will never grow hungry.
+	public static final boolean GM_PETS_NEVER_HUNGRY = true; // if true, pets of GMs will never grow hungry.
 	
 	// IP Configuration
 	public static final String HOST = "50.116.55.23"; // Server IP address

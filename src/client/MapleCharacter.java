@@ -4358,6 +4358,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	}
 
 	public void startFullnessSchedule(final int decrease, final MaplePet pet, int petSlot) {
+		if (isGM() && ServerConstants.GM_PETS_NEVER_HUNGRY || ServerConstants.PETS_NEVER_HUNGRY) {
+			return; // no fullness schedules :3
+		}
 		ScheduledFuture<?> schedule = TimerManager.getInstance().register(new Runnable() {
 
 			@Override
@@ -4374,9 +4377,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 					client.announce(MaplePacketCreator.updateSlot(petz));
 				}
 			}
-		}, 180000, 18000);
+		}, ServerConstants.PET_FULLNESS_REPEAT_TIME, ServerConstants.PET_FULLNESS_START_DELAY);
 		fullnessSchedule[petSlot] = schedule;
-
 	}
 
 	public void startMapEffect(String msg, int itemId) {
