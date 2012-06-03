@@ -63,6 +63,7 @@ public class ServerConstants {
 	public static final boolean FREE_NX = true; // if true, @nx command is free.
 	public static final int NX_COST = 1000000; // if false, @nx command costs this amount.
 	public static final boolean UNLIMITED_PROJECTILES = false; // if true, players won't lose projectiles on use.
+	public static final boolean DROP_UNTRADEABLE_ITEMS = false; // if true, players can drop normally untradeable items.
 	public static final boolean USE_MTS_AS_FM_WARP = true; // if true, Trade button sends players to the FM.
 	public static final boolean ALLOW_INFO_ON_GMS = true; // if false, non-GMs cannot get info on GMs.
 	public static final boolean PERFECT_PITCH = false; // if true, Perfect Pitch can be earned by players.

@@ -32,6 +32,7 @@ import client.MapleCharacter;
 import client.MapleClient;
 import client.MapleInventoryType;
 import constants.ItemConstants;
+import constants.ServerConstants;
 import tools.MaplePacketCreator;
 import tools.Output;
 
@@ -481,12 +482,12 @@ public class MapleInventoryManipulator {
 			if (weddingRing) {
 				c.getPlayer().getMap().disappearingItemDrop(c.getPlayer(), c.getPlayer(), target, dropPos);
 			} else if (c.getPlayer().getMap().getEverlast()) {
-				if (ii.isDropRestricted(target.getItemId()) || MapleItemInformationProvider.getInstance().isCash(target.getItemId())) {
+				if ((ii.isDropRestricted(target.getItemId()) && !ServerConstants.DROP_UNTRADEABLE_ITEMS) || MapleItemInformationProvider.getInstance().isCash(target.getItemId())) {
 					c.getPlayer().getMap().disappearingItemDrop(c.getPlayer(), c.getPlayer(), target, dropPos);
 				} else {
 					c.getPlayer().getMap().spawnItemDrop(c.getPlayer(), c.getPlayer(), target, dropPos, true, false);
 				}
-			} else if (ii.isDropRestricted(target.getItemId()) || MapleItemInformationProvider.getInstance().isCash(target.getItemId())) {
+			} else if ((ii.isDropRestricted(target.getItemId()) && !ServerConstants.DROP_UNTRADEABLE_ITEMS) || MapleItemInformationProvider.getInstance().isCash(target.getItemId())) {
 				c.getPlayer().getMap().disappearingItemDrop(c.getPlayer(), c.getPlayer(), target, dropPos);
 			} else {
 				c.getPlayer().getMap().spawnItemDrop(c.getPlayer(), c.getPlayer(), target, dropPos, true, true);
@@ -498,12 +499,12 @@ public class MapleInventoryManipulator {
 				c.getPlayer().equipChanged();
 			}
 			if (c.getPlayer().getMap().getEverlast()) {
-				if (ii.isDropRestricted(itemId)) {
+				if ((ii.isDropRestricted(itemId) && !ServerConstants.DROP_UNTRADEABLE_ITEMS)) {
 					c.getPlayer().getMap().disappearingItemDrop(c.getPlayer(), c.getPlayer(), source, dropPos);
 				} else {
 					c.getPlayer().getMap().spawnItemDrop(c.getPlayer(), c.getPlayer(), source, dropPos, true, false);
 				}
-			} else if (ii.isDropRestricted(itemId)) {
+			} else if ((ii.isDropRestricted(itemId) && !ServerConstants.DROP_UNTRADEABLE_ITEMS)) {
 				c.getPlayer().getMap().disappearingItemDrop(c.getPlayer(), c.getPlayer(), source, dropPos);
 			} else {
 				c.getPlayer().getMap().spawnItemDrop(c.getPlayer(), c.getPlayer(), source, dropPos, true, true);
