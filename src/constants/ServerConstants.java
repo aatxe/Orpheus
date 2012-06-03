@@ -23,7 +23,7 @@ package constants;
 
 public class ServerConstants {
 	public static short VERSION = 83; // MapleStory version number
-	public static String ORPHEUS_VERSION = "6/2/12"; // date of version publishing
+	public static String ORPHEUS_VERSION = "6/3/12"; // date of version publishing
 	public static final String SERVER_NAME = "OrpheusMS"; // Server's name
 	public static final String TIP_NAME = "OrpheusTip"; // Tip Name for automsg
 	public static String[] WORLD_NAMES = {"Scania", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
