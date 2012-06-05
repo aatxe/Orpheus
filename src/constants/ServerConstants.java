@@ -70,6 +70,16 @@ public class ServerConstants {
 	public static final boolean ENABLE_HARDCORE_MODE = true; // if true, players can enter hardcore mode for double exp and mesos.
 	public static final String EVENTS = "automsg KerningPQ Boats Subway AirPlane elevator rankings"; // there is a rankings event to replace the default rankings tool.
 	
+	// MapleStocks Configuration [Unfinished]
+	public static final boolean USE_MAPLE_STOCKS = true; // if true, MapleStocks will be enabled. (Requires maplestocks event)
+	public static final boolean ALLOW_STOCKS_COMMAND = true; // if true, players can access stocks through @stocks.
+	public static final boolean ALLOW_GM_MARKET_REGULATION = true; // if true, GMs can regulate the stock market (just a little).
+	public static final boolean ALLOW_GM_STOCK_CREATION = true; // if true, GMs can create new stocks with !stocks.
+	public static final boolean ALLOW_STOCK_CRASHES = true; // if true, stocks will be allowed to crash.
+	public static final double STOCK_CRASH_THRESHOLD = 0.375; // percentage of stocks sold per interval to cause crash.
+	public static final double STOCK_DECLINE_THRESHOLD = 0.275; // percentage of stocks sold per interval to cause decline.
+	public static final int STOCK_VALUE_CAP = Integer.MAX_VALUE; // max value of any stock
+	
 	// Pet Configuration
 	public static final long PET_FULLNESS_REPEAT_TIME = 180000; // time between fullness updates in ms.
 	public static final long PET_FULLNESS_START_DELAY = 18000; // delay before initial fullness update in ms.
