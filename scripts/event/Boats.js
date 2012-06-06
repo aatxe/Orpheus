@@ -1,14 +1,14 @@
-/* 
- * This file is part of the OdinMS Maple Story Server
-    Copyright (C) 2008 Patrick Huy <patrick.huy@frz.cc> 
-                       Matthias Butz <matze@odinms.de>
-                       Jan Christian Meyer <vimes@odinms.de>
+/*
+ 	OrpheusMS: MapleStory Private Server based on OdinMS
+    Copyright (C) 2012 Aaron Weiss <aaron@deviant-core.net>
+    				Patrick Huy <patrick.huy@frz.cc>
+					Matthias Butz <matze@odinms.de>
+					Jan Christian Meyer <vimes@odinms.de>
 
     This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License version 3
-    as published by the Free Software Foundation. You may not use, modify
-    or distribute this program under any other version of the
-    GNU Affero General Public License.
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -18,28 +18,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-/**
--- Odin JavaScript --------------------------------------------------------------------------------
-	Boats Between Ellinia and Orbis
--- By ---------------------------------------------------------------------------------------------
-	Information
--- Version Info -----------------------------------------------------------------------------------
-	1.6 - Fix for infinity looping [Information]
-	1.5 - Ship/boat is now showed 
-	    - Removed temp message[Information]
-	    - Credit to Snow/superraz777 for old source
-	    - Credit to Titan/Kool for the ship/boat packet
-	1.4 - Fix typo [Information]
-	1.3 - Removing some function since is not needed [Information]
-	    - Remove register player menthod [Information]
-	    - Remove map instance and use reset reactor function [Information]
-	1.2 - Should be 2 ship not 1 [Information]
-	1.1 - Add timer variable for easy edit [Information]
-	1.0 - First Version by Information
----------------------------------------------------------------------------------------------------
-**/
-
 importPackage(Packages.client);
 importPackage(Packages.tools);
 importPackage(Packages.server.life);
