@@ -33,6 +33,7 @@ import server.MapleStocks;
 import tools.DatabaseConnection;
 import tools.MapleLogger;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.Pair;
 import client.MapleCharacter;
 import client.MapleClient;
@@ -448,11 +449,20 @@ public class PlayerCommands extends EnumeratedCommands {
 								chr.message("  check - one argument, ticker, checks value of a stock");
 								chr.message("  portfolio - no arguments, checks your portfolio");
 							}
-						} catch (Exception e) {
+						} catch (NumberFormatException e) {
 							chr.message("Something went wrong! :(");
 							chr.message("Usage: ");
 							chr.message("  @stocks [option] [arguments]");
 							chr.message("Type '@stocks help' to see the options.");
+						} catch (IndexOutOfBoundsException e) {
+							chr.message("Something went wrong! :(");
+							chr.message("Usage: ");
+							chr.message("  @stocks [option] [arguments]");
+							chr.message("Type '@stocks help' to see the options.");
+						} catch (Exception e) {
+							chr.message("We apologize! Something went seriously wrong! D:");
+							Output.print("MapleStocks experienced an error with " + chr.getName() + ".");
+							MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
 						}
 					} else if (!ServerConstants.USE_MAPLE_STOCKS) {
 						chr.message("MapleStocks is disabled by the server.");

@@ -68,7 +68,7 @@ public class MapleStocks {
 		return stocks.get(id - 1).getTicker();
 	}
 	
-	public int idOf(String ticker) {
+	public int indexOf(String ticker) {
 		int n = 0;
 		for (MapleStock ms : stocks) {
 			if (ms.getTicker() == ticker) {
@@ -79,8 +79,16 @@ public class MapleStocks {
 		return -1;
 	}
 	
-	public int idOf(MapleStocks ms) {
+	public int indexOf(MapleStock ms) {
 		return stocks.indexOf(ms);
+	}
+	
+	public int idOf(String ticker) {
+		return indexOf(ticker) + 1;
+	}
+	
+	public int idOf(MapleStock ms) {
+		return indexOf(ms) + 1;
 	}
 	
 	public ArrayList<MapleStock> getStocks() {
