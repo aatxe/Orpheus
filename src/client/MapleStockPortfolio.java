@@ -102,23 +102,6 @@ public class MapleStockPortfolio {
 	}
 	
 	public void save(int cid) {
-		Output.print("Saved MapleStockPortfolio for " + cid + ".");
-		if (newlyAdded == null || newlyAdded.isEmpty()) {
-			for (Pair<String, Integer> pair : portfolio) {
-				try {
-					Connection con = (Connection) DatabaseConnection.getConnection();
-					PreparedStatement ps = con.prepareStatement("UPDATE maplestocks_data SET shares = ? WHERE cid = ? AND stockid = ?");
-					ps.setInt(1, pair.getRight());
-					ps.setInt(2, cid);
-					ps.setInt(3, MapleStocks.getInstance().idOf(pair.getLeft()));
-					ps.executeUpdate();
-				} catch (SQLException e) {
-					Output.print("Something went wrong while saving a MapleStockPortfolio.");
-					MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
-				}
-			}
-			return;
-		}
 		for (Pair<String, Integer> pair : portfolio) {
 			try {
 				Connection con = (Connection) DatabaseConnection.getConnection();

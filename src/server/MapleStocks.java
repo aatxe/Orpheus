@@ -177,12 +177,12 @@ public class MapleStocks {
 				if (oldPair.getLeft() == pair.getLeft()) {
 					for (MapleStock ms : stocks) {
 						if (pair.getLeft() == ms.getTicker()) {
-							int changeTotal = (pair.getRight() - oldPair.getRight());
+							double changeTotal = (pair.getRight() - oldPair.getRight());
 							if ((((double) Math.abs(changeTotal) / oldPair.getRight()) <= ServerConstants.STOCK_CRASH_THRESHOLD) && changeTotal < 0) {
 								crashStock(ms);
-							} else if (changeTotal < ServerConstants.STOCK_DECLINE_THRESHOLD) { 
+							} else if ((changeTotal / oldPair.getRight()) < ServerConstants.STOCK_DECLINE_THRESHOLD) { 
 								decreaseStock(ms);
-							} else if (changeTotal > ServerConstants.STOCK_DECLINE_THRESHOLD) {
+							} else if ((changeTotal / oldPair.getRight()) > ServerConstants.STOCK_DECLINE_THRESHOLD) {
 								increaseStock(ms);
 							}
 						}
