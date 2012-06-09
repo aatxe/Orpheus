@@ -452,7 +452,7 @@ public class PlayerCommands extends EnumeratedCommands {
 							chr.message("Something went wrong! :(");
 							chr.message("Usage: ");
 							chr.message("  @stocks [option] [arguments]");
-							chr.message("Type @stocks without any parameters to see the options.");
+							chr.message("Type '@stocks help' to see the options.");
 						}
 					} else if (!ServerConstants.USE_MAPLE_STOCKS) {
 						chr.message("MapleStocks is disabled by the server.");
