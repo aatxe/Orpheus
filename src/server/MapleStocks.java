@@ -64,6 +64,10 @@ public class MapleStocks {
 		stocks.add(ms);
 	}
 	
+	public String tickerOf(int id) {
+		return stocks.get(id).getTicker();
+	}
+	
 	public int idOf(String ticker) {
 		int n = 0;
 		for (MapleStock ms : stocks) {
@@ -129,7 +133,7 @@ public class MapleStocks {
 	public void loadAll() {
 		try {
 			Connection con = (Connection) DatabaseConnection.getConnection();
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM maplestocks ORDER BY stockid DESC");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM maplestocks ORDER BY stockid");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				stocks.add(new MapleStock(rs.getString("name"), rs.getString("ticker"), rs.getInt("count"), rs.getInt("value"), rs.getInt("change")));
@@ -184,7 +188,7 @@ public class MapleStocks {
 	public void pushUpdate() {
 		try {
 			Connection con = (Connection) DatabaseConnection.getConnection();
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM maplestocks ORDER BY stockid DESC");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM maplestocks ORDER BY stockid");
 			ResultSet rs = ps.executeQuery();
 			for (MapleStock ms : stocks) {
 				rs.next();
