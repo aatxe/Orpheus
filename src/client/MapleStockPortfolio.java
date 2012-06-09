@@ -47,11 +47,13 @@ public class MapleStockPortfolio {
 		this.newlyAdded = new ArrayList<Pair<String, Integer>>();
 	}
 	
-	public void add(Pair<String, Integer> shares) {
-		if (!this.update(shares)) {
+	public boolean add(Pair<String, Integer> shares) {
+		if (!this.hasStock(MapleStocks.getInstance().getStock(shares.getLeft()))) {
 			portfolio.add(shares);
 			newlyAdded.add(shares);
+			return true;
 		}
+		return false;
 	}
 	
 	public boolean update(Pair<String, Integer> shares) {
@@ -100,7 +102,8 @@ public class MapleStockPortfolio {
 	}
 	
 	public void save(int cid) {
-		if (newlyAdded.isEmpty()) {
+		Output.print("Saved MapleStockPortfolio for " + cid + ".");
+		if (newlyAdded == null || newlyAdded.isEmpty()) {
 			for (Pair<String, Integer> pair : portfolio) {
 				try {
 					Connection con = (Connection) DatabaseConnection.getConnection();
@@ -108,6 +111,7 @@ public class MapleStockPortfolio {
 					ps.setInt(1, pair.getRight());
 					ps.setInt(2, cid);
 					ps.setInt(3, MapleStocks.getInstance().idOf(pair.getLeft()));
+					Output.print("\tUpdated stockid " + MapleStocks.getInstance().idOf(pair.getLeft()));
 				} catch (SQLException e) {
 					Output.print("Something went wrong while saving a MapleStockPortfolio.");
 					MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
@@ -125,11 +129,13 @@ public class MapleStockPortfolio {
 						ps.setInt(1, pair.getRight());
 						ps.setInt(2, cid);
 						ps.setInt(3, MapleStocks.getInstance().idOf(pair.getLeft()));
+						Output.print("\tUpdated stockid " + MapleStocks.getInstance().idOf(pair.getLeft()));
 					} else {
 						ps = con.prepareStatement("INSERT INTO maplestocks_data (`cid`, `stockid`, `shares`) VALUES (?, ?, ?)");
 						ps.setInt(1, cid);
 						ps.setInt(2, MapleStocks.getInstance().idOf(pair.getLeft()));
 						ps.setInt(3, pair.getRight());
+						Output.print("\tInserted stockid " + MapleStocks.getInstance().idOf(pair.getLeft()));
 					}
 				} catch (SQLException e) {
 					Output.print("Something went wrong while saving a MapleStockPortfolio.");

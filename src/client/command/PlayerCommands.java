@@ -397,7 +397,7 @@ public class PlayerCommands extends EnumeratedCommands {
 									int amount = Integer.parseInt(sub[3]);
 									boolean ret = chr.buyStock(MapleStocks.getInstance().getStock(ticker), amount);
 									if (ret) {
-										chr.message("Sold " + amount + " of " + ticker + " for " + String.valueOf((MapleStocks.getInstance().getStock(ticker).getValue() * amount)).replaceAll("(\\d)(?=(\\d{3})+$)", "$1,") + " mesos.");
+										chr.message("Purchased " + amount + " shares of " + ticker + " for " + String.valueOf((MapleStocks.getInstance().getStock(ticker).getValue() * amount)).replaceAll("(\\d)(?=(\\d{3})+$)", "$1,") + " mesos.");
 									} else if (MapleStocks.getInstance().getTotalSold(ticker) + amount <= MapleStocks.getInstance().getStock(ticker).getCount()) {
 										chr.message("There is not enough available shares of " + ticker + ".");
 									} else if (chr.hasStock(ticker, amount)) {
@@ -414,7 +414,7 @@ public class PlayerCommands extends EnumeratedCommands {
 									int amount = Integer.parseInt(sub[3]);
 									boolean ret = chr.sellStock(MapleStocks.getInstance().getStock(ticker), amount);
 									if (ret) {
-										chr.message("Sold " + amount + " of " + ticker + " for " + String.valueOf((MapleStocks.getInstance().getStock(ticker).getValue() * amount)).replaceAll("(\\d)(?=(\\d{3})+$)", "$1,") + " mesos.");
+										chr.message("Sold " + amount + " shares of " + ticker + " for " + String.valueOf((MapleStocks.getInstance().getStock(ticker).getValue() * amount)).replaceAll("(\\d)(?=(\\d{3})+$)", "$1,") + " mesos.");
 									} else if (chr.hasStock(ticker, amount)) {
 										chr.message("You don't have enough room to sell " + amount + " shares of " + ticker + " for " + String.valueOf((MapleStocks.getInstance().getStock(ticker).getValue() * amount)).replaceAll("(\\d)(?=(\\d{3})+$)", "$1,") + " mesos.");
 									} else {

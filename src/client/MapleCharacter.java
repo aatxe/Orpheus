@@ -2203,9 +2203,12 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			if (meso.get() - price < 0) {
 				return false;
 			}
-			this.gainMeso(-price, true);
-			stockPortfolio.add(new Pair<String, Integer>(ms.getTicker(), amount));
-			return true;
+			this.gainMeso(-price, false);
+			if (stockPortfolio.hasStock(ms)) {
+				return stockPortfolio.update(new Pair<String, Integer>(ms.getTicker(), amount));
+			} else {
+				return stockPortfolio.add(new Pair<String, Integer>(ms.getTicker(), amount));
+			}
 		}
 		return false;
 	}
@@ -2216,7 +2219,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			if (meso.get() + price > Integer.MAX_VALUE || meso.get() + price < 0) {
 				return false;
 			}
-			this.gainMeso(price, true);
+			this.gainMeso(price, false);
 			return stockPortfolio.remove(ms, amount);
 		}
 		return false;
