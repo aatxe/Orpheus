@@ -148,7 +148,7 @@ public class MapleStockPortfolio {
 			ps.setInt(1, cid);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				ret.add(new Pair<String ,Integer>(MapleStocks.getInstance().tickerOf(rs.getInt("stockid")), rs.getInt("stocks")));
+				ret.add(new Pair<String ,Integer>(MapleStocks.getInstance().tickerOf(rs.getInt("stockid")), rs.getInt("shares")));
 			}
 		} catch (SQLException e) {
 			Output.print("Failed to load MapleStockPortfolio " + cid + ".");
