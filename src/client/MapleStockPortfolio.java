@@ -35,14 +35,24 @@ import tools.Pair;
  * @author Aaron Weiss
  */
 public class MapleStockPortfolio {
+	private int cid = 0;
 	private ArrayList<Pair<String, Integer>> portfolio;
 	private ArrayList<Pair<String, Integer>> newlyAdded;
 
 	public MapleStockPortfolio() {
-		this(new ArrayList<Pair<String, Integer>>());
+		this(0, new ArrayList<Pair<String, Integer>>());
+	}
+
+	public MapleStockPortfolio(int cid) {
+		this(cid, new ArrayList<Pair<String, Integer>>());
 	}
 	
 	public MapleStockPortfolio(ArrayList<Pair<String, Integer>> portfolio) {
+		this(0, portfolio);
+	}
+	
+	public MapleStockPortfolio(int cid, ArrayList<Pair<String, Integer>> portfolio) {
+		this.cid = cid;
 		this.portfolio = portfolio;
 		this.newlyAdded = new ArrayList<Pair<String, Integer>>();
 	}
@@ -91,7 +101,7 @@ public class MapleStockPortfolio {
 	public boolean hasStock(MapleStock ms, int quantity) {
 		int amount = 0;
 		for (Pair<String, Integer> pair : portfolio) {
-			if (pair.getLeft() == ms.getTicker()) amount += pair.getRight();
+			if (pair.getLeft().equalsIgnoreCase(ms.getTicker())) amount += pair.getRight();
 			if (amount >= quantity) return true;
 		}
 		return false;
@@ -101,7 +111,7 @@ public class MapleStockPortfolio {
 		return portfolio.isEmpty();
 	}
 	
-	public void save(int cid) {
+	public void save() {
 		for (Pair<String, Integer> pair : portfolio) {
 			try {
 				Connection con = (Connection) DatabaseConnection.getConnection();
@@ -127,7 +137,7 @@ public class MapleStockPortfolio {
 	}
 	
 	public static MapleStockPortfolio load(int cid) {
-		MapleStockPortfolio ret = new MapleStockPortfolio();;
+		MapleStockPortfolio ret = new MapleStockPortfolio(cid);
 		try {
 			Connection con = (Connection) DatabaseConnection.getConnection();
 			PreparedStatement ps = con.prepareStatement("SELECT * FROM maplestocks_data WHERE cid = ?");

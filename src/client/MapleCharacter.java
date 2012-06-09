@@ -3603,7 +3603,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 				}
 			}
 			if (ServerConstants.USE_MAPLE_STOCKS) {
-				stockPortfolio.save(id);
+				stockPortfolio.save();
 			}
 			int updateRows = ps.executeUpdate();
 			if (!update) {
