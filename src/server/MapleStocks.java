@@ -201,7 +201,7 @@ public class MapleStocks {
 				ms.update((ms.getValue() - rs.getInt("value")));
 			}
 		} catch (SQLException ex) {
-			Output.print("MapleStocks failed to load. Check exceptions.log.");
+			Output.print("MapleStocks failed to update. Check exceptions.log.");
 			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, ex);
 		}
 	}
