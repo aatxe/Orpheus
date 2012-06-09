@@ -59,6 +59,7 @@ import org.apache.mina.transport.socket.nio.NioSocketAcceptor;
 import paranoia.BlacklistHandler;
 import server.CashShop.CashItemFactory;
 import server.MapleItemInformationProvider;
+import server.MapleStocks;
 import tools.MapleLogger;
 import tools.MaplePacketCreator;
 import tools.Output;
@@ -223,6 +224,13 @@ public class Server implements Runnable {
 			startTime = System.currentTimeMillis();
 			BlacklistHandler.getBlacklistedAccountIds();
 			Output.print("Loading completed in " + ((System.currentTimeMillis() - startTime)) + "ms.");
+		}
+		if (ServerConstants.LOAD_STOCKS_ON_BOOT && ServerConstants.USE_MAPLE_STOCKS) {
+			Output.print("Loading MapleStocks.");
+			startTime = System.currentTimeMillis();
+			MapleStocks.getInstance(false).loadAll();
+			Output.print("Loading completed in " + ((System.currentTimeMillis() - startTime)) + "ms.");
+			
 		}
 		if (ServerConstants.LOAD_COMMANDS_ON_BOOT && ServerConstants.USE_EXTERNAL_COMMAND_LOADER) {
 			try {

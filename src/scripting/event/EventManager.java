@@ -39,6 +39,7 @@ import constants.ServerConstants;
 import net.server.Channel;
 import net.server.MapleParty;
 import net.server.Server;
+import server.MapleStocks;
 import server.TimerManager;
 import server.maps.MapleMap;
 import tools.DatabaseConnection;
@@ -203,5 +204,12 @@ public class EventManager {
 		} catch (SQLException e) {
 			MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
 		}	
+	}
+	
+	public void updateStocks() {
+		if (ServerConstants.USE_MAPLE_STOCKS) {
+			MapleStocks.getInstance().calculateUpdate();
+			MapleStocks.getInstance().pushUpdate();
+		}
 	}
 }

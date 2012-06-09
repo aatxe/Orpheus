@@ -40,6 +40,11 @@ public class Pair<E, F> implements Serializable {
 		return right;
 	}
 	
+	public void update(E left, F right) {
+		this.left = left;
+		this.right = right;
+	}
+	
 	@SuppressWarnings("rawtypes")
 	public boolean equals(Object o) {
 	    if (this.getClass() != o.getClass()) return false;

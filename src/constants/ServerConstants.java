@@ -22,7 +22,7 @@ package constants;
 
 public class ServerConstants {
 	public static short VERSION = 83; // MapleStory version number
-	public static String ORPHEUS_VERSION = "6/3/12"; // date of version publishing
+	public static String ORPHEUS_VERSION = "6/8/12"; // date of version publishing
 	public static final String SERVER_NAME = "OrpheusMS"; // Server's name
 	public static final String TIP_NAME = "OrpheusTip"; // Tip Name for automsg
 	public static String[] WORLD_NAMES = {"Scania", "Bera", "Broa", "Windia", "Khaini", "Bellocan", "Mardia", "Kradia", "Yellonde", "Demethos", "Galicia", "El Nido", "Zenith", "Arcenia", "Kastia", "Judis", "Plana", "Kalluna", "Stius", "Croa", "Medere"};
@@ -71,6 +71,7 @@ public class ServerConstants {
 	
 	// MapleStocks Configuration [Unfinished]
 	public static final boolean USE_MAPLE_STOCKS = true; // if true, MapleStocks will be enabled. (Requires maplestocks event)
+	public static final boolean LOAD_STOCKS_ON_BOOT = true; // if tru,e MapleStocks will be loaded on startup.
 	public static final boolean ALLOW_STOCKS_COMMAND = true; // if true, players can access stocks through @stocks.
 	public static final boolean ALLOW_GM_MARKET_REGULATION = true; // if true, GMs can regulate the stock market (just a little).
 	public static final boolean ALLOW_GM_STOCK_CREATION = true; // if true, GMs can create new stocks with !stocks.

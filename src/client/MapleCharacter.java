@@ -68,6 +68,7 @@ import server.MaplePlayerShop;
 import server.MaplePortal;
 import server.MapleShop;
 import server.MapleStatEffect;
+import server.MapleStocks;
 import server.MapleStorage;
 import server.MapleTrade;
 import server.TimerManager;
@@ -231,6 +232,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	private List<String> blockedPortals = new ArrayList<String>();
 	public ArrayList<String> area_data = new ArrayList<String>();
 	private AutobanManager autoban;
+	private MapleStockPortfolio stockPortfolio;
 	private boolean isbanned = false;
 	private ScheduledFuture<?> pendantOfSpirit = null; // 1122017
 	private byte pendantExp = 0, lastmobcount = 0;
@@ -2191,6 +2193,43 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		return mbsvh.effect;
 	}
 	
+	public MapleStockPortfolio getStockPortfolio() {
+		return stockPortfolio;
+	}
+	
+	public boolean buyStock(MapleStock ms, int amount) {
+		if (MapleStocks.getInstance().getTotalSold(ms.getTicker()) + amount <= ms.getCount()) {
+			int price = ms.getValue() * amount;
+			if (meso.get() - price < 0) {
+				return false;
+			}
+			this.gainMeso(-price, true);
+			stockPortfolio.add(new Pair<String, Integer>(ms.getTicker(), amount));
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean sellStock(MapleStock ms, int amount) {
+		if (stockPortfolio.hasStock(ms, amount)) {
+			int price = ms.getValue() * amount;
+			if (meso.get() + price > Integer.MAX_VALUE || meso.get() + price < 0) {
+				return false;
+			}
+			this.gainMeso(price, true);
+			return stockPortfolio.remove(ms, amount);
+		}
+		return false;
+	}
+	
+	public boolean hasStock(String ticker) {
+		return this.hasStock(ticker, 1);
+	}
+	
+	public boolean hasStock(String ticker, int amount) {
+		return stockPortfolio.hasStock(MapleStocks.getInstance().getStock(ticker), amount);
+	}
+	
 	public MapleStorage getStorage() {
 		return storage;
 	}
@@ -2611,6 +2650,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			ret.vanquisherStage = rs.getInt("vanquisherStage");
 			ret.dojoPoints = rs.getInt("dojoPoints");
 			ret.dojoStage = rs.getInt("lastDojoStage");
+			if (ServerConstants.USE_MAPLE_STOCKS) {
+				ret.stockPortfolio = MapleStockPortfolio.load(charid);
+			}
 			if (ServerConstants.ENABLE_HARDCORE_MODE) {
 				ret.hardcore = rs.getInt("hardcore") == 1;
 				ret.dead = rs.getInt("dead") == 1;
@@ -3556,6 +3598,9 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 					ps.setString(50, name);
 					ps.setInt(51, world);
 				}
+			}
+			if (ServerConstants.USE_MAPLE_STOCKS) {
+				stockPortfolio.save(id);
 			}
 			int updateRows = ps.executeUpdate();
 			if (!update) {
