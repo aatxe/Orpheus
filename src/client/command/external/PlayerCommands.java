@@ -13,6 +13,7 @@ import server.MapleStocks;
 import tools.DatabaseConnection;
 import tools.MapleLogger;
 import tools.MaplePacketCreator;
+import tools.Pair;
 import client.MapleCharacter;
 import client.MapleClient;
 import client.MapleInventoryType;
@@ -405,6 +406,15 @@ public class PlayerCommands extends EnumeratedCommands {
 								} else {
 									chr.message("Invalid ticker (" + sub[2] + "): no such stock.");
 								}
+							} else if (sub[1].equalsIgnoreCase("portfolio")) {
+								chr.message("Your Stocks");
+								if (chr.getStockPortfolio().isEmpty()) {
+									chr.message("None");
+								} else {
+									for (Pair<String, Integer> pair : chr.getStockPortfolio().toArrayList()) {
+										chr.message(MapleStocks.getInstance().getNameByTicker(pair.getLeft()) + " [" + pair.getLeft() + "] - " + pair.getRight() + ((pair.getRight() != 1) ? " shares." : " share."));
+									}
+								}
 							} else {
 								chr.message("Usage: ");
 								chr.message("  @stocks [option] [arguments]");
@@ -413,15 +423,13 @@ public class PlayerCommands extends EnumeratedCommands {
 								chr.message("  buy - two arguments, ticker and amount");
 								chr.message("  sell - two arguments, ticker and amount");
 								chr.message("  check - one argument, ticker, checks value of a stock");
+								chr.message("  portfolio - no arguments, checks your portfolio");
 							}
 						} catch (Exception e) {
+							chr.message("Something went wrong! :(");
 							chr.message("Usage: ");
 							chr.message("  @stocks [option] [arguments]");
-							chr.message("Options: ");
-							chr.message("  list - no arguments, lists all stocks, values and change.");
-							chr.message("  buy - two arguments, ticker and amount");
-							chr.message("  sell - two arguments, ticker and amount");
-							chr.message("  check - one argument, ticker, checks value of a stock");
+							chr.message("Type @stocks without any parameters to see the options.");
 						}
 					} else if (!ServerConstants.USE_MAPLE_STOCKS) {
 						chr.message("MapleStocks is disabled by the server.");
