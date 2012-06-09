@@ -205,6 +205,7 @@ public class MapleStocks {
 				ps.setInt(2, ms.getValue());
 				ps.setInt(3, (ms.getValue() - rs.getInt("value")));
 				ps.setInt(4, rs.getInt("stockid"));
+				Output.print(ps.toString());
 				ps.executeUpdate();
 				ms.update((ms.getValue() - rs.getInt("value")));
 			}

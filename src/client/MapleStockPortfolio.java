@@ -121,12 +121,14 @@ public class MapleStockPortfolio {
 					ps.setInt(1, pair.getRight());
 					ps.setInt(2, cid);
 					ps.setInt(3, MapleStocks.getInstance().idOf(pair.getLeft()));
+					Output.print(ps.toString());
 					ps.executeUpdate();
 				} else {
 					ps = con.prepareStatement("INSERT INTO maplestocks_data (`cid`, `stockid`, `shares`) VALUES (?, ?, ?)");
 					ps.setInt(1, cid);
 					ps.setInt(2, MapleStocks.getInstance().idOf(pair.getLeft()));
 					ps.setInt(3, pair.getRight());
+					Output.print(ps.toString());
 					ps.executeUpdate();
 				}
 			} catch (SQLException e) {
