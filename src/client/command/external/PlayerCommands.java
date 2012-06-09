@@ -13,6 +13,7 @@ import server.MapleStocks;
 import tools.DatabaseConnection;
 import tools.MapleLogger;
 import tools.MaplePacketCreator;
+import tools.Output;
 import tools.Pair;
 import client.MapleCharacter;
 import client.MapleClient;
@@ -373,7 +374,7 @@ public class PlayerCommands extends EnumeratedCommands {
 									int amount = Integer.parseInt(sub[3]);
 									boolean ret = chr.buyStock(MapleStocks.getInstance().getStock(ticker), amount);
 									if (ret) {
-										chr.message("Sold " + amount + " of " + ticker + " for " + String.valueOf((MapleStocks.getInstance().getStock(ticker).getValue() * amount)).replaceAll("(\\d)(?=(\\d{3})+$)", "$1,") + " mesos.");
+										chr.message("Purchased " + amount + " shares of " + ticker + " for " + String.valueOf((MapleStocks.getInstance().getStock(ticker).getValue() * amount)).replaceAll("(\\d)(?=(\\d{3})+$)", "$1,") + " mesos.");
 									} else if (MapleStocks.getInstance().getTotalSold(ticker) + amount <= MapleStocks.getInstance().getStock(ticker).getCount()) {
 										chr.message("There is not enough available shares of " + ticker + ".");
 									} else if (chr.hasStock(ticker, amount)) {
@@ -390,7 +391,7 @@ public class PlayerCommands extends EnumeratedCommands {
 									int amount = Integer.parseInt(sub[3]);
 									boolean ret = chr.sellStock(MapleStocks.getInstance().getStock(ticker), amount);
 									if (ret) {
-										chr.message("Sold " + amount + " of " + ticker + " for " + String.valueOf((MapleStocks.getInstance().getStock(ticker).getValue() * amount)).replaceAll("(\\d)(?=(\\d{3})+$)", "$1,") + " mesos.");
+										chr.message("Sold " + amount + " shares of " + ticker + " for " + String.valueOf((MapleStocks.getInstance().getStock(ticker).getValue() * amount)).replaceAll("(\\d)(?=(\\d{3})+$)", "$1,") + " mesos.");
 									} else if (chr.hasStock(ticker, amount)) {
 										chr.message("You don't have enough room to sell " + amount + " shares of " + ticker + " for " + String.valueOf((MapleStocks.getInstance().getStock(ticker).getValue() * amount)).replaceAll("(\\d)(?=(\\d{3})+$)", "$1,") + " mesos.");
 									} else {
@@ -425,11 +426,20 @@ public class PlayerCommands extends EnumeratedCommands {
 								chr.message("  check - one argument, ticker, checks value of a stock");
 								chr.message("  portfolio - no arguments, checks your portfolio");
 							}
-						} catch (Exception e) {
+						} catch (NumberFormatException e) {
 							chr.message("Something went wrong! :(");
 							chr.message("Usage: ");
 							chr.message("  @stocks [option] [arguments]");
-							chr.message("Type @stocks without any parameters to see the options.");
+							chr.message("Type '@stocks help' to see the options.");
+						} catch (IndexOutOfBoundsException e) {
+							chr.message("Something went wrong! :(");
+							chr.message("Usage: ");
+							chr.message("  @stocks [option] [arguments]");
+							chr.message("Type '@stocks help' to see the options.");
+						} catch (Exception e) {
+							chr.message("We apologize! Something went seriously wrong! D:");
+							Output.print("MapleStocks experienced an error with " + chr.getName() + ".");
+							MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
 						}
 					} else if (!ServerConstants.USE_MAPLE_STOCKS) {
 						chr.message("MapleStocks is disabled by the server.");
