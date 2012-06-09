@@ -99,6 +99,15 @@ public class MapleStocks {
 		return sum;
 	}
 	
+	public String getNameByTicker(String ticker) {
+		for (MapleStock ms : stocks) {
+			if (ms.getTicker() == ticker) {
+				return ms.getName();
+			}
+		}
+		return null;
+	}
+	
 	public MapleStock getStock(String ticker) {
 		for (MapleStock ms : stocks) {
 			if (ms.getTicker() == ticker) {

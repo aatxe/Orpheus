@@ -95,6 +95,10 @@ public class MapleStockPortfolio {
 		return false;
 	}
 	
+	public boolean isEmpty() {
+		return portfolio.isEmpty();
+	}
+	
 	public void save(int cid) {
 		if (newlyAdded.isEmpty()) {
 			for (Pair<String, Integer> pair : portfolio) {
@@ -137,9 +141,8 @@ public class MapleStockPortfolio {
 	}
 	
 	public static MapleStockPortfolio load(int cid) {
-		MapleStockPortfolio ret = null;
+		MapleStockPortfolio ret = new MapleStockPortfolio();;
 		try {
-			ret = new MapleStockPortfolio();
 			Connection con = (Connection) DatabaseConnection.getConnection();
 			PreparedStatement ps = con.prepareStatement("SELECT * FROM maplestocks_data WHERE cid = ?");
 			ps.setInt(1, cid);
