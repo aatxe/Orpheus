@@ -67,7 +67,7 @@ public class ServerConstants {
 	public static final boolean ALLOW_INFO_ON_GMS = true; // if false, non-GMs cannot get info on GMs.
 	public static final boolean PERFECT_PITCH = false; // if true, Perfect Pitch can be earned by players.
 	public static final boolean ENABLE_HARDCORE_MODE = true; // if true, players can enter hardcore mode for double exp and mesos.
-	public static final String EVENTS = "automsg KerningPQ Boats Subway AirPlane elevator rankings"; // there is a rankings event to replace the default rankings tool.
+	public static final String EVENTS = "automsg KerningPQ Boats Subway AirPlane elevator rankings maplestocks"; // there is a rankings event to replace the default rankings tool.
 	
 	// MapleStocks Configuration [Unfinished]
 	public static final boolean USE_MAPLE_STOCKS = true; // if true, MapleStocks will be enabled. (Requires maplestocks event)
