@@ -111,7 +111,7 @@ public class MapleStockPortfolio {
 					ps.setInt(1, pair.getRight());
 					ps.setInt(2, cid);
 					ps.setInt(3, MapleStocks.getInstance().idOf(pair.getLeft()));
-					Output.print("\tUpdated stockid " + MapleStocks.getInstance().idOf(pair.getLeft()));
+					ps.executeUpdate();
 				} catch (SQLException e) {
 					Output.print("Something went wrong while saving a MapleStockPortfolio.");
 					MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
@@ -120,27 +120,25 @@ public class MapleStockPortfolio {
 			return;
 		}
 		for (Pair<String, Integer> pair : portfolio) {
-			for (Pair<String, Integer> newPair : newlyAdded) {
-				try {
-					Connection con = (Connection) DatabaseConnection.getConnection();
-					PreparedStatement ps;
-					if (newPair.getLeft() == pair.getLeft()) {
-						ps = con.prepareStatement("UPDATE maplestocks_data SET shares = ? WHERE cid = ? AND stockid = ?");
-						ps.setInt(1, pair.getRight());
-						ps.setInt(2, cid);
-						ps.setInt(3, MapleStocks.getInstance().idOf(pair.getLeft()));
-						Output.print("\tUpdated stockid " + MapleStocks.getInstance().idOf(pair.getLeft()));
-					} else {
-						ps = con.prepareStatement("INSERT INTO maplestocks_data (`cid`, `stockid`, `shares`) VALUES (?, ?, ?)");
-						ps.setInt(1, cid);
-						ps.setInt(2, MapleStocks.getInstance().idOf(pair.getLeft()));
-						ps.setInt(3, pair.getRight());
-						Output.print("\tInserted stockid " + MapleStocks.getInstance().idOf(pair.getLeft()));
-					}
-				} catch (SQLException e) {
-					Output.print("Something went wrong while saving a MapleStockPortfolio.");
-					MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
+			try {
+				Connection con = (Connection) DatabaseConnection.getConnection();
+				PreparedStatement ps;
+				if (!newlyAdded.contains(pair)) {
+					ps = con.prepareStatement("UPDATE maplestocks_data SET shares = ? WHERE cid = ? AND stockid = ?");
+					ps.setInt(1, pair.getRight());
+					ps.setInt(2, cid);
+					ps.setInt(3, MapleStocks.getInstance().idOf(pair.getLeft()));
+					ps.executeUpdate();
+				} else {
+					ps = con.prepareStatement("INSERT INTO maplestocks_data (`cid`, `stockid`, `shares`) VALUES (?, ?, ?)");
+					ps.setInt(1, cid);
+					ps.setInt(2, MapleStocks.getInstance().idOf(pair.getLeft()));
+					ps.setInt(3, pair.getRight());
+					ps.executeUpdate();
 				}
+			} catch (SQLException e) {
+				Output.print("Something went wrong while saving a MapleStockPortfolio.");
+				MapleLogger.print(MapleLogger.EXCEPTION_CAUGHT, e);
 			}
 		}
 	}
