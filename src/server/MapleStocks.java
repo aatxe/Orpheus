@@ -113,7 +113,7 @@ public class MapleStocks {
 	
 	public String getNameByTicker(String ticker) {
 		for (MapleStock ms : stocks) {
-			if (ms.getTicker() == ticker) {
+			if (ms.getTicker().equalsIgnoreCase(ticker)) {
 				return ms.getName();
 			}
 		}
@@ -122,7 +122,7 @@ public class MapleStocks {
 	
 	public MapleStock getStock(String ticker) {
 		for (MapleStock ms : stocks) {
-			if (ms.getTicker() == ticker) {
+			if (ms.getTicker().equalsIgnoreCase(ticker)) {
 				return ms;
 			}
 		}
