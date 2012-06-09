@@ -65,7 +65,7 @@ public class MapleStocks {
 	}
 	
 	public String tickerOf(int id) {
-		return stocks.get(id).getTicker();
+		return stocks.get(id - 1).getTicker();
 	}
 	
 	public int idOf(String ticker) {
