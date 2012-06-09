@@ -104,7 +104,7 @@ public class MapleStockPortfolio {
 			if (pair.getLeft().equalsIgnoreCase(ms.getTicker())) amount += pair.getRight();
 			if (amount >= quantity) return true;
 		}
-		return false;
+		return (amount >= quantity);
 	}
 	
 	public boolean isEmpty() {
@@ -116,18 +116,18 @@ public class MapleStockPortfolio {
 			try {
 				Connection con = (Connection) DatabaseConnection.getConnection();
 				PreparedStatement ps;
-				if (!newlyAdded.contains(pair)) {
-					ps = con.prepareStatement("UPDATE maplestocks_data SET shares = ? WHERE cid = ? AND stockid = ?");
-					ps.setInt(1, pair.getRight());
-					ps.setInt(2, cid);
-					ps.setInt(3, MapleStocks.getInstance().idOf(pair.getLeft()));
-					Output.print(ps.toString());
-					ps.executeUpdate();
-				} else {
+				if (newlyAdded.contains(pair)) {
 					ps = con.prepareStatement("INSERT INTO maplestocks_data (`cid`, `stockid`, `shares`) VALUES (?, ?, ?)");
 					ps.setInt(1, cid);
 					ps.setInt(2, MapleStocks.getInstance().idOf(pair.getLeft()));
 					ps.setInt(3, pair.getRight());
+					Output.print(ps.toString());
+					ps.executeUpdate();
+				} else {
+					ps = con.prepareStatement("UPDATE maplestocks_data SET shares = ? WHERE cid = ? AND stockid = ?");
+					ps.setInt(1, pair.getRight());
+					ps.setInt(2, cid);
+					ps.setInt(3, MapleStocks.getInstance().idOf(pair.getLeft()));
 					Output.print(ps.toString());
 					ps.executeUpdate();
 				}
