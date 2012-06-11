@@ -180,9 +180,9 @@ public class MapleStocks {
 							double changeTotal = (pair.getRight() - oldPair.getRight());
 							if ((((double) Math.abs(changeTotal) / oldPair.getRight()) <= ServerConstants.STOCK_CRASH_THRESHOLD) && changeTotal < 0) {
 								crashStock(ms);
-							} else if ((changeTotal / oldPair.getRight()) < ServerConstants.STOCK_DECLINE_THRESHOLD) { 
+							} else if (((double) Math.abs(changeTotal) / oldPair.getRight()) < ServerConstants.STOCK_DECLINE_THRESHOLD && changeTotal < 0) { 
 								decreaseStock(ms);
-							} else if ((changeTotal / oldPair.getRight()) > ServerConstants.STOCK_DECLINE_THRESHOLD) {
+							} else if (((double) Math.abs(changeTotal) / oldPair.getRight()) > ServerConstants.STOCK_DECLINE_THRESHOLD) {
 								increaseStock(ms);
 							}
 						}
