@@ -58,6 +58,7 @@ public class MapleStockPortfolio {
 	}
 	
 	public boolean add(Pair<String, Integer> shares) {
+		Output.print("add() called");
 		if (!this.hasStock(MapleStocks.getInstance().getStock(shares.getLeft()))) {
 			portfolio.add(shares);
 			newlyAdded.add(shares);
@@ -67,6 +68,7 @@ public class MapleStockPortfolio {
 	}
 	
 	public boolean update(Pair<String, Integer> shares) {
+		Output.print("update() called");
 		for (Pair<String, Integer> pair : portfolio) {
 			if (pair.getLeft() == shares.getLeft()) {
 				pair.update(pair.getLeft(), pair.getRight() + shares.getRight());
@@ -95,15 +97,21 @@ public class MapleStockPortfolio {
 	}
 	
 	public boolean hasStock(MapleStock ms) {
-		return this.hasStock(ms, 1);
+		return (this.hasStock(ms, 1));
 	}
 	
 	public boolean hasStock(MapleStock ms, int quantity) {
 		int amount = 0;
 		for (Pair<String, Integer> pair : portfolio) {
-			if (pair.getLeft().equalsIgnoreCase(ms.getTicker())) amount += pair.getRight();
-			if (amount >= quantity) return true;
+			if (pair.getLeft().equalsIgnoreCase(ms.getTicker())) {
+				amount += pair.getRight();
+			}
+			if (amount >= quantity) {
+				Output.print("hasStock(" + ms.getTicker() + ", " + quantity + ") called; returning " + (amount >= quantity));
+				return true;
+			}
 		}
+		Output.print("hasStock(" + ms.getTicker() + ", " + quantity + ") called; returning " + (amount >= quantity));
 		return (amount >= quantity);
 	}
 	

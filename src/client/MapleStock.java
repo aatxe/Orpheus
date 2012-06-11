@@ -84,4 +84,11 @@ public class MapleStock {
 	public void update(Triplet<Integer, Integer, Integer> data) {
 		this.data = data;
 	}
+	
+	public boolean equals(Object o) {
+		if (this.getClass() != o.getClass()) return false;
+		if (this == (MapleStock) o) return true;
+		MapleStock c = (MapleStock) o;
+		return (c.getName() == this.getName() && c.getTicker() == this.getTicker());
+	}
 }
