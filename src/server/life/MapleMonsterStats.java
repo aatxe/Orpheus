@@ -29,7 +29,6 @@ import java.util.Map;
 import server.life.MapleLifeFactory.BanishInfo;
 import server.life.MapleLifeFactory.loseItem;
 import server.life.MapleLifeFactory.selfDestruction;
-import tools.Pair;
 
 /**
  * @author Frz
@@ -45,7 +44,7 @@ public class MapleMonsterStats {
 	private List<Integer> revives = Collections.emptyList();
 	private byte tagColor, tagBgColor;
 	private List<MobSkillEntry> skills = new ArrayList<MobSkillEntry>();
-	private Pair<Integer, Integer> cool = null;
+	private CoolDamageEntry cool = null;
 	private BanishInfo banish = null;
 	private List<loseItem> loseItem = null;
 	private selfDestruction selfDestruction = null;
@@ -285,11 +284,11 @@ public class MapleMonsterStats {
 		return removeOnMiss;
 	}
 
-	public void setCool(Pair<Integer, Integer> cool) {
+	public void setCool(CoolDamageEntry cool) {
 		this.cool = cool;
 	}
 
-	public Pair<Integer, Integer> getCool() {
+	public CoolDamageEntry getCool() {
 		return cool;
 	}
 }

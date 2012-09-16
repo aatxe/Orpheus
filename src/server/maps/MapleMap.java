@@ -71,13 +71,13 @@ import server.events.gm.MapleOxQuiz;
 import server.events.gm.MapleSnowball;
 import server.partyquest.MonsterCarnival;
 import server.partyquest.MonsterCarnivalParty;
+import server.life.CoolDamageEntry;
 import server.life.MapleLifeFactory;
 import server.life.MapleLifeFactory.selfDestruction;
 import server.life.MapleMonsterInformationProvider;
 import server.life.MonsterDropEntry;
 import server.life.MonsterGlobalDropEntry;
 import server.partyquest.Pyramid;
-import tools.Pair;
 
 public class MapleMap {
 
@@ -508,13 +508,13 @@ public class MapleMap {
 				if (!monster.isAlive()) {
 					return false;
 				}
-				Pair<Integer, Integer> cool = monster.getStats().getCool();
+				CoolDamageEntry cool = monster.getStats().getCool();
 				if (cool != null) {
 					Pyramid pq = (Pyramid) chr.getPartyQuest();
 					if (pq != null) {
 						if (damage > 0) {
-							if (damage >= cool.getLeft()) {
-								if ((Math.random() * 100) < cool.getRight()) {
+							if (damage >= cool.damage) {
+								if ((Math.random() * 100) < cool.probability) {
 									pq.cool();
 								} else {
 									pq.kill();

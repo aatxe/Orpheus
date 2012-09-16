@@ -32,7 +32,6 @@ import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
 import provider.wz.MapleDataType;
 import tools.Output;
-import tools.Pair;
 import tools.StringUtil;
 
 public class MapleLifeFactory {
@@ -81,7 +80,7 @@ public class MapleLifeFactory {
 			if (special != null) {
 				int coolDmg = MapleDataTool.getIntConvert("coolDamage", monsterInfoData);
 				int coolProb = MapleDataTool.getIntConvert("coolDamageProb", monsterInfoData, 0);
-				stats.setCool(new Pair<Integer, Integer>(coolDmg, coolProb));
+				stats.setCool(new CoolDamageEntry(coolDmg, coolProb));
 			}
 			special = monsterInfoData.getChildByPath("loseItem");
 			if (special != null) {
