@@ -79,6 +79,7 @@ import server.CashShop.CashItem;
 import server.CashShop.CashItemFactory;
 import server.CashShop.SpecialCashItem;
 import server.DueyPackages;
+import server.GiftEntry;
 import server.MTSItemInfo;
 import server.MapleBuffStatDelta;
 import server.MapleItemInformationProvider;
@@ -6898,15 +6899,15 @@ public class MaplePacketCreator {
 		return mplew.getPacket();
 	}
 
-	public static MaplePacket showGifts(List<Pair<IItem, String>> gifts) {
+	public static MaplePacket showGifts(List<GiftEntry> gifts) {
 		MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 		mplew.writeShort(SendOpcode.CASHSHOP_OPERATION.getValue());
 
 		mplew.write(0x4D);
 		mplew.writeShort(gifts.size());
 
-		for (Pair<IItem, String> gift : gifts) {
-			addCashItemInformation(mplew, gift.getLeft(), 0, gift.getRight());
+		for (GiftEntry gift : gifts) {
+			addCashItemInformation(mplew, gift.item, 0, gift.message);
 		}
 
 		return mplew.getPacket();

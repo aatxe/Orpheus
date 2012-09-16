@@ -42,7 +42,6 @@ import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
 import tools.DatabaseConnection;
-import tools.Pair;
 
 /*
  * @author Flav
@@ -383,8 +382,8 @@ public class CashShop {
 		}
 	}
 
-	public List<Pair<IItem, String>> loadGifts() {
-		List<Pair<IItem, String>> gifts = new ArrayList<Pair<IItem, String>>();
+	public List<GiftEntry> loadGifts() {
+		List<GiftEntry> gifts = new ArrayList<GiftEntry>();
 		Connection con = DatabaseConnection.getConnection();
 
 		try {
@@ -401,9 +400,9 @@ public class CashShop {
 				if (item.getType() == MapleInventoryType.EQUIP.getType()) {
 					equip = (IEquip) item;
 					equip.setRingId(rs.getInt("ringid"));
-					gifts.add(new Pair<IItem, String>(equip, rs.getString("message")));
+					gifts.add(new GiftEntry(equip, rs.getString("message")));
 				} else
-					gifts.add(new Pair<IItem, String>(item, rs.getString("message")));
+					gifts.add(new GiftEntry(item, rs.getString("message")));
 
 				if (CashItemFactory.isPackage(cItem.getItemId())) { // Packages
 																	// never
