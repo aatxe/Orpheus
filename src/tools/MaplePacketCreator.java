@@ -42,7 +42,6 @@ import client.ItemInventoryEntry;
 import client.MapleBuffStat;
 import client.MapleCharacter;
 import client.MapleClient;
-import client.MapleDisease;
 import client.MapleDiseaseEntry;
 import client.MapleFamilyEntry;
 import client.MapleInventory;
@@ -88,6 +87,7 @@ import server.MaplePlayerShop;
 import server.MaplePlayerShopItem;
 import server.MapleShopItem;
 import server.MapleTrade;
+import server.WorldRecommendation;
 import server.events.gm.MapleSnowball;
 import server.partyquest.MonsterCarnivalParty;
 import server.life.MapleMonster;
@@ -2504,13 +2504,13 @@ public class MaplePacketCreator {
 		return mplew.getPacket();
 	}
 
-	public static MaplePacket sendRecommended(List<Pair<Byte, String>> worlds) {
+	public static MaplePacket sendRecommended(List<WorldRecommendation> worlds) {
 		MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 		mplew.writeShort(SendOpcode.SEND_RECOMMENDED.getValue());
 		mplew.write(worlds.size());// size
-		for (Pair<Byte, String> world : worlds) {
-			mplew.writeInt(world.getLeft());
-			mplew.writeMapleAsciiString(world.getRight());
+		for (WorldRecommendation world : worlds) {
+			mplew.writeInt(world.worldId);
+			mplew.writeMapleAsciiString(world.message);
 		}
 		return mplew.getPacket();
 	}
@@ -2751,37 +2751,10 @@ public class MaplePacketCreator {
 		return mplew.getPacket();
 	}
 
-	@SuppressWarnings("unused")
-	private static <E extends LongValueHolder> long getLongMask(List<Pair<E, Integer>> statups) {
-		long mask = 0;
-		for (Pair<E, Integer> statup : statups) {
-			mask |= statup.getLeft().getValue();
-		}
-		return mask;
-	}
-
-	@SuppressWarnings("unused")
-	private static <E extends LongValueHolder> long getLongMaskFromList(List<E> statups) {
-		long mask = 0;
-		for (E statup : statups) {
-			mask |= statup.getValue();
-		}
-		return mask;
-	}
-
 	private static <E extends LongValueHolder> long getLongMaskD(List<MapleDiseaseEntry> entries) {
 		long mask = 0;
 		for (MapleDiseaseEntry entry : entries) {
 			mask |= entry.disease.getValue();
-		}
-		return mask;
-	}
-
-	@SuppressWarnings("unused")
-	private static <E extends LongValueHolder> long getLongMaskFromListD(List<MapleDisease> entries) {
-		long mask = 0;
-		for (MapleDisease entry : entries) {
-			mask |= entry.getValue();
 		}
 		return mask;
 	}

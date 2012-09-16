@@ -60,10 +60,10 @@ import paranoia.BlacklistHandler;
 import server.CashShop.CashItemFactory;
 import server.MapleItemInformationProvider;
 import server.MapleStocks;
+import server.WorldRecommendation;
 import tools.MapleLogger;
 import tools.MaplePacketCreator;
 import tools.Output;
-import tools.Pair;
 
 public class Server implements Runnable {
 
@@ -73,7 +73,7 @@ public class Server implements Runnable {
 	private Properties subnetInfo = new Properties();
 	private static Server instance = null;
 	private ArrayList<Map<Byte, AtomicInteger>> load = new ArrayList<Map<Byte, AtomicInteger>>();
-	private List<Pair<Byte, String>> worldRecommendedList = new LinkedList<Pair<Byte, String>>();
+	private List<WorldRecommendation> worldRecommendedList = new LinkedList<WorldRecommendation>();
 	private Map<Integer, MapleGuild> guilds = new LinkedHashMap<Integer, MapleGuild>();
 	private PlayerBuffStorage buffStorage = new PlayerBuffStorage();
 	private Map<Integer, MapleAlliance> alliances = new LinkedHashMap<Integer, MapleAlliance>();
@@ -92,7 +92,7 @@ public class Server implements Runnable {
 		return online;
 	}
 
-	public List<Pair<Byte, String>> worldRecommendedList() {
+	public List<WorldRecommendation> worldRecommendedList() {
 		return worldRecommendedList;
 	}
 
@@ -180,7 +180,7 @@ public class Server implements Runnable {
 				Output.print("Server is loading world" + i + ".");
 				World world = new World(i, Byte.parseByte(p.getProperty("flag" + i)), p.getProperty("eventmessage" + i), Byte.parseByte(p.getProperty("exprate" + i)), Byte.parseByte(p.getProperty("droprate" + i)), Byte.parseByte(p.getProperty("mesorate" + i)), Byte.parseByte(p.getProperty("bossdroprate" + i)));// ohlol
 
-				worldRecommendedList.add(new Pair<Byte, String>(i, p.getProperty("recommendmessage" + i)));
+				worldRecommendedList.add(new WorldRecommendation(i, p.getProperty("recommendmessage" + i)));
 				worlds.add(world);
 				channels.add(new LinkedHashMap<Byte, String>());
 				load.add(new LinkedHashMap<Byte, AtomicInteger>());
