@@ -22,9 +22,9 @@ package net.server.handlers.channel;
 
 import client.IItem;
 import client.ItemFactory;
+import client.ItemInventoryEntry;
 import client.MapleCharacter;
 import client.MapleClient;
-import client.MapleInventoryType;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -33,7 +33,6 @@ import net.AbstractMaplePacketHandler;
 import server.MapleInventoryManipulator;
 import tools.DatabaseConnection;
 import tools.MaplePacketCreator;
-import tools.Pair;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
@@ -50,7 +49,7 @@ public class FredrickHandler extends AbstractMaplePacketHandler {
 				// c.announce(MaplePacketCreator.getFredrick((byte) 0x24));
 				break;
 			case 0x1A:
-				List<Pair<IItem, MapleInventoryType>> items;
+				List<ItemInventoryEntry> items;
 				try {
 					items = ItemFactory.MERCHANT.loadItems(chr.getId(), false);
 					if (!check(chr, items)) {
@@ -62,7 +61,7 @@ public class FredrickHandler extends AbstractMaplePacketHandler {
 					chr.setMerchantMeso(0);
 					if (deleteItems(chr)) {
 						for (int i = 0; i < items.size(); i++) {
-							MapleInventoryManipulator.addFromDrop(c, items.get(i).getLeft(), false);
+							MapleInventoryManipulator.addFromDrop(c, items.get(i).item, false);
 						}
 						c.announce(MaplePacketCreator.fredrickMessage((byte) 0x1E));
 					} else {
@@ -81,12 +80,13 @@ public class FredrickHandler extends AbstractMaplePacketHandler {
 		}
 	}
 
-	private static boolean check(MapleCharacter chr, List<Pair<IItem, MapleInventoryType>> items) {
+	private static boolean check(MapleCharacter chr, List<ItemInventoryEntry> entries) {
 		if (chr.getMeso() + chr.getMerchantMeso() < 0) {
 			return false;
 		}
-		for (Pair<IItem, MapleInventoryType> item : items) {
-			if (!MapleInventoryManipulator.checkSpace(chr.getClient(), item.getLeft().getItemId(), item.getLeft().getQuantity(), item.getLeft().getOwner()))
+		for (ItemInventoryEntry entry : entries) {
+			final IItem item = entry.item;
+			if (!MapleInventoryManipulator.checkSpace(chr.getClient(), item.getItemId(), item.getQuantity(), item.getOwner()))
 				return false;
 		}
 

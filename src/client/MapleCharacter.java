@@ -2669,13 +2669,13 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			ret.getInventory(MapleInventoryType.USE).setSlotLimit(rs.getByte("useslots"));
 			ret.getInventory(MapleInventoryType.SETUP).setSlotLimit(rs.getByte("setupslots"));
 			ret.getInventory(MapleInventoryType.ETC).setSlotLimit(rs.getByte("etcslots"));
-			for (Pair<IItem, MapleInventoryType> item : ItemFactory.INVENTORY.loadItems(ret.id, !channelserver)) {
-				ret.getInventory(item.getRight()).addFromDB(item.getLeft());
-				if (item.getRight().equals(MapleInventoryType.EQUIP) || item.getRight().equals(MapleInventoryType.EQUIPPED)) {
-					IEquip equip = (IEquip) item.getLeft();
+			for (ItemInventoryEntry entry : ItemFactory.INVENTORY.loadItems(ret.id, !channelserver)) {
+				ret.getInventory(entry.type).addFromDB(entry.item);
+				if (entry.type.equals(MapleInventoryType.EQUIP) || entry.type.equals(MapleInventoryType.EQUIPPED)) {
+					IEquip equip = (IEquip) entry.item;
 					if (equip.getRingId() > -1) {
 						MapleRing ring = MapleRing.loadFromDb(equip.getRingId());
-						if (item.getRight().equals(MapleInventoryType.EQUIPPED)) {
+						if (entry.type.equals(MapleInventoryType.EQUIPPED)) {
 							ring.equip();
 						}
 						if (ring.getItemId() > 1112012) {
@@ -2685,19 +2685,19 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 						}
 					}
 				}
-				IItem itemz = item.getLeft();
-				if (itemz.getPetId() > -1) {
-					MaplePet pet = itemz.getPet();
+				IItem item = entry.item;
+				if (item.getPetId() > -1) {
+					MaplePet pet = item.getPet();
 					if (pet != null && pet.isSummoned()) {
 						ret.addPet(pet);
 					}
 					continue;
 				}
-				if (item.getRight().equals(MapleInventoryType.EQUIP) || item.getRight().equals(MapleInventoryType.EQUIPPED)) {
-					IEquip equip = (IEquip) item.getLeft();
+				if (entry.type.equals(MapleInventoryType.EQUIP) || entry.type.equals(MapleInventoryType.EQUIPPED)) {
+					IEquip equip = (IEquip) entry.item;
 					if (equip.getRingId() > -1) {
 						MapleRing ring = MapleRing.loadFromDb(equip.getRingId());
-						if (item.getRight().equals(MapleInventoryType.EQUIPPED)) {
+						if (entry.type.equals(MapleInventoryType.EQUIPPED)) {
 							ring.equip();
 						}
 						if (ring.getItemId() > 1112012) {

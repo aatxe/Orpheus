@@ -24,6 +24,7 @@ import client.IEquip;
 import client.IItem;
 import client.Item;
 import client.ItemFactory;
+import client.ItemInventoryEntry;
 import client.MapleInventoryType;
 import client.MaplePet;
 import constants.ItemConstants;
@@ -260,8 +261,8 @@ public class CashShop {
 			rs.close();
 			ps.close();
 
-			for (Pair<IItem, MapleInventoryType> item : factory.loadItems(accountId, false)) {
-				inventory.add(item.getLeft());
+			for (ItemInventoryEntry entry : factory.loadItems(accountId, false)) {
+				inventory.add(entry.item);
 			}
 
 			ps = con.prepareStatement("SELECT `sn` FROM `wishlists` WHERE `charid` = ?");

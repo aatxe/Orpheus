@@ -38,6 +38,7 @@ import client.IItem;
 import client.ISkill;
 import client.Item;
 import client.ItemFactory;
+import client.ItemInventoryEntry;
 import client.MapleBuffStat;
 import client.MapleCharacter;
 import client.MapleClient;
@@ -4948,11 +4949,11 @@ public class MaplePacketCreator {
 		mplew.writeInt(chr.getMerchantMeso());
 		mplew.write(0);
 		try {
-			List<Pair<IItem, MapleInventoryType>> items = ItemFactory.MERCHANT.loadItems(chr.getId(), false);
-			mplew.write(items.size());
+			List<ItemInventoryEntry> entries = ItemFactory.MERCHANT.loadItems(chr.getId(), false);
+			mplew.write(entries.size());
 
-			for (int i = 0; i < items.size(); i++) {
-				addItemInfo(mplew, items.get(i).getLeft(), true);
+			for (int i = 0; i < entries.size(); i++) {
+				addItemInfo(mplew, entries.get(i).item, true);
 			}
 		} catch (SQLException e) {
 		}

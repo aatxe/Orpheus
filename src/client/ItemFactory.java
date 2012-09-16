@@ -46,8 +46,8 @@ public enum ItemFactory {
 		return value;
 	}
 
-	public List<Pair<IItem, MapleInventoryType>> loadItems(int id, boolean login) throws SQLException {
-		List<Pair<IItem, MapleInventoryType>> items = new ArrayList<Pair<IItem, MapleInventoryType>>();
+	public List<ItemInventoryEntry> loadItems(int id, boolean login) throws SQLException {
+		List<ItemInventoryEntry> items = new ArrayList<ItemInventoryEntry>();
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -95,14 +95,14 @@ public enum ItemFactory {
 					equip.setExpiration(rs.getLong("expiration"));
 					equip.setGiftFrom(rs.getString("giftFrom"));
 					equip.setRingId(rs.getInt("ringid"));
-					items.add(new Pair<IItem, MapleInventoryType>(equip, mit));
+					items.add(new ItemInventoryEntry(equip, mit));
 				} else {
 					Item item = new Item(rs.getInt("itemid"), (byte) rs.getInt("position"), (short) rs.getInt("quantity"), rs.getInt("petid"));
 					item.setOwner(rs.getString("owner"));
 					item.setExpiration(rs.getLong("expiration"));
 					item.setGiftFrom(rs.getString("giftFrom"));
 					item.setFlag((byte) rs.getInt("flag"));
-					items.add(new Pair<IItem, MapleInventoryType>(item, mit));
+					items.add(new ItemInventoryEntry(item, mit));
 				}
 			}
 

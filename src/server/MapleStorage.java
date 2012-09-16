@@ -33,6 +33,7 @@ import java.util.List;
 import java.util.Map;
 import client.IItem;
 import client.ItemFactory;
+import client.ItemInventoryEntry;
 import client.MapleClient;
 import client.MapleInventoryType;
 import tools.DatabaseConnection;
@@ -88,8 +89,8 @@ public class MapleStorage {
 				ret = new MapleStorage(storeId, (byte) rs.getInt("slots"), rs.getInt("meso"));
 				rs.close();
 				ps.close();
-				for (Pair<IItem, MapleInventoryType> item : ItemFactory.STORAGE.loadItems(ret.id, false))
-					ret.items.add(item.getLeft());
+				for (ItemInventoryEntry entry : ItemFactory.STORAGE.loadItems(ret.id, false))
+					ret.items.add(entry.item);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
