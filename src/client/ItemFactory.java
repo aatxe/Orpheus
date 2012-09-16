@@ -117,7 +117,7 @@ public enum ItemFactory {
 		return items;
 	}
 
-	public synchronized void saveItems(List<Pair<IItem, MapleInventoryType>> items, int id) throws SQLException {
+	public synchronized void saveItems(List<ItemInventoryEntry> entries, int id) throws SQLException {
 		PreparedStatement ps = null;
 		PreparedStatement pse = null;
 		try {
@@ -133,9 +133,9 @@ public enum ItemFactory {
 			ps = con.prepareStatement("INSERT INTO `inventoryitems` VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 			pse = con.prepareStatement("INSERT INTO `inventoryequipment` VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-			for (Pair<IItem, MapleInventoryType> pair : items) {
-				IItem item = pair.getLeft();
-				MapleInventoryType mit = pair.getRight();
+			for (ItemInventoryEntry entry : entries) {
+				IItem item = entry.item;
+				MapleInventoryType mit = entry.type;
 				ps.setInt(1, value);
 				ps.setString(2, account ? null : String.valueOf(id));
 				ps.setString(3, account ? String.valueOf(id) : null);
