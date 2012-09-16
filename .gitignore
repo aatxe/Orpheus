@@ -1,1 +1,3 @@
 ﻿*.class
+.metadata/*
+*.DS_Store
