@@ -52,6 +52,7 @@ import client.MaplePet;
 import client.MapleQuestStatus;
 import client.MapleRing;
 import client.MapleStat;
+import client.MapleStatDelta;
 import client.SkillMacro;
 import client.status.MonsterStatus;
 import client.status.MonsterStatusEffect;
@@ -109,7 +110,7 @@ import tools.data.output.MaplePacketLittleEndianWriter;
 public class MaplePacketCreator {
 
 	private final static byte[] CHAR_INFO_MAGIC = new byte[] {(byte) 0xff, (byte) 0xc9, (byte) 0x9a, 0x3b};
-	public static final List<Pair<MapleStat, Integer>> EMPTY_STATUPDATE = Collections.emptyList();
+	public static final List<MapleStatDelta> EMPTY_STATUPDATE = Collections.emptyList();
 	private final static byte[] ITEM_MAGIC = new byte[] {(byte) 0x80, 0x05};
 	private final static int ITEM_YEAR2000 = -1085019342;
 	private final static long REAL_YEAR2000 = 946681229830L;
@@ -973,7 +974,7 @@ public class MaplePacketCreator {
 	 *            The stats to update.
 	 * @return The stat update packet.
 	 */
-	public static MaplePacket updatePlayerStats(List<Pair<MapleStat, Integer>> stats) {
+	public static MaplePacket updatePlayerStats(List<MapleStatDelta> stats) {
 		return updatePlayerStats(stats, false);
 	}
 
@@ -986,39 +987,39 @@ public class MaplePacketCreator {
 	 *            Result of an item reaction(?)
 	 * @return The stat update packet.
 	 */
-	public static MaplePacket updatePlayerStats(List<Pair<MapleStat, Integer>> stats, boolean itemReaction) {
+	public static MaplePacket updatePlayerStats(List<MapleStatDelta> stats, boolean itemReaction) {
 		MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 		mplew.writeShort(SendOpcode.UPDATE_STATS.getValue());
 		mplew.write(itemReaction ? 1 : 0);
 		int updateMask = 0;
-		for (Pair<MapleStat, Integer> statupdate : stats) {
-			updateMask |= statupdate.getLeft().getValue();
+		for (MapleStatDelta statupdate : stats) {
+			updateMask |= statupdate.stat.getValue();
 		}
-		List<Pair<MapleStat, Integer>> mystats = stats;
+		List<MapleStatDelta> mystats = stats;
 		if (mystats.size() > 1) {
-			Collections.sort(mystats, new Comparator<Pair<MapleStat, Integer>>() {
+			Collections.sort(mystats, new Comparator<MapleStatDelta>() {
 
 				@Override
-				public int compare(Pair<MapleStat, Integer> o1, Pair<MapleStat, Integer> o2) {
-					int val1 = o1.getLeft().getValue();
-					int val2 = o2.getLeft().getValue();
+				public int compare(MapleStatDelta o1, MapleStatDelta o2) {
+					int val1 = o1.stat.getValue();
+					int val2 = o2.stat.getValue();
 					return (val1 < val2 ? -1 : (val1 == val2 ? 0 : 1));
 				}
 			});
 		}
 		mplew.writeInt(updateMask);
-		for (Pair<MapleStat, Integer> statupdate : mystats) {
-			if (statupdate.getLeft().getValue() >= 1) {
-				if (statupdate.getLeft().getValue() == 0x1) {
-					mplew.writeShort(statupdate.getRight().shortValue());
-				} else if (statupdate.getLeft().getValue() <= 0x4) {
-					mplew.writeInt(statupdate.getRight());
-				} else if (statupdate.getLeft().getValue() < 0x20) {
-					mplew.write(statupdate.getRight().shortValue());
-				} else if (statupdate.getLeft().getValue() < 0xFFFF) {
-					mplew.writeShort(statupdate.getRight().shortValue());
+		for (MapleStatDelta statupdate : mystats) {
+			if (statupdate.stat.getValue() >= 1) {
+				if (statupdate.stat.getValue() == 0x1) {
+					mplew.writeShort(statupdate.delta);
+				} else if (statupdate.stat.getValue() <= 0x4) {
+					mplew.writeInt(statupdate.delta);
+				} else if (statupdate.stat.getValue() < 0x20) {
+					mplew.write(statupdate.delta);
+				} else if (statupdate.stat.getValue() < 0xFFFF) {
+					mplew.writeShort(statupdate.delta);
 				} else {
-					mplew.writeInt(statupdate.getRight().intValue());
+					mplew.writeInt(statupdate.delta);
 				}
 			}
 		}

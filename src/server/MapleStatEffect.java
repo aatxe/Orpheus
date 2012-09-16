@@ -39,6 +39,7 @@ import client.MapleInventoryType;
 import client.MapleJob;
 import client.MapleMount;
 import client.MapleStat;
+import client.MapleStatDelta;
 import client.SkillFactory;
 import client.status.MonsterStatus;
 import client.status.MonsterStatusEffect;
@@ -76,7 +77,6 @@ import server.maps.SummonMovementType;
 import net.server.PlayerCoolDownValueHolder;
 import tools.ArrayMap;
 import tools.MaplePacketCreator;
-import tools.Pair;
 import constants.skills.Fighter;
 import constants.skills.GM;
 import constants.skills.Gunslinger;
@@ -623,7 +623,7 @@ public class MapleStatEffect {
 				MapleInventoryManipulator.removeById(applyto.getClient(), MapleItemInformationProvider.getInstance().getInventoryType(itemCon), itemCon, itemConNo, false, true);
 			}
 		}
-		List<Pair<MapleStat, Integer>> hpmpupdate = new ArrayList<Pair<MapleStat, Integer>>(2);
+		List<MapleStatDelta> hpmpupdate = new ArrayList<MapleStatDelta>(2);
 		if (!primary && isResurrection()) {
 			hpchange = applyto.getMaxHp();
 			applyto.setStance(0);
@@ -653,7 +653,7 @@ public class MapleStatEffect {
 				newHp = 1;
 			}
 			applyto.setHp(newHp);
-			hpmpupdate.add(new Pair<MapleStat, Integer>(MapleStat.HP, Integer.valueOf(applyto.getHp())));
+			hpmpupdate.add(new MapleStatDelta(MapleStat.HP, applyto.getHp()));
 		}
 		int newMp = applyto.getMp() + mpchange;
 		if (mpchange != 0) {
@@ -661,7 +661,7 @@ public class MapleStatEffect {
 				return false;
 
 			applyto.setMp(newMp);
-			hpmpupdate.add(new Pair<MapleStat, Integer>(MapleStat.MP, Integer.valueOf(applyto.getMp())));
+			hpmpupdate.add(new MapleStatDelta(MapleStat.MP, applyto.getMp()));
 		}
 		applyto.getClient().getSession().write(MaplePacketCreator.updatePlayerStats(hpmpupdate, true));
 		if (moveTo != -1) {
