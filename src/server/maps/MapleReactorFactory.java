@@ -30,7 +30,6 @@ import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
 import server.maps.MapleReactorStats.StateData;
-import tools.Pair;
 import tools.StringUtil;
 
 public class MapleReactorFactory {
@@ -66,10 +65,12 @@ public class MapleReactorFactory {
 							for (MapleData fknexon : eventData.getChildren()) {
 								if (fknexon.getName().equals("timeOut"))
 									continue;
-								Pair<Integer, Integer> reactItem = null;
+								ReactorItemEntry reactItem = null;
 								int type = MapleDataTool.getIntConvert("type", fknexon);
 								if (type == 100) { // reactor waits for item
-									reactItem = new Pair<Integer, Integer>(MapleDataTool.getIntConvert("0", fknexon), MapleDataTool.getIntConvert("1", fknexon));
+									final int itemId = MapleDataTool.getIntConvert("0", fknexon);
+									final int quantity = MapleDataTool.getIntConvert("1", fknexon);
+									reactItem = new ReactorItemEntry(itemId, quantity);
 									if (!areaSet || loadArea) { // only set area
 																// of effect for
 																// item-triggered

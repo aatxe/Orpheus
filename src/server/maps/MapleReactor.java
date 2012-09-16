@@ -27,7 +27,6 @@ import net.MaplePacket;
 import scripting.reactor.ReactorScriptManager;
 import server.TimerManager;
 import tools.MaplePacketCreator;
-import tools.Pair;
 
 /**
  * 
@@ -94,7 +93,7 @@ public class MapleReactor extends AbstractMapleMapObject {
 		return map;
 	}
 
-	public Pair<Integer, Integer> getReactItem(byte index) {
+	public ReactorItemEntry getReactItem(byte index) {
 		return stats.getReactItem(state, index);
 	}
 

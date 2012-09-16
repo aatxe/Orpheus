@@ -1170,7 +1170,7 @@ public class MapleMap {
 			final MapleReactor react = (MapleReactor) o;
 
 			if (react.getReactorType() == 100) {
-				if (react.getReactItem((byte) 0).getLeft() == item.getItemId() && react.getReactItem((byte) 0).getRight() == item.getQuantity()) {
+				if (react.getReactItem((byte) 0).itemId == item.getItemId() && react.getReactItem((byte) 0).quantity == item.getQuantity()) {
 
 					if (react.getArea().contains(drop.getPosition())) {
 						if (!react.isTimerActive()) {

@@ -24,7 +24,6 @@ import java.awt.Point;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import tools.Pair;
 
 /**
  * @author Lerk
@@ -87,7 +86,7 @@ public class MapleReactorStats {
 		}
 	}
 
-	public Pair<Integer, Integer> getReactItem(byte state, byte index) {
+	public ReactorItemEntry getReactItem(byte state, byte index) {
 		StateData nextState = stateInfo.get(state).get(index);
 		if (nextState != null) {
 			return nextState.getReactItem();
@@ -98,11 +97,11 @@ public class MapleReactorStats {
 
 	public static class StateData {
 		private int type;
-		private Pair<Integer, Integer> reactItem;
+		private ReactorItemEntry reactItem;
 		private List<Integer> activeSkills;
 		private byte nextState;
 
-		public StateData(int type, Pair<Integer, Integer> reactItem, List<Integer> activeSkills, byte nextState) {
+		public StateData(int type, ReactorItemEntry reactItem, List<Integer> activeSkills, byte nextState) {
 			this.type = type;
 			this.reactItem = reactItem;
 			this.activeSkills = activeSkills;
@@ -117,7 +116,7 @@ public class MapleReactorStats {
 			return nextState;
 		}
 
-		private Pair<Integer, Integer> getReactItem() {
+		private ReactorItemEntry getReactItem() {
 			return reactItem;
 		}
 
