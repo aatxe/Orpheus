@@ -43,6 +43,7 @@ import client.MapleBuffStat;
 import client.MapleCharacter;
 import client.MapleClient;
 import client.MapleDisease;
+import client.MapleDiseaseEntry;
 import client.MapleFamilyEntry;
 import client.MapleInventory;
 import client.MapleInventoryType;
@@ -2768,31 +2769,31 @@ public class MaplePacketCreator {
 		return mask;
 	}
 
-	private static <E extends LongValueHolder> long getLongMaskD(List<Pair<MapleDisease, Integer>> statups) {
+	private static <E extends LongValueHolder> long getLongMaskD(List<MapleDiseaseEntry> entries) {
 		long mask = 0;
-		for (Pair<MapleDisease, Integer> statup : statups) {
-			mask |= statup.getLeft().getValue();
+		for (MapleDiseaseEntry entry : entries) {
+			mask |= entry.disease.getValue();
 		}
 		return mask;
 	}
 
 	@SuppressWarnings("unused")
-	private static <E extends LongValueHolder> long getLongMaskFromListD(List<MapleDisease> statups) {
+	private static <E extends LongValueHolder> long getLongMaskFromListD(List<MapleDisease> entries) {
 		long mask = 0;
-		for (MapleDisease statup : statups) {
-			mask |= statup.getValue();
+		for (MapleDisease entry : entries) {
+			mask |= entry.getValue();
 		}
 		return mask;
 	}
 
-	public static MaplePacket giveDebuff(List<Pair<MapleDisease, Integer>> statups, MobSkill skill) {
+	public static MaplePacket giveDebuff(List<MapleDiseaseEntry> entries, MobSkill skill) {
 		MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 		mplew.writeShort(SendOpcode.GIVE_BUFF.getValue());
-		long mask = getLongMaskD(statups);
+		long mask = getLongMaskD(entries);
 		mplew.writeLong(0);
 		mplew.writeLong(mask);
-		for (Pair<MapleDisease, Integer> statup : statups) {
-			mplew.writeShort(statup.getRight().shortValue());
+		for (MapleDiseaseEntry entry : entries) {
+			mplew.writeShort(entry.level);
 			mplew.writeShort(skill.getSkillId());
 			mplew.writeShort(skill.getSkillLevel());
 			mplew.writeInt((int) skill.getDuration());
@@ -2803,14 +2804,14 @@ public class MaplePacketCreator {
 		return mplew.getPacket();
 	}
 
-	public static MaplePacket giveForeignDebuff(int cid, List<Pair<MapleDisease, Integer>> statups, MobSkill skill) {
+	public static MaplePacket giveForeignDebuff(int cid, List<MapleDiseaseEntry> entries, MobSkill skill) {
 		MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 		mplew.writeShort(SendOpcode.GIVE_FOREIGN_BUFF.getValue());
 		mplew.writeInt(cid);
-		long mask = getLongMaskD(statups);
+		long mask = getLongMaskD(entries);
 		mplew.writeLong(0);
 		mplew.writeLong(mask);
-		for (int i = 0; i < statups.size(); i++) {
+		for (int i = 0; i < entries.size(); i++) {
 			mplew.writeShort(skill.getSkillId());
 			mplew.writeShort(skill.getSkillLevel());
 		}

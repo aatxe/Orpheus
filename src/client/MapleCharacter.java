@@ -1166,7 +1166,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	}
 
 	public void giveDebuff(final MapleDisease disease, MobSkill skill) {
-		final List<Pair<MapleDisease, Integer>> debuff = Collections.singletonList(new Pair<MapleDisease, Integer>(disease, Integer.valueOf(skill.getX())));
+		final List<MapleDiseaseEntry> debuff = Collections.singletonList(new MapleDiseaseEntry(disease, skill.getX()));
 
 		if (!hasDisease(disease) && diseases.size() < 2) {
 			if (!(disease == MapleDisease.SEDUCE || disease == MapleDisease.STUN)) {
