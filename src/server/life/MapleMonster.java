@@ -72,8 +72,8 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 	private int VenomMultiplier = 0;
 	private boolean fake = false;
 	private boolean dropsDisabled = false;
-	private List<Pair<Integer, Integer>> usedSkills = new ArrayList<Pair<Integer, Integer>>();
-	private Map<Pair<Integer, Integer>, Integer> skillsUsed = new HashMap<Pair<Integer, Integer>, Integer>();
+	private List<MobSkillEntry> usedSkills = new ArrayList<MobSkillEntry>();
+	private Map<MobSkillEntry, Integer> skillsUsed = new HashMap<MobSkillEntry, Integer>();
 	private List<Integer> stolenItems = new ArrayList<Integer>();
 	private int team;
 	public ReentrantLock monsterLock = new ReentrantLock();
@@ -657,7 +657,7 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 		return map;
 	}
 
-	public List<Pair<Integer, Integer>> getSkills() {
+	public List<MobSkillEntry> getSkills() {
 		return stats.getSkills();
 	}
 
@@ -669,14 +669,14 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 		if (toUse == null) {
 			return false;
 		}
-		for (Pair<Integer, Integer> skill : usedSkills) {
-			if (skill.getLeft() == toUse.getSkillId() && skill.getRight() == toUse.getSkillLevel()) {
+		for (MobSkillEntry skill : usedSkills) {
+			if (skill.skillId == toUse.getSkillId() && skill.level == toUse.getSkillLevel()) {
 				return false;
 			}
 		}
 		if (toUse.getLimit() > 0) {
-			if (this.skillsUsed.containsKey(new Pair<Integer, Integer>(toUse.getSkillId(), toUse.getSkillLevel()))) {
-				int times = this.skillsUsed.get(new Pair<Integer, Integer>(toUse.getSkillId(), toUse.getSkillLevel()));
+			if (this.skillsUsed.containsKey(new MobSkillEntry(toUse.getSkillId(), toUse.getSkillLevel()))) {
+				int times = this.skillsUsed.get(new MobSkillEntry(toUse.getSkillId(), toUse.getSkillLevel()));
 				if (times >= toUse.getLimit()) {
 					return false;
 				}
@@ -698,13 +698,13 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 	}
 
 	public void usedSkill(final int skillId, final int level, long cooltime) {
-		this.usedSkills.add(new Pair<Integer, Integer>(skillId, level));
-		if (this.skillsUsed.containsKey(new Pair<Integer, Integer>(skillId, level))) {
-			int times = this.skillsUsed.get(new Pair<Integer, Integer>(skillId, level)) + 1;
-			this.skillsUsed.remove(new Pair<Integer, Integer>(skillId, level));
-			this.skillsUsed.put(new Pair<Integer, Integer>(skillId, level), times);
+		this.usedSkills.add(new MobSkillEntry(skillId, level));
+		if (this.skillsUsed.containsKey(new MobSkillEntry(skillId, level))) {
+			int times = this.skillsUsed.get(new MobSkillEntry(skillId, level)) + 1;
+			this.skillsUsed.remove(new MobSkillEntry(skillId, level));
+			this.skillsUsed.put(new MobSkillEntry(skillId, level), times);
 		} else {
-			this.skillsUsed.put(new Pair<Integer, Integer>(skillId, level), 1);
+			this.skillsUsed.put(new MobSkillEntry(skillId, level), 1);
 		}
 		final MapleMonster mons = this;
 		TimerManager tMan = TimerManager.getInstance();
@@ -719,8 +719,8 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 
 	public void clearSkill(int skillId, int level) {
 		int index = -1;
-		for (Pair<Integer, Integer> skill : usedSkills) {
-			if (skill.getLeft() == skillId && skill.getRight() == level) {
+		for (MobSkillEntry skill : usedSkills) {
+			if (skill.skillId == skillId && skill.level == level) {
 				index = usedSkills.indexOf(skill);
 				break;
 			}

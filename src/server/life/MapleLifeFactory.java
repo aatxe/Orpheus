@@ -129,9 +129,11 @@ public class MapleLifeFactory {
 			MapleData monsterSkillData = monsterInfoData.getChildByPath("skill");
 			if (monsterSkillData != null) {
 				int i = 0;
-				List<Pair<Integer, Integer>> skills = new ArrayList<Pair<Integer, Integer>>();
+				List<MobSkillEntry> skills = new ArrayList<MobSkillEntry>();
 				while (monsterSkillData.getChildByPath(Integer.toString(i)) != null) {
-					skills.add(new Pair<Integer, Integer>(Integer.valueOf(MapleDataTool.getInt(i + "/skill", monsterSkillData, 0)), Integer.valueOf(MapleDataTool.getInt(i + "/level", monsterSkillData, 0))));
+					final int skillId = MapleDataTool.getInt(i + "/skill", monsterSkillData, 0);
+					final int level = MapleDataTool.getInt(i + "/level", monsterSkillData, 0);
+					skills.add(new MobSkillEntry(skillId, level));
 					i++;
 				}
 				stats.setSkills(skills);
