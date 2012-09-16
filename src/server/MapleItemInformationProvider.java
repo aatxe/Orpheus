@@ -91,7 +91,7 @@ public class MapleItemInformationProvider {
 	protected Map<Integer, Integer> expCache = new HashMap<Integer, Integer>();
 	protected Map<Integer, Integer> levelCache = new HashMap<Integer, Integer>();
 	protected Map<Integer, Pair<Integer, List<RewardItem>>> rewardCache = new HashMap<Integer, Pair<Integer, List<RewardItem>>>();
-	protected List<Pair<Integer, String>> itemNameCache = new ArrayList<Pair<Integer, String>>();
+	protected List<ItemNameEntry> itemNameCache = new ArrayList<ItemNameEntry>();
 	protected Map<Integer, Boolean> consumeOnPickupCache = new HashMap<Integer, Boolean>();
 	protected Map<Integer, Boolean> isQuestItemCache = new HashMap<Integer, Boolean>();
 
@@ -150,39 +150,52 @@ public class MapleItemInformationProvider {
 		return ret;
 	}
 
-	public List<Pair<Integer, String>> getAllItems() {
+	public List<ItemNameEntry> getAllItems() {
+		// BUG: If you never add anything to this, it'll always be empty, duh?
 		if (!itemNameCache.isEmpty()) {
-			return itemNameCache;
+			return itemNameCache; 
 		}
-		List<Pair<Integer, String>> itemPairs = new ArrayList<Pair<Integer, String>>();
+		
+		List<ItemNameEntry> entries = new ArrayList<ItemNameEntry>();
 		MapleData itemsData;
+		
 		itemsData = stringData.getData("Cash.img");
 		for (MapleData itemFolder : itemsData.getChildren()) {
-			itemPairs.add(new Pair<Integer, String>(Integer.parseInt(itemFolder.getName()), MapleDataTool.getString("name", itemFolder, "NO-NAME")));
+			entries.add(getItemNameEntry(itemFolder));
 		}
+		
 		itemsData = stringData.getData("Consume.img");
 		for (MapleData itemFolder : itemsData.getChildren()) {
-			itemPairs.add(new Pair<Integer, String>(Integer.parseInt(itemFolder.getName()), MapleDataTool.getString("name", itemFolder, "NO-NAME")));
+			entries.add(getItemNameEntry(itemFolder));
 		}
+		
 		itemsData = stringData.getData("Eqp.img").getChildByPath("Eqp");
 		for (MapleData eqpType : itemsData.getChildren()) {
 			for (MapleData itemFolder : eqpType.getChildren()) {
-				itemPairs.add(new Pair<Integer, String>(Integer.parseInt(itemFolder.getName()), MapleDataTool.getString("name", itemFolder, "NO-NAME")));
+				entries.add(getItemNameEntry(itemFolder));
 			}
 		}
+		
 		itemsData = stringData.getData("Etc.img").getChildByPath("Etc");
 		for (MapleData itemFolder : itemsData.getChildren()) {
-			itemPairs.add(new Pair<Integer, String>(Integer.parseInt(itemFolder.getName()), MapleDataTool.getString("name", itemFolder, "NO-NAME")));
+			entries.add(getItemNameEntry(itemFolder));
 		}
+		
 		itemsData = stringData.getData("Ins.img");
 		for (MapleData itemFolder : itemsData.getChildren()) {
-			itemPairs.add(new Pair<Integer, String>(Integer.parseInt(itemFolder.getName()), MapleDataTool.getString("name", itemFolder, "NO-NAME")));
+			entries.add(getItemNameEntry(itemFolder));
 		}
+		
 		itemsData = stringData.getData("Pet.img");
 		for (MapleData itemFolder : itemsData.getChildren()) {
-			itemPairs.add(new Pair<Integer, String>(Integer.parseInt(itemFolder.getName()), MapleDataTool.getString("name", itemFolder, "NO-NAME")));
+			entries.add(getItemNameEntry(itemFolder));
 		}
-		return itemPairs;
+		
+		return entries;
+	}
+
+	private static ItemNameEntry getItemNameEntry(MapleData itemFolder) {
+		return new ItemNameEntry(Integer.parseInt(itemFolder.getName()), MapleDataTool.getString("name", itemFolder, "NO-NAME"));
 	}
 
 	private MapleData getStringData(int itemId) {
