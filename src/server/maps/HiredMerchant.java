@@ -43,7 +43,6 @@ import server.MapleItemInformationProvider;
 import server.MaplePlayerShopItem;
 import server.TimerManager;
 import tools.MaplePacketCreator;
-import tools.Pair;
 
 /**
  * 
@@ -58,7 +57,7 @@ public class HiredMerchant extends AbstractMapleMapObject {
 	private String description = "";
 	private MapleCharacter[] visitors = new MapleCharacter[3];
 	private List<MaplePlayerShopItem> items = new LinkedList<MaplePlayerShopItem>();
-	private List<Pair<String, Byte>> messages = new LinkedList<Pair<String, Byte>>();
+	private List<HiredMerchantMessage> messages = new LinkedList<HiredMerchantMessage>();
 	private List<SoldItem> sold = new LinkedList<SoldItem>();
 	private boolean open;
 	public ScheduledFuture<?> schedule = null;
@@ -369,7 +368,7 @@ public class HiredMerchant extends AbstractMapleMapObject {
 		return (int) ((System.currentTimeMillis() - start) / 1000);
 	}
 
-	public List<Pair<String, Byte>> getMessages() {
+	public List<HiredMerchantMessage> getMessages() {
 		return messages;
 	}
 

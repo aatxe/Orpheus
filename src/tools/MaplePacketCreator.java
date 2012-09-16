@@ -5081,8 +5081,8 @@ public class MaplePacketCreator {
 		if (hm.isOwner(chr)) {
 			mplew.writeShort(hm.getMessages().size());
 			for (int i = 0; i < hm.getMessages().size(); i++) {
-				mplew.writeMapleAsciiString(hm.getMessages().get(i).getLeft());
-				mplew.write(hm.getMessages().get(i).getRight());
+				mplew.writeMapleAsciiString(hm.getMessages().get(i).message);
+				mplew.write(hm.getMessages().get(i).slot);
 			}
 		} else {
 			mplew.writeShort(0);
