@@ -19,9 +19,10 @@ package client;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import server.EquipLevelUpStat;
 import server.MapleItemInformationProvider;
 import tools.MaplePacketCreator;
-import tools.Pair;
 
 public class Equip extends Item implements IEquip {
 	private byte upgradeSlots;
@@ -238,44 +239,44 @@ public class Equip extends Item implements IEquip {
 	}
 
 	public void gainLevel(MapleClient c, boolean timeless) {
-		List<Pair<String, Integer>> stats = MapleItemInformationProvider.getInstance().getItemLevelupStats(getItemId(), itemLevel, timeless);
-		for (Pair<String, Integer> stat : stats) {
-			if (stat.getLeft().equals("incDEX"))
-				dex += stat.getRight();
-			else if (stat.getLeft().equals("incSTR"))
-				str += stat.getRight();
-			else if (stat.getLeft().equals("incINT"))
-				_int += stat.getRight();
-			else if (stat.getLeft().equals("incLUK"))
-				luk += stat.getRight();
-			else if (stat.getLeft().equals("incMHP"))
-				hp += stat.getRight();
-			else if (stat.getLeft().equals("incMMP"))
-				mp += stat.getRight();
-			else if (stat.getLeft().equals("incPAD"))
-				watk += stat.getRight();
-			else if (stat.getLeft().equals("incMAD"))
-				matk += stat.getRight();
-			else if (stat.getLeft().equals("incPDD"))
-				wdef += stat.getRight();
-			else if (stat.getLeft().equals("incMDD"))
-				mdef += stat.getRight();
-			else if (stat.getLeft().equals("incEVA"))
-				avoid += stat.getRight();
-			else if (stat.getLeft().equals("incACC"))
-				acc += stat.getRight();
-			else if (stat.getLeft().equals("incSpeed"))
-				speed += stat.getRight();
-			else if (stat.getLeft().equals("incJump"))
-				jump += stat.getRight();
-			else if (stat.getLeft().equals("Skill0"))
-				skill0 = stat.getRight();
-			else if (stat.getLeft().equals("Skill1"))
-				skill1 = stat.getRight();
-			else if (stat.getLeft().equals("Skill2"))
-				skill2 = stat.getRight();
-			else if (stat.getLeft().equals("Skill3"))
-				skill3 = stat.getRight();
+		List<EquipLevelUpStat> stats = MapleItemInformationProvider.getInstance().getItemLevelupStats(getItemId(), itemLevel, timeless);
+		for (EquipLevelUpStat stat : stats) {
+			if (stat.name.equals("incDEX"))
+				dex += stat.amount;
+			else if (stat.name.equals("incSTR"))
+				str += stat.amount;
+			else if (stat.name.equals("incINT"))
+				_int += stat.amount;
+			else if (stat.name.equals("incLUK"))
+				luk += stat.amount;
+			else if (stat.name.equals("incMHP"))
+				hp += stat.amount;
+			else if (stat.name.equals("incMMP"))
+				mp += stat.amount;
+			else if (stat.name.equals("incPAD"))
+				watk += stat.amount;
+			else if (stat.name.equals("incMAD"))
+				matk += stat.amount;
+			else if (stat.name.equals("incPDD"))
+				wdef += stat.amount;
+			else if (stat.name.equals("incMDD"))
+				mdef += stat.amount;
+			else if (stat.name.equals("incEVA"))
+				avoid += stat.amount;
+			else if (stat.name.equals("incACC"))
+				acc += stat.amount;
+			else if (stat.name.equals("incSpeed"))
+				speed += stat.amount;
+			else if (stat.name.equals("incJump"))
+				jump += stat.amount;
+			else if (stat.name.equals("Skill0"))
+				skill0 = stat.amount;
+			else if (stat.name.equals("Skill1"))
+				skill1 = stat.amount;
+			else if (stat.name.equals("Skill2"))
+				skill2 = stat.amount;
+			else if (stat.name.equals("Skill3"))
+				skill3 = stat.amount;
 		}
 		this.itemLevel++;
 		c.announce(MaplePacketCreator.showEquipmentLevelUp());
