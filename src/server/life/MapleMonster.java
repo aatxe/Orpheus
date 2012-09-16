@@ -52,10 +52,10 @@ import server.life.MapleLifeFactory.BanishInfo;
 import server.maps.MapleMap;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
+import server.maps.TimeMobEntry;
 import tools.ArrayMap;
 import tools.MaplePacketCreator;
 import tools.Output;
-import tools.Pair;
 
 public class MapleMonster extends AbstractLoadedMapleLife {
 
@@ -314,13 +314,13 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 				reviveMap.broadcastMessage(MaplePacketCreator.playSound("Dojang/clear"));
 				reviveMap.broadcastMessage(MaplePacketCreator.showEffect("dojang/end/clear"));
 			}
-			Pair<Integer, String> timeMob = reviveMap.getTimeMob();
+			TimeMobEntry timeMob = reviveMap.getTimeMob();
 			if (timeMob != null) {
-				if (toSpawn.contains(timeMob.getLeft())) {
-					reviveMap.broadcastMessage(MaplePacketCreator.serverNotice(6, timeMob.getRight()));
+				if (toSpawn.contains(timeMob.id)) {
+					reviveMap.broadcastMessage(MaplePacketCreator.serverNotice(6, timeMob.message));
 				}
 
-				if (timeMob.getLeft() == 9300338 && (reviveMap.getId() >= 922240100 && reviveMap.getId() <= 922240119)) {
+				if (timeMob.id == 9300338 && (reviveMap.getId() >= 922240100 && reviveMap.getId() <= 922240119)) {
 					if (!reviveMap.containsNPC(9001108)) {
 						MapleNPC npc = MapleLifeFactory.getNPC(9001108);
 						npc.setPosition(new Point(172, 9));

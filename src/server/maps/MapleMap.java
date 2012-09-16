@@ -115,7 +115,7 @@ public class MapleMap {
 	private int fieldLimit = 0;
 	private int mobCapacity = -1;
 	private ScheduledFuture<?> mapMonitor = null;
-	private Pair<Integer, String> timeMob = null;
+	private TimeMobEntry timeMob = null;
 	private short mobInterval = 5000;
 	// HPQ
 	private int riceCakeNum = 0; // bad place to put this (why is it in here
@@ -2130,10 +2130,10 @@ public class MapleMap {
 	}
 
 	public void timeMob(int id, String msg) {
-		timeMob = new Pair<Integer, String>(id, msg);
+		timeMob = new TimeMobEntry(id, msg);
 	}
 
-	public Pair<Integer, String> getTimeMob() {
+	public TimeMobEntry getTimeMob() {
 		return timeMob;
 	}
 
