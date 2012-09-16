@@ -94,6 +94,7 @@ import server.partyquest.MonsterCarnivalParty;
 import server.life.MapleMonster;
 import server.life.MapleNPC;
 import server.life.MobSkill;
+import server.life.NpcDescriptionEntry;
 import server.maps.HiredMerchant;
 import server.maps.MapleMap;
 import server.maps.MapleMapItem;
@@ -1385,16 +1386,16 @@ public class MaplePacketCreator {
     
     /**
 	 * Makes a list of any NPCs in the game scriptable.
-	 * @param npc - a list of pairs of NPC IDs and descriptions.
+	 * @param entries - a list of pairs of NPC IDs and descriptions.
 	 * @return 
 	 */
-    public static MaplePacket setNPCScriptable(List<Pair<Integer, String>> npc) {
+    public static MaplePacket setNPCScriptable(List<NpcDescriptionEntry> entries) {
     	MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
     	mplew.writeShort(SendOpcode.SET_NPC_SCRIPTABLE.getValue());
-    	mplew.write(npc.size()); // following structure is repeated n times
-    	for (Pair<Integer, String> x : npc) {
-    		mplew.writeInt(x.getLeft());
-    		mplew.writeMapleAsciiString(x.getRight());
+    	mplew.write(entries.size()); // following structure is repeated n times
+    	for (NpcDescriptionEntry entry : entries) {
+    		mplew.writeInt(entry.npcId);
+    		mplew.writeMapleAsciiString(entry.description);
     		mplew.writeInt(0); // start time
     		mplew.writeInt(Integer.MAX_VALUE); // end time
     	}
