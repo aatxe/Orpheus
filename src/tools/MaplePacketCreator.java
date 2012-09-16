@@ -79,6 +79,7 @@ import server.CashShop.CashItemFactory;
 import server.CashShop.SpecialCashItem;
 import server.DueyPackages;
 import server.MTSItemInfo;
+import server.MapleBuffStatDelta;
 import server.MapleItemInformationProvider;
 import server.MapleMiniGame;
 import server.MaplePlayerShop;
@@ -2610,22 +2611,22 @@ public class MaplePacketCreator {
 	// 8E AA 4F 00 00 C2 EB 0B E0 01 8E AA 4F 00 00 C2 EB 0B 0C 00 8E AA 4F 00
 	// 00 C2 EB 0B 44 02 8E AA 4F 00 00 C2 EB 0B 44 02 8E AA 4F 00 00 C2 EB 0B
 	// 00 00 E0 7A 1D 00 8E AA 4F 00 00 00 00 00 00 00 00 03
-	public static MaplePacket giveBuff(int buffid, int bufflength, List<Pair<MapleBuffStat, Integer>> statups) {
+	public static MaplePacket giveBuff(int buffid, int bufflength, List<MapleBuffStatDelta> statups) {
 		MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 		mplew.writeShort(SendOpcode.GIVE_BUFF.getValue());
 		boolean special = false;
 		writeLongMask(mplew, statups);
-		for (Pair<MapleBuffStat, Integer> statup : statups) {
-			if (statup.getLeft().equals(MapleBuffStat.MONSTER_RIDING) || statup.getLeft().equals(MapleBuffStat.HOMING_BEACON)) {
+		for (MapleBuffStatDelta statup : statups) {
+			if (statup.stat.equals(MapleBuffStat.MONSTER_RIDING) || statup.stat.equals(MapleBuffStat.HOMING_BEACON)) {
 				special = true;
 			}
-			mplew.writeShort(statup.getRight().shortValue());
+			mplew.writeShort(statup.delta);
 			mplew.writeInt(buffid);
 			mplew.writeInt(bufflength);
 		}
 		mplew.writeInt(0);
 		mplew.write(0);
-		mplew.writeInt(statups.get(0).getRight()); // Homing beacon ...
+		mplew.writeInt(statups.get(0).delta); // Homing beacon ...
 
 		if (special) {
 			mplew.write0(3);
@@ -2826,13 +2827,13 @@ public class MaplePacketCreator {
 		return mplew.getPacket();
 	}
 
-	public static MaplePacket giveForeignBuff(int cid, List<Pair<MapleBuffStat, Integer>> statups) {
+	public static MaplePacket giveForeignBuff(int cid, List<MapleBuffStatDelta> statups) {
 		MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 		mplew.writeShort(SendOpcode.GIVE_FOREIGN_BUFF.getValue());
 		mplew.writeInt(cid);
 		writeLongMask(mplew, statups);
-		for (Pair<MapleBuffStat, Integer> statup : statups) {
-			mplew.writeShort(statup.getRight().shortValue());
+		for (MapleBuffStatDelta statup : statups) {
+			mplew.writeShort(statup.delta);
 		}
 		mplew.writeInt(0);
 		mplew.writeShort(0);
@@ -2855,14 +2856,14 @@ public class MaplePacketCreator {
 		return mplew.getPacket();
 	}
 
-	private static void writeLongMask(MaplePacketLittleEndianWriter mplew, List<Pair<MapleBuffStat, Integer>> statups) {
+	private static void writeLongMask(MaplePacketLittleEndianWriter mplew, List<MapleBuffStatDelta> statups) {
 		long firstmask = 0;
 		long secondmask = 0;
-		for (Pair<MapleBuffStat, Integer> statup : statups) {
-			if (statup.getLeft().isFirst()) {
-				firstmask |= statup.getLeft().getValue();
+		for (MapleBuffStatDelta statup : statups) {
+			if (statup.stat.isFirst()) {
+				firstmask |= statup.stat.getValue();
 			} else {
-				secondmask |= statup.getLeft().getValue();
+				secondmask |= statup.stat.getValue();
 			}
 		}
 		mplew.writeLong(firstmask);
@@ -5267,13 +5268,13 @@ public class MaplePacketCreator {
 		return mplew.getPacket();
 	}
 
-	public static MaplePacket givePirateBuff(List<Pair<MapleBuffStat, Integer>> statups, int buffid, int duration) {
+	public static MaplePacket givePirateBuff(List<MapleBuffStatDelta> statups, int buffid, int duration) {
 		MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 		mplew.writeShort(SendOpcode.GIVE_BUFF.getValue());
 		writeLongMask(mplew, statups);
 		mplew.writeShort(0);
-		for (Pair<MapleBuffStat, Integer> stat : statups) {
-			mplew.writeInt(stat.getRight().shortValue());
+		for (MapleBuffStatDelta stat : statups) {
+			mplew.writeInt(stat.delta);
 			mplew.writeInt(buffid);
 			mplew.write0(5);
 			mplew.writeShort(duration);
@@ -5282,14 +5283,14 @@ public class MaplePacketCreator {
 		return mplew.getPacket();
 	}
 
-	public static MaplePacket giveForeignDash(int cid, int buffid, int time, List<Pair<MapleBuffStat, Integer>> statups) {
+	public static MaplePacket giveForeignDash(int cid, int buffid, int time, List<MapleBuffStatDelta> statups) {
 		MaplePacketLittleEndianWriter mplew = new MaplePacketLittleEndianWriter();
 		mplew.writeShort(SendOpcode.GIVE_FOREIGN_BUFF.getValue());
 		mplew.writeInt(cid);
 		writeLongMask(mplew, statups);
 		mplew.writeShort(0);
-		for (Pair<MapleBuffStat, Integer> statup : statups) {
-			mplew.writeInt(statup.getRight().shortValue());
+		for (MapleBuffStatDelta statup : statups) {
+			mplew.writeInt(statup.delta);
 			mplew.writeInt(buffid);
 			mplew.write0(5);
 			mplew.writeShort(time);

@@ -38,10 +38,11 @@ import constants.skills.WindArcher;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import server.MapleBuffStatDelta;
 import server.MapleStatEffect;
 import server.TimerManager;
 import tools.MaplePacketCreator;
-import tools.Pair;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class CloseRangeDamageHandler extends AbstractDealDamageHandler {
@@ -83,7 +84,7 @@ public final class CloseRangeDamageHandler extends AbstractDealDamageHandler {
 						}
 					}
 					int duration = combo.getEffect(player.getSkillLevel(oid)).getDuration();
-					List<Pair<MapleBuffStat, Integer>> stat = Collections.singletonList(new Pair<MapleBuffStat, Integer>(MapleBuffStat.COMBO, neworbcount));
+					List<MapleBuffStatDelta> stat = Collections.singletonList(new MapleBuffStatDelta(MapleBuffStat.COMBO, neworbcount));
 					player.setBuffedValue(MapleBuffStat.COMBO, neworbcount);
 					duration -= (int) (System.currentTimeMillis() - player.getBuffedStarttime(MapleBuffStat.COMBO));
 					c.announce(MaplePacketCreator.giveBuff(oid, duration, stat));

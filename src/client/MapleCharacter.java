@@ -61,6 +61,7 @@ import net.server.guild.MapleGuild;
 import net.server.guild.MapleGuildCharacter;
 import scripting.event.EventInstanceManager;
 import server.CashShop;
+import server.MapleBuffStatDelta;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import server.MapleMiniGame;
@@ -656,10 +657,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		if (!overwrite) {
 			buffstats = getBuffStats(effect, startTime);
 		} else {
-			List<Pair<MapleBuffStat, Integer>> statups = effect.getStatups();
+			List<MapleBuffStatDelta> statups = effect.getStatups();
 			buffstats = new ArrayList<MapleBuffStat>(statups.size());
-			for (Pair<MapleBuffStat, Integer> statup : statups) {
-				buffstats.add(statup.getLeft());
+			for (MapleBuffStatDelta statup : statups) {
+				buffstats.add(statup.stat);
 			}
 		}
 		deregisterBuffStats(buffstats);
@@ -2323,7 +2324,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			if (energybar > 10000) {
 				energybar = 10000;
 			}
-			List<Pair<MapleBuffStat, Integer>> stat = Collections.singletonList(new Pair<MapleBuffStat, Integer>(MapleBuffStat.ENERGY_CHARGE, energybar));
+			List<MapleBuffStatDelta> stat = Collections.singletonList(new MapleBuffStatDelta(MapleBuffStat.ENERGY_CHARGE, energybar));
 			setBuffedValue(MapleBuffStat.ENERGY_CHARGE, energybar);
 			client.announce(MaplePacketCreator.giveBuff(energybar, 0, stat));
 			client.announce(MaplePacketCreator.showOwnBuffEffect(energycharge.getId(), 2));
@@ -2338,7 +2339,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 				@Override
 				public void run() {
 					energybar = 0;
-					List<Pair<MapleBuffStat, Integer>> stat = Collections.singletonList(new Pair<MapleBuffStat, Integer>(MapleBuffStat.ENERGY_CHARGE, energybar));
+					List<MapleBuffStatDelta> stat = Collections.singletonList(new MapleBuffStatDelta(MapleBuffStat.ENERGY_CHARGE, energybar));
 					setBuffedValue(MapleBuffStat.ENERGY_CHARGE, energybar);
 					client.announce(MaplePacketCreator.giveBuff(energybar, 0, stat));
 					getMap().broadcastMessage(chr, MaplePacketCreator.giveForeignBuff(energybar, stat));
@@ -2350,7 +2351,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	public void handleOrbconsume() {
 		int skillid = isCygnus() ? DawnWarrior.COMBO : Crusader.COMBO;
 		ISkill combo = SkillFactory.getSkill(skillid);
-		List<Pair<MapleBuffStat, Integer>> stat = Collections.singletonList(new Pair<MapleBuffStat, Integer>(MapleBuffStat.COMBO, 1));
+		List<MapleBuffStatDelta> stat = Collections.singletonList(new MapleBuffStatDelta(MapleBuffStat.COMBO, 1));
 		setBuffedValue(MapleBuffStat.COMBO, 1);
 		client.announce(MaplePacketCreator.giveBuff(skillid, combo.getEffect(getSkillLevel(combo)).getDuration() + (int) ((getBuffedStarttime(MapleBuffStat.COMBO) - System.currentTimeMillis())), stat));
 		getMap().broadcastMessage(this, MaplePacketCreator.giveForeignBuff(getId(), stat), false);
@@ -3271,8 +3272,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 				}
 			}, 5000, 5000);
 		}
-		for (Pair<MapleBuffStat, Integer> statup : effect.getStatups()) {
-			effects.put(statup.getLeft(), new MapleBuffStatValueHolder(effect, starttime, schedule, statup.getRight().intValue()));
+		for (MapleBuffStatDelta statup : effect.getStatups()) {
+			effects.put(statup.stat, new MapleBuffStatValueHolder(effect, starttime, schedule, statup.delta));
 		}
 		recalcLocalStats();
 	}
