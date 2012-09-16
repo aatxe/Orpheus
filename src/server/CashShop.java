@@ -448,10 +448,10 @@ public class CashShop {
 		ps.setInt(4, accountId);
 		ps.executeUpdate();
 		ps.close();
-		List<Pair<IItem, MapleInventoryType>> itemsWithType = new ArrayList<Pair<IItem, MapleInventoryType>>();
+		List<ItemInventoryEntry> itemsWithType = new ArrayList<ItemInventoryEntry>();
 
 		for (IItem item : inventory) {
-			itemsWithType.add(new Pair<IItem, MapleInventoryType>(item, MapleItemInformationProvider.getInstance().getInventoryType(item.getItemId())));
+			itemsWithType.add(new ItemInventoryEntry(item, MapleItemInformationProvider.getInstance().getInventoryType(item.getItemId())));
 		}
 
 		factory.saveItems(itemsWithType, accountId);

@@ -38,7 +38,6 @@ import client.MapleClient;
 import client.MapleInventoryType;
 import tools.DatabaseConnection;
 import tools.MaplePacketCreator;
-import tools.Pair;
 
 /**
  * 
@@ -126,10 +125,10 @@ public class MapleStorage {
 			ps.setInt(3, id);
 			ps.executeUpdate();
 			ps.close();
-			List<Pair<IItem, MapleInventoryType>> itemsWithType = new ArrayList<Pair<IItem, MapleInventoryType>>();
+			List<ItemInventoryEntry> itemsWithType = new ArrayList<ItemInventoryEntry>();
 
 			for (IItem item : items)
-				itemsWithType.add(new Pair<IItem, MapleInventoryType>(item, MapleItemInformationProvider.getInstance().getInventoryType(item.getItemId())));
+				itemsWithType.add(new ItemInventoryEntry(item, MapleItemInformationProvider.getInstance().getInventoryType(item.getItemId())));
 
 			ItemFactory.STORAGE.saveItems(itemsWithType, id);
 		} catch (SQLException ex) {

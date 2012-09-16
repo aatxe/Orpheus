@@ -3647,11 +3647,11 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 				}
 			}
 			ps.executeBatch();
-			List<Pair<IItem, MapleInventoryType>> itemsWithType = new ArrayList<Pair<IItem, MapleInventoryType>>();
+			List<ItemInventoryEntry> itemsWithType = new ArrayList<ItemInventoryEntry>();
 
 			for (MapleInventory iv : inventory) {
 				for (IItem item : iv.list()) {
-					itemsWithType.add(new Pair<IItem, MapleInventoryType>(item, iv.getType()));
+					itemsWithType.add(new ItemInventoryEntry(item, iv.getType()));
 				}
 			}
 

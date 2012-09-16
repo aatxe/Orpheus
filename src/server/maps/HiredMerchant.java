@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 import client.IItem;
 import client.ItemFactory;
+import client.ItemInventoryEntry;
 import client.MapleCharacter;
 import client.MapleClient;
 import client.MapleInventoryType;
@@ -298,7 +299,7 @@ public class HiredMerchant extends AbstractMapleMapObject {
 	}
 
 	public void saveItems(boolean shutdown) throws SQLException {
-		List<Pair<IItem, MapleInventoryType>> itemsWithType = new ArrayList<Pair<IItem, MapleInventoryType>>();
+		List<ItemInventoryEntry> itemsWithType = new ArrayList<ItemInventoryEntry>();
 
 		for (MaplePlayerShopItem pItems : items) {
 			IItem newItem = pItems.getItem();
@@ -308,7 +309,7 @@ public class HiredMerchant extends AbstractMapleMapObject {
 				newItem.setQuantity(pItems.getItem().getQuantity());
 			}
 			if (pItems.getBundles() > 0) {
-				itemsWithType.add(new Pair<IItem, MapleInventoryType>(newItem, MapleInventoryType.getByType(newItem.getType())));
+				itemsWithType.add(new ItemInventoryEntry(newItem, MapleInventoryType.getByType(newItem.getType())));
 			}
 		}
 		ItemFactory.MERCHANT.saveItems(itemsWithType, this.ownerId);
