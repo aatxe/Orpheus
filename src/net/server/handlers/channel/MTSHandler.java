@@ -30,12 +30,12 @@ import tools.DatabaseConnection;
 import net.AbstractMaplePacketHandler;
 import net.MaplePacket;
 import net.server.Channel;
+import server.ItemNameEntry;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import server.MTSItemInfo;
 import tools.MaplePacketCreator;
 import tools.Output;
-import tools.Pair;
 import tools.data.input.SeekableLittleEndianAccessor;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -742,9 +742,9 @@ public final class MTSHandler extends AbstractMaplePacketHandler {
 		String listaitems = "";
 		if (cOi != 0) {
 			List<String> retItems = new ArrayList<String>();
-			for (Pair<Integer, String> itemPair : ii.getAllItems()) {
-				if (itemPair.getRight().toLowerCase().contains(search.toLowerCase())) {
-					retItems.add(" itemid=" + itemPair.getLeft() + " OR ");
+			for (ItemNameEntry itemPair : ii.getAllItems()) {
+				if (itemPair.name.toLowerCase().contains(search.toLowerCase())) {
+					retItems.add(" itemid=" + itemPair.itemId + " OR ");
 				}
 			}
 			listaitems += " AND (";

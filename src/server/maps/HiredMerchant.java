@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.concurrent.ScheduledFuture;
 import client.IItem;
 import client.ItemFactory;
+import client.ItemInventoryEntry;
 import client.MapleCharacter;
 import client.MapleClient;
 import client.MapleInventoryType;
@@ -42,7 +43,6 @@ import server.MapleItemInformationProvider;
 import server.MaplePlayerShopItem;
 import server.TimerManager;
 import tools.MaplePacketCreator;
-import tools.Pair;
 
 /**
  * 
@@ -57,7 +57,7 @@ public class HiredMerchant extends AbstractMapleMapObject {
 	private String description = "";
 	private MapleCharacter[] visitors = new MapleCharacter[3];
 	private List<MaplePlayerShopItem> items = new LinkedList<MaplePlayerShopItem>();
-	private List<Pair<String, Byte>> messages = new LinkedList<Pair<String, Byte>>();
+	private List<HiredMerchantMessage> messages = new LinkedList<HiredMerchantMessage>();
 	private List<SoldItem> sold = new LinkedList<SoldItem>();
 	private boolean open;
 	public ScheduledFuture<?> schedule = null;
@@ -298,7 +298,7 @@ public class HiredMerchant extends AbstractMapleMapObject {
 	}
 
 	public void saveItems(boolean shutdown) throws SQLException {
-		List<Pair<IItem, MapleInventoryType>> itemsWithType = new ArrayList<Pair<IItem, MapleInventoryType>>();
+		List<ItemInventoryEntry> itemsWithType = new ArrayList<ItemInventoryEntry>();
 
 		for (MaplePlayerShopItem pItems : items) {
 			IItem newItem = pItems.getItem();
@@ -308,7 +308,7 @@ public class HiredMerchant extends AbstractMapleMapObject {
 				newItem.setQuantity(pItems.getItem().getQuantity());
 			}
 			if (pItems.getBundles() > 0) {
-				itemsWithType.add(new Pair<IItem, MapleInventoryType>(newItem, MapleInventoryType.getByType(newItem.getType())));
+				itemsWithType.add(new ItemInventoryEntry(newItem, MapleInventoryType.getByType(newItem.getType())));
 			}
 		}
 		ItemFactory.MERCHANT.saveItems(itemsWithType, this.ownerId);
@@ -368,7 +368,7 @@ public class HiredMerchant extends AbstractMapleMapObject {
 		return (int) ((System.currentTimeMillis() - start) / 1000);
 	}
 
-	public List<Pair<String, Byte>> getMessages() {
+	public List<HiredMerchantMessage> getMessages() {
 		return messages;
 	}
 

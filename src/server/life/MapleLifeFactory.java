@@ -32,7 +32,6 @@ import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
 import provider.wz.MapleDataType;
 import tools.Output;
-import tools.Pair;
 import tools.StringUtil;
 
 public class MapleLifeFactory {
@@ -81,7 +80,7 @@ public class MapleLifeFactory {
 			if (special != null) {
 				int coolDmg = MapleDataTool.getIntConvert("coolDamage", monsterInfoData);
 				int coolProb = MapleDataTool.getIntConvert("coolDamageProb", monsterInfoData, 0);
-				stats.setCool(new Pair<Integer, Integer>(coolDmg, coolProb));
+				stats.setCool(new CoolDamageEntry(coolDmg, coolProb));
 			}
 			special = monsterInfoData.getChildByPath("loseItem");
 			if (special != null) {
@@ -129,9 +128,11 @@ public class MapleLifeFactory {
 			MapleData monsterSkillData = monsterInfoData.getChildByPath("skill");
 			if (monsterSkillData != null) {
 				int i = 0;
-				List<Pair<Integer, Integer>> skills = new ArrayList<Pair<Integer, Integer>>();
+				List<MobSkillEntry> skills = new ArrayList<MobSkillEntry>();
 				while (monsterSkillData.getChildByPath(Integer.toString(i)) != null) {
-					skills.add(new Pair<Integer, Integer>(Integer.valueOf(MapleDataTool.getInt(i + "/skill", monsterSkillData, 0)), Integer.valueOf(MapleDataTool.getInt(i + "/level", monsterSkillData, 0))));
+					final int skillId = MapleDataTool.getInt(i + "/skill", monsterSkillData, 0);
+					final int level = MapleDataTool.getInt(i + "/level", monsterSkillData, 0);
+					skills.add(new MobSkillEntry(skillId, level));
 					i++;
 				}
 				stats.setSkills(skills);

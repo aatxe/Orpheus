@@ -29,7 +29,6 @@ import java.util.Map;
 import server.life.MapleLifeFactory.BanishInfo;
 import server.life.MapleLifeFactory.loseItem;
 import server.life.MapleLifeFactory.selfDestruction;
-import tools.Pair;
 
 /**
  * @author Frz
@@ -44,8 +43,8 @@ public class MapleMonsterStats {
 	private Map<Element, ElementalEffectiveness> resistance = new HashMap<Element, ElementalEffectiveness>();
 	private List<Integer> revives = Collections.emptyList();
 	private byte tagColor, tagBgColor;
-	private List<Pair<Integer, Integer>> skills = new ArrayList<Pair<Integer, Integer>>();
-	private Pair<Integer, Integer> cool = null;
+	private List<MobSkillEntry> skills = new ArrayList<MobSkillEntry>();
+	private CoolDamageEntry cool = null;
 	private BanishInfo banish = null;
 	private List<loseItem> loseItem = null;
 	private selfDestruction selfDestruction = null;
@@ -183,13 +182,13 @@ public class MapleMonsterStats {
 		this.tagBgColor = (byte) tagBgColor;
 	}
 
-	public void setSkills(List<Pair<Integer, Integer>> skills) {
-		for (Pair<Integer, Integer> skill : skills) {
-			this.skills.add(skill);
+	public void setSkills(List<MobSkillEntry> entries) {
+		for (MobSkillEntry entry : entries) {
+			this.skills.add(entry);
 		}
 	}
 
-	public List<Pair<Integer, Integer>> getSkills() {
+	public List<MobSkillEntry> getSkills() {
 		return Collections.unmodifiableList(this.skills);
 	}
 
@@ -198,8 +197,8 @@ public class MapleMonsterStats {
 	}
 
 	public boolean hasSkill(int skillId, int level) {
-		for (Pair<Integer, Integer> skill : skills) {
-			if (skill.getLeft() == skillId && skill.getRight() == level) {
+		for (MobSkillEntry skill : skills) {
+			if (skill.skillId == skillId && skill.level == level) {
 				return true;
 			}
 		}
@@ -285,11 +284,11 @@ public class MapleMonsterStats {
 		return removeOnMiss;
 	}
 
-	public void setCool(Pair<Integer, Integer> cool) {
+	public void setCool(CoolDamageEntry cool) {
 		this.cool = cool;
 	}
 
-	public Pair<Integer, Integer> getCool() {
+	public CoolDamageEntry getCool() {
 		return cool;
 	}
 }

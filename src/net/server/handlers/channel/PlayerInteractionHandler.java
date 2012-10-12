@@ -35,10 +35,10 @@ import server.MaplePlayerShopItem;
 import server.MapleTrade;
 import server.maps.FieldLimit;
 import server.maps.HiredMerchant;
+import server.maps.HiredMerchantMessage;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
 import tools.MaplePacketCreator;
-import tools.Pair;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 /**
@@ -198,7 +198,7 @@ public final class PlayerInteractionHandler extends AbstractMaplePacketHandler {
 			} else if (merchant != null) {
 				String message = chr.getName() + " : " + slea.readMapleAsciiString();
 				byte slot = (byte) (merchant.getVisitorSlot(c.getPlayer()) + 1);
-				merchant.getMessages().add(new Pair<String, Byte>(message, slot));
+				merchant.getMessages().add(new HiredMerchantMessage(message, slot));
 				merchant.broadcastToVisitors(MaplePacketCreator.hiredMerchantChat(message, slot));
 			}
 		} else if (mode == Action.EXIT.getCode()) {

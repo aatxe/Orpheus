@@ -26,12 +26,12 @@ import client.MapleClient;
 import tools.Randomizer;
 import server.life.MapleMonster;
 import server.life.MobSkill;
+import server.life.MobSkillEntry;
 import server.life.MobSkillFactory;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
 import server.movement.LifeMovementFragment;
 import tools.MaplePacketCreator;
-import tools.Pair;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class MoveLifeHandler extends AbstractMovementPacketHandler {
@@ -54,8 +54,8 @@ public final class MoveLifeHandler extends AbstractMovementPacketHandler {
 		MobSkill toUse = null;
 		if (skillByte == 1 && monster.getNoSkills() > 0) {
 			int random = Randomizer.nextInt(monster.getNoSkills());
-			Pair<Integer, Integer> skillToUse = monster.getSkills().get(random);
-			toUse = MobSkillFactory.getMobSkill(skillToUse.getLeft(), skillToUse.getRight());
+			MobSkillEntry skillToUse = monster.getSkills().get(random);
+			toUse = MobSkillFactory.getMobSkill(skillToUse.skillId, skillToUse.level);
 			int percHpLeft = (monster.getHp() / monster.getMaxHp()) * 100;
 			if (toUse.getHP() < percHpLeft || !monster.canUseSkill(toUse)) {
 				toUse = null;

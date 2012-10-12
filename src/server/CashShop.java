@@ -24,6 +24,7 @@ import client.IEquip;
 import client.IItem;
 import client.Item;
 import client.ItemFactory;
+import client.ItemInventoryEntry;
 import client.MapleInventoryType;
 import client.MaplePet;
 import constants.ItemConstants;
@@ -41,7 +42,6 @@ import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
 import tools.DatabaseConnection;
-import tools.Pair;
 
 /*
  * @author Flav
@@ -260,8 +260,8 @@ public class CashShop {
 			rs.close();
 			ps.close();
 
-			for (Pair<IItem, MapleInventoryType> item : factory.loadItems(accountId, false)) {
-				inventory.add(item.getLeft());
+			for (ItemInventoryEntry entry : factory.loadItems(accountId, false)) {
+				inventory.add(entry.item);
 			}
 
 			ps = con.prepareStatement("SELECT `sn` FROM `wishlists` WHERE `charid` = ?");
@@ -382,8 +382,8 @@ public class CashShop {
 		}
 	}
 
-	public List<Pair<IItem, String>> loadGifts() {
-		List<Pair<IItem, String>> gifts = new ArrayList<Pair<IItem, String>>();
+	public List<GiftEntry> loadGifts() {
+		List<GiftEntry> gifts = new ArrayList<GiftEntry>();
 		Connection con = DatabaseConnection.getConnection();
 
 		try {
@@ -400,9 +400,9 @@ public class CashShop {
 				if (item.getType() == MapleInventoryType.EQUIP.getType()) {
 					equip = (IEquip) item;
 					equip.setRingId(rs.getInt("ringid"));
-					gifts.add(new Pair<IItem, String>(equip, rs.getString("message")));
+					gifts.add(new GiftEntry(equip, rs.getString("message")));
 				} else
-					gifts.add(new Pair<IItem, String>(item, rs.getString("message")));
+					gifts.add(new GiftEntry(item, rs.getString("message")));
 
 				if (CashItemFactory.isPackage(cItem.getItemId())) { // Packages
 																	// never
@@ -447,10 +447,10 @@ public class CashShop {
 		ps.setInt(4, accountId);
 		ps.executeUpdate();
 		ps.close();
-		List<Pair<IItem, MapleInventoryType>> itemsWithType = new ArrayList<Pair<IItem, MapleInventoryType>>();
+		List<ItemInventoryEntry> itemsWithType = new ArrayList<ItemInventoryEntry>();
 
 		for (IItem item : inventory) {
-			itemsWithType.add(new Pair<IItem, MapleInventoryType>(item, MapleItemInformationProvider.getInstance().getInventoryType(item.getItemId())));
+			itemsWithType.add(new ItemInventoryEntry(item, MapleItemInformationProvider.getInstance().getInventoryType(item.getItemId())));
 		}
 
 		factory.saveItems(itemsWithType, accountId);

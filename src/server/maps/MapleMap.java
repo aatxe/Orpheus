@@ -71,13 +71,13 @@ import server.events.gm.MapleOxQuiz;
 import server.events.gm.MapleSnowball;
 import server.partyquest.MonsterCarnival;
 import server.partyquest.MonsterCarnivalParty;
+import server.life.CoolDamageEntry;
 import server.life.MapleLifeFactory;
 import server.life.MapleLifeFactory.selfDestruction;
 import server.life.MapleMonsterInformationProvider;
 import server.life.MonsterDropEntry;
 import server.life.MonsterGlobalDropEntry;
 import server.partyquest.Pyramid;
-import tools.Pair;
 
 public class MapleMap {
 
@@ -115,7 +115,7 @@ public class MapleMap {
 	private int fieldLimit = 0;
 	private int mobCapacity = -1;
 	private ScheduledFuture<?> mapMonitor = null;
-	private Pair<Integer, String> timeMob = null;
+	private TimeMobEntry timeMob = null;
 	private short mobInterval = 5000;
 	// HPQ
 	private int riceCakeNum = 0; // bad place to put this (why is it in here
@@ -508,13 +508,13 @@ public class MapleMap {
 				if (!monster.isAlive()) {
 					return false;
 				}
-				Pair<Integer, Integer> cool = monster.getStats().getCool();
+				CoolDamageEntry cool = monster.getStats().getCool();
 				if (cool != null) {
 					Pyramid pq = (Pyramid) chr.getPartyQuest();
 					if (pq != null) {
 						if (damage > 0) {
-							if (damage >= cool.getLeft()) {
-								if ((Math.random() * 100) < cool.getRight()) {
+							if (damage >= cool.damage) {
+								if ((Math.random() * 100) < cool.probability) {
 									pq.cool();
 								} else {
 									pq.kill();
@@ -1170,7 +1170,7 @@ public class MapleMap {
 			final MapleReactor react = (MapleReactor) o;
 
 			if (react.getReactorType() == 100) {
-				if (react.getReactItem((byte) 0).getLeft() == item.getItemId() && react.getReactItem((byte) 0).getRight() == item.getQuantity()) {
+				if (react.getReactItem((byte) 0).itemId == item.getItemId() && react.getReactItem((byte) 0).quantity == item.getQuantity()) {
 
 					if (react.getArea().contains(drop.getPosition())) {
 						if (!react.isTimerActive()) {
@@ -2130,10 +2130,10 @@ public class MapleMap {
 	}
 
 	public void timeMob(int id, String msg) {
-		timeMob = new Pair<Integer, String>(id, msg);
+		timeMob = new TimeMobEntry(id, msg);
 	}
 
-	public Pair<Integer, String> getTimeMob() {
+	public TimeMobEntry getTimeMob() {
 		return timeMob;
 	}
 

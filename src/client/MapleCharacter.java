@@ -61,6 +61,7 @@ import net.server.guild.MapleGuild;
 import net.server.guild.MapleGuildCharacter;
 import scripting.event.EventInstanceManager;
 import server.CashShop;
+import server.MapleBuffStatDelta;
 import server.MapleInventoryManipulator;
 import server.MapleItemInformationProvider;
 import server.MapleMiniGame;
@@ -656,10 +657,10 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		if (!overwrite) {
 			buffstats = getBuffStats(effect, startTime);
 		} else {
-			List<Pair<MapleBuffStat, Integer>> statups = effect.getStatups();
+			List<MapleBuffStatDelta> statups = effect.getStatups();
 			buffstats = new ArrayList<MapleBuffStat>(statups.size());
-			for (Pair<MapleBuffStat, Integer> statup : statups) {
-				buffstats.add(statup.getLeft());
+			for (MapleBuffStatDelta statup : statups) {
+				buffstats.add(statup.stat);
 			}
 		}
 		deregisterBuffStats(buffstats);
@@ -681,11 +682,11 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			}
 		}
 		if (effect.getSourceId() == Spearman.HYPER_BODY || effect.getSourceId() == GM.HYPER_BODY || effect.getSourceId() == SuperGM.HYPER_BODY) {
-			List<Pair<MapleStat, Integer>> statup = new ArrayList<Pair<MapleStat, Integer>>(4);
-			statup.add(new Pair<MapleStat, Integer>(MapleStat.HP, Math.min(hp, maxhp)));
-			statup.add(new Pair<MapleStat, Integer>(MapleStat.MP, Math.min(mp, maxmp)));
-			statup.add(new Pair<MapleStat, Integer>(MapleStat.MAXHP, maxhp));
-			statup.add(new Pair<MapleStat, Integer>(MapleStat.MAXMP, maxmp));
+			List<MapleStatDelta> statup = new ArrayList<MapleStatDelta>(4);
+			statup.add(new MapleStatDelta(MapleStat.HP, Math.min(hp, maxhp)));
+			statup.add(new MapleStatDelta(MapleStat.MP, Math.min(mp, maxmp)));
+			statup.add(new MapleStatDelta(MapleStat.MAXHP, maxhp));
+			statup.add(new MapleStatDelta(MapleStat.MAXMP, maxmp));
 			client.announce(MaplePacketCreator.updatePlayerStats(statup));
 		}
 		if (effect.isMonsterRiding()) {
@@ -830,12 +831,12 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 				gainSlots(i, 4, true);
 			}
 		}
-		List<Pair<MapleStat, Integer>> statup = new ArrayList<Pair<MapleStat, Integer>>(5);
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.MAXHP, Integer.valueOf(maxhp)));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.MAXMP, Integer.valueOf(maxmp)));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.AVAILABLEAP, remainingAp));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.AVAILABLESP, remainingSp));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.JOB, Integer.valueOf(job.getId())));
+		List<MapleStatDelta> statup = new ArrayList<MapleStatDelta>(5);
+		statup.add(new MapleStatDelta(MapleStat.MAXHP, maxhp));
+		statup.add(new MapleStatDelta(MapleStat.MAXMP, maxmp));
+		statup.add(new MapleStatDelta(MapleStat.AVAILABLEAP, remainingAp));
+		statup.add(new MapleStatDelta(MapleStat.AVAILABLESP, remainingSp));
+		statup.add(new MapleStatDelta(MapleStat.JOB, job.getId()));
 		recalcLocalStats();
 		client.announce(MaplePacketCreator.updatePlayerStats(statup));
 		silentPartyUpdate();
@@ -1165,7 +1166,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	}
 
 	public void giveDebuff(final MapleDisease disease, MobSkill skill) {
-		final List<Pair<MapleDisease, Integer>> debuff = Collections.singletonList(new Pair<MapleDisease, Integer>(disease, Integer.valueOf(skill.getX())));
+		final List<MapleDiseaseEntry> debuff = Collections.singletonList(new MapleDiseaseEntry(disease, skill.getX()));
 
 		if (!hasDisease(disease) && diseases.size() < 2) {
 			if (!(disease == MapleDisease.SEDUCE || disease == MapleDisease.STUN)) {
@@ -1271,14 +1272,14 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	}
 
 	private void enforceMaxHpMp() {
-		List<Pair<MapleStat, Integer>> stats = new ArrayList<Pair<MapleStat, Integer>>(2);
+		List<MapleStatDelta> stats = new ArrayList<MapleStatDelta>(2);
 		if (getMp() > getCurrentMaxMp()) {
 			setMp(getMp());
-			stats.add(new Pair<MapleStat, Integer>(MapleStat.MP, Integer.valueOf(getMp())));
+			stats.add(new MapleStatDelta(MapleStat.MP, getMp()));
 		}
 		if (getHp() > getCurrentMaxHp()) {
 			setHp(getHp());
-			stats.add(new Pair<MapleStat, Integer>(MapleStat.HP, Integer.valueOf(getHp())));
+			stats.add(new MapleStatDelta(MapleStat.HP, getHp()));
 		}
 		if (stats.size() > 0) {
 			client.announce(MaplePacketCreator.updatePlayerStats(stats));
@@ -2323,7 +2324,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			if (energybar > 10000) {
 				energybar = 10000;
 			}
-			List<Pair<MapleBuffStat, Integer>> stat = Collections.singletonList(new Pair<MapleBuffStat, Integer>(MapleBuffStat.ENERGY_CHARGE, energybar));
+			List<MapleBuffStatDelta> stat = Collections.singletonList(new MapleBuffStatDelta(MapleBuffStat.ENERGY_CHARGE, energybar));
 			setBuffedValue(MapleBuffStat.ENERGY_CHARGE, energybar);
 			client.announce(MaplePacketCreator.giveBuff(energybar, 0, stat));
 			client.announce(MaplePacketCreator.showOwnBuffEffect(energycharge.getId(), 2));
@@ -2338,7 +2339,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 				@Override
 				public void run() {
 					energybar = 0;
-					List<Pair<MapleBuffStat, Integer>> stat = Collections.singletonList(new Pair<MapleBuffStat, Integer>(MapleBuffStat.ENERGY_CHARGE, energybar));
+					List<MapleBuffStatDelta> stat = Collections.singletonList(new MapleBuffStatDelta(MapleBuffStat.ENERGY_CHARGE, energybar));
 					setBuffedValue(MapleBuffStat.ENERGY_CHARGE, energybar);
 					client.announce(MaplePacketCreator.giveBuff(energybar, 0, stat));
 					getMap().broadcastMessage(chr, MaplePacketCreator.giveForeignBuff(energybar, stat));
@@ -2350,7 +2351,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	public void handleOrbconsume() {
 		int skillid = isCygnus() ? DawnWarrior.COMBO : Crusader.COMBO;
 		ISkill combo = SkillFactory.getSkill(skillid);
-		List<Pair<MapleBuffStat, Integer>> stat = Collections.singletonList(new Pair<MapleBuffStat, Integer>(MapleBuffStat.COMBO, 1));
+		List<MapleBuffStatDelta> stat = Collections.singletonList(new MapleBuffStatDelta(MapleBuffStat.COMBO, 1));
 		setBuffedValue(MapleBuffStat.COMBO, 1);
 		client.announce(MaplePacketCreator.giveBuff(skillid, combo.getEffect(getSkillLevel(combo)).getDuration() + (int) ((getBuffedStarttime(MapleBuffStat.COMBO) - System.currentTimeMillis())), stat));
 		getMap().broadcastMessage(this, MaplePacketCreator.giveForeignBuff(getId(), stat), false);
@@ -2552,19 +2553,19 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		hp = maxhp;
 		mp = maxmp;
 		recalcLocalStats();
-		List<Pair<MapleStat, Integer>> statup = new ArrayList<Pair<MapleStat, Integer>>(10);
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.AVAILABLEAP, remainingAp));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.HP, localmaxhp));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.MP, localmaxmp));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.EXP, exp.get()));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.LEVEL, level));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.MAXHP, maxhp));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.MAXMP, maxmp));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.STR, str));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.DEX, dex));
+		List<MapleStatDelta> statup = new ArrayList<MapleStatDelta>(10);
+		statup.add(new MapleStatDelta(MapleStat.AVAILABLEAP, remainingAp));
+		statup.add(new MapleStatDelta(MapleStat.HP, localmaxhp));
+		statup.add(new MapleStatDelta(MapleStat.MP, localmaxmp));
+		statup.add(new MapleStatDelta(MapleStat.EXP, exp.get()));
+		statup.add(new MapleStatDelta(MapleStat.LEVEL, level));
+		statup.add(new MapleStatDelta(MapleStat.MAXHP, maxhp));
+		statup.add(new MapleStatDelta(MapleStat.MAXMP, maxmp));
+		statup.add(new MapleStatDelta(MapleStat.STR, str));
+		statup.add(new MapleStatDelta(MapleStat.DEX, dex));
 		if (job.getId() % 1000 > 0) {
 			remainingSp += 3;
-			statup.add(new Pair<MapleStat, Integer>(MapleStat.AVAILABLESP, remainingSp));
+			statup.add(new MapleStatDelta(MapleStat.AVAILABLESP, remainingSp));
 		}
 		client.announce(MaplePacketCreator.updatePlayerStats(statup));
 		getMap().broadcastMessage(this, MaplePacketCreator.showForeignEffect(getId(), 0), false);
@@ -2669,13 +2670,13 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 			ret.getInventory(MapleInventoryType.USE).setSlotLimit(rs.getByte("useslots"));
 			ret.getInventory(MapleInventoryType.SETUP).setSlotLimit(rs.getByte("setupslots"));
 			ret.getInventory(MapleInventoryType.ETC).setSlotLimit(rs.getByte("etcslots"));
-			for (Pair<IItem, MapleInventoryType> item : ItemFactory.INVENTORY.loadItems(ret.id, !channelserver)) {
-				ret.getInventory(item.getRight()).addFromDB(item.getLeft());
-				if (item.getRight().equals(MapleInventoryType.EQUIP) || item.getRight().equals(MapleInventoryType.EQUIPPED)) {
-					IEquip equip = (IEquip) item.getLeft();
+			for (ItemInventoryEntry entry : ItemFactory.INVENTORY.loadItems(ret.id, !channelserver)) {
+				ret.getInventory(entry.type).addFromDB(entry.item);
+				if (entry.type.equals(MapleInventoryType.EQUIP) || entry.type.equals(MapleInventoryType.EQUIPPED)) {
+					IEquip equip = (IEquip) entry.item;
 					if (equip.getRingId() > -1) {
 						MapleRing ring = MapleRing.loadFromDb(equip.getRingId());
-						if (item.getRight().equals(MapleInventoryType.EQUIPPED)) {
+						if (entry.type.equals(MapleInventoryType.EQUIPPED)) {
 							ring.equip();
 						}
 						if (ring.getItemId() > 1112012) {
@@ -2685,19 +2686,19 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 						}
 					}
 				}
-				IItem itemz = item.getLeft();
-				if (itemz.getPetId() > -1) {
-					MaplePet pet = itemz.getPet();
+				IItem item = entry.item;
+				if (item.getPetId() > -1) {
+					MaplePet pet = item.getPet();
 					if (pet != null && pet.isSummoned()) {
 						ret.addPet(pet);
 					}
 					continue;
 				}
-				if (item.getRight().equals(MapleInventoryType.EQUIP) || item.getRight().equals(MapleInventoryType.EQUIPPED)) {
-					IEquip equip = (IEquip) item.getLeft();
+				if (entry.type.equals(MapleInventoryType.EQUIP) || entry.type.equals(MapleInventoryType.EQUIPPED)) {
+					IEquip equip = (IEquip) entry.item;
 					if (equip.getRingId() > -1) {
 						MapleRing ring = MapleRing.loadFromDb(equip.getRingId());
-						if (item.getRight().equals(MapleInventoryType.EQUIPPED)) {
+						if (entry.type.equals(MapleInventoryType.EQUIPPED)) {
 							ring.equip();
 						}
 						if (ring.getItemId() > 1112012) {
@@ -3271,8 +3272,8 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 				}
 			}, 5000, 5000);
 		}
-		for (Pair<MapleBuffStat, Integer> statup : effect.getStatups()) {
-			effects.put(statup.getLeft(), new MapleBuffStatValueHolder(effect, starttime, schedule, statup.getRight().intValue()));
+		for (MapleBuffStatDelta statup : effect.getStatups()) {
+			effects.put(statup.stat, new MapleBuffStatValueHolder(effect, starttime, schedule, statup.delta));
 		}
 		recalcLocalStats();
 	}
@@ -3325,7 +3326,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	}
 
 	public void resetStats() {
-		List<Pair<MapleStat, Integer>> statup = new ArrayList<Pair<MapleStat, Integer>>(5);
+		List<MapleStatDelta> statup = new ArrayList<MapleStatDelta>(5);
 		int tap = 0, tsp = 1;
 		int tstr = 4, tdex = 4, tint = 4, tluk = 4;
 		int levelap = (isCygnus() ? 6 : 5);
@@ -3364,12 +3365,12 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 		this.int_ = tint;
 		this.str = tstr;
 		this.luk = tluk;
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.AVAILABLEAP, tap));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.AVAILABLESP, tsp));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.STR, tstr));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.DEX, tdex));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.INT, tint));
-		statup.add(new Pair<MapleStat, Integer>(MapleStat.LUK, tluk));
+		statup.add(new MapleStatDelta(MapleStat.AVAILABLEAP, tap));
+		statup.add(new MapleStatDelta(MapleStat.AVAILABLESP, tsp));
+		statup.add(new MapleStatDelta(MapleStat.STR, tstr));
+		statup.add(new MapleStatDelta(MapleStat.DEX, tdex));
+		statup.add(new MapleStatDelta(MapleStat.INT, tint));
+		statup.add(new MapleStatDelta(MapleStat.LUK, tluk));
 		announce(MaplePacketCreator.updatePlayerStats(statup));
 	}
 
@@ -3647,11 +3648,11 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 				}
 			}
 			ps.executeBatch();
-			List<Pair<IItem, MapleInventoryType>> itemsWithType = new ArrayList<Pair<IItem, MapleInventoryType>>();
+			List<ItemInventoryEntry> itemsWithType = new ArrayList<ItemInventoryEntry>();
 
 			for (MapleInventory iv : inventory) {
 				for (IItem item : iv.list()) {
-					itemsWithType.add(new Pair<IItem, MapleInventoryType>(item, iv.getType()));
+					itemsWithType.add(new ItemInventoryEntry(item, iv.getType()));
 				}
 			}
 
@@ -4522,7 +4523,7 @@ public class MapleCharacter extends AbstractAnimatedMapleMapObject {
 	}
 
 	private void updateSingleStat(MapleStat stat, int newval, boolean itemReaction) {
-		announce(MaplePacketCreator.updatePlayerStats(Collections.singletonList(new Pair<MapleStat, Integer>(stat, Integer.valueOf(newval))), itemReaction));
+		announce(MaplePacketCreator.updatePlayerStats(Collections.singletonList(new MapleStatDelta(stat, Integer.valueOf(newval))), itemReaction));
 	}
 
 	public void announce(MaplePacket packet) {

@@ -52,10 +52,10 @@ import server.life.MapleLifeFactory.BanishInfo;
 import server.maps.MapleMap;
 import server.maps.MapleMapObject;
 import server.maps.MapleMapObjectType;
+import server.maps.TimeMobEntry;
 import tools.ArrayMap;
 import tools.MaplePacketCreator;
 import tools.Output;
-import tools.Pair;
 
 public class MapleMonster extends AbstractLoadedMapleLife {
 
@@ -72,8 +72,8 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 	private int VenomMultiplier = 0;
 	private boolean fake = false;
 	private boolean dropsDisabled = false;
-	private List<Pair<Integer, Integer>> usedSkills = new ArrayList<Pair<Integer, Integer>>();
-	private Map<Pair<Integer, Integer>, Integer> skillsUsed = new HashMap<Pair<Integer, Integer>, Integer>();
+	private List<MobSkillEntry> usedSkills = new ArrayList<MobSkillEntry>();
+	private Map<MobSkillEntry, Integer> skillsUsed = new HashMap<MobSkillEntry, Integer>();
 	private List<Integer> stolenItems = new ArrayList<Integer>();
 	private int team;
 	public ReentrantLock monsterLock = new ReentrantLock();
@@ -314,13 +314,13 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 				reviveMap.broadcastMessage(MaplePacketCreator.playSound("Dojang/clear"));
 				reviveMap.broadcastMessage(MaplePacketCreator.showEffect("dojang/end/clear"));
 			}
-			Pair<Integer, String> timeMob = reviveMap.getTimeMob();
+			TimeMobEntry timeMob = reviveMap.getTimeMob();
 			if (timeMob != null) {
-				if (toSpawn.contains(timeMob.getLeft())) {
-					reviveMap.broadcastMessage(MaplePacketCreator.serverNotice(6, timeMob.getRight()));
+				if (toSpawn.contains(timeMob.id)) {
+					reviveMap.broadcastMessage(MaplePacketCreator.serverNotice(6, timeMob.message));
 				}
 
-				if (timeMob.getLeft() == 9300338 && (reviveMap.getId() >= 922240100 && reviveMap.getId() <= 922240119)) {
+				if (timeMob.id == 9300338 && (reviveMap.getId() >= 922240100 && reviveMap.getId() <= 922240119)) {
 					if (!reviveMap.containsNPC(9001108)) {
 						MapleNPC npc = MapleLifeFactory.getNPC(9001108);
 						npc.setPosition(new Point(172, 9));
@@ -657,7 +657,7 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 		return map;
 	}
 
-	public List<Pair<Integer, Integer>> getSkills() {
+	public List<MobSkillEntry> getSkills() {
 		return stats.getSkills();
 	}
 
@@ -669,14 +669,14 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 		if (toUse == null) {
 			return false;
 		}
-		for (Pair<Integer, Integer> skill : usedSkills) {
-			if (skill.getLeft() == toUse.getSkillId() && skill.getRight() == toUse.getSkillLevel()) {
+		for (MobSkillEntry skill : usedSkills) {
+			if (skill.skillId == toUse.getSkillId() && skill.level == toUse.getSkillLevel()) {
 				return false;
 			}
 		}
 		if (toUse.getLimit() > 0) {
-			if (this.skillsUsed.containsKey(new Pair<Integer, Integer>(toUse.getSkillId(), toUse.getSkillLevel()))) {
-				int times = this.skillsUsed.get(new Pair<Integer, Integer>(toUse.getSkillId(), toUse.getSkillLevel()));
+			if (this.skillsUsed.containsKey(new MobSkillEntry(toUse.getSkillId(), toUse.getSkillLevel()))) {
+				int times = this.skillsUsed.get(new MobSkillEntry(toUse.getSkillId(), toUse.getSkillLevel()));
 				if (times >= toUse.getLimit()) {
 					return false;
 				}
@@ -698,13 +698,13 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 	}
 
 	public void usedSkill(final int skillId, final int level, long cooltime) {
-		this.usedSkills.add(new Pair<Integer, Integer>(skillId, level));
-		if (this.skillsUsed.containsKey(new Pair<Integer, Integer>(skillId, level))) {
-			int times = this.skillsUsed.get(new Pair<Integer, Integer>(skillId, level)) + 1;
-			this.skillsUsed.remove(new Pair<Integer, Integer>(skillId, level));
-			this.skillsUsed.put(new Pair<Integer, Integer>(skillId, level), times);
+		this.usedSkills.add(new MobSkillEntry(skillId, level));
+		if (this.skillsUsed.containsKey(new MobSkillEntry(skillId, level))) {
+			int times = this.skillsUsed.get(new MobSkillEntry(skillId, level)) + 1;
+			this.skillsUsed.remove(new MobSkillEntry(skillId, level));
+			this.skillsUsed.put(new MobSkillEntry(skillId, level), times);
 		} else {
-			this.skillsUsed.put(new Pair<Integer, Integer>(skillId, level), 1);
+			this.skillsUsed.put(new MobSkillEntry(skillId, level), 1);
 		}
 		final MapleMonster mons = this;
 		TimerManager tMan = TimerManager.getInstance();
@@ -719,8 +719,8 @@ public class MapleMonster extends AbstractLoadedMapleLife {
 
 	public void clearSkill(int skillId, int level) {
 		int index = -1;
-		for (Pair<Integer, Integer> skill : usedSkills) {
-			if (skill.getLeft() == skillId && skill.getRight() == level) {
+		for (MobSkillEntry skill : usedSkills) {
+			if (skill.skillId == skillId && skill.level == level) {
 				index = usedSkills.indexOf(skill);
 				break;
 			}

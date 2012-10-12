@@ -37,6 +37,9 @@ import provider.MapleData;
 import provider.MapleDataProvider;
 import provider.MapleDataProviderFactory;
 import provider.MapleDataTool;
+import server.ItemNameEntry;
+import server.MobInfo;
+import server.MobInfoEntry;
 
 /*
  * Originally created by Bassoe <3
@@ -55,11 +58,10 @@ public class MonsterDropCreator {
 												// source .. so.
 	protected static String monsterQueryData = "drop_data"; // Modify this to
 															// suite your source
-	protected static List<Pair<Integer, String>> itemNameCache = new ArrayList<Pair<Integer, String>>();
-	protected static List<Pair<Integer, MobInfo>> mobCache = new ArrayList<Pair<Integer, MobInfo>>();
+	protected static List<ItemNameEntry> itemNameCache = new ArrayList<ItemNameEntry>();
+	protected static List<MobInfoEntry> mobCache = new ArrayList<MobInfoEntry>();
 	protected static Map<Integer, Boolean> bossCache = new HashMap<Integer, Boolean>();
 
-	@SuppressWarnings({"unchecked", "rawtypes"}) // messy code is messy, let's just ignore it...
 	public static void main(String args[]) throws FileNotFoundException, IOException, NotBoundException, InstanceAlreadyExistsException, MBeanRegistrationException, NotCompliantMBeanException, MalformedObjectNameException {
 		MapleData data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzpath") + "/String.wz")).getData("MonsterBook.img");
 
@@ -81,7 +83,7 @@ public class MonsterDropCreator {
 		FileOutputStream out = new FileOutputStream("mobDrop.sql", true);
 
 		// Things not in MonsterBook.img
-		for (Map.Entry e : getDropsNotInMonsterBook().entrySet()) {
+		for (Map.Entry<Integer, List<Integer>> e : getDropsNotInMonsterBook().entrySet()) {
 			first = true;
 
 			sb.append("INSERT INTO ").append(monsterQueryData).append(" VALUES ");
@@ -144,28 +146,22 @@ public class MonsterDropCreator {
 			if (monsterId == 9400408) { // Fix for kaede castle, toad boss
 				idtoLog = 9400409;
 			}
-			if (dataz.getChildByPath("reward").getChildren().size() > 0) { // Fix
-																			// for
-																			// Monster
-																			// without
-																			// any
-																			// reward
-																			// causing
-																			// SQL
-																			// error
+			
+			// Fix for Monster without any reward causing SQL error
+			if (dataz.getChildByPath("reward").getChildren().size() > 0) { 
 				sb.append("INSERT INTO ").append(monsterQueryData).append(" VALUES ");
 				for (MapleData drop : dataz.getChildByPath("reward")) {
 					int itemid = MapleDataTool.getInt(drop);
 					int rate = getChance(itemid, idtoLog, bossCache.containsKey(idtoLog));
 
-					for (Pair<Integer, MobInfo> Pair : mobCache) {
-						if (Pair.getLeft() == monsterId) {
-							if (Pair.getRight().getBoss() > 0) { // Is boss or
-																	// not.
+					for (MobInfoEntry mobEntry : mobCache) {
+						if (mobEntry.id == monsterId) {
+							// Is boss or not.
+							if (mobEntry.info.boss > 0) { 
 								if (rate <= 100000) {
-									if (Pair.getRight().rateItemDropLevel() == 2) {
+									if (mobEntry.info.rareItemDropLevel == 2) {
 										rate *= 10;
-									} else if (Pair.getRight().rateItemDropLevel() == 3) {
+									} else if (mobEntry.info.rareItemDropLevel == 3) {
 										switch (monsterId) {
 											case 8810018: // HT
 												rate *= 48;
@@ -238,36 +234,33 @@ public class MonsterDropCreator {
 		System.out.println("Loading : MonsterBook drops.");
 		StringBuilder SQL = new StringBuilder();
 		StringBuilder bookName = new StringBuilder();
-		for (Pair<Integer, String> Pair : itemNameCache) {
-			if (Pair.getLeft() >= 2380000 && Pair.getLeft() <= lastmonstercardid) {
-				bookName.append(Pair.getRight());
+		for (ItemNameEntry entry : itemNameCache) {
+			if (entry.itemId >= 2380000 && entry.itemId <= lastmonstercardid) {
+				bookName.append(entry.name);
 
-				if (bookName.toString().contains(" Card"))
-					bookName.delete(bookName.length() - 5, bookName.length()); // Get
-																				// rid
-																				// of
-																				// the
-																				// " Card"
-																				// string
+				if (bookName.toString().contains(" Card")) {
+					// Get rid of the " Card" string
+					bookName.delete(bookName.length() - 5, bookName.length());
+				}
 
-				for (Pair<Integer, MobInfo> Pair_ : mobCache) {
-					if (Pair_.getRight().getName().equalsIgnoreCase(bookName.toString())) {
+				for (MobInfoEntry mobEntry : mobCache) {
+					if (mobEntry.info.name.equalsIgnoreCase(bookName.toString())) {
 						int rate = 1000;
-						if (Pair_.getRight().getBoss() > 0) {
+						if (mobEntry.info.boss > 0) {
 							rate *= 25;
 						}
 						SQL.append("INSERT INTO ").append(monsterQueryData).append(" VALUES ");
 						SQL.append("(DEFAULT, ");
-						SQL.append(Pair_.getLeft()).append(", "); // Dropperid
+						SQL.append(mobEntry.id).append(", "); // Dropperid
 						if (addFlagData) {
 							sb.append("'', "); // Flags
 						}
-						SQL.append(Pair.getLeft()).append(", "); // Itemid
+						SQL.append(entry.itemId).append(", "); // Itemid
 						SQL.append("1, 1,"); // Item min and max
 						SQL.append("0, "); // Quest
 						SQL.append(rate);
 						SQL.append(");\n");
-						SQL.append("-- Name : ").append(Pair.getRight()).append("\n");
+						SQL.append("-- Name : ").append(entry.name).append("\n");
 						break;
 					}
 				}
@@ -278,28 +271,25 @@ public class MonsterDropCreator {
 		SQL.append("\n");
 		int i = 1;
 		int lastmonsterbookid = 0;
-		for (Pair<Integer, String> Pair : itemNameCache) {
-			if (Pair.getLeft() >= 2380000 && Pair.getLeft() <= lastmonstercardid) {
-				bookName.append(Pair.getRight());
+		for (ItemNameEntry entry : itemNameCache) {
+			if (entry.itemId >= 2380000 && entry.itemId <= lastmonstercardid) {
+				bookName.append(entry.name);
 
-				if (bookName.toString().contains(" Card"))
-					bookName.delete(bookName.length() - 5, bookName.length()); // Get
-																				// rid
-																				// of
-																				// the
-																				// " Card"
-																				// string
+				if (bookName.toString().contains(" Card")) {
+					// Get rid of the " Card" string
+					bookName.delete(bookName.length() - 5, bookName.length());
+				}
 
-				if (Pair.getLeft() == lastmonsterbookid)
+				if (entry.itemId == lastmonsterbookid)
 					continue; // Fix for multiple monster shet
-				for (Pair<Integer, MobInfo> Pair_ : mobCache) {
-					if (Pair_.getRight().getName().equalsIgnoreCase(bookName.toString())) {
+				for (MobInfoEntry mobEntry : mobCache) {
+					if (mobEntry.info.name.equalsIgnoreCase(bookName.toString())) {
 						SQL.append("INSERT INTO ").append("monstercarddata").append(" VALUES (");
 						SQL.append(i).append(", ");
-						SQL.append(Pair.getLeft());
+						SQL.append(entry.itemId);
 						SQL.append(", ");
-						SQL.append(Pair_.getLeft()).append(");\n");
-						lastmonsterbookid = Pair.getLeft();
+						SQL.append(mobEntry.id).append(");\n");
+						lastmonsterbookid = entry.itemId;
 						i++;
 						break;
 					}
@@ -316,9 +306,9 @@ public class MonsterDropCreator {
 	}
 
 	private static void retriveNLogItemName(final StringBuilder sb, final int id) {
-		for (Pair<Integer, String> Pair : itemNameCache) {
-			if (Pair.getLeft() == id) {
-				sb.append(Pair.getRight());
+		for (ItemNameEntry entry : itemNameCache) {
+			if (entry.itemId == id) {
+				sb.append(entry.name);
 				return;
 			}
 		}
@@ -871,21 +861,21 @@ public class MonsterDropCreator {
 	private static void getAllItems() {
 		MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzpath") + "/String.wz"));
 
-		List<Pair<Integer, String>> itemPairs = new ArrayList<Pair<Integer, String>>();
+		List<ItemNameEntry> itemNames = new ArrayList<ItemNameEntry>();
 		MapleData itemsData;
 
 		itemsData = data.getData("Cash.img");
 		for (MapleData itemFolder : itemsData.getChildren()) {
 			int itemId = Integer.parseInt(itemFolder.getName());
 			String itemName = MapleDataTool.getString("name", itemFolder, "NO-NAME");
-			itemPairs.add(new Pair<Integer, String>(itemId, itemName));
+			itemNames.add(new ItemNameEntry(itemId, itemName));
 		}
 
 		itemsData = data.getData("Consume.img");
 		for (MapleData itemFolder : itemsData.getChildren()) {
 			int itemId = Integer.parseInt(itemFolder.getName());
 			String itemName = MapleDataTool.getString("name", itemFolder, "NO-NAME");
-			itemPairs.add(new Pair<Integer, String>(itemId, itemName));
+			itemNames.add(new ItemNameEntry(itemId, itemName));
 		}
 
 		itemsData = data.getData("Eqp.img").getChildByPath("Eqp");
@@ -893,7 +883,7 @@ public class MonsterDropCreator {
 			for (MapleData itemFolder : eqpType.getChildren()) {
 				int itemId = Integer.parseInt(itemFolder.getName());
 				String itemName = MapleDataTool.getString("name", itemFolder, "NO-NAME");
-				itemPairs.add(new Pair<Integer, String>(itemId, itemName));
+				itemNames.add(new ItemNameEntry(itemId, itemName));
 			}
 		}
 
@@ -901,36 +891,36 @@ public class MonsterDropCreator {
 		for (MapleData itemFolder : itemsData.getChildren()) {
 			int itemId = Integer.parseInt(itemFolder.getName());
 			String itemName = MapleDataTool.getString("name", itemFolder, "NO-NAME");
-			itemPairs.add(new Pair<Integer, String>(itemId, itemName));
+			itemNames.add(new ItemNameEntry(itemId, itemName));
 		}
 
 		itemsData = data.getData("Ins.img");
 		for (MapleData itemFolder : itemsData.getChildren()) {
 			int itemId = Integer.parseInt(itemFolder.getName());
 			String itemName = MapleDataTool.getString("name", itemFolder, "NO-NAME");
-			itemPairs.add(new Pair<Integer, String>(itemId, itemName));
+			itemNames.add(new ItemNameEntry(itemId, itemName));
 		}
 
 		itemsData = data.getData("Pet.img");
 		for (MapleData itemFolder : itemsData.getChildren()) {
 			int itemId = Integer.parseInt(itemFolder.getName());
 			String itemName = MapleDataTool.getString("name", itemFolder, "NO-NAME");
-			itemPairs.add(new Pair<Integer, String>(itemId, itemName));
+			itemNames.add(new ItemNameEntry(itemId, itemName));
 		}
-		itemNameCache.addAll(itemPairs);
+		itemNameCache.addAll(itemNames);
 	}
 
 	public static void getAllMobs() {
-		List<Pair<Integer, MobInfo>> itemPairs = new ArrayList<Pair<Integer, MobInfo>>();
+		List<MobInfoEntry> entries = new ArrayList<MobInfoEntry>();
 		MapleDataProvider data = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzpath") + "/String.wz"));
 		MapleDataProvider mobData = MapleDataProviderFactory.getDataProvider(new File(System.getProperty("wzpath") + "/Mob.wz"));
 		MapleData mob = data.getData("Mob.img");
 
 		int id;
 		MapleData monsterData;
-
-		for (MapleData itemFolder : mob.getChildren()) { // Get the list of mobs
-															// from String.wz
+		
+		// Get the list of mobs from String.wz
+		for (MapleData itemFolder : mob.getChildren()) { 
 			id = Integer.parseInt(itemFolder.getName());
 
 			try {
@@ -941,38 +931,15 @@ public class MonsterDropCreator {
 					bossCache.put(id, true);
 				}
 
-				MobInfo mobInfo = new MobInfo(boss, // fix for HT
-				MapleDataTool.getIntConvert("rareItemDropLevel", monsterData.getChildByPath("info"), 0), MapleDataTool.getString("name", itemFolder, "NO-NAME"));
+				// fix for HT
+				final int rareItemDropLevel = MapleDataTool.getIntConvert("rareItemDropLevel", monsterData.getChildByPath("info"), 0);
+				final String name = MapleDataTool.getString("name", itemFolder, "NO-NAME");
+				MobInfo mobInfo = new MobInfo(boss, rareItemDropLevel, name);
 
-				itemPairs.add(new Pair<Integer, MobInfo>(id, mobInfo));
+				entries.add(new MobInfoEntry(id, mobInfo));
 			} catch (Exception fe) {
 			}
 		}
-		mobCache.addAll(itemPairs);
-	}
-
-	public static class MobInfo {
-
-		public int boss;
-		public int rareItemDropLevel;
-		public String name;
-
-		public MobInfo(int boss, int rareItemDropLevel, String name) {
-			this.boss = boss;
-			this.rareItemDropLevel = rareItemDropLevel;
-			this.name = name;
-		}
-
-		public int getBoss() {
-			return boss;
-		}
-
-		public int rateItemDropLevel() {
-			return rareItemDropLevel;
-		}
-
-		public String getName() {
-			return name;
-		}
+		mobCache.addAll(entries);
 	}
 }

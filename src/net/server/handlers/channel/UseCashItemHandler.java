@@ -33,6 +33,7 @@ import client.MapleInventoryType;
 import client.MapleJob;
 import client.MaplePet;
 import client.MapleStat;
+import client.MapleStatDelta;
 import client.SkillFactory;
 import constants.ItemConstants;
 import constants.skills.Aran;
@@ -48,7 +49,6 @@ import server.maps.MapleMap;
 import server.maps.MapleTVEffect;
 import tools.MaplePacketCreator;
 import tools.Output;
-import tools.Pair;
 import tools.data.input.SeekableLittleEndianAccessor;
 
 public final class UseCashItemHandler extends AbstractMaplePacketHandler {
@@ -97,7 +97,7 @@ public final class UseCashItemHandler extends AbstractMaplePacketHandler {
 					}
 				}
 			} else {
-				List<Pair<MapleStat, Integer>> statupdate = new ArrayList<Pair<MapleStat, Integer>>(2);
+				List<MapleStatDelta> statupdate = new ArrayList<MapleStatDelta>(2);
 				int APTo = slea.readInt();
 				int APFrom = slea.readInt();
 				switch (APFrom) {
@@ -167,8 +167,8 @@ public final class UseCashItemHandler extends AbstractMaplePacketHandler {
 						}
 						player.setHp(player.getHp() + hplose);
 						player.setMaxHp(player.getMaxHp() + hplose);
-						statupdate.add(new Pair<MapleStat, Integer>(MapleStat.HP, player.getHp()));
-						statupdate.add(new Pair<MapleStat, Integer>(MapleStat.MAXHP, player.getMaxHp()));
+						statupdate.add(new MapleStatDelta(MapleStat.HP, player.getHp()));
+						statupdate.add(new MapleStatDelta(MapleStat.MAXHP, player.getMaxHp()));
 						break;
 					case 8192: // MP
 						int mp = player.getMp();
@@ -200,8 +200,8 @@ public final class UseCashItemHandler extends AbstractMaplePacketHandler {
 
 							player.setMp(player.getMp() - minmp);
 							player.setMaxMp(player.getMaxMp() - minmp);
-							statupdate.add(new Pair<MapleStat, Integer>(MapleStat.MP, player.getMp()));
-							statupdate.add(new Pair<MapleStat, Integer>(MapleStat.MAXMP, player.getMaxMp()));
+							statupdate.add(new MapleStatDelta(MapleStat.MP, player.getMp()));
+							statupdate.add(new MapleStatDelta(MapleStat.MAXMP, player.getMaxMp()));
 							break;
 						}
 					default:

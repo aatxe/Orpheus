@@ -33,11 +33,11 @@ import java.util.List;
 import java.util.Map;
 import client.IItem;
 import client.ItemFactory;
+import client.ItemInventoryEntry;
 import client.MapleClient;
 import client.MapleInventoryType;
 import tools.DatabaseConnection;
 import tools.MaplePacketCreator;
-import tools.Pair;
 
 /**
  * 
@@ -88,8 +88,8 @@ public class MapleStorage {
 				ret = new MapleStorage(storeId, (byte) rs.getInt("slots"), rs.getInt("meso"));
 				rs.close();
 				ps.close();
-				for (Pair<IItem, MapleInventoryType> item : ItemFactory.STORAGE.loadItems(ret.id, false))
-					ret.items.add(item.getLeft());
+				for (ItemInventoryEntry entry : ItemFactory.STORAGE.loadItems(ret.id, false))
+					ret.items.add(entry.item);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -125,10 +125,10 @@ public class MapleStorage {
 			ps.setInt(3, id);
 			ps.executeUpdate();
 			ps.close();
-			List<Pair<IItem, MapleInventoryType>> itemsWithType = new ArrayList<Pair<IItem, MapleInventoryType>>();
+			List<ItemInventoryEntry> itemsWithType = new ArrayList<ItemInventoryEntry>();
 
 			for (IItem item : items)
-				itemsWithType.add(new Pair<IItem, MapleInventoryType>(item, MapleItemInformationProvider.getInstance().getInventoryType(item.getItemId())));
+				itemsWithType.add(new ItemInventoryEntry(item, MapleItemInformationProvider.getInstance().getInventoryType(item.getItemId())));
 
 			ItemFactory.STORAGE.saveItems(itemsWithType, id);
 		} catch (SQLException ex) {
